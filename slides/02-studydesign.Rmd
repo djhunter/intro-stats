@@ -1,0 +1,61 @@
+---
+title: "Chapter 2: Study Design"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+```
+
+# Overview
+
+- 2 Study design
+- 2.1 Sampling principles and strategies
+   - 2.1.1 Populations and samples
+   - 2.1.2 Parameters and statistics
+   - 2.1.3 Anecdotal evidence
+   - 2.1.4 Sampling from a population
+   - 2.1.5 Four sampling methods
+- 2.2 Experiments
+   - 2.2.1 Principles of experimental design
+   - 2.2.2 Reducing bias in human experiments
+- 2.3 Observational studies
+
+
+# 2.1 Sampling principles and strategies
+
+## 2.1.1 Populations and samples
+
+## 2.1.2 Parameters and statistics
+
+## 2.1.3 Anecdotal evidence
+
+## 2.1.4 Sampling from a population
+
+## 2.1.5 Four sampling methods
+
+# 2.2 Experiments
+
+## 2.2.1 Principles of experimental design
+
+## 2.2.2 Reducing bias in human experiments
+
+# 2.3 Observational studies
+
+# Exercises
