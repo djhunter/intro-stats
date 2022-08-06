@@ -1,0 +1,44 @@
+---
+title: "Introduction to Statistics"
+author: "David J. Hunter"
+output:
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+    df_print: paged
+    theme: spacelab
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=FALSE}
+library(metathis)
+meta() %>%
+  meta_description(
+    "Slides, assignments, and code for my introductory statistics class."
+  ) %>%
+  meta_name("github-repo" = "djhunter/intro-stats") %>%
+  meta_viewport() %>%
+  meta_social(
+    title = "Introduction to Statistics",
+    url = "https://djhunter.github.io/intro-stats/index.html",
+    image = "https://en.wikipedia.org/wiki/Statistics#/media/File:Fisher_iris_versicolor_sepalwidth.svg",
+    image_alt = "Histogram with bell curve",
+    og_author = c("David J. Hunter")
+  )
+```
+
+This site provides slides, assignments, and other resources that I use in my introductory statistics class.
+
+# Slides 
+
+# Other Resources
+
+- [Syllabus](syllabus/ma005hunterF22.pdf) (PDF)
+
+All of the pages and slides on this site were authored in RMarkdown. The source code is available on GitHub: https://github.com/djhunter/intro-stats
+
