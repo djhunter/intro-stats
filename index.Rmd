@@ -19,20 +19,20 @@ knitr::opts_chunk$set(echo = TRUE)
 library(metathis)
 meta() %>%
   meta_description(
-    "Slides, assignments, and code for my introductory statistics class."
+    "Resources for my introductory statistics class."
   ) %>%
   meta_name("github-repo" = "djhunter/intro-stats") %>%
   meta_viewport() %>%
   meta_social(
     title = "Introduction to Statistics",
     url = "https://djhunter.github.io/intro-stats/index.html",
-    image = "https://upload.wikimedia.org/wikipedia/commons/4/44/Bar_chart_red_and_light_blue.png",
-    image_alt = "Histogram with bell curve",
+    image = "https://ggplot2.tidyverse.org/reference/geom_smooth-1.png",
+    image_alt = "Scatterplot",
     og_author = c("David J. Hunter")
   )
 ```
 
-This site provides slides, assignments, and other resources that I use in my introductory statistics class.
+This site contains slides and other resources that I use in my introductory statistics class.
 
 # Slides 
 

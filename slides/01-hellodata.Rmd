@@ -18,6 +18,11 @@ output:
 ---
 
 ```{r setup, include=FALSE}
+library(openintro)
+library(tidyverse)
+library(tools)
+library(knitr)
+library(kableExtra)
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(comment = NA)
 options(width = 100)
@@ -40,13 +45,104 @@ options(width = 100)
 -   **Treatment group**. Patients in the treatment group received a stent and medical management. The medical management included medications, management of risk factors, and help in lifestyle modification.
 -   **Control group**. Patients in the control group received the same medical management as the treatment group, but they did not receive stents.
 
-Researchers randomly assigned 224 patients to the treatment group and 227 to the control group.
+Researchers *randomly assigned* 224 patients to the treatment group and 227 to the control group.
 
+## Group activity 
 
+```{r stentStudyResultsDFsummary, echo=FALSE}
+stent30_renamed <- stent30 %>% rename(`30 days` = outcome)
+stent365_renamed <- stent365 %>% rename(`365 days` = outcome)
+stent <- stent30_renamed %>%
+  select(-group) %>%
+  bind_cols(stent365_renamed) %>% 
+  relocate(group) %>%
+  mutate(
+    group        = fct_rev(group),
+    `30 days`    = fct_rev(`30 days`),
+    `365 days`   = fct_rev(`365 days`),
+  )
+
+stent %>%
+  mutate(group = str_to_title(group)) %>%
+  pivot_longer(cols = c(`30 days`, `365 days`), 
+               names_to = "stage", 
+               values_to = "outcome") %>%
+  count(group, stage, outcome) %>%
+  pivot_wider(names_from = c(stage, outcome), values_from = n) %>%
+  kable()
+```
+
+1. Of the 224 patients in the treatment group, 45 had a stroke by the end of the first year.
+Using these two numbers, compute the proportion of patients in the treatment group who had a stroke by the end of their first year.
+
+2. Compute the proportion of patients in the control group who had a stroke by the end of the first year.
+
+3. What do these two *summary statistics* tell us about the *research question* "Does the use of stents reduce the risk of stroke?"
+
+## Statistical investigations
+
+Steps in a statistical investigation:
+
+- Formulate a *research question*.
+- Collect *data*.
+- Summarize the data using *summary statistics*.
+- *Interpret* the results in the context of the research question.
+
+> Statistics is the study of how best to collect, analyze, and draw conclusions from data.
 
 # 1.2 Data basics
 
-## 1.2.1 Observations, variables, and data matrices
+## 1.2.1 Observations, variables, and data frames
+
+- A *data frame* is a table (i.e., a spreadsheet).
+    - Each row corresponds to an *observational unit*: the individual entities under consideration.
+    - Each column corresponds to a *variable*: properties that can be observed on each observational unit.
+    
+```{r loan50-df, echo=FALSE}
+loan50 %>% 
+  select(loan_amount, interest_rate, term, grade, state, total_income, homeownership) %>%
+  slice_head(n = 6) %>%
+  kable()
+```
+
+## `county` Data Frame 
+
+- Observational units: United States counties
+- Variables: `r names(county)`
+
+```{r echo=FALSE}
+county[1:100,] %>% 
+  kbl() %>%
+  kable_styling(font_size = 12) %>%
+  row_spec(0, background = "darkblue") %>%
+  scroll_box(width = "100%", height = "300px")
+```
+
+##
+
+```{r county-variables, echo=FALSE}
+tribble(
+  ~variable,           ~description,
+  "name",              "Name of county.",
+  "state",             "Name of state.",
+  "pop2000",           "Population in 2000.",
+  "pop2010",           "Population in 2010.",
+  "pop2017",           "Population in 2017.",
+  "pop_change",        "Population change from 2010 to 2017 (in percent).",
+  "poverty",           "Percent of population in poverty in 2017.",
+  "homeownership",     "Homeownership rate, 2006-2010.",
+  "multi_unit",        "Multi-unit rate: percent of housing units that are in multi-unit structures, 2006-2010.",
+  "unemployment_rate", "Unemployment rate in 2017.",
+  "metro",             "Whether the county contains a metropolitan area, taking one of the values yes or no.",
+  "median_edu",        "Median education level (2013-2017), taking one of the values below_hs, hs_diploma, some_college, or bachelors.", 
+  "per_capita_income", "Per capita (per person) income (2013-2017).",
+  "median_hh_income",  "Median household income.",
+  "smoking_ban",       "Describes the type of county-level smoking ban in place in 2010, taking one of the values none, partial, or comprehensive."
+) %>%
+  kbl(row.names = TRUE) %>%
+  kable_styling(font_size = 16) %>%
+  scroll_box()
+```
 
 ## 1.2.2 Types of variables
 
@@ -55,34 +151,40 @@ par_og <- par(no.readonly = TRUE) # save original par
 par(mar = rep(0, 4))
 plot(c(-0.15, 1.3), 0:1, type = "n", axes = FALSE)
 
-text(0.6, 0.9, "all variables", cex=3)
+text(0.6, 0.9, "all variables", cex=2)
 rect(0.4, 0.8, 0.8, 1)
 
-text(0.25, 0.5, "numerical", cex=3)
+text(0.25, 0.5, "numerical", cex=2)
 rect(0.1, 0.4, 0.4, 0.6)
 arrows(0.45, 0.78, 0.34, 0.62, length = 0.08)
 
-text(0.9, 0.5, "categorical", cex=3)
+text(0.9, 0.5, "categorical", cex=2)
 rect(0.73, 0.4, 1.07, 0.6)
 arrows(0.76, 0.78, 0.85, 0.62, length = 0.08)
 
-text(0, 0.1, "discrete", cex=3)
+text(0, 0.1, "discrete", cex=2)
 rect(-0.17, 0, 0.17, 0.2)
 arrows(0.13, 0.38, 0.05, 0.22, length = 0.08)
 
-text(0.39, 0.1, "continuous", cex=3)
+text(0.39, 0.1, "continuous", cex=2)
 rect(0.25, 0, 0.53, 0.2)
 arrows(0.35, 0.38, 0.4, 0.22, length = 0.08)
 
-text(0.77, 0.105, "ordinal", cex=3)
+text(0.77, 0.105, "ordinal", cex=2)
 rect(0.64, 0, 0.9, 0.2)
 arrows(0.82, 0.38, 0.77, 0.22, length = 0.08)
 
-text(1.12, 0.1, "nominal", cex=3)
+text(1.12, 0.1, "nominal", cex=2)
 rect(0.99, 0, 1.25, 0.2)
 arrows(1.02, 0.38, 1.1, 0.22, length = 0.08)
 par(par_og) # restore original par
 ```
+
+## Group Activity
+
+1. Data were collected about students in a statistics course. Three variables were recorded for each student: number of siblings, student height, and whether the student had previously taken a statistics course. Classify each of the variables as continuous numerical, discrete numerical, or categorical.
+
+2. An experiment is evaluating the effectiveness of a new drug in treating migraines. A `group` variable is used to indicate the experiment group for each patient: treatment or control. The `num_migraines` variable represents the number of migraines the patient experienced during a 3-month period. Classify each variable as either numerical or categorical?
 
 ## 1.2.3 Relationships between variables
 
@@ -134,11 +236,6 @@ Also provided is a figure from the original paper displaying the appropriate are
 
 
 ```{r echo=FALSE, message=FALSE}
-library(openintro)
-library(tidyverse)
-library(tools)
-library(knitr)
-library(kableExtra)
 migraine %>%
   mutate(
     group = toTitleCase(as.character(group)),
