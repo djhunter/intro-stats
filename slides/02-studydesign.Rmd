@@ -31,7 +31,6 @@ options(width = 100)
    - 2.1.2 Parameters and statistics
    - 2.1.3 Anecdotal evidence
    - 2.1.4 Sampling from a population
-   - 2.1.5 Four sampling methods
 - 2.2 Experiments
    - 2.2.1 Principles of experimental design
    - 2.2.2 Reducing bias in human experiments
@@ -42,13 +41,54 @@ options(width = 100)
 
 ## 2.1.1 Populations and samples
 
+**Research Question:** What is the average mercury content in swordfish in the Atlantic Ocean?
+
+- The *population* of interest is all the swordfish in the Atlantic Ocean.
+- Researchers collect a *sample* of 60 swordfish and measure their mercury content.
+
+
 ## 2.1.2 Parameters and statistics
+
+**Research Question:** What is the average mercury content in swordfish in the Atlantic Ocean?
+
+- The population of interest is all the swordfish in the Atlantic Ocean.
+- Researchers collect a sample of 60 swordfish and measure their mercury content.
+    - They calculate the average mercury content of the swordfish in this sample. This number is a *statistic*.
+- This statistic is an estimate of a *parameter*, the true average mercury content of all swordfish in the Atlantic.
+
+**Key point:** Statistics are calculated from a sample, while parameters are properties of the entire population.
 
 ## 2.1.3 Anecdotal evidence
 
+An example of faulty reasoning:
+
+> A man on the news got mercury poisoning from eating swordfish, so the average mercury concentration in swordfish must be dangerously high.
+
+- This fallacy relies on *anecdotal evidence.*
+- Such evidence may be true and verifiable, but it may only represent extraordinary cases and therefore not be a good representation of the population.
+- Good statistical studies collect a *sample* of data from a specified *population* in systematic ways.
+
 ## 2.1.4 Sampling from a population
 
-## 2.1.5 Four sampling methods
+**Research Question:** Over the last five years, what is the average time to complete a degree for Duke undergrads?
+
+- *Random selection:* Write each graduate’s name on a raffle ticket and draw 10 tickets (or use a computer to generate 10 random names). The selected names would represent a random sample of 10 graduates.
+- Such a sample is called a *simple random sample*.
+- This is best way to collect a sample, because it avoids *sampling bias*.
+- Simple random samples are the best way to get sample that is *representative* of the entire population.
+
+## {data-background-image="https://openintro-ims.netlify.app/02-data-design_files/figure-html/pop-to-sample-1.png" data-background-size="contain"}
+
+## Convenience Samples
+
+**Research Question:** Over the last five years, what is the average time to complete a degree for Duke undergrads?
+
+- Suppose that Duke did a poor job keeping track of its graduates, except for the health sciences departments.
+- We might find it *convenient* to just use the data we can get, rather than taking a true random sample of the whole population.
+- *Convenience samples* collected in this way often suffer from *sampling bias*.
+
+## {data-background-image="https://openintro-ims.netlify.app/02-data-design_files/figure-html/pop-to-sub-sample-graduates-1.png" data-background-size="contain"}
+
 
 # 2.2 Experiments
 
@@ -58,4 +98,4 @@ options(width = 100)
 
 # 2.3 Observational studies
 
-# Exercises
+# Group Discussion
