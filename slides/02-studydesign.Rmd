@@ -58,6 +58,15 @@ options(width = 100)
 
 **Key point:** Statistics are calculated from a sample, while parameters are properties of the entire population.
 
+## Group Activity
+
+A recent article in a college newspaper stated that college students get an average of 5.5 hours of sleep each night. A student who was skeptical about this value decided to conduct a survey by asking 25 randomly-chosen students about their sleep habits. On average, the surveyed students slept 6.25 hours per night. 
+
+1. What is the *population* of interest?
+2. What is the *sample*?
+3. Identify the *parameter* in this situation.
+4. Identify the corresponding *statistic*.
+
 ## 2.1.3 Anecdotal evidence
 
 An example of faulty reasoning:
@@ -89,13 +98,46 @@ An example of faulty reasoning:
 
 ## {data-background-image="https://openintro-ims.netlify.app/02-data-design_files/figure-html/pop-to-sub-sample-graduates-1.png" data-background-size="contain"}
 
+## Group Discussion
 
-# 2.2 Experiments
+We can easily access ratings for products, sellers, and companies through websites. These ratings are based only on those people who go out of their way to provide a rating. If 50% of online reviews for a product are negative, do you think this means that 50% of buyers are dissatisfied with the product? Why or why not?
+
+# Experiments vs. Observational Studies
+
+## 2.2 Experiments
+
+Recall:
+
+- In an *experiment*, researchers put subjects in two or more groups and compare them.
+- In a *randomized experiment*, researchers randomly assign the groups. (e.g., stent study)
 
 ## 2.2.1 Principles of experimental design
 
-## 2.2.2 Reducing bias in human experiments
+**Key Point:** The only difference between the groups should be the treatment under consideration.
 
-# 2.3 Observational studies
+>- *Controlling.* Researchers do their best to control any other differences in the groups. (e.g., pill vs. placebo, blinding, double-blinding)
+>- *Randomization.* Researchers randomize patients into treatment groups to account for variables that cannot be controlled.
+>    - Randomization eliminates *confounding variables*.
+>- *Replication.* Everything is done in a way that others would be able to reproduce. More observations produce more conclusive results.
+
+## 2.3 Observational Studies
+
+Data where no treatment has been explicitly applied (or explicitly withheld) is called *observational data*.
+
+**Group Discussion:** Suppose an observational study tracked sunscreen use and skin cancer, and it was found that the more sunscreen someone used, the more likely the person was to have skin cancer. Does this mean sunscreen *causes* skin cancer? Can you identify a possible *confounding variable*?
+
+## {data-background-image="https://openintro-ims.netlify.app/images/randsampValloc.png" data-background-size="contain"}
+
 
 # Group Discussion
+
+The 2008-9 Oklahoma City Thunder had a win-loss record that was actually worse for home games with a sell-out crowd (3 wins and 15 losses) than for home games without a sell-out crowd (12 wins and 11 losses). 
+
+1. Consider the 41 home games as the observational units. What two variables are recorded on these observational units? Which is explanatory, and which is response?
+
+2. Is this an experiment or an observational study?
+
+3. Is the presence of a sell-out crowd causing the team to lose more often? Come up with a plausible *confounding variable* that explains the association.
+
+
+
