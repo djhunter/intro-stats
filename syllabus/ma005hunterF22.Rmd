@@ -35,7 +35,7 @@ We will cover Chapters 1--27 of *Introduction to Modern Statistics* by Mine Çet
 
 Throughout the course we will use the R programming language to manipulate data, produce graphics, and perform computations.
 
-## How are grades determined?
+## What is the coursework and how is it graded?
 
 Our typical class meeting will consist of several short mini-lectures and student **participation** in group discussions. On the night before each class meeting there will be a **daily assignment** due on Canvas. Every three weeks there will be an in-class **exam**, and there will be a cumulative **final exam** on the scheduled date. The following table shows how these assessments are weighted to determine your final grade.
 
@@ -50,11 +50,11 @@ Grades are based on a 90/80/70/60 scale, with $+/-$'s within 3 percent of each l
 
 ## What other policies should students be aware of?
 
-If you miss a significant number of classes, you will almost definitely do poorly in this class.  If you miss more than six classes without a valid excuse, I reserve the right to terminate you from the course with a grade of~F.\hspace{4pt}  Work missed (including tests) without a valid excuse will receive a zero.
+If you miss a significant number of classes, you will almost definitely do poorly in this class.  If you miss more than six classes without a valid excuse, I reserve the right to terminate you from the course with a failing grade.  Work missed (including tests) without a valid excuse will receive a zero.
 
 I expect you to check your email on a regular basis.  If you use a non-Westmont email account, please forward your Westmont email to your preferred account. I'll send out notices on Canvas, so make sure you receive Canvas notifications in your email.
 
-Learning communities function best when students have academic integrity.  Cheating is primarily an offense against your classmates because it undermines our learning community.  Therefore, dishonesty of any kind may result in loss of credit for the work involved and the filing of a report with the Provost's Office. Major or repeated infractions may result in dismissal from the course with a grade of F. Be familiar with the College's plagiarism policy, found at \url{https://www.westmont.edu/office-provost/academic-program/academic-integrity-policy}.
+Learning communities function best when students have academic integrity.  Cheating is primarily an offense against your classmates because it undermines our learning community.  Therefore, dishonesty of any kind may result in loss of credit for the work involved and the filing of a report with the Provost's Office. Major or repeated infractions may result in dismissal from the course with a failing grade. Be familiar with the College's plagiarism policy, found at \url{https://www.westmont.edu/office-provost/academic-program/academic-integrity-policy}.
 
 In particular, providing someone with an electronic copy of your work is a breach of the academic integrity policy. Do not email, post online, or otherwise disseminate any of the work that you do in this class. You may work with others on the assignments, but make sure that you write or type up your own answers yourself. You are on your honor that the work you hand in represents your own understanding.
 
