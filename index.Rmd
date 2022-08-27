@@ -36,6 +36,8 @@ This site contains slides and other resources that I use in my introductory stat
 
 # Slides 
 
+1. [Hello Data](slides/01-hellodata.html)
+
 # Other Resources
 
 - [Syllabus](syllabus/ma005hunterF22.pdf) (PDF)
