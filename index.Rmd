@@ -36,7 +36,8 @@ This site contains slides and other resources that I use in my introductory stat
 
 # Slides 
 
-1. [Hello Data](slides/01-hellodata.html)
+1. [Hello Data](slides/01-hellodata.html), 8/29
+2. [Association and Experiments](slides/01b-association.html), 8/31
 
 # Other Resources
 
