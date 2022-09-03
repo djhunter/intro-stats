@@ -1,0 +1,42 @@
+---
+title: "Chapter 3: Getting Started with Data in R"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+```
+
+# Overview
+
+- What is R?
+- Online Interactive Tutorials
+- RStudio
+
+# The R Programming Language
+
+- Free, open-source
+- Powerful, professional, widely-used
+- Optimized for statistics, ML
+- Huge community of support (CRAN)
+
+# Interactive Tutorials 
+
+# RStudio
+
