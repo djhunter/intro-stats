@@ -41,6 +41,7 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 1. [Hello Data](slides/01-hellodata.html), 8/29
 2. [Association and Experiments](slides/01b-association.html), 8/31
 3. [Study Design](slides/02-studydesign.html), 9/2
+4. [Getting Started with Data in R](slides/03-intro_data_R.html), 9/5
 
 # Other Resources
 
