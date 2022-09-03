@@ -38,5 +38,83 @@ options(width = 100)
 
 # Interactive Tutorials 
 
+## Lesson 1: Language of Data
+
+Everyone with a screen (laptop, tablet, or phone), especially the **Operator**, can follow along. Open the first tutorial: 
+
+https://openintro.shinyapps.io/ims-01-data-01/
+
+## Group Activity
+
+The **Recorder** will have some things to write down along the way.
+
+1. How many observations and variables are there in the `email50` data set?
+2. What is the name of the function that creates new variables from old ones?
+3. Based on the scatterplot of `exclaim_mess` by `num_char` grouped by `spam`, what relationships between these variables do you observe?
+
+## Load Packages
+
+```{r}
+library(tidyverse)
+library(openintro)
+```
+
+## Glimpse
+
+```{r}
+glimpse(hsb2)
+```
+
+## Count (and pipes)
+
+```{r}
+hsb2 %>% 
+  count(schtyp)
+```
+
+## Filter rows
+
+```{r}
+hsb2_public <- hsb2 %>%
+  filter(schtyp == "public")
+glimpse(hsb2_public)
+```
+
+## Count filtered data frame
+
+```{r}
+hsb2_public %>%
+  count(schtyp)
+```
+
+## Making new variables with `mutate`
+
+```{r}
+avg_read <- mean(hsb2$read)
+hsb2 <- hsb2 %>%
+  mutate(read_cat = if_else(read < avg_read,
+                            "below average",
+                            "at or above average")
+         )
+hsb2
+```
+
+## Make scatterplots
+
+```{r}
+ggplot(data = hsb2, aes(x = science, y = math)) + 
+  geom_point()
+```
+
+## Group by color
+
+```{r}
+ggplot(data = hsb2, aes(x = science, y = math, color = prog)) +
+  geom_point()
+```
+
+
 # RStudio
+
+Look for an announcement later today on Canvas.
 
