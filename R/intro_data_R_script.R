@@ -54,3 +54,5 @@ ggplot(data = hsb2, aes(x = science, y = math, color = prog)) +
 ggplot(email50, aes(x = num_char, y = exclaim_mess, color = spam)) +
   geom_point()
 
+ggplot(email, aes(x = num_char, y = exclaim_mess, color = spam)) +
+  geom_point()
