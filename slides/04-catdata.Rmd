@@ -23,6 +23,10 @@ knitr::opts_chunk$set(comment = NA)
 options(width = 100)
 ```
 
+# MA-005 Catalog Description
+
+> MA 005 Introduction to Statistics (4) Prerequisite: Admissions mathematics requirement. A truly liberally educated person must have a basic knowledge of statistics, as its use permeates society. This course provides that grounding. Topics include exploratory data analysis, correlation, hypothesis testing, and regression. Graphs that model certain phenomena such as the normal, t, and chi-square distributions are set in an applied context. Non-parametric tests, such as the goodness-of-fit and Mann-Whitney, are also explored. The course involves *extensive use of statistical software.*
+
 # Overview
 
 - 4 Exploring categorical data
@@ -72,19 +76,21 @@ glimpse(loans)
 
 A **contingency table** is a table that summarizes the data for two categorical variables.
 
-
-
 ```{r echo = FALSE}
 ct <- table(loans$application_type, loans$homeownership)
 addmargins(ct) %>% kbl()
 ```
+
+<br>
+
+- `homeownership`: levels: rent, mortgage, own. What is the homeownership status of the loan applicant's residence?
+- `application_type` levels: joint, individual. Is the loan application filed jointly or individually?
 
 ## Bar Plots
 
 - A *bar plot* can describe a single categorical variable.
 
 ## {data-background-image="https://openintro-ims.netlify.app/04-explore-categorical_files/figure-html/loan-homeownership-bar-plot-1.png" data-background-size="contain"}
-
 
 
 # 4.2 Visualizing two categorical variables
@@ -161,7 +167,125 @@ Answer the following with phrases of the form "the proportion of ____ that are _
 
 
 # 4.4 Pie charts
+
+Rules for the use of pie charts:
+
+>1. Don't use pie charts.
+>2. The only thing worse than a pie chart, is multiple pie charts.
+>3. Sometimes, people use pie charts.
+
+## {data-background-image="https://openintro-ims.netlify.app/04-explore-categorical_files/figure-html/loan-homeownership-pie-chart-1.png" data-background-size="contain"}
+
+## {data-background-image="https://openintro-ims.netlify.app/04-explore-categorical_files/figure-html/loan-grade-pie-chart-1.png" data-background-size="contain"}
+
+
+
 # 4.5 Waffle charts
+
+Waffle charts are a slight improvement over pie charts.
+
+## {data-background-image="https://openintro-ims.netlify.app/04-explore-categorical_files/figure-html/loan-waffle-1.png" data-background-size="contain"}
+
 # 4.6 Comparing numerical data across groups
 
+- *Explanatory variable:* categorical
+- *Response variable:* numeric
 
+## Example: teaching evaluations
+
+Do men get higher teaching evaluations than women?
+
+```{r}
+evals %>%
+  group_by(gender) %>%
+  summarize(ave_eval = mean(score))
+```
+
+## Side-by-side Boxplots
+
+```{r, fig.width=5, fig.height=4, fig.align='center'}
+evals %>%
+  ggplot(aes(x = gender, y = score)) +
+  geom_boxplot()
+```
+
+
+## Side-by-side Boxplots (horizontal)
+
+```{r, fig.width=5, fig.height=4, fig.align='center'}
+evals %>%
+  ggplot(aes(x = score, y = gender)) +
+  geom_boxplot()
+```
+
+## Histograms
+
+```{r, fig.width=5, fig.height=4, fig.align='center', message=FALSE}
+evals %>%
+  ggplot(aes(x = score, fill = gender)) +
+  geom_histogram()
+```
+
+
+## Dodged Histograms
+
+```{r, fig.width=5, fig.height=4, fig.align='center', message=FALSE}
+evals %>%
+  ggplot(aes(x = score, fill = gender)) +
+  geom_histogram(position = "dodge")
+```
+
+
+## Density Plots
+
+```{r, fig.width=5, fig.height=4, fig.align='center', message=FALSE}
+evals %>%
+  ggplot(aes(x = score, fill = gender)) +
+  geom_density()
+```
+
+
+## Density Plots
+
+```{r, fig.width=5, fig.height=4, fig.align='center', message=FALSE}
+evals %>%
+  ggplot(aes(x = score, fill = gender)) +
+  geom_density(alpha = 0.3)
+```
+
+
+## Ridge Plots
+
+```{r, fig.width=5, fig.height=3.5, fig.align='center', message=FALSE}
+library(ggridges)
+evals %>%
+  ggplot(aes(x = score, y = gender, fill = gender)) +
+  geom_density_ridges(alpha = 0.3)
+```
+
+# Group Exercise
+
+## Black Lives Matter
+
+A Washington Post-Schar School poll conducted in the United States in June 2020, among a random national sample of 1,006 adults, asked respondents whether they support or oppose protests following George Floyd’s killing that have taken place in cities across the US. The survey also collected information on the age of the respondents. (Washington Post 2020)
+
+1. What are the observational units?
+2. What are the variables recorded and what are their types?
+3. Is this an experiment or an observational study?
+4. Can the conclusions based on this data be generalized to a larger population? Why/why not?
+
+## {data-background-image="https://openintro-ims.netlify.app/04-explore-categorical_files/figure-html/unnamed-chunk-14-1.png" data-background-size="contain"}
+
+## Association?
+
+<div class = "column-left">
+```{r, echo=FALSE, out.width = '100%'}
+knitr::include_graphics("https://openintro-ims.netlify.app/04-explore-categorical_files/figure-html/unnamed-chunk-14-1.png")
+```
+</div>
+
+<div class = "column-right">
+5. Based on the stacked bar plot, do views on the protests and age appear to be associated? Explain.
+6. Which is the explanatory variable, and which is the response?
+7. Come up with a possible confounding variable that explains this association.
+</div>
