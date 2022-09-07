@@ -1,0 +1,167 @@
+---
+title: "Chapter 4: Exploring Categorical Data"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+```
+
+# Overview
+
+- 4 Exploring categorical data
+    - 4.1 Contingency tables and bar plots
+    - 4.2 Visualizing two categorical variables
+        - 4.2.1 Bar plots with two variables
+        - 4.2.2 Mosaic plots
+    - 4.3 Row and column proportions
+    - 4.4 Pie charts
+    - 4.5 Waffle charts
+    - 4.6 Comparing numerical data across groups
+
+# Exploring Data
+
+Explore *categorical* data using:
+
+- Summary statistics
+- Visualizations
+
+(All graphs made using R.)
+
+**Key Point:** How can we visualize the relationships between *multiple* variables?
+
+# 4.1 Contingency tables and bar plots
+
+## Loans data set
+
+```{r, message = FALSE, include = FALSE}
+library(openintro)
+library(tidyverse)
+library(kableExtra)
+loans <- loans_full_schema %>%
+  mutate(application_type = as.character(application_type)) %>%
+  filter(application_type != "") %>%
+  mutate(
+    homeownership    = tolower(homeownership), 
+    homeownership    = fct_relevel(homeownership, "rent", "mortgage", "own"), 
+    application_type = fct_relevel(application_type, "joint", "individual")
+    ) 
+```
+
+```{r}
+glimpse(loans)
+```
+
+## Contingency Table
+
+A **contingency table** is a table that summarizes the data for two categorical variables.
+
+
+
+```{r echo = FALSE}
+ct <- table(loans$application_type, loans$homeownership)
+addmargins(ct) %>% kbl()
+```
+
+## Bar Plots
+
+- A *bar plot* can describe a single categorical variable.
+
+## {data-background-image="https://openintro-ims.netlify.app/04-explore-categorical_files/figure-html/loan-homeownership-bar-plot-1.png" data-background-size="contain"}
+
+
+
+# 4.2 Visualizing two categorical variables
+
+```{r echo = FALSE}
+ct <- table(loans$application_type, loans$homeownership)
+addmargins(ct) %>% kbl()
+```
+
+##  4.2.1 Bar plots with two variables
+
+To see the relationship between *two* categorical variables, you can use *stacked*, *dodged*, or *standardized* bar plots.
+
+## {data-background-image="https://openintro-ims.netlify.app/04-explore-categorical_files/figure-html/loan-homeownership-app-type-bar-plot-1.png" data-background-size="contain"}
+
+##  4.2.2 Mosaic plots
+
+A *mosaic plot* is like a standardized bar plot, but with widths that vary according to group size.
+
+. . .
+
+**General Principle:**
+
+- The *explanatory* variable goes on the horizontal axis.
+- The *response* variable goes on the vertical axis.
+
+## {data-background-image="https://openintro-ims.netlify.app/04-explore-categorical_files/figure-html/loan-homeownership-type-mosaic-plot-1.png" data-background-size="contain"}
+
+## {data-background-image="https://openintro-ims.netlify.app/04-explore-categorical_files/figure-html/loan-app-type-mosaic-plot-1.png" data-background-size="contain"}
+
+# 4.3 Row and column proportions
+
+## Row proportions
+
+We can divide each row by the row total to obtain *row proportions*.
+
+```{r echo = FALSE}
+addmargins(prop.table(ct, margin = 1), margin = 2) %>% kbl()
+```
+
+. . . 
+
+Similarly, divide each column by the column total to obtain *column proportions*.
+
+```{r echo = FALSE}
+addmargins(prop.table(ct, margin = 2), margin = 1) %>% kbl()
+```
+
+## Group Activity
+
+<div class = "column-left">
+```{r echo = FALSE}
+round(addmargins(prop.table(ct, margin = 1), margin = 2), 3) %>% kbl()
+```
+
+<br>
+
+```{r echo = FALSE}
+round(addmargins(prop.table(ct, margin = 2), margin = 1), 3) %>%  kbl()
+```
+</div>
+
+<div class = "column-right">
+Answer the following with phrases of the form "the proportion of ____ that are ____."
+
+1. What does 0.451 represent in the top table? 
+2. What does 0.802 represent in the bottom table?
+3. What does 0.122 represent in the top table?
+4. What does 0.135 represent in the bottom table?
+
+</div>
+
+
+
+
+# 4.4 Pie charts
+# 4.5 Waffle charts
+# 4.6 Comparing numerical data across groups
+
+
