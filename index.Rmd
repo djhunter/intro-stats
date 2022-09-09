@@ -43,11 +43,13 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 3. [Study Design](slides/02-studydesign.html), 9/2
 4. [Getting Started with Data in R](slides/03-intro_data_R.html), 9/5
 5. [Exploring Categorical Data](slides/04-catdata.html), 9/7
+6. [Exploring Numerical Data](slides/05-numdata.html), 9/9
 
 # Other Resources
 
 - [Syllabus](syllabus/ma005hunterF22.pdf) (PDF)
 - [Textbook Website](https://openintro-ims.netlify.app/)
+- [How to install R and RStudio](https://westmont.instructure.com/courses/8503/discussion_topics/44046)
 
 All of the pages and slides on this site were authored in RMarkdown.  The source code is available on GitHub: https://github.com/djhunter/intro-stats
 

@@ -21,20 +21,22 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(comment = NA)
 options(width = 100)
+library(kableExtra)
 ```
 
 # Overview
 
-Chapter 5: Exploring numerical data
-
-- 5.1 Scatterplots for paired data
-- 5.2 Dot plots and the mean
-- 5.3 Histograms and shape
-- 5.4 Variance and standard deviation
-- 5.5 Box plots, quartiles, and the median
-- 5.6 Robust statistics
-- 5.7 Transforming data
-- 5.8 Mapping data
+- Reminder: Install RStudio
+    - [Updated instructions on Canvas](https://westmont.instructure.com/courses/8503/discussion_topics/44046)
+- Chapter 5: Exploring numerical data
+    - 5.1 Scatterplots for paired data
+    - 5.2 Dot plots and the mean
+    - 5.3 Histograms and shape
+    - 5.4 Variance and standard deviation
+    - 5.5 Box plots, quartiles, and the median
+    - 5.6 Robust statistics
+    - ~~5.7 Transforming data~~
+    - ~~5.8 Mapping data~~
 
 # 5.1 Scatterplots for paired data
 
@@ -47,6 +49,10 @@ glimpse(loan50)
 ```
 
 ## Scatterplot of amount vs. income
+
+```{r, include=FALSE}
+theme_set(theme_bw())
+```
 
 ```{r, fig.width=6, fig.height=3.8, fig.align='center'}
 loan50 %>%
@@ -116,18 +122,249 @@ mean(loan50$interest_rate)
 
 1. In the dot plot below, pretend that the dots are all physical objects (e.g., weights), and that the horizontal axis is a plank of wood. Where on the plank of wood would you place a support (i.e., fulcrum) so that the whole structure will balance? Everyone should make a guess, then *record the mean* of the guesses in your group.
 
-```{r, fig.width=9, fig.height=3.4, fig.align='center', message = FALSE, warning=FALSE, echo = FALSE}
+```{r, fig.width=9, fig.height=3.4, fig.align='center', message = FALSE, warning=FALSE, echo=FALSE}
 loan50 %>%
   ggplot(aes(x = interest_rate)) +
   geom_dotplot() + 
   scale_x_continuous(breaks = (1:30))
 ```
 
-
-
 # 5.3 Histograms and shape
+
+## Histograms
+
+- A **histogram** is a bar plot where each bar shows the number of values that fall in its interval. 
+- Like dot plots, histograms show how a variable is distributed.
+
+## Histogram of interest rate {data-transition="fade"}
+
+```{r, fig.width=6, fig.height=3.8, fig.align='center', message = FALSE, warning=FALSE}
+loan50 %>%
+  ggplot(aes(x = interest_rate)) +
+  geom_histogram()
+```
+
+## Histogram of interest rate {data-transition="fade"}
+
+```{r, fig.width=6, fig.height=3.8, fig.align='center', message = FALSE, warning=FALSE}
+loan50 %>%
+  ggplot(aes(x = interest_rate)) +
+  geom_histogram(binwidth = 3)
+```
+
+## Density plot of interest rate {data-transition="fade"}
+
+```{r, fig.width=6, fig.height=3.8, fig.align='center', message = FALSE, warning=FALSE}
+loan50 %>%
+  ggplot(aes(x = interest_rate)) +
+  geom_density()
+```
+
+## Density plot of interest rate {data-transition="fade"}
+
+```{r, fig.width=6, fig.height=3.8, fig.align='center', message = FALSE, warning=FALSE}
+loan50 %>%
+  ggplot(aes(x = interest_rate)) +
+  geom_density(fill = "purple", alpha = 0.5)
+```
+
+## Skew
+
+<div class = "column-left">
+This density plot has a longer *tail* on the right.
+
+- If a distribution has a longer tail on the right, it is called **skewed right**.
+- If a distribution has a longer tail on the left, it is called **skewed left**.
+- It the two tails are the same, the distribution is **symmetric**.
+</div>
+
+<div class = "column-right">
+```{r, message = FALSE, warning=FALSE, echo = FALSE, fig.width=5, fig.height=3}
+loan50 %>%
+  ggplot(aes(x = interest_rate)) +
+  geom_density(fill = "purple", alpha = 0.5)
+```
+</div>
+
+## Group Discussion
+
+<div class = "column-left">
+1. Why would interest rates be skewed right? What sort of loans would be in the right tail? What sort of borrowers would take out such a loan?
+
+2. What is a range of interest rates for the majority of loans in this sample?
+</div>
+
+<div class = "column-right">
+```{r, message = FALSE, warning=FALSE, echo = FALSE, fig.width=5, fig.height=3}
+loan50 %>%
+  ggplot(aes(x = interest_rate)) +
+  geom_density(fill = "purple", alpha = 0.5)
+```
+</div>
+
 # 5.4 Variance and standard deviation
+
+## Sample Variance
+
+- The **variance** of a sample is the average squared distance from the mean.
+- The **sample standard deviation** is the square root of the sample variance.
+
+$$
+s = \sqrt{\frac{\sum_{i=1}^n (x_i - \bar{x})^2}{n-1}}
+$$
+
+Standard deviation gives a measure of *how spread out* the data are.
+
+- We use $s$ for the sample standard deviation, so $s^2$ is the sample variance.
+- We use $\sigma$ (the Greek letter sigma) for the population standard deviation, so $\sigma^2$ is the population variance.
+
+## Big and small standard deviation
+
+```{r, include=FALSE}
+set.seed(2341)
+bigsmall <- tibble(x1 = rnorm(50, mean = 5, sd= 0.5), x2 = rnorm(50, mean = 5, sd = 1.5))
+```
+
+<div class = "column-left">
+Smaller standard deviation
+
+```{r, message = FALSE, warning=FALSE, echo = FALSE, fig.width=5, fig.height=3}
+bigsmall %>%
+  ggplot(aes(x = x1)) +
+  geom_density(fill = "purple", alpha = 0.5) +
+  xlim(0,10)
+```
+</div>
+
+<div class = "column-right">
+Bigger standard deviation
+
+```{r, message = FALSE, warning=FALSE, echo = FALSE, fig.width=5, fig.height=3}
+bigsmall %>%
+  ggplot(aes(x = x2)) +
+  geom_density(fill = "purple", alpha = 0.5) +
+  xlim(0,10)
+```
+
+</div>
+
+
+
+
 # 5.5 Box plots, quartiles, and the median
+
+## Box Plots
+
+A *box plot* shows a box that covers the range of the middle 50% of the data.
+
+- The edges of the box are the 25th and 75th percentiles (i.e., first and third *quartiles*).
+    - The distance between these edges is the *inter-quartile range* (IQR).
+- The line in the middle of the box is the median (50th percentile).
+- The whiskers show the range of the data.
+
+## Box plots and variability {data-transition="fade"}
+
+<div class = "column-left">
+Smaller standard deviation
+
+```{r, message = FALSE, warning=FALSE, echo = FALSE, fig.width=5, fig.height=3}
+bigsmall %>%
+  ggplot(aes(x = x1)) +
+  geom_boxplot() +
+  xlim(0,10)
+```
+</div>
+
+<div class = "column-right">
+Bigger standard deviation
+
+```{r, message = FALSE, warning=FALSE, echo = FALSE, fig.width=5, fig.height=3}
+bigsmall %>%
+  ggplot(aes(x = x2)) +
+  geom_boxplot() +
+  xlim(0,10)
+```
+</div>
+
+## Box plots and variability {data-transition="fade"}
+
+<div class = "column-left">
+Smaller standard deviation
+
+```{r, message = FALSE, warning=FALSE, echo = FALSE, fig.width=5, fig.height=3}
+bigsmall %>%
+  ggplot(aes(x = x1)) +
+  geom_boxplot() +
+  geom_density(fill = "purple", alpha = 0.2) +
+  xlim(0,10)
+```
+</div>
+
+<div class = "column-right">
+Bigger standard deviation
+
+```{r, message = FALSE, warning=FALSE, echo = FALSE, fig.width=5, fig.height=3}
+bigsmall %>%
+  ggplot(aes(x = x2)) +
+  geom_boxplot() +
+  geom_density(fill = "purple", alpha = 0.2) +
+  xlim(0,10) 
+```
+</div>
+
 # 5.6 Robust statistics
-# 5.7 Transforming data
-# 5.8 Mapping data
+
+## Robustness
+
+A statistic is called *robust* if it's value stays more-or-less the same when one or two data points change.
+
+## {data-background-image="https://openintro-ims.netlify.app/05-explore-numerical_files/figure-html/loan-int-rate-robust-ex-1.png" data-background-size="contain"}
+
+## Robust or not?
+
+```{r robustOrNotTable, echo=FALSE}
+loan50_original <- loan50 %>% 
+  select(interest_rate) %>% 
+  mutate(
+    mark = if_else(interest_rate == 26.30, TRUE, FALSE)
+    )
+loan50_15 <- loan50 %>% 
+  select(interest_rate) %>% 
+  mutate(
+    mark = if_else(interest_rate == 26.30, TRUE, FALSE),
+    interest_rate = if_else(interest_rate == 26.30, 15, interest_rate)
+    )
+loan50_35 <- loan50 %>% 
+  select(interest_rate) %>% 
+  mutate(
+    mark = if_else(interest_rate == 26.30, TRUE, FALSE),
+    interest_rate = if_else(interest_rate == 26.30, 35, interest_rate)
+    )     
+
+loan50_robust_check <- bind_rows(
+  loan50_original %>% mutate(Scenario = "Original data"),
+  loan50_15 %>% mutate(Scenario = "Move 26.3% to 15%"),
+  loan50_35 %>% mutate(Scenario = "Move 26.3% to 35%")
+) %>%
+  mutate(Scenario = fct_relevel(Scenario, "Original data", "Move 26.3% to 15%", "Move 26.3% to 35%"))
+loan50_robust_check %>%
+  group_by(Scenario) %>%
+  summarise(
+    Median = median(interest_rate),
+    IQR = IQR(interest_rate),
+    Mean = mean(interest_rate), 
+    SD = sd(interest_rate)
+    ) %>%
+  kbl()
+```
+
+<br>
+
+- The *median* (i.e., the middle value) and the *IQR* are robust.
+- The *mean* and *standard deviation* are not robust.
+
+## Group Discussion
+
+1. When realtors report the housing prices in an area, they usually report the median, rather than the mean. Why do you think they do that?
+2. When professors compute final grades for a course, they usually compute the mean of all your test scores, rather than the median. Why do you think they do that?
+
