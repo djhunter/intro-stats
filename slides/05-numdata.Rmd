@@ -1,0 +1,133 @@
+---
+title: "Chapter 5: Exploring Numerical Data"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+```
+
+# Overview
+
+Chapter 5: Exploring numerical data
+
+- 5.1 Scatterplots for paired data
+- 5.2 Dot plots and the mean
+- 5.3 Histograms and shape
+- 5.4 Variance and standard deviation
+- 5.5 Box plots, quartiles, and the median
+- 5.6 Robust statistics
+- 5.7 Transforming data
+- 5.8 Mapping data
+
+# 5.1 Scatterplots for paired data
+
+## Loan Data
+
+```{r, message=FALSE}
+library(tidyverse)
+library(openintro)
+glimpse(loan50)
+```
+
+## Scatterplot of amount vs. income
+
+```{r, fig.width=6, fig.height=3.8, fig.align='center'}
+loan50 %>%
+  ggplot(aes(x = total_income, y = loan_amount)) +
+  geom_point()
+```
+
+## County Data
+
+```{r, message=FALSE}
+glimpse(county)
+```
+
+## Scatterplot of income vs poverty rate
+
+```{r, fig.width=6, fig.height=3.5, fig.align='center', message = FALSE, warning=FALSE}
+county %>%
+  ggplot(aes(x = poverty, y = median_hh_income)) +
+  geom_point(alpha = 0.2) +
+  geom_smooth()
+```
+
+
+
+# 5.2 Dot plots and the mean
+
+## One Quantitative Variable
+
+A **dot plot** is a quick way to understand the distribution of a single quantitative variable.
+
+```{r}
+loan50$interest_rate
+```
+
+## Dot Plot of interest rate
+
+```{r, fig.width=6, fig.height=3.8, fig.align='center', message = FALSE, warning=FALSE}
+loan50 %>%
+  ggplot(aes(x = interest_rate)) +
+  geom_dotplot()
+```
+
+## Sample Mean
+
+The **sample mean** $\bar{x}$ is the sum of the values divided by the number of observations.
+
+- The sample mean is a *statistic*.
+
+$$
+\bar{x} = \frac{x_1 + x_2 + \cdots + x_n}{n}
+$$
+
+```{r}
+mean(loan50$interest_rate)
+```
+
+## Population Mean
+
+- The `loan50` data set is a *sample* from a much larger *population* of loans.
+- The **population mean** is the average of all values in the population.
+    - The population mean is a *parameter*.
+    - Parameters are generally unknown, but we estimate them with statistics.
+        - Our best guess *point estimate* for the population mean interest rate is the sample mean (`r mean(loan50$interest_rate)`).
+    - We use the symbol $\mu$ (the Greek letter mu) for the population mean. 
+    
+## Group Exercise
+
+1. In the dot plot below, pretend that the dots are all physical objects (e.g., weights), and that the horizontal axis is a plank of wood. Where on the plank of wood would you place a support (i.e., fulcrum) so that the whole structure will balance? Everyone should make a guess, then *record the mean* of the guesses in your group.
+
+```{r, fig.width=9, fig.height=3.4, fig.align='center', message = FALSE, warning=FALSE, echo = FALSE}
+loan50 %>%
+  ggplot(aes(x = interest_rate)) +
+  geom_dotplot() + 
+  scale_x_continuous(breaks = (1:30))
+```
+
+
+
+# 5.3 Histograms and shape
+# 5.4 Variance and standard deviation
+# 5.5 Box plots, quartiles, and the median
+# 5.6 Robust statistics
+# 5.7 Transforming data
+# 5.8 Mapping data
