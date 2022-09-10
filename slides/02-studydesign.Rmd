@@ -143,13 +143,14 @@ In one 2009 study, a team of researchers recruited 76 volunteer subjects and div
 
 5. Can we generalize the conclusion to the population at large?
 
-# Group Discussion
-
-The 2008-9 Oklahoma City Thunder had a win-loss record that was actually worse for home games with a sell-out crowd (3 wins and 15 losses) than for home games without a sell-out crowd (12 wins and 11 losses). 
-
-1. Consider the 41 home games as the observational units. What two variables are recorded on these observational units? Which is explanatory, and which is response?
-
-2. Is this an experiment or an observational study?
-
-3. Is the presence of a sell-out crowd causing the team to lose more often? Come up with a plausible *confounding variable* that explains the association.
-
+---
+#  # Group Discussion
+#  
+#  The 2008-9 Oklahoma City Thunder had a win-loss record that was actually worse for home games with a sell-out crowd (3 wins and 15 losses) than for home games without a sell-out crowd (12 wins and 11 losses). 
+#  
+#  1. Consider the 41 home games as the observational units. What two variables are recorded on these observational units? Which is explanatory, and which is response?
+#  
+#  2. Is this an experiment or an observational study?
+#  
+#  3. Is the presence of a sell-out crowd causing the team to lose more often? Come up with a plausible *confounding variable* that explains the association.
+---
