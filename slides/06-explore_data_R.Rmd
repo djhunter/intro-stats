@@ -1,0 +1,60 @@
+---
+title: "Chapter 6: Exploratory Data Analysis in R"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(qrencoder)
+library(tidyverse)
+library(openintro)
+```
+
+# Overview
+
+
+- Graphical representation of two categorical variables
+    - Side-by-side bar charts
+    - Stacked bar charts
+    - To normalize or not to normalize
+- Tabular representation of two categorical variables
+    - Computation of margins
+    - Counts vs proportions
+    - Law of total probability
+- Graphical representation of one categorical variable
+    - Marginal vs conditional
+    - Bar chart
+
+# Interactive Tutorials 
+
+## Lesson 1: Visualizing categorical data
+
+Everyone with a screen (laptop, tablet, or phone), especially the **Operator**, can follow along. Open the first tutorial: 
+
+https://openintro.shinyapps.io/ims-02-explore-01/
+
+```{r, echo = FALSE, fig.height=4}
+image(qrencode_raster("https://openintro.shinyapps.io/ims-02-explore-01/"), 
+      asp=1, col=c("white", "black"), axes=FALSE, 
+      xlab="", ylab="")
+```
+
+## Group Activity
+
+The **Recorder** should record the answers to the multiple choice questions.
