@@ -45,6 +45,7 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 5. [Exploring Categorical Data](slides/04-catdata.html), 9/7
 6. [Exploring Numerical Data](slides/05-numdata.html), 9/9
 7. [Exploratory Data Analysis in R](slides/06-explore_data_R.html), 9/12
+8. [Review for Test #1](slides/07-test1review.html), 9/14
 
 # Other Resources
 

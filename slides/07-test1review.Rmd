@@ -1,0 +1,62 @@
+---
+title: "Review for Test #1"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(qrencoder)
+library(tidyverse)
+library(openintro)
+```
+
+# General Advice 
+
+See the [study guide](https://westmont.instructure.com/courses/8503/files/587724) on Canvas.
+
+- Review the slides and your class notes. 
+    - As you review, follow along with the *textbook*.
+    - As you review, keep a list of key terms and concepts.
+    - Make sure you can answer all the *group activity questions*.
+- Review your homework, keeping in mind that these have been graded very leniently and not all of your answers will be correct, even if you didn't have points deducted.
+- Do some of the *odd-numbered problems* in the textbook.
+    - The answers to the odd-numbered questions are in the back of the book.
+- Study the *Chapter Review* sections at the end of each chapter.
+
+# Review Problems
+
+## Comments on Homework Problems
+
+https://openintro-ims.netlify.app/
+
+```{r, echo = FALSE, fig.height=4}
+image(qrencode_raster("https://openintro-ims.netlify.app/"), 
+      asp=1, col=c("white", "black"), axes=FALSE, 
+      xlab="", ylab="")
+```
+
+## Group Activity
+
+- Chapter 1, Exercise 7
+- Chapter 2, Exercises 11, 15
+- Chapter 4, Exercise 5
+- Chapter 5, Exercises 1, 3, 23
+
+Recorder and Presenter may have some assigned tasks.
+
