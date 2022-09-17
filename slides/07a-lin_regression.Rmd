@@ -47,13 +47,123 @@ library(openintro)
 
 ## 7.1.1 Fitting a line to data
 
+Suppose you want to by $x$ shares of TGT stock.
+- Your broker charges you $5 for the transaction.
+- TGT is currently selling for $64.96 per share.
+
+$$
+y = 5 + 64.96 x.
+$$
+
+## {data-background-image="https://openintro-ims.netlify.app/07-model-slr_files/figure-html/perfLinearModel-1.png" data-background-size="contain"}
+
+## Equations of Lines
+
+A *linear* relationship between an explanatory variable $x$ and a response variable $y$ can be estimated by a *regression line*:
+
+$$
+\hat{y} = b_0 + b_1 x
+$$
+
+- The *slope* of this line is $b_1$.
+- The *y-intercept* of this line is $b_0$.
+
+We use the symbol $\hat{y}$ to emphasize that this is a *predicted* value of $y$.
+
+## {data-background-image="https://openintro-ims.netlify.app/images/brushtail-possum/brushtail-possum.jpg" data-background-size="contain"}
+
 ## 7.1.2 Using linear regression to predict possum head lengths
+
+Researchers captured 104 of brushtail possums and took body measurements before releasing the animals back into the wild. We consider two of these measurements: the *total length* of each possum, from head to tail, and the *length of each possum's head*.
+
+## {data-background-image="https://openintro-ims.netlify.app/07-model-slr_files/figure-html/scattHeadLTotalL-1.png" data-background-size="contain"}
+
+## {data-background-image="https://openintro-ims.netlify.app/07-model-slr_files/figure-html/scattHeadLTotalLLine-1.png" data-background-size="contain"}
+
+## Group Exercise
+
+The equation of the regression line for predicting Head Length from Total Length is $\hat{y} = 41 + 0.59x$. 
+
+1. Use the regression model to predict the Head Length of a possum whose Total Length is 76.0 cm.
+
+2. One of the possums in the sample had a Total Length of 76.0 cm and a Head Length of 85.84 mm. Did the model prediction overestimate or underestimate the Head Length? By how much?
 
 ## 7.1.3 Residuals
 
+*Residuals* are the leftover variation in the data after accounting for the model fit.
+
+- Each observation (i.e., point) has a residual.
+- The residual of a point is the vertical distance between the point and the regression line.
+    - Data = Fit + Residual
+    - Residual = Data - Fit
+    - In symbols, the residual of the $i$th observation $(x_i, y_i)$ is $e_i = y_i - \hat{y}_i$.
+
+## {data-background-image="https://openintro-ims.netlify.app/07-model-slr_files/figure-html/scattHeadLTotalLLine-highlighted-1.png" data-background-size="contain"}
+
+## {data-background-image="https://openintro-ims.netlify.app/07-model-slr_files/figure-html/scattHeadLTotalLResidualPlot-1.png" data-background-size="contain"}
+
+## Group Exercise
+
+Everyone (especially the Operator): open the following applet:
+
+https://www.rossmanchance.com/applets/2021/regshuffle/regshuffle.htm
+
+```{r, echo = FALSE, fig.height=4}
+image(qrencode_raster("https://www.rossmanchance.com/applets/2021/regshuffle/regshuffle.htm"), 
+      asp=1, col=c("white", "black"), axes=FALSE, 
+      xlab="", ylab="")
+```
+
+## Group Exercise
+
+1. Click the *Show Regression Line* checkbox and record the equation of the regression line.
+
+2. Click *Show Residuals*. Find the **largest negative** residual and click on its point in the scatterplot. Record the value of the residual.
+
+3. Delete this row by clicking the *Delete* button that appeared when you did part 2. How did this affect the slope of the regression line?
+
 ## 7.1.4 Describing linear relationships with correlation
 
+The *correlation coefficient* $r$ describes the strength and direction of a linear relationship.
+ - $r$ is a number between -1 and 1.
+ - Everyone uses software to calculate $r$.
+ - The sign of $r$ tells you the direction of the relationship.
+ 
+| range of $r$ | Strength | Meaning |
+| ------------ | -------- | ------- |
+| $0.7 \leq \lvert r \rvert \leq 1$ | Strong | Points almost form a line. |
+| $0.3 \leq \lvert r \rvert \leq 0.7$ | Moderate | Clear pattern, but bloblike. |
+| $0.1 \leq \lvert r \rvert \leq 0.3$ | Weak | Slight pattern. |
+| $0 \leq \lvert r \rvert \leq 0.1$ | None | No discernible trend. |
+
+ 
+## {data-background-image="https://openintro-ims.netlify.app/07-model-slr_files/figure-html/crop-yields-af-1.png" data-background-size="contain"}
+
+A: $r = -0.54$
+
+B: $r = 0.16$
+
+C: $r = 0.46$
+
+D: $r = -0.44$
+
+E: $r = 0.69$
+
+F: $r = 0.85$
+
+## Group Exercise
+
+Return to the correlation applet of the previous group exercise.
+
+1. Reload the applet to get it back to the original state.
+
+2. Check on *Show Regression Line* and *Correlation coefficient*. Record the value of $r$.
+
+3. Now try deleting points from the scatterplot and see if you can get the value of $r$ to be greater than 0.85. How many points did you have to delete?
+
 # 7.2 Least squares regression
+
+## {data-background-image="" data-background-size="contain"}
 
 ## 7.2.1 Gift aid for freshman at Elmhurst College
 
@@ -68,14 +178,4 @@ library(openintro)
 ## 7.2.6 Categorical predictors with two levels
 
 # 7.3 Outliers in linear regression
-
-## Comments on Homework Problems
-
-https://openintro-ims.netlify.app/
-
-```{r, echo = FALSE, fig.height=4}
-image(qrencode_raster("https://openintro-ims.netlify.app/"), 
-      asp=1, col=c("white", "black"), axes=FALSE, 
-      xlab="", ylab="")
-```
 
