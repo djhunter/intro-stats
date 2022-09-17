@@ -1,0 +1,205 @@
+---
+title: "Section 4.1"
+date: "October 2, 2019"
+output: 
+  word_document:
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    transition: slide
+    css: slidesdjh.css
+    center: true
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+
+# Chapter 4
+
+## Big idea of chapter 4
+
+* Previously research questions focused on a single statistic.
+    + What proportion of the time did Harley choose the right bowl?  
+    + What is the average hours slept by Westmont Students? 
+
+* We will now start to focus on research questions comparing two groups.  
+    + Are smokers more likely than nonsmokers to have lung cancer? 
+    + Are children who used night lights as infants more likely to need glasses than those who didn’t use night lights?
+    
+# 4.1: Association and Confounding
+
+## Types of variables
+
+<span style="color:lightgreen">
+When two variables are involved in a study, they are often classified as **explanatory** and **response**.
+</span>
+
+> * Explanatory variable (Independent, Predictor)
+>     + The variable we think is “explaining” the change in the response variable. (Many times, this is the variable the researchers are manipulating.)
+> * Response variable (Dependent)
+>     + The variable we think is being impacted or changed by the explanatory variable.  
+
+## Examples
+
+> * Choose the explanatory and response variable:
+>     + Smoking and lung cancer 
+>     + Heart disease and diet
+>     + Height and weight
+> * <span style="color:yellow">Sometimes there is a clear distinction between explanatory and response variables and sometimes there isn’t.</span>
+
+# Night Lights and Nearsightedness
+
+## Near-sightedness often develops in childhood {data-background="https://images-na.ssl-images-amazon.com/images/I/31vlNtv87GL.jpg"}
+
+>* <span style="color:orchid">Recent studies looked to see if there is an association between near-sightedness and night light use with infants</span>
+>* <span style="color:orchid">Researchers interviewed parents of 479 children who were outpatients in a pediatric ophthalmology clinic</span>
+>* <span style="color:orchid"> Asked whether the child slept with the room light on, with a night light on, or in darkness before age 2</span>
+>* <span style="color:orchid"> Children were also separated into two groups: near-sighted or not near-sighted based on the child’s recent eye examination</span>
+
+##  Night Light Data
+
+```{r, echo=FALSE}
+library(knitr)
+nldata <- data.frame(c(18,154), c(78,154), c(41,34))
+colnames(nldata) <- c("Darkness", "Night Light", "Room Light")
+nldata$Total <- rowSums(nldata)
+nldata[3,] <- colSums(nldata)
+row.names(nldata) <- c("Near-sighted", "Not near-sighted", "Total")
+kable(nldata, caption = "Night Light Data")
+```
+
+<br>
+
+> * This type of table is called a **two-way table** (or "contingency table" or "cross tabulation", or just "crosstab").
+
+##
+
+```{r, echo=FALSE}
+kable(nldata, caption = "Night Light Data")
+kable(nldata / rep(as.numeric(nldata[3,]), each=3), digits=3, caption="Conditional Column Proportions")
+# kable(nldata/nldata$Total, digits= 3, caption="Conditional Row Proportions")
+```
+
+## Association
+
+```{r, echo=FALSE}
+kable(nldata / rep(as.numeric(nldata[3,]), each=3), digits=3, caption="Conditional Column Proportions")
+```
+
+> - Notice that as the light level increases, the percentage of near-sighted children also increases. 
+> - We say there is an **association** between near-sightedness and night lights.
+> - Two variables are **associated** if the values of one variable provide information (help you predict) the values of the other variable.
+
+## Stacked Bar Plots
+
+```{r, echo=FALSE}
+barplot(as.matrix(nldata[1:2,1:3]))
+```
+
+Near sighted is dark gray, not-near sighted is light gray.
+
+## Mosaic Plots
+
+```{r, echo=FALSE}
+nsmatrix <- matrix(c(18,78,41,154,154,34), byrow = TRUE, nrow=2)
+colnames(nsmatrix) <- c("Darkness", "Night Light", "Room Light")
+rownames(nsmatrix) <- c("Near-sighted", "Not near-sighted")
+nstable <- as.table(nsmatrix)
+plot(t(nstable), color=c("purple4","blue"), main="Mosaic Plot of Night Light Data")
+
+```
+
+## Association $\neq$ Causation
+
+- A **confounding variable** is associated to both the explanatory variable and the response variable.
+- We say it is **confounding** because its effects on the response cannot be separated from those of the explanatory variable.
+- Because of this, we can’t draw cause and effect conclusions when confounding variables are present.
+
+
+> - Possession of lighters is associated to lung cancer. (Confounding variable: smoker/nonsmoker)
+> - <span style="color:yellow">(Confounding variable: eyesight of parents) Nearsighted children have nearsighted parents, and nearsighted parents need lit rooms to function.</span>
+
+
+
+
+# Exploration 4.1: Home Court Disadvantage?
+
+## Home Court advantage
+
+- Crowd distraction (0:15)
+- Referee Bias (3:24)   
+
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/BT55zpjT0v4?rel=0&amp;start=15&amp;end=248" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+## Home Court Disadvantage?
+
+The 2008-9 Oklahoma City Thunder had a win-loss record that was actually worse for home games with a sell-out crowd (3 wins and 15 losses) than for home games without a sell-out crowd (12 wins and 11 losses). 
+
+1. Identify the observational units and variables in this study. 
+2. When did the Thunder have a higher winning percentage: in front of a sell-out crowd or a smaller crowd? 
+3. Do the two variables appear to be associated?
+4. Which would you consider the explanatory variable in this study? Which is the response? (That is, what are the roles of these variables in this study?)
+
+## Data in R
+
+```{r}
+okcmatrix <- matrix(c(3,15,12,11), byrow=FALSE, nrow=2)
+rownames(okcmatrix) <- c("Wins", "Losses")
+colnames(okcmatrix) <- c("Sell-out Crowd", "Smaller Crowd")
+okctable <- as.table(okcmatrix)
+okctable
+prop.table(okctable, 2)
+```
+
+## Mosaic Plot of OKC data
+
+```{r, echo=FALSE}
+plot(t(okctable), color=c("cyan", "orange"), main="OKC wins and crowd sizes")
+```
+
+
+## Confounding Variables
+
+<span style="color:orchid">
+A **confounding variable** is a variable that is related both to the explanatory and to the response variable in such a way that its effects on the response variable cannot be separated from the effects of the explanatory variable.
+</span>
+
+5. *Discuss:*  Come up with a plausible confounding variable that would explain why the team would be less likely to win in front of a sell-out crowd than in front of a smaller crowd. **Facilitator:** Get your group to agree on a confounding variable.
+
+## Confounding variable
+
+6. Explain how the variable is confounding--*what is the link between this third variable and the response variable, and what is the link between this third variable and the explanatory variable?* (Hint: Remember that this variable has to be recorded on the observational units: home games for the Thunder.) **Operator:** [Use this form](https://goo.gl/forms/akV1Bu3OlKVXoB1G3) to type up a complete sentence of explanation.
+
+## Crowd size and Opponent records
+
+Of the Thunder's 41 home games, 22 were against teams that won more than half of their games ("strong opponents"). Of these 22 games, 13 were sell-outs. Of the 19 games against "weak opponents"" that won less than half of their games that season, only 5 of those games were sell-outs.
+
+7. **Record** this data in a two-way table. The rows should be labeled *Sell-out Crowd* and *Smaller Crowd*, and the columns should be labeled *Strong opponent* and *Weak opponent*.
+
+8. Compute and **record** the conditional column proportions for your table.
+
+## Crowd size and Opponent records
+
+9. Does there appear to be an association between crowd size and opponent records? How are they associated? Does it make sense that these variables would be associated?
+
+## Win/Loss and Opponent records
+
+When the Thunder played a strong opponent, they won only 4 of 22 games. When they played a weak opponent, the Thunder won 11 of 19 games.
+
+10. **Record** this data in a two-way table. Now the columns should be labeled *Strong opponent* and *Weak opponent*, and the rows should be labeled *Wins* and *Losses*.
+
+11. Compute and **record** the conditional column proportions for your table.
+
+12. Does there appear to be an association between wins/losses and opponent records?
+
+## Explain and summarize
+
+13. Fill in the blanks: When the Thunder played a strong opponent (instead of a weak opponent), they were (more/less) _____ likely to win, and they were (more/less) _____ to have a large crowd. Therefore __________ is a confounding variable that explains the association between __________ and __________. 
+
+

@@ -1,0 +1,249 @@
+---
+title: "Section P.3"
+geometry: left=0.5in, right=0.5in, top=0.8in, bottom=0.4in
+output:
+  word_document:
+  revealjs::revealjs_presentation:
+    center: yes
+    css: slidesdjh.css
+    fig_height: 7
+    fig_width: 14
+    highlight: zenburn
+    transition: slide
+    reveal_options:
+      controls: yes
+      height: 600
+      progress: no
+      width: 1080
+    self_contained: yes
+    theme: black
+date: "August 26, 2019"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(comment = NA)
+```
+
+# Section P.3: Exploring Random Processes
+
+## Objectives
+
+- Get used to working in groups.
+- Learn about probability and random processes.
+- Understand the role of simulations in making decisions about random processes.
+- Go over parts of the course syllabus.
+
+## Group Roles
+
+- **Facilitator:** Helps ensure that the group stays on task, is focused, and that there is room for everyone in the conversation.
+- **Recorder:** Records specific points from the small group's discussion along with findings or answers.
+- **Presenter:** Presents the group's ideas to the rest of the class, on the board or during class discussion.
+- **Operator:** Performs calculations using technology, or completes online responses. (Can be done with a smartphone, tablet, or laptop. If the assigned operator doesn't have one of these devices, feel free to swap roles.)
+
+## Group Process
+
+- Everybody should sign in on the log sheet under the appropriate assigned role. 
+- In addition to the assigned role, each group member should keep a record of the numbered problems in his/her notebook.
+- *Absence Policy:* If you miss class because of an excused absence, you can still get credit for the participation grade by handing in a write-up of the numbered Activity problems on the day you return.
+
+# Exploration P.3: Cars or Goats
+
+## Let's Make a Deal
+
+A popular television game show, *Let's Make a Deal,* from the 1960s and 1970s featured a new car hidden behind one of three doors, selected at random. Behind the other two doors were less appealing prizes (e.g., goats!). When a contestant played the game, he or she was asked to pick one of the three doors. If the contestant picked the correct door, he or she won the car!
+
+<iframe width="374" height="210" src="https://www.youtube-nocookie.com/embed/pvNXm_5kLmo?rel=0&amp;start=1844" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+
+## Probability
+
+1. Suppose you are a contestant on this show.  Intuitively, what do you think is the probability that you win the car (i.e., that the door you pick has the car hidden behind it)?
+
+2. **Facilitator:** Get your group to agree on a one-sentence description of what you think probability means in this context. 
+   - **Recorder:** Write this sentence on the log sheet.
+   - **Presenter:** Write this sentence on the board.
+
+## Simulation 1
+
+3. The red card represents the car, and the two black cards represent goats. The **facilitator** (playing the role of game show host) will shuffle the three cards and then randomly arrange them face down. The **Operator** picks a card and then reveals whether you have won the car or selected a goat. 
+
+Play this game a total of 15 times. **Recorder:** make a table to keep track of whether you win the car (C) or a goat (G) each time:
+
+
+```{r, message=FALSE, warning=FALSE}
+library(huxtable)
+simtable <- matrix(c(1:15, rep(" ",15)), byrow=TRUE, nrow=2)
+rownames(simtable) <- c("Game Number", "Outcome (car or goat)")
+
+ht <- as_hux(simtable, add_rownames=TRUE)
+number_format(ht) <- 0
+ht <- set_all_borders(ht, 2)
+width(ht) <- 1.0
+ht
+```
+
+----
+
+4. In what proportion of these 15 games did you win the car? **Presenter:** Write this proportion on the board.
+
+5. Suppose that you were to play this game 1,000 times. In what proportion of those games would you expect to win the car? Discuss.
+
+## Switch Strategy
+
+Now consider a fun twist that the game show host adds to this game: 
+
+- First, you (the contestant) choose one of the three doors. 
+- Before revealing what’s behind your door, the host will first reveal what's behind a different door that the host knows to be a goat. 
+- Then the host asks whether you prefer to *stay* with (keep) the door you picked originally or *switch* (change) to the remaining door.
+
+## Switch strategy: Make a prediction
+
+6. Prediction: Do you think the probability of winning is different between the "stay" (keep) and "switch" (change) strategies? If so, what do you think the probability of winning with the switch strategy is?  **Facilitator:** See if your group can agree on a single answer: what is the probability of winning with the "switch" strategy?
+
+----
+
+7. Investigate the probability of winning with the "switch" strategy by playing with three cards for 15 games.  This time the **facilitator** should randomly arrange the three cards in his/her hand, making sure that he/she (playing the role of game show host) knows where the car is but the **Operator** does not. The **Operator** picks a card.  Then the **facilitator** reveals *one of the cards known to be a goat but not the card you chose.*  The **operator** then switches his/her choice to the remaining hidden card. Keep track of the outcome (winning a car or goat) for 15 rounds. **Recorder:** make a table:
+
+```{r, message=FALSE, warning=FALSE}
+library(huxtable)
+simtable <- matrix(c(1:15, rep(" ",15)), byrow=TRUE, nrow=2)
+rownames(simtable) <- c("Repetition", "Outcome (car or goat)")
+
+ht <- as_hux(simtable, add_rownames=TRUE)
+number_format(ht) <- 0
+ht <- set_all_borders(ht, 2)
+width(ht) <- 1.0
+ht
+```
+
+----
+
+8. In what proportion of these 15 games did you win the car? Is this more or less than (or the same as) when you stayed with the original door? (Question 3)
+
+## Simulation using applet
+
+9. **Operator:** Use the [Monte Hall applet](http://www.rossmanchance.com/applets/MontyHall/Monty04.html) on the [textbook website](http://www.isi-stats.com/isi/applets.html) to simulate playing this version of the game *10 times with the "stay" strategy.* Record the proportion of wins in these 10 games. Then simulate another 10 games, and record the overall proportion of wins at this point. Keep doing this in multiples of 10 games until you reach 100 games played. 
+
+**Recorder:** Record the overall proportions of wins after each additional multiple of 10 games in a table.
+
+```{r, message=FALSE, warning=FALSE}
+library(huxtable)
+simtable <- matrix(c((1:10)*10, rep(" ",10)), byrow=TRUE, nrow=2)
+rownames(simtable) <- c("Number of Games", "Proportion of Wins")
+
+ht <- as_hux(simtable, add_rownames=TRUE)
+number_format(ht) <- 0
+ht <- set_all_borders(ht, 2)
+width(ht) <- 1.0
+ht
+```
+
+----
+
+10. What do you notice about how the overall proportion of wins changes as you play more games? Do these proportions appear to be approaching some common value?
+
+11. Now keep adding sets of 100 more games played until you reach a total of 1,000 games played. What percentage of the time did you win a car? Is this close to what you predicted for the "stay" strategy in Question 5? 
+
+----
+
+12. The [applet](http://www.rossmanchance.com/applets/MontyHall/Monty04.html) lets you choose either the "Stay" or "Switch" strategy. *Simulate playing 1,000 games with each strategy,* and record the number of times you win/lose with each. **Recorder:** make a table:
+
+```{r, message=FALSE, warning=FALSE}
+library(huxtable)
+simtable <- matrix(c(" ", "Stay Strategy", "Switch Strategy", "Wins (cars)", " ", " ", "Losses (goats)", " ", " ", "Total",1000,1000), byrow=TRUE, nrow=4)
+ht <- as_hux(simtable)
+number_format(ht) <- 0
+ht <- set_all_borders(ht, 2)
+width(ht) <- 0.6
+ht
+```
+
+## Discussion
+
+13. Do you believe that the simulation has been run for enough repetitions to declare one strategy as superior? Which strategy is better? Explain how you can tell.
+
+14. Based on the 1,000 simulated repetitions of playing this game, what is your estimate for the probability of winning the game with the "switch" strategy?
+
+15. How could you use simulation to obtain a better estimate of this probability?
+
+## Probability
+
+16. The probability of winning with the "switch" strategy can be shown mathematically to be $2/3$. (One way to see this is to recognize that with the "switch" strategy you only lose when you had picked the correct door in the first place.) Explain what it means to say that the probability of winning equals $2/3$.
+
+## Extension
+
+17. Suppose that you watch the game show over many years and find that Door 1 hides the car 50% of the time, Door 2 has the car 40% of the time, and Door 3 has the car 10% of the time. What then is your optimal strategy? In other words, which door should you pick initially, and then should you stay or switch? What is your probability of winning with the optimal strategy? 
+
+**Presenter:** Prepare to explain your answer to the class if called upon.
+
+# Assignments and Grading
+
+## Graded work
+
+| Assignment | Format | % of grade | 
+| ---------- | ------ | ---------- |
+| Daily Assignments | WeBWorK | 15% |
+| Exploration Participation | log sheets | 5% |
+| Investigations | RStudio | 15% |
+| Hour Exams | written | 3 @ 15% each |
+| Final Exam | written | 20% |
+
+## WeBWorK
+
+- Log in through Canvas.
+- Answer questions online.
+- Try until you get it right: no penalty for repeated submissions.
+- Assignments are due by the "Reduced Scoring Date" (usually 11:59pm before class).
+- Up to 48 hours after the Reduced Scoring Date, work counts for 75% of its value. After that, 0%.
+
+## Investigations
+
+- Use RStudio to edit an `Rmd` file and produce an `html` file.
+- Hand in the `html` file in Canvas.
+- Late work (up to 48 hours) counts 75%.
+
+Three options:
+
+1. Use the computers in the library, which have RStudio installed.
+2. Install RStudio on your own computer (Windows/Mac/Linux). Follow the instructions on Canvas.
+3. Chromebook users: Use http://stat.westmont.edu. (See me for login credentials.)
+
+# Attendance and Integrity
+
+## Attendance
+
+- More than 3 absences is excessive.
+- More than 6 unexcused absences may result in you being dismissed from the course with a grade of 'F.'
+
+## Excused Absences
+
+If you miss an Exploration because of an excused absence, you can submit make-up assignment consisting of 
+
+- an explanation of why you were absent, and
+- written answers to all the numbered problems in the slides for the day that you missed. 
+This make-up assignment is due at the beginning of the following class.
+
+## Academic integrity
+
+- Be familiar with the [college plagiarism policy](https://www.westmont.edu/office-provost/academic-program/academic-integrity-policy). Violations are reported to Provost's Office.
+- Do not email, post online, or otherwise disseminate any of the work that you do in this class. 
+- You may work with others, but make sure that you type up your own answers yourself. 
+- You are on your honor that the work you hand in represents your own understanding.
+- Repeated or major infractions can result in a grade of 'F' for the course.
+
+# How to get an 'A' in this course
+
+## Tips for success
+
+>- Come to class every day and participate appropriately.
+>- Take notes during class activities and lectures, and review them.
+>- Do all the assigned work accurately and on time.
+>- Come to student hours or email me when you have questions. (Open door policy.)
+>- Do the practice problems.
+>- Study for the exams.
+>- Do well on the exams.
+
+
+
+
+

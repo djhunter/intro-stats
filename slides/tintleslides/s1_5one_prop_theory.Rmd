@@ -1,0 +1,207 @@
+---
+title: "Section 1.5"
+date: "September 6, 2016"
+output: 
+  word_document:
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    center: true
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(comment = NA)
+```
+
+# Section 1.5: Inference for a Single Proportion: Theory-based approach
+
+## Null Distributions
+
+- One proportion tests ($H_0: \pi = \pi_0$) always have predictable distributions.
+    - symmetric
+    - bell-shaped
+    - centered at $\pi_0$
+
+See the [One Proportion applet](http://www.rossmanchance.com/applets/OneProp/OneProp.htm).
+
+- Instead of simulating the null distribution, we can approximate it using math.
+
+## Theory: Normal distribution
+
+For large sample sizes, our simulated dotplots tend to look like:
+
+```{r, fig.height=3}
+library(ggplot2)
+ggplot(data.frame(x=c(-4,4)), aes(x=x)) + 
+  stat_function(fun=dnorm, color="blueviolet", size=1.5) + 
+  theme(axis.text.x = element_blank())
+```
+
+$$
+f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}, \mbox{ mean} = \mu, \mbox{ SD} = \sigma
+$$
+
+## Theory-based test (i.e. One-Proportion $z$-Test)
+
+Instead of finding the proportion of simulations that are as extreme as the observed statistic, we can find the area under the curve corresponding to these extreme $x$-values. (Need to know mean, standard deviation.)
+
+* Advantages: Doesn't require simulation.
+* Disadvantage: Not valid for small samples.
+
+## Validity Conditions
+
+The normal approximation to the null distribution is **valid** whenever the sample size is reasonably large. One convention is to consider the sample size to be large enough whenever there are *at least 10 observations in each category (at least 10 successses and 10 failures).*
+
+>- Example: Tasting water: 3 of 27 chose tap water. 
+>   - Not valid. (Only 3 observations in the tap water category.)
+>- Example: Uniform colors: Red won 248 out of 457 times.
+>   - Valid: 248 successes, 209 failures.
+
+## Valid Example: Uniform colors
+
+<div class="column-left">
+There were 248 red wins (successes) and 209 blue wins (failures).
+</div>
+
+![](http://math.westmont.edu/img/redbluesim.png)
+
+## Invalid Example: Heart Transplants
+
+<div class="column-left">
+There were 8 deaths (successes) and 2 survivors (failures).
+</div>
+
+<div class="column-right">
+![](http://math.westmont.edu/img/heartsim.png)
+</div>
+
+## Formulas
+
+- The mean of the null distribution is the hypothesized value of the long-run proportion $\pi$. 
+
+- The standard deviation of the null distribution can be *approximated* by plugging into this formula: 
+
+$$
+\mbox{SD}_\text{null} \approx \sqrt{\frac{\pi(1-\pi)}{n}}
+$$
+
+## How good is the approximation?
+
+<div class="column-left">
+$$
+\begin{align}
+\mbox{SD}_\text{null} & \approx \sqrt{\frac{0.5(1-0.5)}{457}} \\
+& \approx 0.0234
+\end{align}
+$$
+</div>
+
+<div class="column-right">
+![](http://math.westmont.edu/img/redbluesim.png)
+</div>
+
+\mbox{SD}_\text{null} \approx \sqrt{\frac{\pi(1-\pi)}{n}}
+
+## Central Limit Theorem
+
+If the sample size $n$ is large enough, the distribution of sample proportions will be approximately bell-shaped (or normal), centered at the long-run proportion $\pi$, with a standard deviation of $\sqrt{\frac{\pi(1-\pi)}{n}}$.
+
+- Check using the [One Proportion applet](http://www.rossmanchance.com/applets/OneProp/OneProp.htm).
+
+# Exploration 1.5: Calling Heads or Tails
+
+## Heads or Tails?
+
+*Research Question:* When asked to call the outcome of a coin toss, are people equally likely to choose heads or tails? 
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/OLCL6OYbSTw?rel=0&amp;start=135" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+## Preview
+
+Conventional wisdom says that people tend to pick heads more often than tails, so that's the research hypothesis we'll investigate.
+
+- Observational units?
+- Variable?
+- Parameter of interest?
+- Hypotheses?
+
+## Data
+
+> Results for our class:
+
+| Heads | Tails | Total |
+| ----- | ----- | ----- |
+| 33 | 31 | 64 | 
+
+3. Calculate the sample proportion that picked heads. **Recorder:** Record the values of $\hat{p}$ and $n$.
+
+## Simulation 
+
+5. Use the [One Proportion applet](http://www.rossmanchance.com/applets/OneProp/OneProp.htm) to test the hypotheses using a *simulation* analysis. **Recorder:** Record the following.
+    - Where is the null distribution centered? Check the Summary Stats box and report the **mean** and **standard deviation**.
+    - Approximate the **p-value** and summarize the **strength of evidence** that the sample data provide regarding the research hypothesis.
+    - Determine the **standardized statistic**, $z$. Does it indicate the same strength of evidence?
+
+## Validity Conditions
+
+The normal approximation to the null distribution is **valid** whenever the sample size is reasonably large. One convention is to consider the sample size to be large enough whenever there are *at least 10 observations in each category (at least 10 successses and 10 failures).*
+
+## Theory-based test: Valid?
+
+6. Check the box next to Normal Approximation in the applet. Does the region shaded in blue seem to be a good description (model) of what we actually got in the simulation?
+
+7. Is the sample size large enough in this study to use the normal approximation and theory-based inference? **Recorder:**  Write a sentence to justify your answer.
+
+## Formulas
+
+- The mean of the null distribution is the hypothesized value of the long-run proportion $\pi$. 
+
+- The standard deviation of the null distribution can be *approximated* by plugging into this formula: 
+
+$$
+\mbox{SD}_\text{null} \approx \sqrt{\frac{\pi(1-\pi)}{n}}
+$$
+
+## Theory-based test: Using Formulas
+
+8. Use the formula to determine the (theoretical; predicted) standard deviation of the sample proportion. Then compare this to the SD from your simulated sample proportions, as recorded in #5. Are they similar? **Presenter:** Write both standard deviations on the board, showing work.
+
+9. Use the predicted value of the standard deviation from #8 to calculate the standardized statistic $z$ by hand and confirm that your answer is very close to what you found in #5 when using simulation. **Presenter:** Write both $z$-scores on the board, showing work.
+
+## Check using applet
+
+In the applet, see that the predicted value of the standardized statistic, $z$, is given immediately below the button for "Normal approximation" in parentheses and should match your answer to #9.
+
+10. The **theory-based** (normal approximation) p-value is also now displayed. Compare this p-value to the one you got from simulation (#5). Are they similar?
+
+## Validity matters!
+
+11. Why are the standard deviation (#8), standardized statistic (#9) and p-value (#10) similar when using the theory-based (one-proportion z-test; normal approximation) to what you got in your simulation? When would they be different?
+
+## Follow-up #1
+
+In his book *Statistics You Can't Trust,* Steve Campbell claims that people pick heads 70% of the time when they're asked to predict the outcome of a coin toss.
+
+12. Use the theory-based approach to test Campbell's claim based on the sample data used above (for our class) using a *two-sided* alternative. **Recorder:** Report the null and alternative hypothesis, standardized statistic, and p-value. **Operator:** [Use this form](https://goo.gl/forms/FORBxSC68snbQ8yJ2) to write a sentence summarizing your conclusion *in the context of this problem.* 
+
+## Follow-up #2
+
+In a small class of 8 students, 7 students chose heads. 
+
+13. Use simulation to generate a two-sided p-value evaluating the strength of evidence that
+the long-run proportion of students picking heads is different than 50% based on this small class's data alone.
+
+14. Why can't you use the normal approximation in this case?
+
+15. Use the normal approximation anyway. **Presenter:** Write the p-values obtained from the two methods on the board, and circle the one that is most valid.

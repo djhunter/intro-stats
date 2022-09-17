@@ -1,0 +1,191 @@
+---
+title: "Section 3.3"
+date: "September 27, 2019"
+output: 
+  word_document:
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    center: true
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(comment = NA)
+```
+
+# Section 3.3: 2SD and Theory-based Confidence Intervals for a Single Mean
+
+## Introduction
+
+- Last time, we saw shortcuts for constructing confidence intervals for a population proportion $\pi$.
+    - The variables were *categorical*, so we summarized the data with $\hat{p}$.
+- Today, we are going to use similar shortcuts to construct confidence intervals for a population mean $\mu$.
+    - The variables will be *quantitative*, we will summarize the data with $\bar{x}$ and $s$.
+    
+## Example: Used Cars {data-background="http://classiccardb.com/uploads/postfotos/1982-honda-civic-sedan-classic-all-original-survivor-w-59k-miles-2.jpg"}
+
+**Question:** How much does a used Honda Civic cost?
+
+## Used Car Data
+
+The following histogram displays data for the selling price of 102 Honda Civics that were listed for sale on the Internet.
+
+```{r, fig.height = 5}
+library(ggplot2)
+carPrices <- read.table("http://www.isi-stats.com/isi/data/chap3/UsedCars.txt", header=TRUE)
+ggplot(data = carPrices, aes(Price)) + geom_histogram(binwidth = 2000)
+```
+
+## Used Cars
+
+- While we should be cautious about our sample being representative of the population, let’s treat it as such.
+- The sample mean is $\bar{x} = \$13,292$.
+- We don’t presume that $\mu = \$13,292$, but it should be "close."
+- To determine how close, we can construct a confidence interval.
+
+## Confidence Intervals
+
+- Remember the basic form of a confidence interval is:  
+$$
+\text{statistic} \pm (\text{multiplier}) \times (\text{SD of statistic})
+$$
+
+- In our case, the statistic is $\bar{x}$, so we write our 2SD confidence interval as:
+$$
+\bar{x} \pm 2 \times (\text{SD of } \bar{x})
+$$
+
+- We need a way to estimate SD of $\bar{x}$.
+
+
+## Confidence intervals
+
+- *Important:* The SD of $\bar{x}$ and the SD of our sample ($s = \$4,535$) are not the same.
+- There is more variability in the data (the car-to-car variability) than in sample means.
+- We can approximate the variability in the sample means as $s / \sqrt{n}$.
+- So we can write a 2SD confidence interval as:
+$$
+\bar{x} \pm 2 \times \frac{s}{\sqrt{n}}
+$$
+
+- This method gives a rough approximation for a 95% CI.
+
+## Theory-based CI for $\mu$
+
+- A theory-based confidence interval is quite similar except it uses a multiplier that is based on a t-distribution and is dependent on the sample size and confidence level. (We will let the applet figure all this out for us.) 
+- For theory-based confidence interval for a population mean (called a one-sample t-interval) to be *valid*, the sample distribution should be symmetric or we need to have a sample size of at least 20 and the sample distribution should not be strongly skewed.
+
+## Theory-based CI for $\mu$
+
+The confidence interval for a population mean has the form: 
+$$
+\bar{x} \pm (\text{multiplier}) \times \frac{s}{\sqrt{n}}
+$$
+
+- $\bar{x}$ is the center (our best estimate for the population mean).
+- $s/\sqrt{n}$ is the predicted value of the standard deviation of the null distribution (also called the standard error).
+- $\text{multiplier}$ is a number that is dependent upon the confidence level ($\approx$ 2 for 95% confidence intervals)
+
+## Data
+
+```{r, echo=TRUE}
+carPrices
+```
+
+## Summary Statistics
+
+```{r, echo=TRUE}
+mean(carPrices$Price)
+sd(carPrices$Price)
+```
+
+2SD interval: $13292 \pm 2 \times \frac{4534.568}{\sqrt{102}} \approx (12394, 14190)$
+
+## Theory-based inference applet
+
+We can just paste the [Used Car data](http://www.isi-stats.com/isi/data/chap3/UsedCars.txt) into the [Theory-based inference applet](http://www.rossmanchance.com/applets/TBIA.html?hideExtras=1).
+
+## Theory-based interval in R
+
+```{r, echo=TRUE}
+t.test(carPrices$Price)
+```
+
+- Compare to 2SD interval: (12394, 14190)
+- 2SD interval is a little wider, but close (3 sig figs)
+
+# Exploration 3.3: Sleepless Nights? (continued) {data-background="https://thumbs.gfycat.com/ShowyEvenFreshwatereel-small.gif"}
+
+## Sleep data
+ 
+1. In Exploration 2.2, we collected data on how many hours of sleep we got. Use the [Descriptive Statistics applet](http://www.rossmanchance.com/applets/Dotplot.html?hideExtras=1) to get $n$, $\bar{x}$, and $s$ for [our class data](https://math.westmont.edu/ma5/classSleep.txt). **Record** these values.
+
+2. Based on this data, what is the best estimate for $\mu$, the average amount of sleep Westmont students get?
+
+3. It was tricky to generate a null distribution to estimate $\text{SD}_\text{null}$, the standard deviation of sample means. Instead, **record** the standard error, $s/\sqrt{n}$.
+
+## Validity Conditions
+
+> The theory-based interval for a population mean (called a *one-sample t-interval*) requires that the quantitative variable should have a symmetric distribution or you should have at least 20 observations and the sample distribution should not be strongly skewed.
+
+4. In Exploration 2.2, we decided that these validity conditions hold for our data.
+
+## 2SD Confidence interval
+
+5. Compute a 95% 2SD confidence interval for $\mu$, using the standard error you recorded in #3. **Record** this interval.
+
+6. Complete this sentence, **recording** what goes in the blanks. We are 95% confident that _____ is between _____ and _____.
+
+## Theory-based inference applet
+
+7. We can also use the [Theory-Based Inference applet](http://www.rossmanchance.com/applets/TBIA.html?hideExtras=1) to get confidence intervals. Use the *One Mean* scenario, check the boxes for *Paste Data* and *Includes header*, *Clear* the sample data, and paste in [our class data](https://math.westmont.edu/ma5/classSleep.txt). **Record** the 95% theory-based t-interval from the applet. Compare it to the 2SD interval that you calculated in #5-#6.
+
+8. **Record** a 90% confidence interval also.
+
+9. Which interval is wider, the 95% or the 90%? **Presenter:** Be ready to explain why it makes sense that this interval is wider.
+
+## CI's and Hypothesis tests
+
+Use your CI's from #7 and #8 to answer the following.
+
+11. At a signficance level of $\alpha = 0.05$, would you reject $H_0 : \mu = 6.5$ in favor of the alternative $H_a : \mu \neq 6.5$?
+
+12. At a signficance level of $\alpha = 0.10$, would you reject $H_0 : \mu = 6.5$ in favor of the alternative $H_a : \mu \neq 6.5$?
+
+**Record** your answers. **Presenter:** Write a sentence or diagram on the board explaining how you can use a confidence interval to determine the result of a hypothesis test.
+
+## One-mean confidence intervals in R
+
+```{r, echo=TRUE}
+sleepDF <- read.table("https://math.westmont.edu/ma5/classSleep.txt", header = TRUE)
+t.test(sleepDF$SleepHours)
+```
+
+This is more accurate than the applet.
+
+## One-mean confidence intervals in R
+
+You can change the confidence level:
+
+```{r, echo=TRUE}
+t.test(sleepDF$SleepHours, conf.level = 0.90)
+```
+
+## One-mean p-values in R
+
+You can set the null value for a two-sided hypothesis test:
+
+```{r, echo=TRUE}
+t.test(sleepDF$SleepHours, conf.level = 0.90, mu = 6.5)
+```

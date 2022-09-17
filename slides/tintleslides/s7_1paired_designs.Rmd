@@ -1,0 +1,232 @@
+---
+title: "Section 7.1"
+date: "October 28, 2019"
+output: 
+  word_document:
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+
+# Chapters 4-6 Review
+
+## Explanatory and response 
+
+We considered scenarios with an explanatory (predictor) variable and a response (predicted) variable.
+
+>- So far, the explanatory has been *categorical*, with two levels.
+>- i.e., *two groups*
+>     - If the groups are *randomly assigned*, it's an experiment.
+>     - If not, it's an observational study.
+>- The response variable could be *categorical*.
+>     - Two proportions, two-way table
+>- The response variable could be *quantitative*.
+>     - Two means, side-by-side box plots
+
+## Two-group Simulations
+
+>- Categorical response: 
+>     - Cards with two *colors*, representing *response* (success, failure)
+>- Quantitative response: 
+>     - Cards with *numbers*, representing *response* (measurements)
+>- Shuffle and deal into *two piles*, representing *explanatory groups*
+>- Calculate simulated statistic (difference of proportions or means)
+>- Build null distribution (repeat >1000 times)
+>- Compute p-value
+>     - Evidence for *association* between explanatory and response variables
+
+# Chapter 7: Paired Data: One Quantitative Variable
+
+## Section 7.1: Paired Designs
+
+How would you collect data to answer the following questions?
+
+- You want to compare grocery prices between Vons and Trader Joe's. Are prices different, on average?
+- You want to test "The Freshmen 10" theory. Do college students gain, on average, 10 pounds during their first year?
+
+## Overview
+
+- The paired data sets in this chapter have *one pair of quantitative response values for each observational unit,* allowing for a built-in comparison. 
+- Studies with paired data *remove individual variability* by looking at the difference score for each individual. 
+- Reducing variability in data improves inferences:
+    + Narrower confidence intervals
+    + Smaller p-values when the null hypothesis is false
+
+# Can you Study with Music Blaring?
+
+## Advice from `collegeinfogeek.com`
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/S5_APAxM5Lg?rel=0&amp;start=157&amp;end=293" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+## Studying with music
+
+- Does studying with music hurt your ability to focus?
+- In *Checking It Out: Does music interfere with studying?* Stanford Prof Clifford Nass claims the human brain listens to song lyrics with the same part that does word processing. 
+- Instrumental music is, for the most part, processed on the other side of the brain and Nass claims that reading and listening to instrumental music has virtually no interference.
+
+## Chapter 6 Approach: Random assignment
+
+- **Experiment #1: Random assignment to 2 groups.** 27 students are randomly assigned to 1 of 2 groups: 
+    + One group listens to music with lyrics
+    + One group listens to music without lyrics
+- Students play a memorization game while listening to the particular music that they were assigned.
+
+## Alternative: Paired designs
+
+- **Experiment #2: Paired design using repeated measures.** All students play the memorization game twice:
+    + Once while listening to music with lyrics 
+    + Once while listening to music without lyrics.
+    
+- **Experiment #3: Paired design using matching.** Sometimes repeating something is impossible (like testing a surgical procedure) but we can still pair.
+    + Test each student on memorization.
+    + Match students up with similar scores and randomly:
+         + Have one play the game while listening to music with lyrics and the other while listening to music without lyrics. 
+
+
+## Paired Design Data
+
+<div class="column-left">
+Unstacked data:
+
+```{r, echo=FALSE}
+set.seed(90121)
+instrumental <- rnorm(27, mean=10, sd= 2.5)
+lyrics <- instrumental - rnorm(27, mean=0.75)
+studymusic <- stack(data.frame(instrumental, lyrics))
+colnames(studymusic) <- c("memscore", "musictype")
+print(unstack(studymusic), digits = 2)
+```
+</div>
+
+<div class="column-right">
+Stacked data:
+
+```{r, echo=FALSE}
+print(studymusic, digits = 2)
+```
+</div>
+
+----
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.height=5, fig.width=5, fig.align="center"}
+library(ggplot2)
+library(cowplot)
+p1 <- ggplot(studymusic, aes(x = musictype, y = memscore, color = musictype)) + geom_boxplot()
+p1
+```
+
+----
+
+```{r, echo=FALSE, fig.height=8}
+p2 <- ggplot(studymusic, aes(x = musictype, y = memscore, color = musictype)) + geom_jitter(position=position_jitter(width=0.1, height=0))
+p3 <- ggplot(studymusic, aes(x = memscore, color = musictype, fill=musictype)) + geom_density(alpha=0.5)
+studymusic <- cbind(student = rownames(studymusic), studymusic)
+studymusic$student <- c(1:27, 1:27)
+p4 <- ggplot(studymusic, aes(x = musictype, y = memscore)) + geom_line(aes(group=student, color=factor(student)))
+plot_grid(p1, p2, p3, p4, labels = c(LETTERS[1:4]), align = "v")
+```
+
+## Paired data
+
+Lines show that most students did worse with lyrics.
+
+```{r, echo=FALSE, fig.height=5, fig.width=7, fig.align="center"}
+p4
+```
+
+## Variability
+
+- Variability in students' memorization abilities may make it difficult to see differences between the music types in Experiment #1 (random assignment).
+- The paired design (Experiment #2) focuses on the **difference** in memory score for each student, instead of the memory score.
+- *By looking at this difference, the variability in general memorization ability is taken away.*
+- With the same number of observational units, Design #2 provides more data, and more evidence, that there is a difference for the two types of music.
+
+## Randomization?
+
+In our memorizing with or without lyrics example: 
+
+- If we see significant improvement in performance, is it attributable to the type of song?
+What about experience? Could that have made the difference?
+- Improved design:
+    + Randomly assign each person to which song they hear first: with lyrics first, or without. 
+This cancels out an "experience" effect.
+
+## pairing in observational studies 
+
+- If you are interested in which test was more difficult in a course, the first or the second, compare the average difference in scores for each individual.
+- Freshman 10: compare each student's September weight with his/her June weight.
+
+## Exams #1 and #2
+
+```{r, echo=FALSE, warning=FALSE}
+rosterdf <- read.csv("../rosterf19.csv", stringsAsFactors = FALSE)
+eps <- log(0.6)/log(0.55)
+he1 <- round(100*(rosterdf$he1raw/100)^eps, 1)
+he2 <- round(100*(rosterdf$he2raw/100)^eps, 1)
+exam12 <- stack(data.frame(he1, he2))
+colnames(exam12) <- c("score", "exam")
+hep1 <- ggplot(exam12, aes(x = score, color = exam, fill=exam)) + geom_density(alpha=0.5)
+hep1
+```
+
+## Exams #1 and #2
+
+```{r, echo=FALSE, warning=FALSE}
+exam12 <- cbind(student = rownames(exam12), exam12)
+exam12$student <- c(1:35, 1:35)
+p4 <- ggplot(exam12, aes(x = exam, y = score)) + geom_line(aes(group=student, color=factor(student)))
+p4
+```
+
+# Exploration 7.1
+
+## {data-background="images/roundingfirst.png" data-background-size="contain"}
+
+## Rounding first base
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/zE1sJESCbEs?rel=0&amp;end=57" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+----
+
+**Preview:** Is it better to take a "narrow angle" or a "wide angle"?
+
+- Categorical explanatory variable: type of angle taken
+- Quantitative response variable: time taken to get to 2nd
+- *Independent groups design:* Get 20 volunteers. Randomly assign 10 to run to second base using a wide angle, and assign the other 10 to run to second using a narrow angle. Record the time (in seconds) that it takes for the runner to get to second. 
+- *Paired design using repeated measures:* Get 20 volunteers. Have each volunteer run the bases twice, once using the narrow angle, and once using the wide angle. Record the times that it takes each runner to get to second base using each technique.
+
+## Independent groups vs Repeated measures
+
+1. Which design, *independent groups* or *paired using repeated measures,* eliminates the variability in the speed of the 20 runners? How? **Record** a sentence.
+
+2. In the *paired design using repeated measures,* what aspect of this experiment should be determined randomly? Why? **Record** a sentence.
+
+## Paired with matching
+
+3. Suppose you also have scouting data giving each runner's 40 yard dash time. How could you use this data to create a *paired design using matching*? How would you assign the pairs? What would each pair do? How could you incorporate randomness?
+
+**Operator:** Type up your pair's answer in a short paragraph [using this form](https://goo.gl/forms/A07nryTElNXbmJDH2).
+
+----
+
+4. Suppose a coach wants to study the association between caffeine intake and performance in the long jump. For each of the following designs, **record** whether it is an *experiment or observational study,* and *what kind of pairing* is used, if any.
+    - The coach records everyone’s performance on a long jump and then asks each of them to report their caffeine intake from earlier in the day. 
+    - The athletes are paired by height and then one in each pair is randomly assigned to caffeine while the other isn’t. Each athlete's performance on the long jump is then recorded.
+    - On two separate days, each athlete is given a caffeine pill one one day and a placebo on the other, and the order is randomized. Athletes' performances on both these days are then recorded.
+
+
+
+
+
+

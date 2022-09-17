@@ -1,0 +1,126 @@
+---
+output: 
+  html_document: 
+    theme: sandstone
+    self_contained: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(comment = NA)
+#sec1df <- read.csv("f18sec1.csv", stringsAsFactors = FALSE, header = TRUE)
+#sec2df <- read.csv("f18sec2.csv", stringsAsFactors = FALSE, header = TRUE)
+#sec3df <- read.csv("f18sec3.csv", stringsAsFactors = FALSE, header = TRUE)
+
+allsecdf <- read.csv("rosterF18.csv", stringsAsFactors = FALSE, header = TRUE)
+allsecdf <- allsecdf[order(allsecdf$he1raw, decreasing = TRUE),] # sort by first exam score
+sec1df <- allsecdf[allsecdf$Section == "Section 1", ]
+sec2df <- allsecdf[allsecdf$Section == "Section 2", ]
+sec3df <- allsecdf[allsecdf$Section == "Section 3", ]
+
+gpRoles <- c("Facilitator", "Recorder", "Presenter", "Reflector")
+maxingp <- length(gpRoles)
+#roleShift <- 1 # Monday
+roleShift <- 2 # Wednesday
+#roleShift <- 0 # Friday
+rolePerm4 <-  (0:(maxingp-1) + roleShift) %% maxingp + 1
+rolePerm3 <-  c((0:(maxingp-2) + roleShift) %% (maxingp-1) + 1, 4)
+
+library(huxtable)
+```
+
+## Groups {.tabset .tabset-fade .tabset-pills}
+
+### Section 1 (8am)
+
+```{r, message=FALSE, warning=FALSE}
+set.seed(10118) 
+n <- nrow(sec1df)
+ngps <- (n+3) %/% 4
+# just make random groups
+# groups <- matrix(c(sec1df[sample(n), "Student"], rep("",(maxingp - (n %% maxingp)) %% maxingp)), 
+#                 ncol=maxingp, byrow=FALSE)
+
+# assign groups based on order (mix top/bottom)
+go3 <- (maxingp - (n %% maxingp)) %% maxingp #how many groups of 3
+groups <- matrix(c(sec1df[c(sample(1:(2*ngps)), sample((2*ngps+1):n)), "Student"], rep("", go3)),
+                ncol=maxingp, byrow=FALSE)
+groups[1:(nrow(groups)-go3),] <- groups[1:(nrow(groups)-go3),rolePerm4]
+if(go3>0) {
+  groups[(nrow(groups)-go3+1):nrow(groups),] <- groups[(nrow(groups)-go3+1):nrow(groups),rolePerm3]
+}
+rownames(groups) <- paste0("Group #", 1:nrow(groups))
+colnames(groups) <- gpRoles
+grouptable1 <- as_hux(groups)
+grouptable1 <- add_rownames(grouptable1, colname=" ")
+grouptable1 <- add_colnames(grouptable1)
+grouptable1 <- set_all_borders(grouptable1, 2)
+grouptable1 <- set_bold(grouptable1,row=everywhere,col=1,value=TRUE)
+grouptable1 <- set_bold(grouptable1,row=1,col=everywhere,value=TRUE)
+grouptable1 <- set_background_color(grouptable1,row=evens,col=everywhere,value='antiquewhite')
+width(grouptable1) <- 1.0
+grouptable1
+```
+
+### Section 2 (9:15am)
+
+```{r, message=FALSE, warning=FALSE}
+set.seed(10118) 
+# sec2df <- sec2df[1:48,] # There are only 48 seats in the room
+n <- nrow(sec2df)
+ngps <- (n+3) %/% 4
+#groups <- matrix(c(sec2df[sample(n), "Student"], rep("",(maxingp - (n %% maxingp)) %% maxingp)), 
+#                 ncol=maxingp, byrow=FALSE)
+#groups <- groups[,rolePerm]
+
+# assign groups based on order (mix top/bottom)
+go3 <- (maxingp - (n %% maxingp)) %% maxingp #how many groups of 3
+groups <- matrix(c(sec2df[c(sample(1:(2*ngps)), sample((2*ngps+1):n)), "Student"], rep("", go3)),
+                ncol=maxingp, byrow=FALSE)
+groups[1:(nrow(groups)-go3),] <- groups[1:(nrow(groups)-go3),rolePerm4]
+if(go3>0) {
+  groups[(nrow(groups)-go3+1):nrow(groups),] <- groups[(nrow(groups)-go3+1):nrow(groups),rolePerm3]
+}
+rownames(groups) <- paste0("Group #", 1:nrow(groups))
+colnames(groups) <- gpRoles
+grouptable1 <- as_hux(groups)
+grouptable1 <- add_rownames(grouptable1, colname=" ")
+grouptable1 <- add_colnames(grouptable1)
+grouptable1 <- set_all_borders(grouptable1, 2)
+grouptable1 <- set_bold(grouptable1,row=everywhere,col=1,value=TRUE)
+grouptable1 <- set_bold(grouptable1,row=1,col=everywhere,value=TRUE)
+grouptable1 <- set_background_color(grouptable1,row=evens,col=everywhere,value='antiquewhite')
+width(grouptable1) <- 1.0
+grouptable1
+```
+
+### Section 3 (2:00pm)
+
+```{r, message=FALSE, warning=FALSE}
+set.seed(1012018) 
+n <- nrow(sec3df)
+ngps <- (n+3) %/% 4
+#groups <- matrix(c(sec3df[sample(n), "Student"], rep("",(maxingp - (n %% maxingp)) %% maxingp)), 
+#                 ncol=maxingp, byrow=FALSE)
+#groups <- groups[,rolePerm]
+
+# assign groups based on order (mix top/bottom)
+go3 <- (maxingp - (n %% maxingp)) %% maxingp #how many groups of 3
+groups <- matrix(c(sec3df[c(sample(1:(2*ngps)), sample((2*ngps+1):n)), "Student"], rep("", go3)),
+                ncol=maxingp, byrow=FALSE)
+groups[1:(nrow(groups)-go3),] <- groups[1:(nrow(groups)-go3),rolePerm4]
+if(go3>0) {
+  groups[(nrow(groups)-go3+1):nrow(groups),] <- groups[(nrow(groups)-go3+1):nrow(groups),rolePerm3]
+}
+rownames(groups) <- paste0("Group #", 1:nrow(groups))
+colnames(groups) <- gpRoles
+grouptable1 <- as_hux(groups)
+grouptable1 <- add_rownames(grouptable1, colname=" ")
+grouptable1 <- add_colnames(grouptable1)
+grouptable1 <- set_all_borders(grouptable1, 2)
+grouptable1 <- set_bold(grouptable1,row=everywhere,col=1,value=TRUE)
+grouptable1 <- set_bold(grouptable1,row=1,col=everywhere,value=TRUE)
+grouptable1 <- set_background_color(grouptable1,row=evens,col=everywhere,value='antiquewhite')
+width(grouptable1) <- 1.0
+grouptable1
+```

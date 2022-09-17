@@ -1,0 +1,217 @@
+---
+title: "Section 10.4-5"
+date: "November 25, 2019"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+
+# Section 10.4: Inference for Regression Slope: Simulation-Based Approach
+
+## Slope and Correlation
+
+- In Section 10.2 we used inference to determine if there was a linear relationship between two quantitative variables.
+- In Section 10.3 we used regression to describe the linear relationship.
+- The slope of the regression line can also be used as a statistic in the type of inference we did in Section 10.2.
+
+# Example 10.4: Do students who spend more time in non-academic activities tend to have lower GPAs?
+
+## Activities and GPA
+
+- The subjects were 34 undergraduate students from the University of Minnesota.
+- They were asked questions about how much time they spent in activities like work, watching TV, exercising, non-academic computer use, etc. as well as what their current GPA was.
+- We are going to test to see if there is a *negative* association between the number of hours per week spent on nonacademic activities and GPA.
+
+## Hypotheses
+
+- *Null Hypothesis:* There is no association between the number of hours students spend on nonacademic activities and student GPA in the population.
+- *Alternative Hypothesis:* There is a negative association between the number of hours students spend on nonacademic activities and student GPA in the population.
+
+Symbols?
+
+## Descriptive statistics
+
+- $\widehat{\text{GPA}} = 3.60 - 0.0059 \times \text{(nonacademic hours)}$
+- Meaning of slope? y-intercept?
+
+```{r, echo=FALSE, fig.width=4, fig.height=3, fig.align='center'}
+library(ggplot2)
+actgpa <- read.table("http://www.isi-stats.com/isi/data/chap10/GPA.txt", header = TRUE)
+ggplot(actgpa, aes(x=hours, y=gpa)) + geom_point() +geom_smooth(method=lm, se=FALSE)
+```
+
+## Shuffle to Develop Null Distribution
+
+- We are going to shuffle just as we did with correlation to develop a null distribution.
+- The only difference is that we will be calculating the slope each time and using that as our statistic.
+- Let's get [the data](http://www.isi-stats.com/isi/data/chap10/GPA.txt) and test it in the [correlation/regression applet](http://www.rossmanchance.com/applets/RegShuffle.htm?hideExtras=2).
+
+## Residuals
+
+- The regression line minimizes the sum of the squares of the residuals.
+- Are there any *influential observations*? What happens if we remove them?
+
+```{r, echo=FALSE, fig.width=4, fig.height=3, fig.align='center', warning=FALSE}
+library(broom)
+mod <- lm(actgpa$gpa ~ actgpa$hours)
+df <- augment(mod)
+ggplot(df, aes(x=actgpa.hours, y=actgpa.gpa)) + geom_point() +geom_smooth(method=lm, se=FALSE) + geom_segment(aes(xend = actgpa.hours, yend=.fitted))
+```
+
+
+# Exploration 10.4: Perceptions of Heaviness
+
+## Hand models?
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/AoKErz_HtGA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+## Preview 
+
+Researchers believe a person's body is used as a perceptual ruler and people will judge the size of an object based on its relationship to parts of their body. Specifically, some researchers thought people with smaller hands will perceive objects to be bigger and hence heavier than those with larger hands. Linkenauger, Mohler, and Proffitt (2011) collected data on 46 participants, recording their hand width and estimated weight of bean bags. 
+
+## Hypotheses
+
+The regression equation is $\hat{y} = a + bx$, and the corresponding population parameters are $\alpha$ and $\beta$. We are going to do inference for the *regression slope*. 
+
+1. **Record**  the null and alternative hypotheses for this study in symbols. Use a one-sided alternative.
+
+## Descriptive statistics
+
+2. Paste the [handwidth data](http://www.isi-stats.com/isi/data/chap10/Handwidth.txt) into the [Corr/Regression applet](http://www.rossmanchance.com/applets/RegShuffle.htm?hideExtras=2) and make a scatterplot. **Record** the direction, form, and strength of the scatterplot.
+
+3. Use the applet to **record** the least squares regression line for predicting estimated weight based on hand width. What is the value of the slope of the regression line? **Operator:** Write a sentence [using this form](https://forms.gle/gfmEmLMD5c8Vf94cA) to interpret the meaning of the regression slope in the context of this study, using numbers and units appropriately.
+
+## Simulation using applet
+
+4. Check *Show Shuffle Options* and make sure *Slope* is selected. 
+- Click *Shuffle Y-values* a few times and pay attention to the plot that appears. Make sure you understand the meanings of the red, blue, and gray lines.
+- Now do at least 1,000 shuffles with the applet and **Record** the p-value, along with an interpretation of the p-value in the context of the study.
+
+5. As you did in Section 10.2, find the p-value corresponding to the correlation coefficient. How does this p-value compare with the p-value corresponding to the slope? 
+
+## Generalization and Causation
+
+6. The sample used here was not a random sample. The article just said that the researchers obtained data on 46 participants. 
+- Describe the population to which we could legitimately make our inference. Explain your reasoning.
+- Can we conclude that having smaller hands *causes* a person to estimate the weight of the bean bag to be larger? **Operator:** [Use this form](https://forms.gle/vtP6J32AyMsQQhpA8) to write a sentence explaining your answer, including a consideration of confounding variables. 
+
+## Influential Observations
+
+7. Now uncheck *Show Shuffle Options*. Click on an observation that you think is most influential. **Record** the $(x,y)$ pair for this observation. Then *Delete* it. Redo your simulation, and **Record** a new p-value. How does it compare to the original p-value in #5?
+
+# Section 10.5: Theory-Based Inference for the Regression Slope
+
+## Beta vs. Rho ($\beta$ vs. $\rho$)
+
+- You may have noticed that testing the slope of the regression line is equivalent to testing the correlation (same p-value)
+- Hence these hypotheses are equivalent.
+    + $H_0: \beta = 0$, $H_a: \beta \neq 0$   (Slope)
+    + $H_0: \rho = 0$,  $H_a: \rho \neq 0$   (Correlation)
+- Sample slope ($b$),  Population ($\beta$)
+- Sample correlation ($r$), Population ($\rho$)
+
+When we do the theory based test, we will be using the t-statistic which can be calculated from either the slope or correlation.
+
+## Theoretical null distribution
+
+- We have seen in this chapter that our null distributions are again bell-shaped and centered at 0 (for either correlation or slope as our statistic). 
+- The $t$-distribution is going to work. 
+- Same $t$-statistic for both correlation coefficient and for slope.
+
+\[
+t = \frac{r}{\sqrt{\frac{1-r^2}{n-2}}} = \frac{b}{SE(b)}
+\]
+
+## Validity Conditions
+
+- The scatterplot should follow a linear trend.
+- There should be approximately the same number of points above and below the regression line (symmetry). 
+- The variability of vertical slices of the points should be similar. (homoscedasticity) 
+
+## Validity Failures
+
+<div class="column-left">
+Data is *not symmetric* above and below the line:
+
+```{r, echo=FALSE, fig.width=4, fig.height=3, fig.align='center'}
+library(ggplot2)
+sleepgpa <- read.table("http://www.math.hope.edu/isi/data/chap10/SleepGPA.txt", header = TRUE)
+ggplot(sleepgpa, aes(x=Sleep, y=GPA)) + geom_point() +geom_smooth(method=lm, se=FALSE)
+```
+</div>
+
+<div class="column-right">
+Data doesn't follow a linear pattern:
+
+```{r, echo=FALSE, fig.width=4, fig.height=3, fig.align='center'}
+library(ggplot2)
+examtimes <- read.table("http://www.math.hope.edu/isi/data/chap10/StroopAgeTime.txt", header = TRUE)
+ggplot(examtimes, aes(x=Age, y=time)) + geom_point() +geom_smooth(method=lm, se=FALSE)
+```
+</div>
+
+## Validity Failures
+
+Variability of vertical slices changes (heteroscedasticity):
+
+
+<div class="column-left">
+```{r, echo=FALSE, fig.width=4, fig.height=3, fig.align='center'}
+library(ggplot2)
+tvlife <- read.table("http://www.math.hope.edu/isi/data/chap10/TVLife.txt", header = TRUE)
+ggplot(tvlife, aes(x=TVsperK, y=LifeExpectancy)) + geom_point() +geom_smooth(method=lm, se=FALSE)
+```
+</div>
+
+<div class="column-right">
+```{r, echo=FALSE, fig.width=4, fig.height=3, fig.align='center'}
+library(ggplot2)
+smoke <- read.table("http://www.math.hope.edu/isi/data/chap10/AlcoholSmoke.txt", header = TRUE)
+ggplot(smoke, aes(x=Alcohol_Drinks, y=Smoked)) + geom_point() +geom_smooth(method=lm, se=FALSE)
+```
+</div>
+
+Take a look at the [AlcoholSmoke](http://www.math.hope.edu/isi/data/chap10/AlcoholSmoke.txt) data in the [Applet](http://www.rossmanchance.com/applets/RegShuffle.htm?hideExtras=2).
+
+## What to do when validity fails
+
+- What do you do when validity conditions aren’t met for theory-based inference?
+    + If it's not too bad, the theory-based tests are probably OK
+    + Use the simulation-based approach...
+        + *instead of* the theory-based test, for really bad failures 
+        + or *in addition to* the theory-based test, in borderline cases
+- Another strategy is to “transform” the data on a different scale so conditions are met.  
+    + The logarithmic scale is common
+    
+## Regression using R
+
+```{r}
+heaviness <- read.table("http://www.isi-stats.com/isi/data/chap10/Handwidth.txt", header = TRUE)
+heaviness
+```
+
+## Regression using R
+
+```{r}
+summary(lm(perceived_weight ~ hand_width, data = heaviness))
+```
+
+## 95% Confidence band
+
+```{r}
+require(ggplot2)
+ggplot(heaviness, aes(x = hand_width, y = perceived_weight)) + geom_point() + geom_smooth(method = lm)
+```
+

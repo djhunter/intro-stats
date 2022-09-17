@@ -1,0 +1,121 @@
+---
+title: "Selected Review Problems for Hour Exam #3"
+date: "November 13, 2019"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: false
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    center: true
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+
+# Hour Exam #3 Review Problems
+
+## Try this quiz
+
+In Pairs, decide [https://goo.gl/forms/cabyuoiwXkYNhotE3](which scenario goes with each study description). 
+
+https://bit.ly/2OH1jB6
+
+## For Problems with answers... 
+
+The study guide lists several problems with answers in the BOB.
+
+# Chapter 6: Comparing Two Means (Independent Groups)
+
+## {data-background="http://math.westmont.edu/img/prob6110.png" data-background-size="contain"}
+
+----
+
+<div class="column-left">
+![](images/prob6216.png)
+</div>
+
+<div class="column-right">
+![](images/prob6218.png)
+</div>
+
+## {data-background="http://math.westmont.edu/img/prob639.png" data-background-size="contain"}
+
+# Chapter 7: Paired Data: One Quantitative Variable
+
+----
+
+<div class="column-left">
+![](images/prob7212.png)
+</div>
+
+<div class="column-right">
+![](images/prob7212b.png)
+</div>
+
+## Marriage ages, continued
+
+![](images/prob732.png)
+
+# Chapter 8: Comparing More that Two Proportions
+
+----
+
+
+<div class="column-left">
+![](images/prob8116.png)
+</div>
+
+<div class="column-right">
+![](images/prob8116b.png)
+</div>
+
+----
+
+<div class="column-left">
+![](images/prob8222.png)
+</div>
+
+<div class="column-right">
+![](images/prob8222b.png)
+</div>
+
+## Data for previous problem
+
+```
+      nottoo	pretty	very
+above 21	    159	    110
+ave   53	    372	    221
+below 94	    249	    83
+```
+
+# Chapter 9: Comparing more than two means
+
+----
+
+
+<div class="column-left">
+![](images/prob9118.png)
+</div>
+
+<div class="column-right">
+![](images/prob9118b.png)
+</div>
+
+----
+
+<div class="column-left">
+![](images/prob926.png)
+</div>
+
+<div class="column-right">
+![](images/prob926b.png)
+</div>
+
+
+

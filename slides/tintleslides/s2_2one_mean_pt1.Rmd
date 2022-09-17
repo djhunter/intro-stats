@@ -1,0 +1,254 @@
+---
+title: "Section 2.2, Part I"
+date: "September 11, 2019"
+output: 
+  word_document:
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    center: true
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(comment = NA)
+```
+
+# Section 2.2: Inference for a single quantitative variable, Part I
+
+## Quantitative Variables
+- In Chapter 1, we did inference on a single *categorical* variable.
+    - e.g., Tap or bottled? Red or blue?
+    - Our parameter was $\pi$, and our statistic was $\hat{p}$.
+- In this section, we will do inference on a single *quantitative* variable.
+    - e.g., word length, height, hours of sleep
+    - Our parameter will be $\mu$, and our statistic will be $\bar{x}$.
+    
+## Experiment
+
+Listen to the following music clip. 
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/X0Ph9Tc8tUw?controls=0&amp;start=26&amp;end=36" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+## Estimate the duration
+
+Now write down how many seconds long you think that clip was.
+
+## Estimating elapsed time
+
+- Subjects were told that they'd listen to music and asked questions when it was over. 
+- Researchers Played 10 seconds of the Jackson 5’s "ABC" and asked how long they thought it lasted.
+- Can the subjects accurately estimate the length? 
+
+## Hypotheses
+
+- Null Hypothesis: People will accurately estimate the length of a 10 second-song snippet, on average. 
+    - $H_0: \mu = 10$
+- Alternative Hypothesis: People will not accurately estimate the length of a 10 second-song snippet, on average. 
+    - $H_a: \mu \neq 10$
+
+## Data 
+
+```{r, echo = TRUE}
+timedata <- 
+  read.table("http://www.isi-stats.com/isi/data/chap3/TimeEstimate.txt", 
+  header = TRUE)
+timedata
+```
+
+## Dotplot of time estimate data
+
+```{r, echo = TRUE, fig.height=3, fig.width=10, fig.align='center'}
+stripchart(timedata, method = "stack", at=0, pch=16, offset = 0.4)
+```
+
+## Mean, Median, and Quartiles
+
+```{r, echo=TRUE}
+summary(timedata)
+```
+
+## Skew, mean, median
+
+- The distribution obtained is not symmetric, but is right skewed.
+- When data are skewed right, the mean gets pulled out to the right while the median is more resistant to this.
+
+```{r, fig.height=3, fig.width=10, fig.align='center'}
+stripchart(timedata, method = "stack", at=0, pch=16, offset = 0.4)
+```
+
+## Null Distribution?
+
+- $H_0: \mu = 10$ seconds
+- $H_a: \mu \neq 10$ seconds
+- Our problem now is, how do we develop a null distribution?  (The second S in our 3S strategy.)
+- Flipping coins and spinning spinners will not work to model what would happen under a true null hypothesis, because we need to simulate average *times*. (quantitative variable)
+
+## Null distribution of simulated statistics
+
+- We need to simulate what happened in the study, under the null assumption that $\mu = 10$.
+- There were 48 students.
+- Our observed statistic was the average estimated time.
+- So we need to draw 48 simulated times and average them. That will give us a dot.
+
+## Population?
+
+- We need to create a population based on what we know about our sample and what we want the mean to be.
+- We need to come up with a large data set that we think our population of time estimates might look like under a true null.
+- We might assume the population is skewed (like our sample) and has a standard deviation similar to what we found in our sample, but has a mean of 10 seconds.
+
+## Simulated population
+
+We simulate a large (>6000) population of made-up time estimates that conform to our null hypothesis. Population properties:
+
+```{r, echo = FALSE}
+simpop <- 
+  read.table("http://www.isi-stats.com/isi/data/chap3/TimePopulation.txt", 
+  header = TRUE)
+summary(simpop)
+cat("Number of simulated time estimates =", nrow(simpop))
+```
+
+## Histogram of simulated population
+```{r}
+library(ggplot2)
+ggplot(simpop, aes(x=Estimate)) + 
+ geom_histogram(aes(y=..density..), colour="black", fill="white",binwidth = 2)+
+ geom_density(alpha=.1, fill="#FF6666") 
+```
+
+## Null distribution
+
+- Develop a null distribution by taking 1000 samples of size 48.
+- Take the mean of each sample. That's a dot.
+
+```{r, echo=FALSE, fig.height=4.2, fig.width=10}
+set.seed(125)
+sim_stats <- replicate(1000, mean(sample(simpop$Estimate, 48, replace = TRUE)))
+stripchart(sim_stats, method = "stack", at=0, pch=19, offset = 0.7)
+```
+
+
+## p-value
+
+Find out where our observed mean of 13.71 sec is located.
+
+```{r, echo=FALSE, fig.height=4.2, fig.width=10}
+set.seed(125)
+sim_stats <- replicate(1000, mean(sample(simpop$Estimate, 48, replace = TRUE)))
+stripchart(sim_stats, method = "stack", at=0, pch=19, offset = 0.7)
+```
+
+## Learning objectives
+
+- Use the descriptive statistics applet to describe a data set.
+- Use the one-mean applet to do a simulation-based test on a hypothesis about a single quantitative variable.
+
+# Exploration 2.2: How much sleep do we get?
+
+## How much sleep do westmont students get? {data-background="https://media2.giphy.com/media/Eccdry010Mj1m/giphy.gif" data-background-size="contain"}
+
+## Preview
+
+**Question:** How many hours do Westmont students sleep on a typical night? Let's make the question more specific and ask about last night. Is the average less than the recommended eight hours? How can we estimate this average?
+
+- Variable? Type?
+- Observational Units?
+- Sample? Population of interest?
+- Hypotheses?
+
+## Bias: discuss
+
+1. Identify at least one way (variable) that your class is likely a good representation of all Westmont students in terms of hours slept last night.
+
+2. Identify at least one way (variable) that your class is likely not a good representation of all Westmont students in terms of hours slept last night.
+
+**Presenter:** Be ready to share your group's answers to these questions.
+
+## Data
+
+**Operator:** Use the [Descriptive Statistics applet](http://www.rossmanchance.com/applets/Dotplot.html?hideExtras=1) to examine a dotplot of the sample data. To do this, press Clear to delete the existing data in the applet and then copy and paste [your class data](https://math.westmont.edu/ma5/classSleep.txt) (including the one-word variable name at the top) into the Sample data box and press *Use Data*. 
+
+## Skew
+
+> A distribution is called **skewed** if it is not symmetric, and, instead, the bulk of observation values tend to fall on one side of the distribution, with a longer "tail" on the other. Right-skewed distributions have their tail on the right, and left-skewed distributions have their tail on the left.
+
+## Distribution of data
+
+3. Describe the shape of the distribution of sleep times in the sample as symmetric, right skewed, left skewed, or something else. **Record** your group's consensus.
+
+4. One way to summarize the center of a distribution is with the mean. Check the box next to *Actual* in the Mean row and record the value of the average sleep time for your class. **Record** the *mean,* using the appropriate symbol. Also, **record** the *sample size.*
+
+## Median
+
+The **median** is the middle data value when the data are sorted in order from smallest to largest. 
+
+- The location of the median can be found by determining $(n + 1)/2$, where $n$ represents the sample size. 
+- When there are an odd number of data values, the median is the $[(n + 1)/2]$th observation.
+- When there are an even number of data values, the median is reported as the average of the middle two numbers.
+
+## Median exercise
+
+5. Before you use the applet to find the median sleep hours for your class, make sure you understand how to find the median by finding the median of another (small!) class of statistics students. Here are the sleep times of a small class of six statistics students: 6, 7.5, 5.5, 8, 6.5, 7.5. What is the median for this small class? Find this by hand; don't use the applet! **Record** this value.
+
+## Find the median
+
+6. Now, let's return to your class's data. Use the applet to find the median sleep time for your class by checking the *Actual* box in the Median row. **Record** the median of the class data.
+
+7. Do the mean and median for your class differ by much? What does this suggest about the skewness of the data?
+
+## Variability 
+
+8. What is the standard deviation of sleep times for students in your class? Use the applet to find this by checking the *Actual* box next to Std dev. **Record** this value.
+
+9. Are there any sleep hours in your class that you would characterize as unusual? In particular, are there sleep times that are far away from the bulk of the data (outliers)?
+
+## Resistance
+
+A summary statistic is **resistant** if its value does not change considerably when outliers are included in a dataset.
+
+10. In the Sample data box in the applet find the longest sleep hours value and change it
+to 20. Press *Use Data* again.
+**Record** the new values of the mean, median, and standard deviation.
+Which of these three is resistant to outliers? 
+
+## Simulation
+
+11. Assume that the population of sleep hours follows a normal distribution with mean  $\mu = 8$ hours (as indicated under the null hypothesis) and standard deviation $\sigma = 1.5$. 
+Open the [One Mean applet](http://www.rossmanchance.com/applets/OneSample.html?hideExtras=1). Verify that the population distribution looks to be normally distributed with mean very close to 8 hours and SD about 1.5 hours. Check the *Show Sampling Options* box. Keep *Number of Samples* set to one for now. Set the *Sample Size* to match the class data.  Press *Draw Samples*. **Presenter:** Be ready to explain what the dots are on the rightmost plot.
+
+## Make a null distribution
+
+12. Change the Number of Samples to make 1,000 samples total and press *Draw Samples*.
+**Record** the *mean* and *standard deviation* of the null distribution.
+
+13. **Record** a p-value using the *Count Samples* settings. 
+
+14. **Record** the value of a standardized statistic by using the same formula we used in Section 1.3.
+
+$$
+\mbox{standardized statistic} = \frac{\mbox{statistic} - \mbox{null value}}{\mbox{SD of null distribution}}
+$$
+
+## Summarize your conclusion
+
+15. **Operator:** [Use this form](https://goo.gl/forms/KGXqLa4oCnF4vsZE2) to write one well-crafted *sentence* summarizing your group's conclusion *in the context* of this problem. Use the appropriate measures of significance in your sentence.
+
+## Extension: Inference on the median
+
+16. In the applet, above the null distribution, there is a radio button for *median*. What does this change about the null distribution? (What do the dots mean now?) Use the median that you recorded in #6 to obtain a p-value for the following hypotheses, where $M$ now stands for the population median.
+$$
+H_0: M = 8 \\
+H_a: M < 8
+$$
+**Record** this p-value. How does the strength of evidence compare to the test of means that you did in #13?

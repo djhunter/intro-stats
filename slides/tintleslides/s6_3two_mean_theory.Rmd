@@ -1,0 +1,299 @@
+---
+title: "Section 6.3"
+date: "October 25, 2019"
+output: 
+  word_document:
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    center: true
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+
+# Last time: Two Quantitative Variables
+
+## Categorical Explanatory, Quantitative Response
+
+>- Explanatory variable: categorical (2 groups)
+>- Response variable: *quantitative*
+>     - We summarize the responses by taking the means.
+>     - We summarize the difference between the two groups by taking the difference of the means. 
+>- Observed statistic: $\bar{x}_1 - \bar{x}_2$
+>- Null Hypothesis: $H_0: \mu_1 - \mu_2 = 0$
+
+## Null Distribution
+
+>- We generate a null distribution assuming that $\mu_1 - \mu_2 = 0$.
+>- The null distribution tells us what would happen randomly, assuming $H_0$.
+>- We check to see if our observed $\bar{x}_1 - \bar{x}_2$ is *typical* (near the middle of the null distribution) or *unusual* (out in the tail).
+>     - If it's *typical* (large p-value), we don't reject $H_0$. It is plausible that $\mu_1-\mu_2 = 0$. The groups are the same.
+>     - If its *unusual* (small p-value), then we reject $H_0$. There is a significant difference between the two groups.
+
+## Theory-Based Approaches
+
+>- Instead of generating a null distribution, we use a theory-based *approximation* of the null distribution.
+>     - It should be symmetric and bell-shaped.
+>     - It should be centered at 0 (the null value)
+>- The only question is how to approximate $\text{SD}_\text{null}$.
+
+
+# 6.3: Comparing Two Means: Theory-based approach
+
+## {data-background="https://cdn.momtricks.com/wp-content/uploads/2015/02/mom-feeding-her-baby-formula.jpg" data-background-size="contain"}
+
+## Breastfeeding vs. Bottle feeding
+
+The American Academy of Pediatrics (AAP) recommends breast milk as the best nutrition for infants. Babies should be breastfed exclusively for the first six months, according to the AAP. According to [WebMD](https://www.webmd.com/baby/breastfeeding-vs-formula-feeding), the benefits include:
+
+- Natural antibodies to resist illnesses,
+- Easier to digest,
+- *May raise intelligence,*
+- May reduce future health problems.
+
+## Breastfeeding and Intelligence
+
+- A study in *Pediatrics* (1999) examined if children who were breastfed during infancy differed from bottle-fed.
+- Involved 323 children recruited at birth in 1980-81 from four Western Michigan hospitals. 
+- Children were followed-up at age 4 and assessed using the General Cognitive Index (GCI)  A measure of the child’s intellectual functioning. 
+- Also recorded if the child had been breastfed during infancy.
+
+## Explanatory and response variables
+
+- Explanatory variable: If the baby was breastfed. (Categorical)
+- Response variable: Baby’s GCI measure at age 4. (Quantitative)
+
+## Hypotheses
+
+- *Null hypothesis:* There is no association between breastfeeding during infancy and GCI at age 4.
+- *Alternative hypothesis:* There is an association between breastfeeding during infancy and GCI at age 4.
+
+## Hypotheses in symbols
+
+- $\mu_1 =$ average GCI for all breastfed children in Michigan
+- $\mu_2 =$ average GCI for all Michigan children not breastfed
+
+$$
+H_0: \mu_1 - \mu_2 = 0 \\
+H_a: \mu_1 - \mu_2 \neq 0
+$$
+
+
+## Data Frame
+
+```{r}
+infantDF <- read.table("http://www.isi-stats.com/isi/data/chap6/BreastFeedIntell.txt", 
+                       header = TRUE)
+infantDF
+```
+
+
+## Summary of Data
+
+```{r}
+summary(infantDF)
+```
+
+----
+
+```{r}
+boxplot(GCI ~ Feeding, data = infantDF, horizontal = TRUE)
+```
+
+----
+
+```{r}
+library(ggplot2)
+ggplot(infantDF, aes(GCI, fill = Feeding)) + geom_histogram(position = "dodge", binwidth = 2)
+```
+
+----
+
+```{r}
+ggplot(infantDF, aes(GCI, fill = Feeding)) + geom_density(alpha = 0.2)
+```
+
+## Statistic: Difference in Sample Means
+
+```{r}
+library(plyr)
+ddply(infantDF, ~Feeding, summarize, mean=mean(GCI), sd=sd(GCI))
+```
+
+The difference in means $\bar{x}_1 - \bar{x}_2 = 4.4$.
+
+## Is the difference significant?
+
+The difference in means $\bar{x}_1 - \bar{x}_2 = 4.4$. *Assuming* that breastfeeding is not associated with GCI score:
+
+- Is it *possible* a difference this large could happen by chance alone?
+- Is it *plausible* (believable, fairly likely) a difference this large could happen by chance alone?  
+
+Use the [data](http://www.isi-stats.com/isi/data/chap6/BreastFeedIntell.txt) to find out:
+
+- Simulation Based: [Multiple Means Applet](http://www.rossmanchance.com/applets/AnovaShuffle.htm?hideExtras=2)
+- Theory Based: [Theory-Based Inference Applet](http://www.rossmanchance.com/applets/TBIA.html?hideExtras=1)
+
+## T-Statistic
+
+- To use theory-based methods in the multiple means applet, the t-statistic is used.
+- It is simply our prediction for the number of standard deviations our statistic is above or below the mean of the null distribution.
+
+$$
+t = \frac{\bar{x}_1 - \bar{x}_2 - 0}{\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}}
+$$
+
+## $t$-statistic by hand
+
+$$
+\begin{align}
+t &= \frac{\bar{x}_1 - \bar{x}_2 - 0}{\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}} \\[10pt]
+&\approx \frac{105.3 - 100.9 - 0}{\sqrt{14.5^2/237 + 14.0^2/85}} \\[10pt]
+&\approx 2.46
+\end{align}
+$$
+
+
+## *Old-fashioned way: t-table* {data-background="http://www.ttable.org/uploads/2/1/7/9/21795380/published/9754276.png?1517416376" data-background-size="contain"}
+
+## T-Test in R
+
+```{r}
+t.test(GCI ~ Feeding, data = infantDF)
+```
+
+## Formula notation in R
+
+- The *tilde* `~` in the formula means "is dependent on".
+- `GCI ~ Feeding` means we are testing whether intelligence measured by GCI is dependent on the type of feeding given to the infant.
+- `GCI` is the response variable, while `Feeding` is the explanatory.
+
+## Validity Conditions
+
+*Either*
+
+- The quantitative variable should have a symmetric distribution in both groups 
+
+*or* 
+
+- you should have at least 20 observations in each group and 
+- the sample distributions should not be strongly skewed.
+
+**Please Note:** The t-test is often used for group sizes less than 20. Just be aware that doing so involves *assuming that the population is symmetric.*
+
+## The t-test is robust
+
+- Even when you have small group sizes (< 20) and the population is not symmetrically distributed, the t-test can still work. (i.e., it's Type I error rate is 5% when using $\alpha = 0.05$). So the t-test is *robust*.
+- However, small sample sizes and/or asymmetric populations can make the type II error rate higher (i.e., the t-test [loses power](https://thestatsgeek.com/2013/09/28/the-t-test-and-robustness-to-non-normality/).)
+
+Moral: Bigger sample sizes are almost always better.
+
+## Conclusions
+
+- If breastfeeding were not associated with GCI (our null) the probability of observing a difference of 4.4 or more or -4.4 or less just by chance is 0.015. 
+- So we have strong evidence against the null hypothesis and can conclude there is an association between breastfeeding and intelligence.  
+- In fact we can conclude that breastfed babies have higher average GCI scores at age 4.
+- We can see this in both the small p-value (0.015) and the confidence interval that says the mean GCI for breastfed babies is 0.87 to 7.93 points higher than that for non-breastfed babies.
+
+## Causation?
+
+- Can we conclude that being breastfed as infants *caused* the children to be more intelligent?
+- Is there a possible confounding variable?
+
+# Exploration 6.3
+
+## Close Friends
+
+## {data-background="https://66.media.tumblr.com/7332db13078e0e0a16129532b1b3eb17/tumblr_mh5s49MX1s1r3d8abo1_r1_500.gif" data-background-size="contain"}
+
+
+## Men vs. Women
+
+- Do men and women tend to differ on the number of close friends? 
+- One of the questions asked of a random sample of adult Americans on the 2004 General Social Survey (GSS) was:
+
+*From time to time, most people discuss important matters with other people. Looking back over the last six months--who are the people with whom you discussed matters important to you? Just tell me their first names or initials.*
+
+- The interviewer then recorded how many names each person gave, along with keeping track of the person's sex. 
+
+## Data
+
+```{r}
+friends <- read.table("http://www.isi-stats.com/isi/data/chap6/CloseFriends.txt", header = TRUE)
+summary(friends)
+```
+
+
+## Histograms
+
+```{r, echo=FALSE}
+ggplot(friends, aes(Friends, fill = Sex)) + geom_histogram(position = "dodge", binwidth = 1)
+```
+
+## Density plots
+
+```{r, echo=FALSE}
+ggplot(friends, aes(Friends, fill = Sex)) + geom_density(alpha = 0.2)
+```
+
+## Preview Assignment
+
+- Explanatory: Male/Female. Response: Number of close friends.
+- Parameters: 
+    - $\mu_1 =$ average number of close friends for all US men. 
+    - $\mu_2 =$ average number of close friends for women.
+- $H_0: \mu_1 - \mu_2 = 0$, $H_a: \mu_1 - \mu_2 \neq 0$.
+- $\bar{x}_1 - \bar{x}_2 = -0.228$
+- Simulation-based p-value $\approx 0.014$
+- Conclusion?
+
+## T-Statistic
+
+1. Copy the [CloseFriends data](http://www.isi-stats.com/isi/data/chap6/CloseFriends.txt) into the [Multiple Means applet](http://www.rossmanchance.com/applets/AnovaShuffle.htm?hideExtras=2) again. Create a null distribution using 1000 shuffles. (Be patient.)
+
+2. Change the statistic to *t-statistic*. **Record** the observed t-statistic. Based on this standardized statistic, do we have strong evidence against the null hypothesis? How are you deciding?
+
+3. Below the null distribution, click *overlay t-distribution*. Put the observed t-statistic in the box, select *Beyond* for a 2-sided test, and click *Count*. **Record** both the theory-based p-value and the simulation-based p-value. Are they similar?
+
+## 95% confidence interval
+
+4. On the left, find the checkbox for the 95% CI for difference in means. **Record** this confidence interval. Do you think it is a theory-based interval or a simulation-based interval? (We'll check later.)
+
+5. **Record** a sentence explaining why the 95% confidence interval is consistent with the p-value for the two-sided hypothesis test.
+
+6. **Record** a sentence explaining why the validity conditions are met for the theory-based test.
+
+## TBIA applet
+
+7. Now copy the [CloseFriends data](http://www.isi-stats.com/isi/data/chap6/CloseFriends.txt) into the [Theory-based inference applet](http://www.rossmanchance.com/applets/TBIA.html?hideExtras=1), using the Two Means scenario. The data is stacked, and includes a header.
+
+8. **Record** a theory-based *p-value* and a 95% theory-based *confidence interval* for this test. Compare them to your answers to #3 and #4. Do you notice any discrepancies?
+
+----
+
+9. Fill in the blanks: We are _____ % confident that the mean number of close friends men have is _____ than the mean number of close friends that women have, by between _____ and _____ friends.
+
+10. *Predict* How would the width of the interval change if you increased the confidence level to 99%? Now **Record** a 99% confidence interval.
+
+11. How would the width of the interval change if you increased the sample size? Why?
+
+12. How would the width of the interval change if the variability of the number of close friends increased for both males and females? Why?
+
+## How to do this test in R
+
+```{r}
+friends <- read.table("http://www.isi-stats.com/isi/data/chap6/CloseFriends.txt", header = TRUE)
+t.test(Friends ~ Sex, data = friends)
+```
+
+13. Which applet is closest to R's answers?
+
+## {data-background="http://math.westmont.edu/img/rvappletwar.jpg" data-background-size="contain"}

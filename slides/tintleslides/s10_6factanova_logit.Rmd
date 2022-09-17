@@ -1,0 +1,293 @@
+---
+title: "Section 10.6"
+date: "December 4, 2019"
+output: 
+  word_document:
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+
+# Section 10.6: Logistic Regression and Factorial Anova
+
+## Questions on Chapter 10 Investigation?
+
+## Recall Chapter 8-9 Investigation
+
+```{r, fig.height=4.3, fig.width=6, fig.align='center'}
+drivers <- read.table("http://math.westmont.edu/ma5/carstatus.txt", header = TRUE)
+plot(Behavior ~ Status, data = drivers)
+```
+
+## No evidence?
+
+>- We found little to no evidence for an association between car status and yielding behavior.
+>- Categorical $\rightarrow$ Categorical (Chi-square, p-value $\approx$ 0.2)
+>- However, we observed a trend, so maybe it makes sense to view car status as *Quantitative* (1,2,3,4,5)
+>- **Operator:** Look at https://stats.idre.ucla.edu/other/mult-pkg/whatstat/ and decide which test to use.
+
+# Logistic Regression
+
+## Predicting probabilities 
+
+A *logistic* curve has the following shape:
+
+```{r, echo=FALSE, fig.height=5}
+plot(function(x) {exp(x)/(1+exp(x))}, xlim = c(-10,10), ylab = "predicted probability", xlab="quantitative explanatory variable")
+```
+
+## Status coded as categorical (factor)
+
+```{r}
+drivers
+```
+
+## Change to numeric (quantitative)
+
+```{r}
+drivers$Status <- as.numeric(drivers$Status)
+drivers
+```
+
+## Logistic Regression in R
+
+```{r}
+d.logit <- glm(Behavior ~ Status, data = drivers, family = binomial)
+summary(d.logit)
+```
+
+## Significance and predictions
+
+- The logistic regression model had a p-value of 0.03, indicating strong evidence of an association between driving behavior and yielding behavior.
+- The prediction equation has the form 
+$$
+\displaystyle \hat{P}(x) = \frac{e^{b_0 + b_1x}}{1 + e^{b_0 + b_1x}}
+$$ 
+where $x$ is a status value and $b_0$ and $b_1$ are the logistic regression coefficients.
+
+## Logistic prediction curve
+
+```{r, fig.height = 4.2, fig.width=6, fig.align='center'}
+b <- coef(d.logit)
+Phat <- function(x) {exp(b[1]+x*b[2])/(1+exp(b[1]+x*b[2]))}
+plot(Phat, xlim = c(0,10), xlab="Status of Driver", ylab="Probability of Yielding")
+```
+
+## Prediction and data
+
+```{r, fig.height=3, fig.width=5, fig.align='center'}
+library(ggplot2)
+ggplot(drivers, aes(x = Status, y = as.numeric(Behavior)-1)) +
+  geom_point(position=position_jitter(height=0.04, width=0.08)) + 
+  ylab("Probability of Yielding") + stat_function(fun=Phat, color="blue", size=1.5)
+```
+
+## Prediction and data
+
+```{r, echo=FALSE}
+library(ggplot2)
+ggplot(drivers, aes(x = Status, y = as.numeric(Behavior)-1)) +
+  geom_point(position=position_jitter(height=0.04, width=0.08)) + 
+  ylab("Probability of Yielding") + stat_function(fun=Phat, color="blue", size=1.5)
+```
+
+## Plot using base r graphics
+
+```{r, fig.height=3, fig.width=5, fig.align='center'}
+pred.df <- data.frame(Status = seq(min(drivers$Status), max(drivers$Status), len=100))
+pred.df$phat <- predict(d.logit, newdata = pred.df, type="response")
+plot(as.numeric(Behavior)-1 ~ Status, data = drivers)
+lines(phat ~ Status, data = pred.df, col="blue", lwd = 1.5)
+```
+
+
+# Review of Simulation-Based Tests: Explanatory and Response scenarios
+
+## Two proportion applet
+
+The [Two-Proportion Applet](http://www.rossmanchance.com/applets/ChiSqShuffle.html?hideExtras=2) is preloaded with the Yawning data. 
+
+- Explanatory: Whether or not the subject saw a "yawn seed." (Categorical)
+- Response: Whether or not the subject yawned. 
+
+## Two mean applet
+
+The [Two Mean Applet](http://www.rossmanchance.com/applets/AnovaShuffle.htm?hideExtras=2) has the preloaded Sleep Deprivation data.
+
+- Explanatory: Sleep Deprived? (Y/N) (categorical)
+- Response: Improvement score on a test. (quantitative)
+
+## Paired data applet
+
+The [Matched Pairs Applet](http://www.rossmanchance.com/applets/MatchedPairs/MatchedPairs.htm?hideExtras=1) has the preloaded Rounding First Base data.
+
+- Explanatory: Two different running strategies (categorical)
+- Response: Time to second base (quantitative)
+
+## Multiple proportions applet
+
+The [Multiple Proportions Applet](http://www.rossmanchance.com/applets/ChiSqShuffle.html?hideExtras=1) has the preloaded Organ Donor data.
+
+- Explanatory: Type of recruitment strategy (neutral, opt-in, or opt-out). (categorical) 
+- Response: Whether or not the subject chose to donate. (categorical)
+
+## Multiple Means applet
+
+The [Multiple Means Applet](http://www.rossmanchance.com/applets/AnovaShuffle.htm) has the preloaded data. Check *Show Shuffle Options*, and do one shuffle. Observe what happens.
+
+- Explanatory: Type of treatment (A,B,C,D,E) (categorical)
+- Response: Strength (quantitative)
+
+## Correlation/Regression
+
+The [Correlation/Regression Applet](http://www.rossmanchance.com/applets/RegShuffle.htm?hideExtras=2) has the preloaded Footprint data.
+
+- Explanatory: foot length (quantitative)
+- Response: height (quantitative)
+
+# verbal vs visual memory
+
+## Count the passes
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/vJG698U2Mvo?start=4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+## Experiment
+
+- Subjects were given a statement and told to write a justification of its claim. Some subjects had to justify *concrete* claims, while others were given *abstract* claims. Their writing was then assigned a quality rating.
+- At the same time, subjects performed an imagery memory task, one involving pictures (*visual*), and the other involving syllables (*verbal*).
+- Does the type of claim matter? (concrete/abstract)
+- Does the type of imagery matter? (verbal/visual)
+
+## Comparing two groups
+
+- We could compare the mean ratings of the two types of claims.
+- Or we could compare the mean ratings of the two imagery groups.
+
+What test would we be using?
+
+## Data 
+
+```{r}
+ratings <- read.table("http://math.westmont.edu/ma5/ratings.txt", header = TRUE)
+ratings
+```
+
+## Summary of `ratings` data
+
+```{r}
+summary(ratings)
+```
+
+
+## Two-sample t-test: claims
+
+```{r}
+t.test(Rating ~ Claim, data=ratings)
+```
+
+
+## Two-sample t-test: Imagery
+
+```{r}
+t.test(Rating ~ Imagery, data=ratings)
+```
+
+## Multiple comparisons problem
+
+>- When you have a large number of variables, beware of doing several pairwise tests.
+>- Each test will have a chance of making a Type I error (false alarm).
+>- Multiple comparisons compound the chances of making a Type I error.
+>- Given enough tests to try, one will probably be significant (p-value < 0.05) just by chance, even when the null hypothesis of no association is true.
+
+## Relating the effects of two variables
+
+- The researchers were not only interested in which task was harder.
+- They were interested if the type of imagery in the memory task interfered with paragraph writing differently, for concrete and abstract claims.
+- In this situation, they were looking for an *interaction* between *imagery* and *claim*, as measured by *rating*.
+
+## Simulation using applet
+
+The data for this study is preloaded into the [Two-variable ANOVA applet](http://www.rossmanchance.com/applets/twoway.html).
+
+1. Click on *Show Means* and **record** the observed *Difference in Differences*, which will be our statistic.
+
+2. Complete the sentence to interpret the Difference in Differences in context: Both groups, Concrete and Abstract, got lower ratings using the _______ imagery, but the ______ group showed a greater effect, by ______ points. 
+
+## Interaction plot
+
+3. The *interaction plot* shows the means and illustrates the Difference in Differences. If the effect of the memory task was the same on both groups, what would the lines look like? **Record** a sketch showing what it would look like if the Difference in Differences were equal to zero.
+
+## Do one simulation
+
+4. Click on *Show Shuffle Options*, and click the *Data* radio button. Do one or two shuffles. Look at the data and **record**  what variable is getting shuffled, and whether it is the explanatory or response. You may have to enlarge the data panels to be able to see all the data.
+
+5. Now click on the *Graphs* radio button, and do a few more shuffles. How would you characterizes the randomly generated interaction plots compared to the observed interaction plot?
+
+## Compute a p-value
+
+We will test the null hypothesis that the population Difference in Differences is zero, versus the alternative that it is not equal to zero.
+
+6. Do at least 1000 shuffles, and **record** a p-value and how strong the evidence is against the null hypothesis. What do you think we have shown, in the context of this study?
+
+## Interaction effects
+
+- The ratings of Concrete definitions were higher than Abstract definitions.
+- Both groups did worse during the Verbal task.
+- However, the effect was stronger on the Concrete group. 
+- So there is a significant *interaction* between the two variables. The value of one variable influences the effect of the other.
+- If there is no significant interaction, you could test the ratings for all the Concrete vs. all the Abstract (or all Visual vs. all Verbal)
+- If there is an interaction, you should compare means for all four combinations of categories.
+
+## Find the Theory-based test
+
+We have two explanatory variables, Imagery (Visual/Verbal) and Claim (Concrete/Abstract) and one response variable, Rating.
+
+7. Use the [UCLA guide](https://stats.idre.ucla.edu/other/mult-pkg/whatstat/) to determine which test to use. **Record** the name of this test.
+
+## Interaction Plots in R
+
+```{r fig.height=4, fig.width=7, fig.align='center'}
+ratings$Imagery <- factor(ratings$Imagery,levels(ratings$Imagery)[c(2,1)]) # reorder factors
+interaction.plot(ratings$Imagery, ratings$Claim, ratings$Rating)
+```
+
+## Boxplots for multiple categories
+
+```{r fig.height=4.2, fig.width=6, fig.align='center'}
+ggplot(ratings, aes(x=Imagery, y=Rating, fill=Claim)) + geom_boxplot()
+```
+
+
+## Two-way ANOVA in R
+
+We use an asterisk * instead of a plus + in the formula, because we want to test for interaction effects.
+
+```{r}
+r.aov <- aov(Rating ~ Claim * Imagery, data = ratings)
+anova(r.aov)
+```
+
+## Followup-test
+
+```{r}
+TukeyHSD(r.aov)
+```
+
+
+
+
+
+
+
+

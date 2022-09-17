@@ -1,0 +1,170 @@
+---
+title: "Section 10.2"
+date: "November 20, 2019"
+output: 
+  word_document:
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    center: true
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+
+# Section 10.2: Inference for the Correlation Coefficient: Simulation-based approach
+
+## Last Time: Correlation coefficient $r$
+
+> - Correlation measures the strength and direction of a linear association between two quantitative variables.
+> - Correlation is a number $r$ between -1 and 1.  
+> - With positive correlation one variable increases, on average, as the other increases.
+> - With negative correlation one variable decreases, on average, as the other increases.
+> - The closer it is to either -1 or 1 the closer the points fit to a line.
+> - No correlation means $r \approx 0$.
+
+## Guidelines for Correlation
+\[
+r= \frac{1}{n-1} \sum_{i=1}^n \left( \frac{x_i - \bar{x}}{s_x} \right) \left( \frac{y_i -\bar{y}}{s_y} \right)
+\]
+
+| range of $r$ | Strength | Meaning |
+| ------------ | -------- | ------- |
+| $0.7 \leq \lvert r \rvert \leq 1$ | Strong | Points almost form a line. |
+| $0.3 \leq \lvert r \rvert \leq 0.7$ | Moderate | Clear pattern, but bloblike. |
+| $0.1 \leq \lvert r \rvert \leq 0.3$ | Weak | Slight pattern. |
+| $0 \leq \lvert r \rvert \leq 0.1$ | None | No discernible trend. |
+
+Note: $-1\leq r \leq 1$ always.
+
+## Heart Rate ~ Body Temperature: Data
+
+```{r, echo=FALSE}
+library(ggplot2)
+tempheart <- data.frame(tmp = c(98.3, 98.2, 98.7, 98.5, 97.0, 98.8, 98.5, 98.7, 99.3, 97.8, 98.2, 99.9, 98.6, 98.6, 97.8, 98.4, 98.37, 97.4, 96.7, 98.0), HR = c(72,69,72,71,80,81,68,82,68,65,71,79,86,82,58,84,73,57,62,89))
+tempheart
+```
+
+----
+
+```{r, echo=TRUE, fig.height=4, fig.width=6, fig.align='center'}
+cor(tempheart$tmp, tempheart$HR)
+ggplot(tempheart, aes(x=tmp, y=HR)) + geom_point()
+```
+
+## Statistic $\rightarrow$ Parameter
+
+- The *statistic* $r$ (computed from the data) measures the correlation in the sample.
+- The *parameter* $\rho$ (an unknown property of the population) represents the true correlation in the population of interest.
+- $\rho \approx 0$ means there is no association (correlation) between the two variables *in the population of interest.*
+
+
+## Body Temperature and Heart Rate
+
+Is there a correlation between body temperature and heart rate?
+
+- Null Hypothesis: There is no association between body temperature and heart rate.
+    + $H_0 : \rho = 0$
+- Alternative Hypothesis: There is a positive linear correlation between heart rate and body temperature.
+    + $H_a: \rho > 0$
+
+## Randomness?
+
+- If there was no association between heart rate and body temperature, what is the probability we would get a correlation as high as 0.378 just by chance?
+
+- If there is no association, we can break apart the temperatures and their corresponding heart rates.  We will do this by shuffling one of the variables.  (The applet shuffles the response.)
+
+## Shuffling Simulations
+
+> - With two proportions, we colored the response on the cards, shuffled the cards and placed them into two piles corresponding to the two categories of the explanatory variable.
+> - With two means we did the same thing except this time the responses were numbers instead of colors.
+
+## Larger example
+
+Let’s look at a different (and larger) [data set](http://www.math.hope.edu/isi/data/chap10/TempHeart.txt) comparing temperature and heart rate (Example 10.5A) using the [Correlation/Regression applet](http://www.rossmanchance.com/applets/RegShuffle.htm?hideExtras=2).
+
+
+# Exploration 10.2
+
+## Preview
+
+During the Vietnam war, young men in the US were drafted into the Army in an order determined by a random lottery. 
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/-p5X1FjyD_g?rel=0&amp;start=4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+----
+
+```{r, echo=FALSE, fig.width=6, fig.height=6, fig.align='center'}
+draft <- read.table("http://www.math.hope.edu/isi/data/chap10/DraftLottery.txt", header=TRUE)
+ggplot(draft, aes(x=sequential_date, y=draft_number)) + geom_point()
+```
+
+## Randomness or Pattern?
+
+<div class="column-left">
+```{r}
+cor(draft$sequential_date, draft$draft_number)
+```
+Could this correlation coefficient just be a product of randomness?
+</div>
+
+<div class="column-right">
+```{r, echo=TRUE, fig.width=3.5, fig.height=3.5, fig.align='center'}
+ggplot(draft, aes(x=sequential_date, y=draft_number)) + geom_point()
+```
+</div>
+
+
+## Preview
+
+Was the draft order truly random? A "fair" draft should have a correlation coefficient of zero.
+
+- Null Hypotheses: There is no association between sequential date and draft number.
+    + $H_0 : \rho = 0$
+- Alternative Hypothesis: There is some linear correlation between sequential date and draft number.
+    + $H_a : \rho \neq 0$
+    
+## Simulation using Cards
+
+Each of the 366 birthdays in a year (including February 29) was assigned a draft number.
+
+1. **Record** an explanation of how you would conduct a simulation of a null distribution using cards. 
+
+- How many cards would you need?
+- What would you write on the cards?
+- After you shuffle the cards, what would you do to create a point on the null distribution? What calculations would you need to make?
+
+## Simulation using Applet
+
+2. Paste the [DraftLottery data set](http://www.math.hope.edu/isi/data/chap10/DraftLottery.txt) into the [Correlation/Regression applet](http://www.rossmanchance.com/applets/RegShuffle.htm?hideExtras=2). Check the *Correlation Coefficient* box and confirm that the correlation coefficient is -0.226. 
+
+- Check the *Show Shuffle Options* box and select the *Correlation* radio button. Then press *Shuffle Y-values* to simulate one fair, random lottery. Record the value of the correlation coefficient.
+- Press *Shuffle Y-values* four more times to generate results of four more fair, random lotteries. **Record the values** of the five shuffled correlation coefficients that you found.
+- **Compare** your shuffled statistics with the observed one.
+
+## Build a Null Distribution
+
+3. Change the Number of Shuffles from 1 to 995 and press Shuffle Y-values to simulate 995 more fair, random lotteries. Look at the null distribution of these 1,000 correlation coefficients. Where is this distribution centered? Why does this make sense?
+
+4. Use the null distribution to obtain a p-value for this test. **Record** the p-value, along with a *sentence* explaining what it means in the *context* of this study.
+
+## What happened?
+
+> The irregularity can be attributed to improper mixing of the balls used in the lottery drawing process. (Balls with birthdays early in the year were placed in the bin first, and balls with birthdays late in the year were placed in the bin last. Without thorough mixing, balls with birthdays late in the year settled near the top of the bin and so tended to be selected earlier.) 
+
+## 1971
+
+The following year, in 1971, the mixing process was improved. The correlation coefficient turned out to be $r = 0.014$.
+
+5. Use your simulation results to approximate the p-value for the 1971 draft lottery. Is there any reason to suspect that this 1971 draft lottery was not conducted with a fair, random process? **Record** the following sentences:
+- *Explain* the reasoning behind your conclusion. 
+- *Also explain* why you don't need to paste in the data from the 1971 lottery first.
+
+**Operator:** Enter your explanations into [this form](https://goo.gl/forms/TymdXgClkNJJB8N52).

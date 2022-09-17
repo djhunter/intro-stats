@@ -1,0 +1,233 @@
+---
+title: "Section 6.1"
+date: "October 21, 2019"
+output: 
+  word_document:
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    center: true
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+  html_document:
+    theme: cosmo
+---
+
+# Hour Exam #2 Results
+
+----
+
+```{r, echo=FALSE, warning=FALSE}
+library(ggplot2)
+rosterdf <- read.csv("../rosterf19.csv", stringsAsFactors = FALSE)
+eps <- log(0.6)/log(0.55)
+fun.1 <- function(x) 100*(x/100)^(log(0.6)/log(0.55))
+rosterdf$he2 <-  round(fun.1(rosterdf$he2raw), 1)
+rosterdf$he1 <-  round(fun.1(rosterdf$he1raw), 1)
+ggplot(rosterdf) + geom_density(aes(he1), fill = "red", alpha = 0.2) + 
+  geom_density(aes(he2), fill = "blue", alpha = 0.2) + 
+  labs(x = "Hour Exam 1 (pink) and Hour Exam 2 (blue)")
+```
+
+# Data Analytics Major
+
+## Major requirements
+
+- Math: 5 (Stats), 9, 10 (Calculus), 130 (Probability and Statistics)
+- Computer Science: 10, 30 (Programming), 116 (Machine Learning), 125 (Databases), 128 (Big Data), 195 (Senior Seminar)
+- Business: 12 (Microeconomics), 20 (Forecasting), 115 (Game Theory), 138 (Management Science)
+
+More info: https://www.westmont.edu/data-analytics
+ 
+## What to take this spring
+
+Choose one (or more) of:
+
+- MA 9 or MA 10: Calc I or II
+- EB 12: Microeconomics
+- CS 30: (if you already have CS 10)
+- CS 116 (if you already have CS 30)
+
+# 6.1: Comparing two Groups: Quantitative response
+
+## Quantitative vs. Categorical 
+
+- *Categorical variables*
+    - Labels/Categories: arithmetic doesn't make sense
+    - Gender, color, whether or not something happened, etc.
+- *Quantitative variables*
+    - Values can be added, subtracted, etc.
+    - Usually things that you measure.
+    - Age, height, weight, distance, time, etc.
+    
+## Graphical representations
+
+- *Categorical variables*
+    - Bar graphs showing proportions of sample with each value
+- *Quantitative variables*
+    - Dotplots showing values of each unit in the sample
+    
+## Notation
+
+- *Categorical variables*
+    - Statistic: sample proportion $\hat{p}$
+    - Parameter: population proportion $\pi$
+- *Quantitative variables*
+    - Statistic: sample mean $\bar{x}$, standard deviation $s$
+    - Parameter: population mean $\mu$, standard deviation $\sigma$
+
+## Quartiles
+
+- The value for which 25% of the data lie below that value is called the **lower quartile** (or 25th percentile). 
+- Similarly, the value for which 25% of the data lie above that value is called the **upper quartile** (or 75th percentile). 
+- Quartiles can be calculated by determining the median of the values above/below the location of the overall median. 
+
+## IQR and five-number summary
+
+- The difference between the quartiles is called the **inter-quartile range** (IQR), another measure of variability along with standard deviation. 
+- The **five-number summary** for the distribution of a quantitative variable consists of the minimum, lower quartile, median, upper quartile, and maximum.
+- A boxplot is a visual display of the IQR and five-number summary.
+
+
+##
+
+```{r, fig.height=3}
+height_data <- c(61,62,62,62,62,63,64,64,64,65,
+                 65,65,65,66,67,68,68,69,69,69,
+                 69,70,71,71,72,73,75,76,76,77)
+summary(height_data)
+boxplot(height_data, ylim = c(58,80), range=0, horizontal = TRUE)
+```
+
+## Old Faithful Geyser
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/wE8NDuzt8eg?rel=0&amp;start=6&amp;end=59" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+## Old Faithful eruptions 
+
+How do the five-number summary and IQR differ for inter-eruption times between 1978 and 2003?
+
+![](images/oldfaithful.png)
+
+## Inter-eruption times {fig_height=1, fig_width=1}
+
+
+|            | Minimum | Lower Quartile | Median | Upper Quartile | Maximum |
+| ---------- | ------- | -------------- | ------ | -------------- | ------- |
+| 1978 times | 42 | 58 | 75 | 81 | 95 | 
+| 2003 times | 56 | 87 | 91 | 98 | 110 |  
+
+
+<div class="col2">
+```{r, out.width = "500px", echo=FALSE}
+knitr::include_graphics("images/oldfaithful.png")
+```
+
+> - 1978 IQR = 81-58 = 23
+> - 2003 IQR = 98 - 87 = 11
+> - Less variability in 2003
+
+</div>
+
+## Old Faithful Boxplot
+
+
+```{r, fig.align="center", echo=FALSE}
+knitr::include_graphics("images/ofboxplot.png")
+```
+
+## Boxplots and outliers
+
+
+<div class="col2">
+```{r, out.width = "450px", echo=FALSE}
+knitr::include_graphics("images/oldfaithful.png")
+knitr::include_graphics("images/ofboxplot.png")
+```
+
+- A data value that is more than 1.5 × IQR above the upper quartile or below the lower quartile is considered an outlier. 
+- Outliers are represented by dots, with the whiskers extending to 1.5 × IQR beyond the quartiles.
+
+</div>
+
+# Exploration 6.1A: Haircut prices
+
+## {data-background="https://media.tenor.com/images/8b8df57f08fe3bd6e112951244a6fdd2/tenor.gif" data-background-size="contain"}
+
+## Haircut prices
+
+```{r, fig.align="center", echo=FALSE}
+knitr::include_graphics("images/haircuts.png")
+```
+
+## Preview
+
+Do women pay more than men for haircuts? Is this a statistical tendency or always true? By how much do women spend more than men, on average? How much do haircut prices vary within a sex as well as between sexes?
+
+To investigate these questions a professor asked students in her class to report the cost of their most recent haircut, along with their sex.
+
+- Explanatory variable: gender (categorical)
+- Response variable: price of haircut (quantitative)
+
+## Descriptive Statistics Applet
+
+1. **Operator:** Copy the [haircut data](http://www.math.hope.edu/isi/data/chap6/Haircuts.txt) to the clipboard. Open the [Descriptive Statistics applet](http://www.rossmanchance.com/applets/Dotplot.html). 
+    - Check the *Stacked* check box 
+    - Keep the Includes header box checked and press *Clear*. *Paste the data* into the Sample data box and press *Use Data*.  Check the *Actual* boxes to show the means and standard deviations. 
+    - **Record** the sample size, mean haircut price, and standard deviation (SD) of haircut prices for each sex. 
+    - Which sex has the larger mean haircut price? 
+    - Which sex has the larger SD of haircut prices? 
+
+## Association?
+
+2. Address these questions based on the previous graphs and statistics. 
+    - Do women pay more than men for haircuts? If so, is this a statistical tendency (i.e., true on average) or always true?
+    - By how much do women spend more than men, on average? **Record** a statistic, using appropriate symbols.
+
+3. Do you predict that the difference will turn out to be statistically significant? (You will learn how to assess statistical significance in the next section.) **Record** a pair of hypotheses to test, using appropriate symbols.
+
+## Five-number summary
+
+The individual values of the haircut prices that you have been analyzing are:
+
+```
+Women (n = 37):
+ 0,   0,   0,  15,  15,  15,  20,  20,  20,  25,  30,  30,  35,  35,  35,
+40,  45,  45,  45,  45,  50,  50,  50,  50,  55,  60,  65,  70,  70,  75, 
+90, 110, 120, 120, 150, 150, 150
+Men (n = 13):
+0, 0, 0, 14, 15, 15, 20, 20, 20, 22, 23, 60, 75
+```
+
+4.  **Compute by hand** the quartiles. Then compute the IQR. (Do Men first.)
+
+5. Check your answers by using the applet. **Record** the side-by-side boxplots.
+
+## Applet and R disagree!?
+
+```{r}
+summary(c(0,0,0,14,15,15,20,20,20,22,23,60,75))
+summary(c(0,0,0,15,15,15,20,20,20,25,30,30,35,35,
+          35,40,45,45,45,45,50,50,50,50,55,60,65,
+          70,70,75,90,110,120,120,150,150,150))
+```
+
+## Skew and Sensitivity
+
+6. Which group (male or female) shows more skew? **Record** how you are deciding, using means and medians.
+
+7. **Operator:** In the applet data, change the male haircut price of $75 to $150. Report the new mean, median, SD and IQR. **Record** the effect of an outlying value on each statistic.
+- mean:
+- median:
+- standard deviation:
+- inter-quartile range:
+
+

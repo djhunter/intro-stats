@@ -1,0 +1,57 @@
+---
+title: "Selected Review Problems for Final Exam"
+date: "December 6, 2019"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: false
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    transition: slide
+    center: true
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+
+# An incomplete collection of Final Exam Review Problems
+
+## For Problems with answers... 
+
+See study Guides 1-4
+
+# Chapter 10: Two Quantitative Variables
+
+## {data-background="images/probs1014ff.png" data-background-size="contain"}
+
+## {data-background="images/prob1044.png" data-background-size="contain"}
+
+## {data-background="images/prob1046abcd.png" data-background-size="contain"}
+
+## {data-background="images/prob1054.png" data-background-size="contain"}
+
+## {data-background="images/prob10518.png" data-background-size="contain"}
+
+# Chapter 1: Introductory Concepts
+
+## {data-background="images/prob158.png" data-background-size="contain"}
+
+# Chapter 3: Tests for a single proportion and single mean; confidence intervals
+
+## {data-background="images/prob3ce2.png" data-background-size="contain"}
+
+## {data-background="images/prob3ce21.png" data-background-size="contain"}
+
+# Chapter 4: Generalization and Causation
+
+## {data-background="images/prob4ce6.png" data-background-size="contain"}
+
+# Chapter 5: Two Proportions
+
+## {data-background="images/prob5ce5.png" data-background-size="contain"}
+
+# Any Requests?

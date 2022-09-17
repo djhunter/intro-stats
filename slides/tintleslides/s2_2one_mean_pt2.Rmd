@@ -1,0 +1,242 @@
+---
+title: "Section 2.2, Part II"
+date: "September 13, 2019"
+output: 
+  word_document:
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    center: true
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(comment = NA)
+```
+
+# Section 2.2: Inference for a single quantitative variable, Part II
+
+## Review: Standard deviations
+
+There are (at least) three different kinds of standard deviation:
+
+- $s$, the standard deviation of the *sample*
+- $\sigma$, the standard deviation of the *population*
+- $\text{SD}_\text{null}$, the standard deviation of the *null distribution*
+
+These will often/always have different values, and $\text{SD}_\text{null}$ will always be smaller, because each point of the null distribution is obtained by averaging.
+
+## Review: p-value
+
+From page 38:
+
+The p-value is the probability of obtaining a value of the statistic at least as extreme as the observed statistic when the null hypothesis is true. We can estimate the p-value by finding the proportion of the simulated statistics in the null distribution that are at least as extreme (in the direction of the alternative hypothesis) as the value of the statistic actually observed in the research study.
+
+## Theory-Based Test
+
+- Last time we saw how to do inference on a single quantitative variable using a simulation.
+- The simulation was tricky, because we had to generate a "fake" population to draw from to make the null distribution.
+- Today we'll explore the *theory-based* test for a single mean.
+
+## Recall: Estimating elapsed time {data-background="https://images-na.ssl-images-amazon.com/images/I/51MQQ3o5E8L._SY355_.jpg" data-background-size="contain"}
+
+- Subjects were told that they'd listen to music and asked questions when it was over. 
+- Researchers Played 10 seconds of the Jackson 5’s "ABC" and asked how long they thought it lasted.
+- Can the subjects accurately estimate the length? 
+
+## Hypotheses
+
+- Null Hypothesis: People will accurately estimate the length of a 10 second-song snippet, on average. 
+    - $H_0: \mu = 10$
+- Alternative Hypothesis: People will not accurately estimate the length of a 10 second-song snippet, on average. 
+    - $H_a: \mu \neq 10$
+
+## Data 
+
+```{r, echo = TRUE}
+timedata <- 
+  read.table("http://www.isi-stats.com/isi/data/chap3/TimeEstimate.txt", 
+  header = TRUE)
+timedata
+```
+
+## Dotplot of time estimate data
+
+```{r, echo = TRUE, fig.height=3, fig.width=10, fig.align='center'}
+stripchart(timedata, method = "stack", at=0, pch=16, offset = 0.4)
+```
+
+## Mean and Standard Deviation
+
+```{r, echo=TRUE}
+mean(timedata$Estimate)
+sd(timedata$Estimate)
+```
+
+## Theory-based test
+
+- The null distribution that we developed can be predicted with theory-based methods.
+- We know it will be centered on the mean given in the null hypothesis.
+- We can also predict its shape and its standard deviation.
+
+## The t-distribution
+
+- The shape is very much like a normal distribution, but slightly different and is called a t-distribution.
+- The t-distribution has slightly "heavier" tails than a normal distribution.
+- The t-statistic is the standardized statistic we use with a single quantitative variable and can be found using the formula:
+$$
+t  = \frac{\bar{x} - \mu}{s/\sqrt{n}}
+$$
+
+Here, $s$ is the sample standard deviation. (On board.)
+
+## Validity conditions
+
+The theory-based test for a single mean requires *either*:
+
+- The quantitative variable should have a symmetric distribution, *or*,
+- The sample size is at least 20 and the sample distribution is not strongly skewed. 
+
+## Simulated sample means
+
+Last time, we did a simulation to get a null distribution for this data.
+
+```{r, echo=FALSE, fig.height=4.2, fig.width=10}
+simpop <- 
+  read.table("http://www.isi-stats.com/isi/data/chap3/TimePopulation.txt", 
+  header = TRUE)
+set.seed(125)
+sim_stats <- replicate(1000, mean(sample(simpop$Estimate, 48, replace = TRUE)))
+stripchart(sim_stats, method = "stack", at=0, pch=19, offset = 0.7)
+```
+
+## Simulated t-statistics
+
+Using the formula, we get simulated t-statistics:
+
+```{r, echo = FALSE, fig.height=4.2, fig.width=10}
+library(ggplot2)
+sim_tstats <- (sim_stats - 10)/(sd(timedata$Estimate)/sqrt(48))
+ssdf <- data.frame(sim_tstats = sim_tstats)
+ggplot(ssdf, aes(x=sim_tstats)) + geom_histogram(binwidth = 0.12, aes(y=..density..)) +
+   stat_function(fun=dt, color="red", 
+                args = list(df = 47))
+
+```
+
+## Convert t-stat to p-value
+
+To get a p-value from a t-statistic, you need some sort of calculator or software.
+
+```{r, echo=TRUE}
+tstat <- (mean(timedata$Estimate) - 10)/sd(timedata$Estimate/sqrt(48))
+pt(tstat, 47, lower.tail = FALSE)
+```
+
+# Exploration 2.2, Continued
+
+## Preview
+
+Research question: Do Westmont students get less than the recommended 8 hours of sleep per night?
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/dqONk48l5vY?rel=0&amp;start=50&amp;end=120" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+## Data
+
+1. Enter [our class data](https://math.westmont.edu/ma5/classSleep.txt) into the [Descriptive Statistics applet](http://www.rossmanchance.com/applets/Dotplot.html?hideExtras=1) (including the one-word variable name at the top) in the Sample data box and press *Use Data*. 
+
+## Sample Statistics
+
+2. Using *appropriate notation*, **record** the sample mean, the sample standard deviation, and the sample size, which the applet will calculate for you if you click *Actual*. You will need the quantities, correctly labeled, to use in the formulas that follow.
+
+## Theory-based t-test
+
+> **Validity Conditions:** The quantitative variable should have a symmetric distribution *or* you should have at least 20 observations and the sample distribution should not be strongly skewed.
+
+3. Would you consider the validity conditions met for population 1? **Record** a complete sentence explaining why or why not.
+
+## Central Limit Theorem
+
+The central limit theorem implies that the distribution of sample means is normal when the population distribution is normal, or is approximately normal when the sample size is large. Moreover,
+
+$$
+\begin{align*}
+\mbox{MEAN}(\bar{x}) & =  \mu \\
+\mbox{SD}(\bar{x}) &= \sigma/\sqrt{n} \approx s/\sqrt{n}
+\end{align*}
+$$
+
+4. The **standard error** $s/\sqrt{n}$ is a theoretical approximation of the standard deviation of the null distribution. **Record** $s/\sqrt{n}$, and compare it to the simulated $\text{SD}_\text{null}$, which you reported in #12 of Part I. Are these values similar?
+
+## The t-statistic
+
+5. We can find a general formula for a standardized statistic for a test on a population mean. In particular, the t-statistic for a test on a population mean can be found by using this formula:
+$$
+t = \frac{\bar{x} - \mu_0}{s/\sqrt{n}}
+$$
+**Record** the value of the t-statistic for your class data.
+
+## Strength of Evidence
+
+6. The good news is that t-statistics can be interpreted very similarly to z-statistics. Namely, values greater than 2 (or less than -2) provide strong evidence against the null hypothesis. Interpret what the t-statistic is telling you about strength of evidence against the null hypothesis.
+
+## One Mean Applet
+
+7. Return to the [One Mean applet](http://www.rossmanchance.com/applets/OneSample.html?hideExtras=1), and set the *Sample Size* to match the class data. Generate a null distribution with at least 1000 dots.  Above the null distribution, change the choice of statistic from mean to *t-statistic*. Check the box to *Overlay t-Distribution*. Does this theoretical model do a reasonable job of predicting the behavior of the simulated distribution of t-statistics? **Presenter:** Be ready to explain how you are deciding.
+
+## Simulation and Theory
+
+8. Use the applet to count the number of simulated samples with a t-statistic less than (our alternative hypothesis) the *observed value of your t-statistic* to find the approximate p-value (based on t-statistics). **Record** this p-value.
+
+9. The theory-based p-value (one-sample t-test) is also provided in the output. **Record** the theory-based p-value.
+
+10. We just found the p-value three different ways. **Record** a short name or description of these three different methods.
+
+## Extension #1
+
+11. Suppose our observed statistic was $\bar{x} = 7.75$, instead of what it actually was. **Record** and compare the theory-based p-value with the simulation-based p-value, using the One Mean Applet.
+
+12. With this new observed statistic, are the results still statistically significant? Do you think there is any *practical* significance in these new results?
+
+## Extension #2
+
+13. Now let's assume a different shape for the population of sleep times. Use the radio button
+to select Pop 2. 
+
+- **Recorder:** Describe how the shape of this population is different from the Pop 1. Also
+**record** the population mean and standard deviation (SD).
+- Next generate a null distribution of sample means, and determine an approximate p-value for our original class results. **Record** this p-value. 
+
+14. Experiment with different values of the observed statistic. Does the theory-based p-value appear to be a valid approximation of the simulated p-value for population 2 and this sample size? Explain how you are deciding.
+
+## Sensitivity to population assumptions
+
+15. Did the assumed shape of the population (Pop 1 vs. Pop 2) make a substantial difference on the distribution of sample means? Justify your answer. 
+
+16. Did the assumed shape of the population (Pop 1 vs. Pop 2) make a substantial difference
+on the strength of evidence against the null hypothesis? Explain.
+
+## Extension #3: Another applet
+
+17. The theory-based test can also be done using the [Theory-Based Inference applet](http://www.rossmanchance.com/applets/TBIA.html?hideExtras=1). Select the *One mean* scenario, check the *Test of significance* box, and enter the appropriate values for $n$, $\bar{x}$, $s$, and the hypotheses. **Record** your p-value and t-statistic. Compare these values to your answers to #9 and #5. Are they the same?
+
+18. Keep the hypotheses and $n$ and $s$ the same, and experiment with different values of $\bar{x}$. **Record** the largest value of $\bar{x}$ that gives a p-value less than 0.05.
+
+## Extension #4: Inference on the median
+
+19. In the applet, above the null distribution, there is a radio button for *median*. What does this change about the null distribution? (What do the dots mean now?) Use the median that you recorded in #6 to obtain a p-value for the following hypotheses, where $M$ now stands for the population median.
+$$
+H_0: M = 8 \\
+H_a: M < 8
+$$
+**Record** this p-value. How does the strength of evidence compare to the test of means that you did previously?

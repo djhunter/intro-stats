@@ -1,0 +1,199 @@
+---
+title: "Section 7.2"
+date: "March 26, 2018"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    center: true
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+
+
+# Simulation-based approach for analyzing paired data
+
+## Rounding first base
+
+<div class="column-left">
+- Imagine you’ve hit a line drive and are trying to reach second base.
+- Does the path that you take *(narrow vs. wide)* to round first base make much of a difference? 
+</div>
+
+<div class="column-right">
+![](images/roundingfirst.png)
+</div>
+
+## Rounding first data
+
+
+<div class="column-left">
+- Paired design with repeated measures.
+- 22 runners, each runner ran bases using both angles.
+- Randomly assigned which angle goes first.
+</div>
+
+
+<div class="column-right">
+```{r, echo=FALSE}
+firstbase <- read.table("FirstBase.txt", header = TRUE)
+firstbase
+```
+</div>
+
+----
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.height=5, fig.width=12, fig.align="center"}
+library(cowplot)
+firstbase <- cbind(runner = rownames(firstbase), firstbase)
+fbstacked <- data.frame(firstbase[1], stack(firstbase[2:3]))
+colnames(fbstacked) <- c("runner", "time", "angle")
+p1 <- ggplot(fbstacked, aes(x=time, color=angle, fill=angle)) + geom_density(alpha=0.5)
+p2 <- ggplot(fbstacked, aes(x=angle, y=time)) + geom_line(aes(group=runner, color=factor(runner))) + geom_point(aes(color=factor(runner)))
+plot_grid(p1,p2)
+```
+
+```{r, echo=FALSE, comment=NULL}
+library(plyr)
+print(ddply(fbstacked, ~angle, summarize, mean=mean(time), sd=sd(time)), row.names=FALSE)
+```
+
+## Difference = narrow - wide
+
+<div class="column-left">
+```{r, echo=FALSE}
+firstbase$difference <- firstbase$narrow - firstbase$wide
+firstbase
+```
+</div>
+
+
+<div class="column-right">
+```{r, echo=FALSE, fig.width=5, fig.height=4, warning=FALSE, message=FALSE}
+ggplot(firstbase, aes(x=difference)) + geom_dotplot()
+```
+
+</div>
+
+## Difference = narrow - wide
+
+<div class="column-left">
+```{r}
+mean(firstbase$difference)
+sd(firstbase$difference)
+```
+
+\[
+\begin{align}
+\bar{x}_d &= 0.075 \\
+s_d &\approx 0.0883
+\end{align}
+\]
+
+</div>
+
+
+<div class="column-right">
+```{r, echo=FALSE, fig.width=5, fig.height=4, warning=FALSE, message=FALSE}
+ggplot(firstbase, aes(x=difference)) + geom_dotplot()
+```
+
+</div>
+
+## Simulation
+
+\[
+\begin{align}
+H_0: \mu_d &= 0 \\
+H_a: \mu_d &\neq 0
+\end{align}
+\]
+
+- The null basically says the running path doesn’t matter.
+- So we can use our same data set and, for each runner, **randomly decide** which time goes with the narrow path and which time goes with the wide path and then compute the difference. 
+- After we do this for each runner, we then **compute a mean difference.** 
+- We will then repeat this process many times to develop a null distribution. (See PPT animation.)
+
+# Exploration 7.2
+
+## Jumping Jacks vs Bicycle Kicks
+
+<div class="column-left">
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/dmYwZH_BNd0?rel=0&amp;start=27" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+</div>
+
+<div class="column-right">
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/Fz2Jc2x883k?rel=0&amp;start=20" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+</div>
+
+## Preview
+
+
+<div class="column-left">
+Which common exercise, jumping jacks or bicycle kicks, raises your heart rate more?
+
+\[
+\begin{align}
+H_0: \mu_d &= 0 \\
+H_a: \mu_d &\neq 0 \\
+\bar{x}_d &\approx 11.9545
+\end{align}
+\]
+</div>
+
+<div class="column-right">
+```{r, echo=FALSE}
+jjbike <- read.table("JJvsBicycle.txt", header=TRUE)
+#jjbike$difference <- jjbike$JJ - jjbike$bicycle
+print(jjbike)
+```
+</div>
+
+## Simulation using cards
+
+1. **Facilitator**. Examine your group's set of cards. Make sure you have 22. Observe the front and back of a card. How are they similar? How are they different? How are they related to the observed data?
+
+2. Shuffle the cards well, making sure to randomize which side is facing up. Lay out the cards to simulate a sample, under the null hypothesis that there is no association between the type of exercise and heart rate. Calculate and **record** your *simulated mean difference.* **Presenter:** Write your group's simulated mean difference on the board.
+
+
+## Simulation using applet
+
+2. Go to the [Matched Pairs applet](http://www.rossmanchance.com/applets/MatchedPairs/MatchedPairs.htm?hideExtras=1). Clear the data, and paste in the data from [JJvsBicycle.txt](http://www.math.hope.edu/isi/data/chap7/JJvsBicycle.txt), and click *Use Data*. **Facilitator:** Have your group discuss the following: 
+    + In the top graph, what do the red dots, blue dots, and gray lines represent?
+    + In the bottom graph, what do the dots represent? 
+
+3. Check the box for *Randomize* and then click on the Randomize button. Write a sentence describing the animation. **Facilitate:**
+    + What do the coin flips determine? 
+    + How is the dot on the null distribution calculated?
+
+## Simlated Null Distribution
+
+4. Perform 1000 (or more) randomizations, and **record** a *p-value* for the above test. In the context of the problem (exercise), **record** a sentence saying what this p-value tells us. 
+
+5. Compute a 95% 2SD *confidence interval* for the mean difference $\mu_d$. Which *standard deviation* do you use, and what it it's value? **Record** a sentence interpreting this confidence interval in the context of this problem. Your sentence should refer to the endpoints of the interval, and should have something to say about exercise and heart rate.
+
+## Now do it wrong
+
+6. Let's see what happens if we ignore the pairing and *incorrectly* analyze this data using the techniques of Chapter 6. 
+Go to the [Multiple Means applet](http://www.rossmanchance.com/applets/AnovaShuffle.htm?hideExtras=2) and analyze the data as though we have two independent samples, as you did in Chapter 6. (NB: The heart rate data are unstacked.) **Record** the *mean* and *standard deviation* of the simulated null distribution, report the two-sided *p-value*, and report a 95% 2SD *confidence interval*. 
+
+## Consequences of doing it wrong
+
+7. Compare the *incorrect* SD of the null distribution obtained using the two-independent-samples method to that obtained using the paired samples method. Which SD is larger?
+
+8. Compare the *incorrect* p-value obtained using the two-independent-samples method to that obtained using the paired samples method. Which p-value is smaller and hence provides stronger evidence against the null hypothesis of no difference?
+
+9. Compare the *incorrect* CI (independent samples) with the paired samples CI. Which is wider?
+
+## Moral
+
+**The right way to analyze the data depends on the study design.** 
+
+If you get the *design* wrong, you will apply the wrong statistical technique, and your p-value and confidence intervals will be wrong, and your conclusions will be wrong.

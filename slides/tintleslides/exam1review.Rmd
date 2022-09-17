@@ -1,0 +1,51 @@
+---
+title: "Review for Hour Exam #1"
+date: "September 18, 2019"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    center: true
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(comment = NA)
+```
+
+# Hour Exam #1 Review
+
+## Academic Integrity Pledge
+
+I understand that giving or receiving help on this exam is a violation of academic regulations and is punishable by a grade of F in this course.  This includes looking at other students' exams and/or allowing other students, actively or passively, to see answers on my exam.  This also includes revealing, actively or passively, any information about the exam to any member of Dr. Hunter's MA-005 classes who has not yet taken the exam.  I pledge not to do any of these things.
+
+## Academic Integrity Pledge
+
+I understand that giving or receiving help on this exam is a violation of academic regulations and is punishable by a grade of F in this course.  This includes looking at other students' exams and/or allowing other students, actively or passively, to see answers on my exam.  This also includes revealing, *actively or passively,* any information about the exam to any member of Dr. Hunter's MA-005 classes who has not yet taken the exam.  I pledge not to do any of these things.
+
+## Bible Project Videos
+
+https://thebibleproject.com/
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/HGHqu9-DtXk?rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+## Overview (on board)
+
+## Selected review problems (on board)
+
+- 1.4.4-1.4.6
+- 1.CE.15
+- 2.2.7
+- 2.2.11, 2.2.12, 2.2.14
+- 2.CE.9, 2.CE.10 (BOB wrong)
+

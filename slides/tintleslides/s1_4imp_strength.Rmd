@@ -1,0 +1,159 @@
+---
+title: "Section 1.4"
+date: "September 4, 2019"
+output: 
+  word_document:
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    center: true
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(comment = NA)
+```
+
+# Section 1.4: What Impacts Strength of Evidence?
+
+## Introduction
+
+- We’ve now looked at tests of significance and have seen how p-values and standardized statistics give information about the strength of evidence against the null hypothesis.
+- Today we’ll explore *factors that affect strength of evidence*. 
+
+# Example 1.4: Predicting Elections from Faces
+
+## Which face looks more competent?
+
+![](http://math.westmont.edu/img/wisc_senate_04.png)
+
+## Predicting elections
+
+- Do voters make judgments about candidates based on facial appearances?  
+- More specifically, can you predict an election by choosing the candidate whose face is more competent-looking?  
+- Participants were shown two candidates and asked who has the more competent-looking face.
+
+## Predicting elections
+
+They determined which face was the more competent for the 32 Senate races in 2004.
+
+- Observational units: The 32 Senate races
+- Variable: If the method predicted the winner correctly
+
+## Hypotheses and Data 
+
+Let $\pi$ be the long-run proportion of elections that are won by the more competent-looking candidate.
+
+- Null Hypothesis: Competent-looking candidates are equally likely to win as others.
+    - $H_0 : \pi = 0.5$
+- Alternative Hypothesis: Competent-looking candidates are more likely to win.
+    - $H_a : \pi > 0.5$
+- Data: The more competent-looking candidate won 23 of 32 elections. ($\hat{p} = 23/32 \approx 0.719$)
+
+## Significance?
+
+Let's use the [One Proportion applet](http://www.rossmanchance.com/applets/OneProp/OneProp.htm) to test these hypotheses and get a p-value. Then consider changing:
+
+- The difference between the observed statistic and the null value.
+- The sample size.
+- The alternative hypothesis.
+
+## Two-sided tests
+
+- The researchers in this study predicted that competent-looking candidates would be elected more often.
+
+Suppose they had no such prior belief. Then the alternative to 
+\[H_0 : \pi = 0.5 \]
+would be
+\[H_a : \pi \neq 0.5 \]
+
+An alternative hypothesis using "$\neq$" is called a *two-sided alternative*.
+
+## Two-sided p-value
+
+>- In a two-sided test the alternative can be concluded when sample proportions are in either tail of the null distribution. [See  applet](http://www.rossmanchance.com/applets/OneProp/OneProp.htm). 
+>- Remember that the p-value is the probability (assuming the null hypothesis is true) of obtaining a proportion that is equal to or more extreme than the observed statistic.
+>- In a two-sided test, "more extreme"" goes in both directions. 
+>- Therefore, the p-value will be *twice as large* as the p-value for a one-sided test.
+
+## Predicting House Elections
+
+- Researchers also predicted the 279 races for the House of Representatives in 2004.
+- They correctly predicted the winner in 189/279 ≈ 0.677, or 67.7% of the races.
+- The House’s sample percentage (67.7%) is bit smaller than the Senate (71.9%), but that the sample size is larger (279) than for the senate races (32).
+- Do you expect the strength of evidence to be stronger, weaker, or essentially the same for the House compared to the Senate? [See  applet](http://www.rossmanchance.com/applets/OneProp/OneProp.htm).  
+
+# Exploration 1.4: Competitive Advantage to Uniform Colors?
+
+## Olympic Combat Sports
+
+## {data-background="https://66.media.tumblr.com/134d2ba93f1e3dd69179417fc180f115/tumblr_myv9uehMKO1qba41po1_500.gif" background-data-size="contain"}
+
+## Preview
+
+0. Observational units, variable, statistic?
+
+1. Let's suppose that going into this study, the researchers wanted to see whether the color red had an advantage over blue. In other words, *the research conjecture is that competitors that wear red uniforms will win a majority of the time.* State the null and the alternative hypotheses in words.
+
+2. We will let $\pi$ represent the probability that a competitor wearing a red uniform wins. Using this, restate the hypotheses using symbols.
+
+## Simulate
+
+3. Researchers Hill and Barton used data collected on the results of 457 matches and found that the competitor wearing red won 248 times, whereas the competitor wearing blue won 209 times. 
+    - What is the statistic we will use? **Recorder:** Record the observed value of the *statistic* in this study.
+    - Use the [One Proportion applet](http://www.rossmanchance.com/applets/OneProp/OneProp.htm) to test our hypothesis. **Recorder:** Record a *p-value* and write a conclusion. Also write down the *mean and standard deviation* from your null distribution when the proportion of successes is used for the variable on the horizontal axis. You will need this later.
+    
+## 1-sided or 2-sided
+
+Now suppose the researchers did not necessarily think that red would win more often, but they also didn't necessarily think that blue would win more often. They were just interested in *whether one color would win more often than the other.* 
+
+- Original research question: "Will red win more often?"
+- New research question: "Will one color would win more often than the other?" 
+
+## 1-sided or 2-sided
+
+Now consider the research question, "Will one color would win more often than the other?" 
+
+4. If we let $\pi$ equal the probability that a competitor wearing a red uniform wins, state the hypotheses for this study in symbols using a two-sided alternative.
+
+5. Use the [applet](http://www.rossmanchance.com/applets/OneProp/OneProp.htm) to approximate the p-value for our observed proportion of red winning 248 times out of 457 matches, but now select the "Two-sided" check box to find the "two-sided p-value." **Recorder:** Record the new hypotheses and p-value.
+
+## Two-sided tests
+
+- You should have seen that when the alternative hypothesis is two-sided, the p-value is computed by looking at how extreme the observed data is in both tails on the null distribution. This makes the p-value about twice as large. 
+
+- Because the p-value for a two-sided test is about twice as large as that for a one-sided test, they provide less evidence against the null hypothesis. However, two-sided tests are used more often in scientific practice.
+
+## Distance from null value
+
+6. For this study the null value was 0.50 and the observed sample statistic was about 0.543. Suppose a larger proportion, say 57% of the 457 matches, were won by red.
+    - Go back to the [One Proportion applet](http://www.rossmanchance.com/applets/OneProp/OneProp.htm) and approximate the (one-sided) p-value for this situation where again we are testing to see whether the overall probability of winning is more than 0.50. **Record** the p-value.
+    - Is your p-value larger or smaller than your original one? **Presenter:** Be ready to explain why this makes sense.
+
+## Distance from null value
+
+> The farther away the observed statistic is from the average value of the null distribution, the more evidence there is against the null hypothesis.
+
+## Sample size
+
+7. The data for this study came from four combat sports in the 2004 Olympics. One of those sports was boxing. The researchers found that out of the 272 boxing matches, 150 of them were won by competitors wearing red. This proportion of $150/272 \approx 0.551$ is similar to the overall proportion of times the competitor wearing red won. Let's see what the smaller sample size does to the strength of evidence. Use the [One Proportion applet](http://www.rossmanchance.com/applets/OneProp/OneProp.htm) to test the same hypotheses as we originally did, but with just the boxing matches as our sample. **Record** a p-value.
+
+## Sample Size 
+
+- Compare the null distribution you generate in this case to that generated in #3. In particular, how do the center (mean) and variability (standard deviation) compare?
+- What is your new p-value? Is it larger or smaller than your original p-value from #3? Explain why this makes sense.
+- **Operator:** [Use this form](https://docs.google.com/forms/d/e/1FAIpQLSfJhhC2xn_SOAdPp30JL8cFKn43qaQRSp8eiYy4s9i-3Ujozg/viewform?usp=sf_link) to write a sentence explaining the relationship between sample size and the strength of evidence against the null hypothesis.
+
+## Graphical Summary
+
+**Presenter:** On the board, summarize the three things that we have talked about today that affect the strength of evidence. Use a chart or arrows or some other notational format. Make sure you indicate which way each effect goes.

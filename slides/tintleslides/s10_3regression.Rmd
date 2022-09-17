@@ -1,0 +1,235 @@
+---
+title: "Section 10.3"
+date: "November 22, 2019"
+output: 
+  word_document:
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+
+# Section 10.3: Least Squares Regression
+
+## Regression Line
+
+- If we decide an association is linear, it’s helpful to develop a mathematical model of that association. 
+- Helps make predictions about the response variable. 
+- The least-squares regression line is the most common way of doing this.  
+
+## Review: Linear Functions
+
+>- A *linear function* has an equation of the form $f(x) = a + bx$.
+>- The graph a function is the set of all points of the form $(x, f(x))$.
+>- The graph of a linear function is a straight line.
+>- The slope of this linear function is the constant $b$. The slope is the vertical change over the horizontal change (rise/run).
+>- The $y$-intercept of this function is the constant $a$.
+
+# Regression Line
+
+## {data-background="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Cptvdisplay.jpg/1200px-Cptvdisplay.jpg" data-background-size="contain"}
+
+## Line of Best Fit 
+
+- Unless the points form a perfect line, there won’t be a single line that goes through every point.  
+- We want a line that gets as close as possible to all the points.
+- *Note:* Correlation $\neq$ Causation
+
+```{r, echo=FALSE, fig.width=4, fig.height=3, fig.align='center'}
+library(ggplot2)
+tvlife <- read.table("http://www.math.hope.edu/isi/data/chap10/TVLife.txt", header = TRUE)
+ggplot(tvlife, aes(x=TVsperK, y=LifeExpectancy)) + geom_point() +geom_smooth(method=lm, se=FALSE)
+```
+
+## Residuals
+
+- The vertical distances between the data points and the line are called **residuals**. 
+- The **regression line** minimizes the sum of the squares of the residuals.
+
+```{r, echo=FALSE, fig.width=4, fig.height=3, fig.align='center', warning=FALSE}
+library(broom)
+mod <- lm(tvlife$LifeExpectancy ~ tvlife$TVsperK)
+df <- augment(mod)
+ggplot(df, aes(x=tvlife.TVsperK, y=tvlife.LifeExpectancy)) + geom_point() +geom_smooth(method=lm, se=FALSE) + geom_segment(aes(xend = tvlife.TVsperK, yend=.fitted))
+```
+
+## {data-background="http://imgs.xkcd.com/comics/correlation.png" data-background-size="contain"}
+
+
+# Exploration 10.1, Revisited
+
+## {data-background="https://i.pinimg.com/originals/55/ba/1e/55ba1e76220081d02f1a2405fe3d6186.jpg" data-background-size="contain"}
+
+## The Delboeuf Illusion
+
+- Researchers gathered data to investigate the claim that dinner plates are growing
+- American dinner plates sold on eBay on March 30, 2010 (Van Ittersum and Wansink, 2011).
+- Year manufactured and diameter are given.
+
+```{r, echo=FALSE}
+plates <- read.table("http://www.math.hope.edu/isi/data/chap10/PlateSize.txt", header = TRUE)
+plates
+```
+
+## Plate Size vs. Year
+
+- Both year (explanatory variable) and diameter in inches (response variable) are quantitative.
+- Each dot represents one plate in this scatterplot.
+
+```{r, echo=FALSE, fig.width=4, fig.height=3, fig.align='center'}
+ggplot(plates, aes(x=year, y=size)) + geom_point()
+```
+
+## Plate Size vs. Year
+
+- Regression line: $\hat{y} = -14.8 + 0.0128x$
+
+```{r, echo=FALSE, fig.width=4, fig.height=3, fig.align='center'}
+ggplot(plates, aes(x=year, y=size)) + geom_point() + geom_smooth(method=lm, se=FALSE)
+```
+
+## Formulas
+
+\[ 
+\begin{align}
+\hat{y} &= a + bx && \text{regression line} \\
+b &= r \frac{s_y}{s_x} && \text{sample slope} \\
+a &= \bar{y} - b\bar{x} && \text{sample $y$-intercept} \\
+\end{align}
+\]
+
+- For a given value of $x$, $\hat{y}$ is the corresponding *predicted* value.
+- The distance $y - \hat{y}$ (actual - predicted) is a *residual*.
+
+## Residuals
+
+- The distance $y - \hat{y}$ (actual - predicted) is a *residual*.
+- The residuals can be represented by vertical line segments.
+- The regression line minimizes the residuals.
+
+```{r, echo=FALSE, fig.width=4, fig.height=3, fig.align='center', warning=FALSE}
+library(broom)
+mod2 <- lm(plates$size ~ plates$year)
+df2 <- augment(mod2)
+ggplot(df2, aes(x=plates.year, y=plates.size)) + geom_point() +geom_smooth(method=lm, se=FALSE) + geom_segment(aes(xend = plates.year, yend=.fitted))
+```
+
+
+## Predictions
+
+> - The regression line for plate size as a function of year is $\hat{y} = -14.8 + 0.0128x$.
+> - We don't have data for the year 2000, but we can **predict** that a plate from the year 2000 has size $\hat{y} = -14.8 + 0.0128(2000) = 10.8$. 
+> - Similarly, a 2001 plate has a predicted size of $-14.8 + 0.0128(2001) = 10.8128$.
+> - Notice that our model predicts that plates grow by 0.0128 inches per year. This is what the slope tells you.
+
+## Slope
+
+- Slope is the predicted change in the response variable for one-unit change in the explanatory variable.
+- Both the slope and the correlation coefficient for this study were positive.
+    + The slope is 0.0128
+    + The correlation is 0.604 
+- The slope and correlation coefficient will always have the same sign. ($b = r \frac{s_y}{s_x}$)
+
+## Interpolation vs Extrapolation
+
+- The regression equation $\hat{y} = -14.8 + 0.0128x$ should only be used to predict sizes for about 1950 to 2010 (the range of our data). This is called **interpolation**.
+- Predicting values for the response variable for values of the explanatory variable that are outside of the range of the original data is called **extrapolation**.
+    + Our model predicts that in the year 2500, Americans will be eating off of plates that are 17.2 inches in diameter.
+- **Typically, you should avoid extrapolation.**
+
+
+## {data-background="http://imgs.xkcd.com/comics/extrapolating.png" data-background-size="contain"}
+
+## {data-background="http://math.westmont.edu/img/rvsxkcd.jpg" data-background-size="contain"}
+
+## Coefficient of Determination
+
+- While the intercept and slope have meaning in the context of year and diameter, remember that  the correlation does not. It is just 0.604, with no units.
+- However, the square of the correlation (coefficient of determination or $r^2$) does have meaning.
+- $r^2  = (0.604)^2 \approx 0.365 = 36.5\%$
+- **Meaning:** 36.5% of the variation in plate size (or the response variable) can be explained by its linear association with the year (the explanatory variable).
+
+## Overview of applet
+
+Paste the [PlateSize data set](http://www.math.hope.edu/isi/data/chap10/PlateSize.txt) into the [Correlation/Regression applet](http://www.rossmanchance.com/applets/RegShuffle.htm?hideExtras=2).
+
+- Create scatterplot
+- Find correlation
+- Find regression equation
+- Find coefficient of determination
+
+# Exploration 10.3
+
+## Crime Scene Footprints {data-background="https://i.pinimg.com/originals/be/15/74/be1574970912db22164d07a5bfa9a76d.jpg" data-background-size="contain"}
+
+## Preview
+
+Can a footprint taken at the scene of a crime help to predict the height of the criminal? In other words, is there an association between height and foot length? To investigate this question, a sample of 20 statistics students measured their height (in inches) and their foot length (in centimeters).
+
+- Observational units: The 20 stats students
+- Explanatory variable: Foot length (quantitative)
+- Response variable: Height (quantitative)
+- Data indicates a moderate to strong positive linear correlation.
+
+## **Don't click on "show regression line" yet!!**
+
+Please **resist the temptation** to click on "show regression line" until you have completed Question 3 and entered your guess in the form.
+
+## Guessing game
+
+*Before you calculate the regression line,* open the preloaded foot data in the [Correlation/Regression applet](http://www.rossmanchance.com/applets/RegShuffle.htm?hideExtras=2).
+
+1. Check the *Show Movable Line* box to add a blue line to the scatterplot. Move the line until you believe your line "best" summarizes the relationship between height and foot length for these data. **Record** the resulting equation for your line (using traditional statistical notation).
+    
+## Minimize residuals
+
+*A residual is the difference between an observed response and the corresponding prediction made by the least squares regression line (residual = observed - predicted).*
+
+2. Check the *Show Residuals* box to visually represent these residuals for your blue "guess" line. **Record** the *SAE* value (Sum of Absolute Errors) and the *SSE* (Sum of Squared Errors).
+
+3. Now continue to adjust your blue line until you think you have minimized the sum of the squared residuals. **Record** your new equation and your new SSE value. **Operator:** [Enter your SSE in this form](https://goo.gl/forms/m3Womm0twhsoMCuY2).
+
+## Regression line
+
+4. *Now* check the *Show Regression Line* box and **record** the equation of the least squares regression line.  Also **record** the SSE. How does the SSE compare with the value you found in #3?
+
+5. Use the least squares regression line to predict the height of someone whose foot length is 29 cm. **Record** your prediction.
+
+6. Interpret the slope in context: The slope of the regression line predicting height based on foot length is __________, meaning that for every additional _______ cm increase in foot length, the predicted height increases by _________ inches.
+
+## Compute a residual
+
+> A **residual** is the difference between an observed response and the corresponding prediction made by the least squares regression line (residual = observed - predicted = $y - \hat{y}$).
+
+7. **Record** the residual for the person whose foot length is 32 centimeters and height is 74 inches.
+
+## Influential observations 
+
+8. Uncheck *Show Movable Line* and check the *Move Observations* box.
+    + Choose a point in the middle of the scatterplot and move it up and down.
+    + Now choose a point on the far right of the scatterplot and move it up and down.
+    
+Which of these two observations is more influential? Generally speaking, where do influential observations tend to be found? **Record** your answer.
+
+## Extrapolation
+
+9. A size 0 infant shoe is about 8cm long. **Record** the regression line's prediction for the height of an infant with this shoe size?  Why does this model produce such an unrealistic prediction?
+
+## Coefficient of Determination
+
+10. Check the *Correlation coefficient* box and the *R-squared* box. **Record** $r$ and $r^2$. Complete the following sentence:
+
+The coefficient of determination is __________%; this means that __________% of the variation in people's ___________________ is attributable to the linear association with ______________________________. 
+
+
+## {data-background="http://math.westmont.edu/img/corvscause.jpg" data-background-size="contain"}

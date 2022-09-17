@@ -1,0 +1,184 @@
+---
+title: "Sections 3.4-3.5"
+date: "September 30, 2019"
+output: 
+  word_document:
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    transition: slide
+    center: true
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+
+# Sections 3.4-3.5: Properties of Confidence Intervals
+
+## Goals for today
+
+- What factors affect the width of a confidence interval?
+- How can we think about the meaning of "95% Confidence"?
+- What are some pitfalls to watch out for when using statistical inference?
+
+## Exploration 3.4A {data-background="https://thespreadissue.files.wordpress.com/2014/12/black-friday-shopping.gif" data-background-size="contain"}
+
+## Holiday Spending Habits
+
+A November 7-10, 2013, Gallup poll asked 1,039 U.S. adults how much they planned to personally spend on Christmas gifts this year. The report cited an average of $704.
+
+1. Identify the following items in this study.
+
+- observational units? 
+- variable? Is it quantitative or categorical?
+- parameter of interest (in words and symbols)? 
+
+2. To construct a confidence interval for $\mu$, we need to know the sample size, the sample mean, and the sample standard deviation. **Record** as many of these as you know, using appropriate symbols.
+
+## The impact of Standard deviation
+
+The Gallup report did not provide $s$, the sample standard deviation.
+
+3. What property of the sample does $s$ measure?
+
+4. Suppose $s$ was equal to \$150. Use the 2SD method to **record** a 95% confidence interval for $\mu$. 
+
+5. Suppose $s$ was equal to \$300. Use the 2SD method to **record** the 95% confidence interval for $\mu$. 
+
+## The impact of sample size
+
+6. The poll involved 562 men and 477 women. Suppose the women reported planning to spend an average of \$704 with standard deviation \$150. **Record** a 2SD interval for the mean amount that women plan to spend.
+
+7. Compare the intervals you recorded in #4, #5, and #6. How do sample standard deviation and sample size affect the width of a confidence interval? What else can affect the width of a confidence interval. **Presenter:** Be ready to share.
+
+# Exploration 3.4B
+
+## What proportion is orange? {data-background="https://cdn.shopify.com/s/files/1/2028/7269/products/reeses_pieces.jpg"}
+
+## Exploration 3.4B 
+
+Reese's Pieces candies come in three colors: orange, yellow, and brown. Suppose that you take a random sample of candies and want to estimate the long-run proportion of candies that is orange. Let's assume for now (although we would not know this when conducting the study) that this long-run proportion, symbolized by $\pi$, is equal to 0.50.
+
+## Sampling Variability
+
+1. Suppose that you take a random sample of 100 Reese's Pieces candies and find the sample proportion of orange. Is there any guarantee that the sample proportion will equal 0.50?
+
+2. Suppose we calculate a confidence interval from this sample proportion. Is there any guarantee that the interval will contain the value 0.50?
+
+3. Suppose that you select another random sample of 100 Reese's Pieces candies. How would a new confidence interval compare?
+
+## Studies are random processes
+
+>- A statistical study, done with random sampling, is a random process.
+>- Two identical studies, done with exactly the same methodology, can/will have different samples.
+>   - This is called *sampling variability*. 
+>- Two identical studies, done with exactly the same methodology, could come to different conclusions, one right, and one wrong.
+>   - This is called *sampling error*. It doesn't mean anybody made a mistake. It is just "bad luck."
+>   - We can control sampling error, but it can't be eliminated.
+
+## Simulating Confidence Intervals Applet
+
+4. Use the [Simulating Confidence Intervals applet](http://www.rossmanchance.com/applets/ConfSim.html) to make a confidence interval for $\pi$. Leave the *Method* part as Proportions, Binomial, Wald, and use $\pi = 0.5$. Set $n=100$ and *Intervals* to 1.
+Click *Sample* to make one 95% confidence interval. A colored horizontal line segment should appear on one of the graphs. Click on this line to see the endpoints of the confidence interval, and **record** these endpoints.
+
+**Presenter:** Write your group's confidence interval on the board.
+
+
+## Make more intervals
+
+5. Now click *Reset*, and change *Intervals* to 200, and click *Sample*, to generate 200 random samples, along with their corresponding confidence intervals. 
+
+## What is the applet doing?
+
+6. On the "Sample Proportions" dotplot, click on one of the red dots. Doing this will reveal the value of the sample proportion and the corresponding 95% confidence interval. Also click on one of the green dots, and observe the corresponding interval. **Operator:** [Use this form](https://goo.gl/forms/WIbXC6SUSx6IDmQI3) to answer the following questions:
+
+- What is the difference between the red confidence intervals and the green confidence intervals?
+- What does the location of the dot on the "sample proportions" dot plot have to do with the corresponding confidence interval?
+    
+## The Main Point
+
+7. Based on your observations from #5-#6, fill in the blanks: 
+
+Thus, 95% confidence means that if we repeatedly sampled from a process and used the sample statistic to construct a 95% confidence interval, in the long run, roughly `_______`% of all those intervals would manage to capture the actual value of the long-run proportion , and the remaining `_______`% would not.
+
+## Confidence Level
+
+8. **Facilitator:** Before you change the confidence level to 90%, have your group predict what will happen. Widths? Percent green/red?
+
+9. Now change Conf level to 90% and *Recalculate*. **Record** how the widths of the intervals change. Why does this make sense? **Record** how the running total changes. Why does this make sense?
+
+## Confidence Level
+
+> The confidence level indicates the long-run percentage of confidence intervals that would succeed in capturing the (unknown) value of the parameter if random samples were to be taken repeatedly from the population/process and a confidence interval produced from each sample. 
+
+## Sample Size
+
+9. **Facilitator:** Before you change the sample size to 400, have your group predict what will happen. Widths? Percent green/red?
+
+10. Change the sample size to 400 and press *Sample*. **Record** how the widths of the intervals change. Why does this make sense? **Record** how the running total changes. Why does this make sense?
+
+## Concept Review 
+
+11. Suppose that you calculate a 99% confidence interval for the long-run proportion of orange to be (0.461, 0.589). Decide whether each statement is *valid* or *invalid*.
+    + There is a 99% chance that the long-run proportion of Reese's Pieces candy that is orange is between 0.461 and 0.589.
+    + We are 99% confident that the long-run proportion of Reese's Pieces candy that is orange is between 0.461 and 0.589.
+    + If we were to repeat the process of taking random samples making 99% CI's, then in the long run, 99% of all those CI's would contain the long-run proportion $\pi$.
+    
+    
+# Section 3.5: Cautions!
+
+## The Bradley Effect? (Video from 2008)
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/HWPn3L_aEmE?rel=0&amp;end=129" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+## Bias
+
+> * Sampling Bias refers to **bias of the sampling method.** 
+>     + Random sampling is an unbiased sampling method.
+>     + Convenience sampling can often be a biased sampling method.
+>     + Voluntary response (e.g., web polls) is almost always a biased method.
+> * There are other types of bias (e.g., response bias). 
+>     + Suggestively worded questions
+>     + Reluctance to express an unpopular opinion
+
+## Errors
+
+> * Type I and II errors are "errors" due to **sampling variablity.**
+>     + Not mistakes.
+>     + $\alpha$ = probability of Type I error
+>     + Power = 1 - probability of type II error
+> * **Nonrandom errors** are mistakes.
+>     + Errors due to response bias
+>     + Errors due to experimenter interference
+>     + Errors due to contamination of materials
+>     + etc.
+
+## Statistical Signficance vs. Practical Importance
+
+> * "Statistically significant" means "very unlikely to have occurred by chance, assuming $H_0$."
+> * "Practically important" means "the difference is large enough to matter in the real world."
+
+## 
+
+A survey of 47000 Americans found that 32.4% own a cat.
+
+$$
+\begin{align*}
+H_0 &: \pi = 0.33333 \\
+H_a &: \pi < 0.33333
+\end{align*}
+$$
+
+P-Value = 0.0000091
+
+```{r}
+prop.test(15228, 47000, p = 0.33333, alternative="less")
+```
+
+

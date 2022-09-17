@@ -1,0 +1,328 @@
+---
+title: "Section 10.5"
+date: "December 2, 2019"
+output: 
+  word_document:
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    center: true
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+
+# Sections 10.5: Theory-Based Inference for the Regression Slope
+
+## Beta vs. Rho ($\beta$ vs. $\rho$)
+
+- In the Preview Activity, you may have noticed that testing the slope of the regression line is equivalent to testing the correlation (same p-value)
+- Hence these hypotheses are equivalent.
+    + $H_0: \beta = 0$, $H_a: \beta \neq 0$   (Slope)
+    + $H_0: \rho = 0$,  $H_a: \rho \neq 0$   (Correlation)
+- Sample slope ($b$),  Population ($\beta$)
+- Sample correlation ($r$), Population ($\rho$)
+
+When we do the theory based test, we will be using the t-statistic which can be calculated from either the slope or correlation.
+
+## Theoretical null distribution
+
+- We have seen in this chapter that our null distributions are again bell-shaped and centered at 0 (for either correlation or slope as our statistic). 
+- The $t$-distribution is going to work. 
+- Same $t$-statistic for both correlation coefficient and for slope.
+
+\[
+t = \frac{r}{\sqrt{\frac{1-r^2}{n-2}}} = \frac{b}{SE(b)}
+\]
+
+## Validity Conditions
+
+- The scatterplot should follow a linear trend.
+- There should be approximately the same number of points above and below the regression line (symmetry). 
+- The variability of vertical slices of the points should be similar. (homoscedasticity) 
+
+## Validity Failures
+
+<div class="column-left">
+Data is *not symmetric* above and below the line:
+
+```{r, echo=FALSE, fig.width=4, fig.height=3, fig.align='center'}
+library(ggplot2)
+sleepgpa <- read.table("http://www.math.hope.edu/isi/data/chap10/SleepGPA.txt", header = TRUE)
+ggplot(sleepgpa, aes(x=Sleep, y=GPA)) + geom_point() +geom_smooth(method=lm, se=FALSE)
+```
+</div>
+
+<div class="column-right">
+Data doesn't follow a linear pattern:
+
+```{r, echo=FALSE, fig.width=4, fig.height=3, fig.align='center'}
+library(ggplot2)
+examtimes <- read.table("http://www.math.hope.edu/isi/data/chap10/StroopAgeTime.txt", header = TRUE)
+ggplot(examtimes, aes(x=Age, y=time)) + geom_point() +geom_smooth(method=lm, se=FALSE)
+```
+</div>
+
+## Validity Failures
+
+Variability of vertical slices changes (heteroscedasticity):
+
+
+<div class="column-left">
+```{r, echo=FALSE, fig.width=4, fig.height=3, fig.align='center'}
+library(ggplot2)
+tvlife <- read.table("http://www.math.hope.edu/isi/data/chap10/TVLife.txt", header = TRUE)
+ggplot(tvlife, aes(x=TVsperK, y=LifeExpectancy)) + geom_point() +geom_smooth(method=lm, se=FALSE)
+```
+</div>
+
+<div class="column-right">
+```{r, echo=FALSE, fig.width=4, fig.height=3, fig.align='center'}
+library(ggplot2)
+smoke <- read.table("http://www.math.hope.edu/isi/data/chap10/AlcoholSmoke.txt", header = TRUE)
+ggplot(smoke, aes(x=Alcohol_Drinks, y=Smoked)) + geom_point() +geom_smooth(method=lm, se=FALSE)
+```
+</div>
+
+## What to do when validity fails
+
+- What do you do when validity conditions aren’t met for theory-based inference?
+    + If it's not too bad, the theory-based tests are probably OK
+    + Use the simulation-based approach...
+        + *instead of* the theory-based test, for really bad failures 
+        + or *in addition to* the theory-based test, in borderline cases
+- Another strategy is to “transform” the data on a different scale so conditions are met.  
+    + The logarithmic scale is common
+    
+# Exploration 10.5
+
+## Breakfast Cereal
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/tjLO4eEp0Xs?start=161?end=231" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+## Breakfast Cereal Ratings
+
+Several variables were recorded on 74 different breakfast cereals: number of calories per serving, grams of protein, grams of fat, milligrams of sodium, grams of fiber, grams of carbohydrates, grams of sugars, milligrams of potassium, typical percentage of the FDA's RDA of vitamins, the weight of one serving, the number of cups in one serving, and the shelf location (1,2 or 3 for bottom, middle or top). A variable named "rating" was calculated by Consumer Reports.
+
+## Sugar and Cereal Rating 
+
+Is there a linear relationship between the sugar content of a cereal and its rating?
+
+- Null Hypothesis: There is no association between sugar content and rating.
+    + $H_0: \rho = 0$ (correlation)
+    + $H_0: \beta = 0$  (slope)
+- Alternative Hypothesis: There is a linear relationship between between sugar content and rating.
+    + $H_a: \rho \neq 0$ (correlation)
+    + $H_a: \beta \neq 0$  (slope)
+
+
+## $t$-Statistic
+
+1. Paste the [CerealSugar](http://math.westmont.edu/data/cerealsugar.txt) data into the [Applet](http://www.rossmanchance.com/applets/RegShuffle.htm?hideExtras=2) and **record** the correlation coefficient $r$.
+
+2. Use the correlation coefficient to find the t-statistic using the following formula.
+\[
+t = \frac{r}{\sqrt{\frac{1-r^2}{n-2}}} 
+\]
+**Record** your answer.
+
+## VALIDITY CONDITIONS
+
+Validity conditions for a theory-based test for a regression slope:
+
+- Linear Pattern
+- Symmetry about the regression line. 
+- Homoscedasticity (variance the same along the line)
+
+3. Based on the scatterplot, are each of these validity conditions met? Explain.
+
+## Null distribution
+
+4. Run a simulation with 1000 shuffles. Select the *t-statistic* radio button, then check the *Overlay t distribution* button. Does the t-distribution appear to do a good job of predicting the distribution of the simulated t-statistics? Is this consistent with your conclusion in #3?
+
+5. Check the *Slope* radio button so your null distribution shows shuffled slopes. Use this null distribution to **record** a 95% 2SD confidence interval for the population regression slope $\beta$.
+
+## Regression table
+
+6. In the applet, click the box for *Regression Table*. This table provides the observed t-statistic for the data as well as the two-sided, theory-based test p-value. Compare the *standardized t-statistic* to the value you calculated in #2. **Record** the p-value, along with an interpretation of its meaning in context.
+
+## Regression table using R
+
+```{r}
+cerealsugar <- read.table("http://math.westmont.edu/data/cerealsugar.txt", header = TRUE)
+summary(lm(rating ~ sugars, data = cerealsugar))
+```
+
+## Interpret the R output
+
+7. Where do you find the coefficient of determination $r^2$ in this output? (Compare with the applet's table if you are not sure.) **Record** the coefficient of determination, along with an interpretation of its value in context.
+
+8. Where do you find the p-value for the hypothesis test? Is it one-sided or two-sided?
+
+9. Notice that the formula for this call was `rating ~ sugar`. Which is the explanatory, and which is the response?
+
+## Theory-Based CI's
+
+10. Use the applet to **record** a theory-based 95% confidence interval for the population slope coefficient. Compare this CI to the one you produced in #5.
+
+11. **Record** a sentence interpreting the theory-based confidence interval in context. (What is between what and what, with what degree of certainty?)
+
+## Other Variables
+
+In addition to sugar content, the researchers recorded several other variables for each box of cereal. Using these variables, can we predict how a cereal would be rated?
+
+## cereal data
+
+```{r}
+cereal <- read.table("http://math.westmont.edu/data/cereal.csv", header=TRUE, sep=";")
+cereal
+```
+
+## Correlation matrix
+
+```{r}
+round(cor(cereal[,c(4,5,6,7,8,9,10,12,16)]),2)
+```
+
+12. Which two measurements have the strongest positive association with `rating`? Which two have the strongest negative association? **Record** your findings, along with how you are deciding.
+
+##
+
+```{r, echo=FALSE, message=FALSE}
+library(ggplot2)
+library(GGally)
+ggpairs(cereal[,c(4,5,8,10,16)], lower=list(continuous="smooth"))
+```
+
+## Explore five variables of the data
+
+```{r}
+cereal[,c(4,5,8,10,16)]
+```
+
+## Regression: `rating ~ sugars`
+
+```{r}
+summary(lm(rating ~ sugars, data = cereal))
+```
+
+## Regression: `rating ~ fiber`
+
+```{r}
+summary(lm(rating ~ fiber, data = cereal))
+```
+
+## Prediction equations
+
+13. **Record** the equations of the two regression lines for the two regression analyses on the previous slides: `rating ~ sugars` and `rating ~ fiber`. What qualities tend to characterize highly-rated cereals? Predict the rating of a cereal containing 10 grams of sugar.
+
+14. **Record** the coefficients of determination for these two regression analyses also. Which equation is better at predicting the rating of a cereal?
+
+## Confidence bands
+
+```{r, fig.height=4.5, fig.width=7, fig.align='center'}
+ggplot(cereal, aes(x = sugars, y = rating)) + geom_point() + geom_smooth(method = lm)
+```
+
+## Prediction vs Confidence intervals
+
+```{r}
+rs.lm <- lm(rating ~ sugars, data = cereal)
+predict(rs.lm, data.frame(sugars = c(5,10,15)), interval="predict")
+```
+
+```{r}
+rs.lm <- lm(rating ~ sugars, data = cereal)
+predict(rs.lm, data.frame(sugars = c(5,10,15)), interval="confidence")
+```
+
+# Multiple regression
+
+## Multiple Regression
+
+- There is more than one choice for an explanatory variable.
+- Different choices have different $r^2$'s. 
+- Multiple regression gives us a way to combine them. It also gives us a combined coefficient of determination, $R^2$.
+- All we have to do is change the formula.
+
+## `rating ~ sugars + fiber`
+
+```{r}
+summary(lm(rating ~ sugars + fiber, data = cereal))
+```
+
+## Multiple regression prediction equation
+
+- We can write one prediction equation.
+- The relationship explains 82% of the variability in rating: $R^2 = 0.8165$
+
+$$\widehat{\text{rating}} = 51.6 - 2.2\times\text{sugars} + 2.9\times\text{fiber}$$
+
+## More explanatory variables
+
+```{r}
+summary(lm(rating ~ sugars + fiber + calories + protein, data = cereal))
+```
+
+## Better predictions
+
+15. **Record** a prediction equation for rating based on the explanatory variables sugars, fiber, calories, and protein.
+
+16. **Record** the percentage of variability in rating that is determined by this relationship.
+
+17. A new cereal, *Sugar Frosted Chocolate Bombs*, has 140 calories per serving, 2 grams of protein, 16 grams of sugars, and 1 gram of fiber. **Record** a predicted rating for this cereal.
+
+## {data-background="http://math.westmont.edu/img/sugar.jpg" data-background-size="contain"}
+
+## Two types of p-values
+
+- p-values for each coefficient: $H_0: \beta_1 = 0, \, H_0: \beta_2 = 0, \, \ldots, H_0: \beta_k = 0$
+- p-values for an overall association: $H_0: \beta_1 = \beta_2 = \cdots = \beta_k = 0$
+
+Check overall significance *before* looking at individual slopes. 
+
+
+18. **Record** the p-value for the overall association for the `rating ~ sugars + fiber + calories + protein` model. (It will probably be in [scientific notation](https://www.calculatorsoup.com/calculators/math/scientific-notation-converter.php).)
+
+## validity conditions
+
+- Validity conditions for simple linear regression for each variable:
+    + linear relationship
+    + symmetry across regression line
+    + equal variation along regression line
+- *Plus:* The sample size should be at least 10 times the number of explanatory variables.
+
+## Overfitting
+
+- In multiple regression, adding more explanatory variables does not always make the model better.
+- Too many variables can give a misleadingly high $R^2$. It can also amplify noise in the data and make predictions worse (overfitting).
+- *Rule of thumb:* if you add an explanatory variable and the *Adjusted R-squared* goes down, you have too many variables.
+
+## Five-variable model
+
+Adjusted $R^2 \approx 0.8923$.
+
+```{r}
+summary(lm(rating ~ sugars + fiber + calories + protein + fat, data = cereal))
+```
+
+## Six-variable model
+
+Adjusted $R^2 \approx 0.8908$.
+
+```{r}
+summary(lm(rating ~ sugars + fiber + calories + protein + fat + carbo, data = cereal))
+```
+
+## Sometimes less is more
+
+- When we added `carbo` to the model, the Adjusted R-squared went down.
+- This means the additional explanatory variable didn't improve the model.
+- Having too many explanatory variables can throw off predictions.

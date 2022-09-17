@@ -1,0 +1,184 @@
+---
+title: "Section 10.5-10.6"
+date: "December 2, 2019"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    center: true
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+
+# Sections 10.5: Theory-Based Inference for the Regression Slope
+
+## Beta vs. Rho ($\beta$ vs. $\rho$)
+
+- In the Preview Activity, you may have noticed that testing the slope of the regression line is equivalent to testing the correlation (same p-value)
+- Hence these hypotheses are equivalent.
+    + $H_0: \beta = 0$, $H_a: \beta \neq 0$   (Slope)
+    + $H_0: \rho = 0$,  $H_a: \rho \neq 0$   (Correlation)
+- Sample slope ($b$),  Population ($\beta$)
+- Sample correlation ($r$), Population ($\rho$)
+
+When we do the theory based test, we will be using the t-statistic which can be calculated from either the slope or correlation.
+
+## Theoretical null distribution
+
+- We have seen in this chapter that our null distributions are again bell-shaped and centered at 0 (for either correlation or slope as our statistic). 
+- The $t$-distribution is going to work. 
+- Same $t$-statistic for both correlation coefficient and for slope.
+
+\[
+t = \frac{r}{\sqrt{\frac{1-r^2}{n-2}}} = \frac{b}{SE(b)}
+\]
+
+## Validity Conditions
+
+- The scatterplot should follow a linear trend.
+- There should be approximately the same number of points above and below the regression line (symmetry). 
+- The variability of vertical slices of the points should be similar. (homoscedasticity) 
+
+## Validity Failures
+
+<div class="column-left">
+Data is *not symmetric* above and below the line:
+
+```{r, echo=FALSE, fig.width=4, fig.height=3, fig.align='center'}
+library(ggplot2)
+sleepgpa <- read.table("http://www.math.hope.edu/isi/data/chap10/SleepGPA.txt", header = TRUE)
+ggplot(sleepgpa, aes(x=Sleep, y=GPA)) + geom_point() +geom_smooth(method=lm, se=FALSE)
+```
+</div>
+
+<div class="column-right">
+Data doesn't follow a linear pattern:
+
+```{r, echo=FALSE, fig.width=4, fig.height=3, fig.align='center'}
+library(ggplot2)
+examtimes <- read.table("http://www.math.hope.edu/isi/data/chap10/StroopAgeTime.txt", header = TRUE)
+ggplot(examtimes, aes(x=Age, y=time)) + geom_point() +geom_smooth(method=lm, se=FALSE)
+```
+</div>
+
+## Validity Failures
+
+Variability of vertical slices changes (heteroscedasticity):
+
+
+<div class="column-left">
+```{r, echo=FALSE, fig.width=4, fig.height=3, fig.align='center'}
+library(ggplot2)
+tvlife <- read.table("http://www.math.hope.edu/isi/data/chap10/TVLife.txt", header = TRUE)
+ggplot(tvlife, aes(x=TVsperK, y=LifeExpectancy)) + geom_point() +geom_smooth(method=lm, se=FALSE)
+```
+</div>
+
+<div class="column-right">
+```{r, echo=FALSE, fig.width=4, fig.height=3, fig.align='center'}
+library(ggplot2)
+smoke <- read.table("http://www.math.hope.edu/isi/data/chap10/AlcoholSmoke.txt", header = TRUE)
+ggplot(smoke, aes(x=Alcohol_Drinks, y=Smoked)) + geom_point() +geom_smooth(method=lm, se=FALSE)
+```
+</div>
+
+## What to do when validity fails
+
+- What do you do when validity conditions aren’t met for theory-based inference?
+    + If it's not too bad, the theory-based tests are probably OK
+    + Use the simulation-based approach...
+        + *instead of* the theory-based test, for really bad failures 
+        + or *in addition to* the theory-based test, in borderline cases
+- Another strategy is to “transform” the data on a different scale so conditions are met.  
+    + The logarithmic scale is common
+    
+# Exploration 10.5
+
+## The brain has lots of parts
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/LQ4DlE1Xyd4?rel=0&amp;start=66" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+----
+
+Is there a linear relationship between the brain density in the middle temporal gyrus and a person’s number of Facebook friends?
+
+- Null Hypothesis: There is no association between brain density and number of Facebook friends.
+    + $H_0: \rho = 0$ (correlation)
+    + $H_0: \beta = 0$  (slope)
+- Alternative Hypothesis: There is a linear relationship between brain density and number of Facebook friends.
+    + $H_a: \rho \neq 0$ (correlation)
+    + $H_a: \beta \neq 0$  (slope)
+
+p-value = 0.02 (approximately), using simulation-based test.
+
+## $t$-Statistic
+
+1. Paste the [Facebook](http://www.math.hope.edu/isi/data/chap10/Facebook.txt) data into the [Applet](http://www.rossmanchance.com/applets/RegShuffle.htm?hideExtras=2) and **record** the correlation coefficient $r$.
+
+2. Use the correlation coefficient to find the t-statistic using the following formula.
+\[
+t = \frac{r}{\sqrt{\frac{1-r^2}{n-2}}} 
+\]
+**Record** your answer.
+
+## VALIDITY CONDITIONS
+
+Validity conditions for a theory-based test for a regression slope:
+
+- Linear Pattern
+- Symmetry about the regression line. 
+- Homoscedasticity (variance the same along the line)
+
+3. Based on the scatterplot, are each of these validity conditions met? Explain.
+
+## Null distribution
+
+4. Run a simulation with 1000 shuffles. Select the *t-statistic* radio button, then check the *Overlay t distribution* button. Does the t-distribution appear to do a good job of predicting the distribution of the simulated t-statistics? Is this consistent with your conclusion in #3?
+
+5. Check the *Slope* radio button so your null distribution shows shuffled slopes. Use this null distribution to **record** a 95% 2SD confidence interval for the population regression slope $\beta$.
+
+## Regression table
+
+6. In the applet, click the box for *Regression Table*. This table provides the observed t-statistic for the data as well as the two-sided, theory-based test p-value. Compare the *standardized t-statistic* to the value you calculated in #2. **Record** the p-value, along with an interpretation of its meaning in context.
+
+## Regression table using R
+
+```{r}
+facebook <- read.table("http://www.math.hope.edu/isi/data/chap10/Facebook.txt", header = TRUE)
+summary(lm(density ~ friends, data = facebook))
+```
+
+## Interpret the R output
+
+7. Where do you find the coefficient of determination $r^2$ in this output? (Compare with the applet's table if you are not sure.) **Record** the coefficient of determination, along with an interpretation of its value in context.
+
+8. Where do you find the p-value for the hypothesis test? Is it one-sided or two-sided?
+
+9. Notice that the formula for this call was `density ~ friends`. Which is the explanatory, and which is the response?
+
+## Theory-Based CI's
+
+10. Use the applet to **record** a theory-based 95% confidence interval for the population slope coefficient. Compare this CI to the one you produced in #5.
+
+11. **Record** a sentence interpreting the theory-based confidence interval in context. (What is between what and what, with what degree of certainty?)
+
+## Influential Observations
+
+12. Add the observation (50,-10) to the data, and repeat *both* the theory-based and simulation-based tests.
+
+- **Record** the p-value using a simulation-based approach with shuffled t-statistics.
+- **Record** the p-value using the theory-based approach.
+- Why are the p-values from the two approaches not very similar? (Take a look at the overlayed t-distribution.)
+
+## The multiple comparisons problem
+
+13. The researchers originally searched for positive associations between many areas of the brain and the number of Facebook friends for 125 subjects. They found significantly positive associations for a number of brain areas. The second part of the study is with the 40 subjects that we looked at in this exploration. Why do you think this method of "look at a bunch of regions to see which are significant" is often criticized? (Hint: If you run lots of tests of significance using a 5% level of significance, how often will you reject the null hypothesis when you really shouldn't have?) **Operator:** Enter your explanation [using this form](https://goo.gl/forms/CT2nWspxDLi9Rdxo2).
+

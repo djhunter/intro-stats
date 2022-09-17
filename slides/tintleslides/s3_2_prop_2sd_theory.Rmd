@@ -1,0 +1,213 @@
+---
+title: "Section 3.2"
+date: "September 25, 2020"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(comment = NA)
+```
+
+# Section 3.2: 2SD and Theory-based Confidence Intervals for a Single Proportion
+
+## Introduction
+
+- In Section 3.1 we found confidence intervals by doing repeated tests of significance (changing the value in the null hypothesis) to find a range of values that were *plausible* for the population parameter (long run probability or population proportion).
+- This is a very tedious way to construct a confidence interval.
+- Today, we will look at two other ways to construct confidence intervals [2SD and Theory-Based].
+
+## The Affordable Care Act
+
+- A November 2013 Gallup poll based on a random sample of 1,034 adults asked whether the Affordable Care Act had affected the respondents or their family. 
+- 69% of the sample responded that the act had no effect.  (This number went down to 59% in May 2014 and 54% in Oct 2014.)
+- What can we say about the proportion of all adult Americans that would say the act had no effect?
+
+## CI using plausible values
+
+- We could construct a confidence interval just like we did last time.
+
+| Probability under null | 0.659 | 0.660 | 0.661 | $\cdots$ | 0.717 | 0.718 | 0.719 |
+| ---------------------- | ----- | ----- | ----- | -------- | ----- | ----- | ----- |
+| Two-sided p-value | 0.0388 | 0.0453 | 0.0514 | $\cdots$ | 0.0517 | 0.0458 | 0.0365 |
+| Plausible? ($\alpha  = 0.05$) | No | No | Yes | $\cdots$ | Yes | No | No |
+
+- We find we are 95% confident that the proportion of all adult Americans that felt unaffected by the ACA is between 0.661 and 0.717.
+
+## Short Cut?
+
+- The method we used last time to find our interval of plausible values for the parameter is tedious and time consuming. 
+- Might there be a short cut?
+- Our sample proportion should be the middle of our confidence interval.
+- We just need a way to find out *how wide* it should be.
+
+## Two standard deviations 
+
+When a null distribution is bell-shaped, about 95% of the statistics will fall within 2 standard deviations of the mean with the other 5% outside this region.
+
+```{r, fig.align='center'}
+library(knitr)
+include_graphics("http://math.westmont.edu/img/normaltails.png")
+```
+
+## 95% 2SD Confidence Interval
+
+- So we could say that a parameter value is plausible if it is within 2 standard deviations (SD) from our best estimate of the parameter, our observed sample statistic.
+- This gives us the simple formula for a *95% 2SD confidence interval* of
+
+$$
+\hat{p} \pm 2 \times \text{SD}_\text{null}
+$$
+
+## 2SD Method
+
+-  Use the [One Proportion Applet](http://www.rossmanchance.com/applets/OneProp/OneProp.htm?hideExtras=1) to generate a null distribution for $H_0 : \pi = 0.5$, and record $\text{SD}_\text{null} \approx 0.016$.
+- Using the 2SD method on our ACA data we get a 95% confidence interval
+$$
+0.69 \pm 2(0.016)	= 0.69 \pm 0.032 = (0.658, 0.722)
+$$		
+
+- The 0.032 in the above is called a *margin of error*.
+- This interval is close to what we got using plausible values: (0.661, 0.717).
+
+## Theory-Based Methods
+
+- We can use the 2SD method with the theory-based approximation for the standard deviation of the null distribution: $\text{SD}_\text{null} \approx \sqrt{\frac{\pi(1-\pi)}{n}}$.
+- Instead of making up some $\pi$ to use in this formula, we can use $\hat{p}$.
+- The approximate, theory-based 95% 2SD confidence interval is 
+$$
+\begin{align}
+\hat{p} \pm 2 \times \sqrt{\frac{\hat{p}(1-\hat{p})}{n}} &= 0.69 \pm 2 \times \sqrt{\frac{0.69(1-0.69)}{1034}} \\
+&\approx 0.69 \pm 0.028 \\
+&\approx (0.662, 0.718)
+\end{align}
+$$
+
+## Other confidence levels
+
+- If we want other confidence levels, we change the multiplier.
+- The general *theory-based confidence interval* for a single proportion is:
+
+$$
+\hat{p} \pm \text{(multiplier)} \times \sqrt{\frac{\hat{p}(1-\hat{p})}{n}} 
+$$
+
+- 2 (or rather 1.96) is the multiplier for 95% confidence.
+- 1.645 gives a 90% CI. 2.576 gives a 99% CI.
+- The higher the confidence level, the bigger the multiplier (need software or a table).
+
+## Software for Theory-based CI's
+
+- The [Theory-Based Inference applet](http://www.rossmanchance.com/applets/TBIA.html?hideExtras=1) does confidence intervals.
+You can also get them in R:
+
+```{r, echo=TRUE}
+prop.test(714, 1034, conf.level = 0.95)
+```
+
+R is actually using a [slightly more accurate theory-based method](https://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Wilson_score_interval_with_continuity_correction).
+
+
+# Exploration 3.2: American Exceptionalism
+
+## Preview
+
+The Gallup organization conducted a survey with a random sample of 1,019 adult Americans on December 10-12, 2010. They found that 80% of the respondents agreed with the statement that the United States has a unique character that makes it the greatest country in the world.
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/DAufq8y20d4?rel=0&amp;start=52&amp;end=174" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+## Plausible z-scores?
+
+We found that $\pi = 0.775$ was plausible, but $\pi = 0.5$ is not plausible.
+
+1. How many standard deviations is 0.80 from 0.775? (Hint: Standardize the value by looking at the difference between 0.775 and 0.80 and divide by the $\text{SD}_\text{null}$ you found in the Preview assignment.) **Record** this value.
+
+2. Repeat #1 for $\pi = 0.5$. **Record** this value.
+
+3. What can you say about the standardized values of plausible $\pi$'s? 
+
+## 2SD method
+
+**2SD method.** We can construct a 95% confidence interval of plausible values for a parameter by including all values that fall within 2 standard deviations of the sample statistic. 
+
+$$
+\mbox{observed statistic} \pm 2 \times (\mbox{SD of null distribution})
+$$
+
+3. How did the $\text{SD}_\text{null}$'s you found with $\pi = 0.775$ and with $\pi = 0.50$ compare?
+
+4. In order to compute a null distribution, we need a null value for $\pi$. Does it matter what $\pi$ we choose? 
+
+## 2SD Simulation-based CI
+
+In a random sample of 1,019 adult Americans, 80% of the respondents agreed with the statement that the United States has a unique character that makes it the greatest country in the world.
+
+5. Determine a 95% confidence interval using the 2SD method. Use $\pi = 0.5$ to simulate a null distribution to get $\text{SD}_\text{null}$. **Record** the confidence interval in $\pm$ notation.
+
+6. Interpret the confidence interval in the context of this problem: We are 95% confident that _____ is between _____ and _____. **Operator:** Type up this sentence [using this form](https://goo.gl/forms/v49uZguah6q6HLwu1).
+
+## Standard error of $\hat{p}$
+
+> An estimate of the standard deviation of a statistic, based on sample data, is called the **standard error** (SE) of the statistic.
+
+$$
+(\mbox{Standard Error of } \hat{p}) = \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}
+$$
+
+7. Calculate and **record** the standard error for this study. How does it compare to the standard deviations you found in the Preview assignment?
+
+## Validity
+
+> The theory-based approach for finding a confidence interval for $\pi$ (called a one-sample z-interval) is considered valid if there are at least 10 observational units in each category of the categorical variable (i.e., at least 10 successes and at least 10 failures).
+
+## Theory-based CI
+
+8. We will rely on technology to find the multiplier appropriate for our confidence level.
+    - In the [Theory-Based Inference applet](http://www.rossmanchance.com/applets/TBIA.html?hideExtras=1), specify the sample size $n$ of 1019 and the sample the sample count of 815 and press Calculate. (The applet will fill in the value of $\hat{p}$.)
+    - Check the box for *Confidence Interval*, confirm the confidence level is 95% and press Calculate CI to generate a theory-based confidence interval. **Record** the 95% theory-based confidence interval.
+
+9. Is this theory-based confidence interval similar to the one you obtained using the 2SD method?
+
+## Confidence level
+
+10. Change the confidence level in the applet from 95% to 99% and press the Calculate CI button again. **Record** the 99% confidence interval given by the applet. 
+
+11. How does it compare to the 95% interval? (Compare both the midpoint of the interval = (lower endpoint + upper endpoint)/2 and the margin of error = (upper endpoint - lower endpoint)/2.)
+
+## CI's in R
+
+```{r, echo=TRUE}
+prop.test(815, 1019, conf.level = 0.95)
+```
+
+## CI's in R
+
+```{r, echo=TRUE}
+prop.test(815, 1019, conf.level = 0.99)
+```
+
+## CI's and Hypothesis tests
+
+Use your confidence intervals from #7 and #9 to answer the following questions.
+
+12. At a signficance level of $\alpha = 0.05$, would you reject $H_0 : \pi = 0.83$ in favor of the alternative $H_a : \pi \neq 0.83$?
+
+13. At a signficance level of $\alpha = 0.01$, would you reject $H_0 : \pi = 0.83$ in favor of the alternative $H_a : \pi \neq 0.83$?
+
+**Presenter:** Be ready to explain how you can use a confidence interval to determine the result of a hypothesis test.
+
+

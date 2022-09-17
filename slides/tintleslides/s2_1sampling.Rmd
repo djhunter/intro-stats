@@ -1,0 +1,513 @@
+---
+title: "Section 2.1"
+date: "September 9, 2019"
+output: 
+  word_document:
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    center: true
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(comment = NA)
+```
+
+# Section 2.1: Sampling from a Finite Population
+
+## Last time: Heads or Tails
+
+>- We used our own class survey to test whether the assertion of Steve Campbell was plausible, namely, that people pick heads 70% of the time when they're asked to predict the outcome of a coin toss.
+>- In our sample, 33/64 picked heads.
+>- We found that $H_0$ (Campbell's assertion) was not plausible (small p-value), based on our sample.
+>- Two possibilities:
+>    - Campbell is wrong.
+>    - Campbell is right, but our *sample* is somehow not representative of all people.
+
+
+# Generalization: How broadly do our results apply?
+
+## How broadly do our results apply?
+
+- We are usually interested in a *population* (e.g., all people, all college students)
+- We usually collect data from a *sample* (e.g., people in our dorm)
+
+What does our statistical analysis tell us about the population of interest?
+
+## Dewey Defeats Truman
+
+One of the most famous instances of nonrepresentative sampling involved the polls prior to the 1948 US presidential election.
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/5BK8HxzIWs0?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+## What happened?
+
+The newspaper thought Dewey would win because of poll results. [However](http://www.oxfordmathcenter.com/drupal7/node/251),
+
+- They were relying on opinion polls done weeks before the election.
+- Polls were conducted over the telephone. (In 1948, who had telephones?)
+- Pollsters were allowed to choose whom to ask, as long as they met demographic quotas. (convenience sample)
+
+## Parameters vs. Statistics
+
+The **population** is the entire collection of observational units we are interested in, and the **sample** is a subset of the population on which we record data. Numerical summaries about a population are called **parameters**, and numerical summaries calculated from a sample are called **statistics**. For example:
+
+- Population: all US voters in 1948.
+- Parameter: the proportion of all voters who support Truman
+- Sample: the people that the pollsters selected.
+- Statistic: the proportion of the sample who support Truman
+
+# Exploration 2.1A: Sampling Words
+
+## Preview
+
+1. For the parts that follow, your group should use the **Operator's** sample of 10 words from the Gettysburg Address that was made in the Preview assignment. If the Operator doesn't have that sample, use someone else's sample.
+
+- *Population:* all of the words in the passage.
+- *Sample:* the 10 words you selected.
+
+(Note: this is a "toy example.")
+
+## Make a table
+
+<div class="column-left">
+2. Write down each word from your sample and then indicate the length of the word (number of letters) and whether or not the word contains at least one letter e.
+
+</div>
+
+<div class="column-right">
+
+| Word | Length | Contains e? |
+| ---- | ------ | ----------- |
+| 1 | | |
+| 2 | | |
+| 3 | | |
+| 4 | | |
+| 5 | | |
+| 6 | | |
+| 7 | | |
+| 8 | | |
+| 9 | | |
+| 10 | | |
+
+</div>
+
+## Data tables
+
+A **data table** (or statistical spreadsheet) is a convenient way to store and represent all data values. Typically, in a data table, the *rows correspond to observational units,* columns represent variables, and the data are the table entries.
+
+## Average word length
+
+5. Calculate the *average length* of the 10 words in your sample. Is this number a parameter or a statistic? Explain how you know. What symbol would you use to refer to this value? **Recorder:** Record the average word length, using appropriate symbols. **Presenter:** Write this on the board.
+
+6. The average length of the 268 words in the entire speech equals 4.29 letters. Is this number a parameter or a statistic? Explain how you know. What symbol would you use to refer to this value?
+
+## Proportion of e-words
+
+7. Calculate the *proportion of words in your sample that contain at least one e.* Is this number a parameter or a statistic? Explain how you know. What symbol would you use to refer to this value? **Recorder:** Record the proportion of e-words, using appropriate symbols.
+
+8. The proportion of all words in the entire speech that contain at least one letter e is $125/268 \approx 0.47$. Is this number a parameter or a statistic? Explain how you know. What symbol would you use to refer to this value?
+
+## Dotplot of word lengths
+
+10. Let's make a dot plot of the average word lengths for each group's sample. 
+    a. How do we label the axis of this dotplot appropriately?
+    b. Explain what each dot on the dotplot represents by filling in the following sentence. Each dot on the dotplot is a single measurement of the value of ___ on a single ___.
+    c. Do you think your samples are representative of the population? How are you deciding?
+    
+## Data for our class
+
+```{r}
+samples <- readLines("http://math.westmont.edu/img/samplewords19.txt")
+samples
+```
+
+## Dotplot for our class
+
+```{r, warning=FALSE, message=FALSE}
+samples <- readLines("http://math.westmont.edu/img/samplewords19.txt")
+n <- length(samples)
+aveWordLength <- numeric(n)
+eWordProp <- numeric(n)
+sdWordLength <- numeric(n)
+for(i in 1:n) {
+  words <- strsplit(samples[i]," ")[[1]]
+  wordlengths <- nchar(words)
+  aveWordLength[i] <- mean(wordlengths)
+  sdWordLength[i] <- sd(wordlengths)
+  numEs <- sum(grepl("e", words))
+  eWordProp[i] <- numEs/length(words)
+}
+classData <- data.frame(aveWordLength, eWordProp, sdWordLength)
+#print(samples)
+#print(classData)
+library(ggplot2)
+ggplot(classData, aes(x = aveWordLength)) + geom_dotplot(dotsize=0.8) + scale_y_continuous(NULL, breaks = NULL)
+```
+
+## Bias?
+
+11. Let's compare our sample statistics to the population parameters. ($\mu = 4.29$, $\pi = 0.47$)
+```{r}
+cat("Number of samples: ", nrow(classData), "\n")
+cat("Average word length: ", mean(classData$aveWordLength), "\n")
+cat("Number of samples with ave word length > 4.29: ", sum(classData$aveWordLength > 4.29), "\n")
+cat("Proportion of samples with ave word length > 4.29: ", sum(classData$aveWordLength > 4.29)/n, "\n\n")
+cat("Number of samples with proportion e words > 0.47: ", sum(classData$eWordProp>0.47), "\n")
+cat("Proportion of samples with proportion e words > 0.47: ", sum(classData$eWordProp>0.47)/n, "\n")
+```
+
+## Biased Sampling Method
+
+- Bias is a property of a sampling method, not a property of an individual sample. 
+
+- A sampling method is **biased** if, when using that sampling method, statistics from different samples consistently overestimate or consistently underestimate the population parameter of interest.
+
+## Reason for bias?
+
+13. Discuss why we might have expected this sampling method (asking you to quickly pick 10 representative words) to be biased. 
+
+14. Do you think asking each of you to take 20 words instead of 10 words would have helped with this issue? Explain.
+
+## Pointing while blindfolded?
+
+What if you were to close your eyes and point blindly at the page with a pencil 10 times, taking for your sample the 10 words on which your pencil lands.
+
+15. Do you think this sampling method is likely to be biased? If so, in which direction? Explain.
+
+A sample is only useful to us if the data we collect on our sample are similar to the results we would find in the entire population. In this sense, we say the sample is *representative* of the population. 
+
+## Simple Random Sample
+
+> A **simple random sample** (SRS) ensures that every sample of size $n$ is equally likely to be the sample selected from the population. In particular, each observational unit has the same chance of being selected as every other observational unit.
+
+## Collect a simple random sample
+
+17. **Operator:** Go to the [Random Numbers Applet](http://www.rossmanchance.com/applets/RandomGen/GenRandom01.htm). Specify that you want *one replication* with *5 Numbers per replication* in the *range from 1 to 268*, *without replacement*. Press Generate to view the 5 random numbers. **Record** your five random numbers in the first column of a table, like the one below. Using your randomly generated values, look up the corresponding word from the sampling frame in the book (pages 112-113). 
+
+| Random Number | Word | Length | Contains e? |
+| ---- | ------ | ----------- | ----------- |
+| &nbsp; | | | |
+|  | | | |
+|  | | | |
+|  | | | |
+|  | | | |
+
+
+## Sampling Frame
+
+```
+ID	Word	
+1	Four
+2	score	
+3	and
+4	seven	
+5	years	
+6	ago
+7	our
+8	fathers	
+9	brought
+10	forth
+11	upon
+12	this
+13	continent	
+14	a
+15	new	
+16	nation	
+17	conceived	
+18	in
+19	liberty	
+20	and
+21	dedicated	
+22	to
+23	the	
+24	proposition	
+25	that
+26	all
+27	men	
+28	are	
+29	created	
+30	equal	
+31	Now
+32	we	
+33	are	
+34	engaged	
+35	in
+36	a
+37	great	
+38	civil
+39	war	
+40	testing	
+41	whether	
+42	that
+43	nation	
+44	or
+45	any
+46	nation	
+47	so
+48	conceived	
+49	and
+50	so
+51	dedicated	
+52	can
+53	long
+54	endure	
+55	We	
+56	are	
+57	met	
+58	on
+59	a
+60	great	
+61	battlefield	
+62	of
+63	that
+64	war	
+65	We	
+66	have	
+67	come	
+68	to
+69	dedicate	
+70	a
+71	portion	
+72	of
+73	that
+74	field	
+75	as
+76	a
+77	final
+78	resting	
+79	place	
+80	for
+81	those	
+82	who
+83	here	
+84	gave	
+85	their	
+86	lives	
+87	that
+88	that
+89	nation	
+90	might
+91	live	
+92	It
+93	is
+94	altogether	
+95	fitting
+96	and
+97	proper	
+98	that
+99	we	
+100	should
+101	do
+102	this
+103	But
+104	in
+105	a
+106	larger	
+107	sense	
+108	we	
+109	cannot
+110	dedicate	
+111	we	
+112	cannot
+113	consecrate	
+114	we	
+115	cannot
+116	hallow
+117	this
+118	ground	
+119	The	
+120	brave	
+121	men	
+122	living
+123	and
+124	dead	
+125	who
+126	struggled	
+127	here	
+128	have	
+129	consecrated	
+130	it
+131	far
+132	above	
+133	our
+134	poor
+135	power	
+136	to
+137	add
+138	or
+139	detract	
+140	The	
+141	world	
+142	will
+143	little	
+144	note	
+145	nor
+146	long
+147	remember	
+148	what
+149	we	
+150	say
+151	here	
+152	but
+153	it
+154	can
+155	never	
+156	forget	
+157	what
+158	they	
+159	did
+160	here	
+161	It
+162	is
+163	for
+164	us
+165	the	
+166	living	
+167	rather	
+168	to
+169	be	
+170	dedicated	
+171	here	
+172	to
+173	the	
+174	unfinished	
+175	work	
+176	which
+177	they	
+178	who
+179	fought
+180	here	
+181	have	
+182	thus
+183	far
+184	so
+185	nobly
+186	advanced	
+187	It
+188	is
+189	rather	
+190	for
+191	us
+192	to
+193	be	
+194	here	
+195	dedicated	
+196	to
+197	the	
+198	great	
+199	task	
+200	remaining	
+201	before	
+202	us
+203	that
+204	from
+205	these	
+206	honored	
+207	dead	
+208	we	
+209	take	
+210	increased	
+211	devotion	
+212	to
+213	that
+214	cause	
+215	for
+216	which
+217	they	
+218	gave	
+219	the	
+220	last
+221	full
+222	measure	
+223	of
+224	devotion	
+225	that
+226	we	
+227	here	
+228	highly
+229	resolve	
+230	that
+231	these	
+232	dead	
+233	shall
+234	not
+235	have	
+236	died	
+237	in
+238	vain	
+239	that
+240	this
+241	nation	
+242	under	
+243	God	
+244	shall
+245	have	
+246	a
+247	new	
+248	birth	
+249	of
+250	freedom	
+251	and
+252	that
+253	government	
+254	of
+255	the	
+256	people	
+257	by
+258	the	
+259	people	
+260	for
+261	the	
+262	people	
+263	shall
+264	not
+265	perish	
+266	from
+267	the	
+268	earth	
+```
+
+## Calculate statistics
+
+18. Let's examine your sample and those of your classmates. Calculate the *average word length* and *proportion of e-words* in your random sample. **Presenter:** Write these numbers on the board.
+
+## Bias?
+
+19. Let's compare your sample statistics to the population parameters.
+    a. How many groups obtained a sample average word length larger than the population average (4.29 letters)?
+    b. How many groups obtained a sample proportion of e-words larger than the population proportion (0.47)? 
+    c. What do these answers reveal about whether simple random sampling is an unbiased sampling method? 
+
+## Simulation
+
+20. Open the [Sampling Words applet](http://www.rossmanchance.com/applets/OneSample.html?population=gettysburg). For now, use the pull-down menu to select the *length* variable. 
+
+21. Check the *Show Sampling Options* box. Specify 5 in the *Sample Size* box and press the *Draw Samples* button. You will see five blue dots within the population distribution representing the five lengths that you have sampled, which are also displayed in a dotplot in the middle panel. The blue triangle indicates the value of this sample's mean, which is then added to the graph on the right. 
+
+## Do 1000 samples total
+
+22. Press the Draw Samples button four more times (for a total of five samples). Notice how the samples vary and how the sample mean varies from sample to sample.Change the Number of Samples to 995 (for a total of 1,000 samples). Press the Draw Samples button. (This should generate a dotplot of 1,000 values of the sample mean for 1,000 different simple random samples, each consisting of 5 words, selected randomly from the population of all 268 words in the Gettysburg Address.) 
+
+**Recorder:** Record the mean and standard deviation of the distribution of sample means.
+
+## Effect of sample size?
+
+24. Now change the Sample Size from 5 to 20 and the Number of Samples to 1000. Press the Draw Samples button. How do these two distributions compare? **Recorder:** Write down a feature that is similar and a feature that is different.
+
+25. Did changing the sample size change the center of the distribution? If we used a biased sampling method, would increasing the sample size remove the bias? 
+
+## Summary
+
+**Presenter:** Write a sentence on the board describing a concept we explored today. (Use some of these terms: "SRS", "sample", "bias", "population", "statistic", "parameter", "mean", "standard deviation")

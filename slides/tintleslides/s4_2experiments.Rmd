@@ -1,0 +1,138 @@
+---
+title: "Section 4.3"
+date: "October 4, 2019"
+output: 
+  word_document:
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 8
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    transition: slide
+    css: slidesdjh.css
+    center: false
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+    
+# 4.2: Observational Studies vs. Experiments
+
+## Observational Studies
+
+- In an **observational study**, the groups you compare are "just there." They are defined by what you see rather than by what you do.
+- For example, the researchers didn’t control which children slept with a night light on or not.
+- Observational studies may have confounding variables present that prevent us from determining a cause and effect.
+
+## Experiment
+
+- In an **experiment**, you actively create the groups and then assign the conditions to be compared.
+- These conditions may be one or more *treatment* or a *control*.
+- Well-designed experiments can control for confounding variables by making the treatment groups very similar except for what the experimenter manipulates.
+
+## Experiment: Physicians' Health Study {data-background="https://media.phillyvoice.com/media/images/11272018_bayer_aspirin_Flickr.2e16d0ba.fill-735x490.jpg"}
+
+## Experiment: Physicians' Health Study
+
+Studied aspirin’s effect on reducing heart attacks.
+
+- Started in 1982 with 22,071 male physicians.
+- The physicians were **randomly** assigned into one of two groups.
+- Half took a 325mg *aspirin* every other day and half took a *placebo*. 
+
+## Aspirin Study Results 
+
+> - 189 (1.7%) heart attacks occurred in the placebo group and 104 (0.9%) in the aspirin group. (45% reduction in heart attacks for the aspirin group.) 
+> - What about confounding variables?  
+>      + Did they have a better diet?  
+>      + Did they exercise more?
+>      + Were they genetically less likely to have heart attacks?
+>      + Were they younger?
+> - *Confounding variables are controlled in experiments due to random assignment of subjects into treatment groups.*
+
+## Random Assignment
+
+- **Confounding variables are controlled** in experiments due to the random assignment of subjects to treatment groups.
+- Randomly assigning people to groups tends to balance out all other variables between the groups.  
+- So variables that could have an effect on the response should be equalized between the two groups and therefore should not be confounding
+- Thus, *cause and effect conclusions are possible in experiments through random assignment.*  (It must be a well-run experiment.)
+
+## {data-background="https://math.westmont.edu/img/baselinedemo.png" data-background-size="contain"}
+
+## Random vs. Random
+
+- With observational studies, **random sampling** is often done.  This possibly allows us to make inferences from the sample to the population where the sample was drawn.
+- With experiments, **random assignment** is done.  This allows us to possibly conclude causation.
+
+## {data-background="https://math.westmont.edu/img/figure4_5.jpg" data-background-size="contain"}
+
+# Exploration 4.2
+
+## Tripping study
+
+The goal of the tripping study is to compare two recovery strategies for tripping (elevating or lowering).
+
+![](https://ars.els-cdn.com/content/image/1-s2.0-S0021929014002954-gr1_lrg.jpg)
+
+## Tripping study variables
+
+- Recovery: recover from trip / don't recover
+- Technique: elevating / lowering 
+
+Possible confounding variables:
+
+- Sex (male/female)
+- height (quantitative)
+- "balance gene" (have gene / don't have gene)
+- x-variables (things we didn't/couldn't measure)
+
+## Randomizing Subjects 
+
+Open the [Randomizing Subjects applet](http://www.rossmanchance.com/applets/Subjects.html).
+
+1. Press *Randomize* once. What does pressing *Randomize* do? Notice that a dot appears on the dotplot. Where is it located? **Record** the location of the dot. How is the location of the dot computed? **Presenter:** Write a computation on the board showing how the location of the dot is computed, along with some words explaining what this number means.
+
+## Run 500 Replications
+
+2. Uncheck *Animate*. Set *Replications* to 500 and *Randomize* to create a dotplot.
+3. Select *Reveal Both*.
+4. Compare the different drop-down options (sex, height, gene, x-var). What do the dotplots all have in common? **Recorder:** Name at least two things that they have in common.
+5. What principle does this applet illustrate? **Recorder** Write down one or two sentences.
+
+## Cursive vs. Block Letters {data-background="https://qph.fs.quoracdn.net/main-qimg-ff65847c3f183aba458dd981b7d186e9"}
+
+## Cursive vs. Block Letters 
+
+Among students who took the essay portion of the SAT, those who wrote in cursive style scored significantly higher on the essay, on average, than students who used printed block letters.
+
+6. **Record** the explanatory and response variables?
+7. Identify and **record** a possible confounding variable.
+8. Based on this data, does cursive writing cause an essay score to be higher?
+
+## Cursive vs. Block Letters
+
+In a different study, the identical essay was shown to several different scorers, but some scorers were randomly chosen to see a cursive version of the essay and the other scorers were shown a version with printed block letters. The average cursive score was significantly higher than the average block-letter score.
+
+9. Does this study provide evidence a causal relationship? Why/why not? 
+
+10. In this study, the scorers were kept *blind*, in that they weren't told about the cursive/block-letter experiment. Why?
+
+**Presenter:** Be ready to share your group's responses.
+
+## Dutton and Aron, 1974
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/P0aMEkGlcQE?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<br>
+
+> - Experiment? 
+
+## Attraction and Scary Bridges
+
+11. **Record** the explanatory and response variables.
+
+12. **Facilitator:** Get your group to agree on a possible confounding variable. **Record** this variable, and explain its association with the explanatory and response variables.
+

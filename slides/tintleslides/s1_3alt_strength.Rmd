@@ -1,0 +1,253 @@
+---
+title: "Section 1.3"
+date: "September 2, 2019"
+output: 
+  word_document:
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    center: true
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(comment = NA)
+```
+# Places to get help
+
+## Resources for getting help
+
+- Student Hours, Winter Hall 303, Tuesdays and Thursdays 2-4:30, or by appointment.
+- Library Peer Tutoring, Wednesdays 7-9pm, VL 214 (Chena Underhill)
+- Copies of the textbook are on reserve at the library front desk.
+
+# Investigations
+
+## R and RStudio
+
+- What does it do?
+- Why are we using it?
+- Who else uses it?
+
+(demo)
+
+## Academic Integrity Policy
+
+From the [Syllabus](https://math.westmont.edu/ma5/ma005f19.pdf):
+
+"[P]roviding someone with an electronic copy of your work is a breach of the academic integrity policy. Do not email, post online, or otherwise disseminate any of the work that you do in this class. You may work with others on the assignments, but make sure that you type up your own answers yourself. You are on your honor that the work you
+hand in represents your own understanding."
+
+----
+
+[D]ishonesty of any kind may result in loss of credit for the work involved and the filing of a report with the Provost’s Office. Major or repeated infractions may result in dismissal from the course with a grade of F. Be familiar with the College's plagiarism policy, found at:
+https://www.westmont.edu/office-provost/academic-program/academic-integrity-policy 
+
+# Section 1.3: Alternative Measure of Strength of Evidence {data-background="https://teammodern.com/wp-content/uploads/2018/06/68212843_m.jpg"}
+
+## Review: Significance tests
+
+In the water tasting example, ($H_0: \pi = 0.25$, $H_a: \pi < 0.25$, $p = 3/27 \approx 0.1111$, when you create a null distribution using the [One Proportion applet](http://www.rossmanchance.com/applets/OneProp/OneProp.htm),
+
+- What does a single dot represent?
+- What does the whole distribution represent?
+- What is the p-value? What does it mean?
+
+## Review: Hypotheses
+
+- The *null hypothesis* is the chance explanation. (=)
+- Typically the *alternative hypothesis* is what the researchers think is true. (<  >)
+- The *p-value* is the proportion of outcomes in the null distribution that are at least as extreme as the value of the statistic actually observed in the study.
+- Small p-values (typically less than 0.05)  provide strong evidence against the null.
+
+## Review: Notation
+
+- The parameter $\pi$ is the long-term proportion.
+- The statistic $\hat{p}$ is the sample proportion.
+- $n$ is the sample size
+- $H_0$ is the null hypothesis.
+- $H_a$ is the alternative hypothesis.
+
+## Strength of evidence
+
+- P-values are one measure for the strength of evidence and they are, by far, the most frequently used.
+- P-values essentially are measures of how far the sample statistic is away from the parameter under the null hypothesis.
+- Another measure for this distance we will look at today is called the *standardized statistic*.
+
+# Example: Heart Transplants  {data-background="https://www.cardiovascularbusiness.com/sites/default/files/styles/media_image/public/2018-08/stock-surgery.jpg"}
+
+## Heart Transplants
+
+- The British Medical Journal (2004) reported that heart transplants at St. George’s Hospital in London had been suspended after a spike in the mortality rate.
+- Of the last 10 heart transplants, 80% had resulted in deaths within 30 days. 
+- This mortality rate was over five times the national average. 
+- The researchers used 15% as a reasonable value for comparison.
+
+----
+
+- Research question:
+    - Does a heart transplant patient at St. George’s have a higher probability of dying than the national rate of 0.15?  
+- Observational units
+    - The last 10 heart transplant operations 
+- Variable
+    - If the patient died or not
+- Parameter
+    - The actual probability of a death after a heart transplant operation at St. George’s 
+
+----
+
+- Null hypothesis:
+    - The death rate at St. George's is the same as the national rate (0.15).
+    - $H_0 : \pi = 0.15$
+- Alternative hypothesis:
+    - The death rate at St. George's is higher than the national rate.
+    - $H_a : \pi > 0.15$
+- Observed Statistic: 
+    - $\hat{p} = 0.8$ (8 out of 10 died)
+
+Use the [One Proportion applet](http://www.rossmanchance.com/applets/OneProp/OneProp.htm) to get a p-value.
+
+## Standard Deviation, Informally
+
+- **Loosely speaking,** the *standard deviation* of the null distribution is the average distance that the dots are from the mean of the distribution.
+- The standard deviation measure of how spread out the distribution is.
+    
+## Standardized Statistic
+
+Another way to measure strength of evidence is to *standardize* the observed statistic. The *standardized statistic*, or z-score, is the distance betweeen the observed statistic and the null hypothesized value, in units of standard deviations.
+
+$$
+\begin{align}
+z &= \frac{\text{observed statistic}  - \text{null value}}{\mbox{SD of null distribution}}\\[10pt]
+&= \frac{\hat{p}  - 0.15}{\mbox{SD of null distribution}}
+\end{align}
+$$
+
+## Guidelines
+
+| Standardized Statistic | Strength of Evidence |
+| :--------------------- | :------------------- |
+| Between -1.5 and 1.5 | little or no evidence against the null hypothesis |
+| Below -1.5 or above 1.5 | moderate evidence against the null hypothesis | 
+| Below -2 or above 2 | strong evidence against the null hypothesis |
+| Below -3 or above 3 |  very strong evidence against the null hypothesis |
+
+  : Guidelines for evaluating strength of evidence from standardized values of statistics
+
+## Learning Objectives
+
+- Be able to determine the value of a standardized statistic. 
+- Describe what the standardized statistic means.
+- State a conclusion about the alternative hypothesis (and null hypothesis) based on the magnitude of the standardized statistic.
+- Recognize that standardized statistic is an alternative to p-value, and that both p-value and standardized statistic summarize strength of evidence. 
+
+# Exploration 1.3: Bob or Tim?
+
+## Preview
+
+[Video about a Similar Study](https://globalnews.ca/news/3274520/why-people-look-like-their-names-study/)
+
+----
+
+A study in Psychonomic Bulletin and Review (Lea, Thomas, Lamkin, and Bell, 2007) presented evidence that "people use facial prototypes when they encounter different names." Participants were given two faces and asked to identify which one was Tim and which one was Bob. 
+
+![](http://math.westmont.edu/img/bob_or_tim.png)
+
+## Preview
+
+1. Identify the observational units in this study.
+
+2. Identify the variable. Is the variable categorical or quantitative?
+
+The parameter of interest here is the probability that a student in your class would assign the same name to the face on the left.
+
+3. State the null hypothesis to be tested when the data are collected. 
+
+## Alternative Hypotheses
+
+The researchers believe that the face on the left has features that are more likely to be associated with a Tim, while the one on the right has features that are more likely to be associated with a Bob.
+
+**Recorder:** Write down the null and alternative hypotheses in symbols, using $\pi$ to represent the long-run proportion of people who would assign Tim to the face on the left.
+
+## Class Data
+
+4. Do you think the face on the left is Bob or Tim? Collect the responses (data) for all the students in your class.
+
+**Results** (34 students responded)
+
+Bob: 3, Tim: 31 
+
+## Simulation
+
+You will use the [One Proportion applet](http://www.rossmanchance.com/applets/OneProp/OneProp.htm) to investigate how surprising the observed class statistic would be if students were just randomly selecting which name to put with which face.
+
+6. **Facilitator:** Before you use the applet, make sure your group agrees about what you will enter for the following values: 
+    - Probability of success:
+    - Sample size:
+    - Number of repetitions:
+
+----
+
+7. Conduct this simulation analysis. Make sure the *Proportion of heads* button is selected in the applet and *not* Number of heads. 
+    - Report the approximate p-value. (See pp. 37-40 if you need to be reminded how.)
+    - Use the p-value to evaluate the strength of evidence provided by the sample data against the null hypothesis, in favor of the alternative that students really do tend to assign the name Tim (as the researchers predicted) to the face on the left.
+  
+**Presenter:** Write your group's *p-value* and *strength of evidence* on the board.
+
+## Summary Stats
+
+8. Check the *Summary Stats* box in the applet. **Recorder:**
+    - **Record** the *mean* (average) value of the simulated statistics.
+    - **Record** the *standard deviation* (SD) of the simulated statistics.
+    - **Record** $\hat{p}$, the observed class value of the statistic. 
+    - **Record** how many standard deviations $z$ the observed class value of the statistic is from the hypothesized mean of the null distribution, 0.50. In other words, calculate:
+$$
+z = \frac{\hat{p}  - 0.50}{\mbox{SD of null distribution}}
+$$
+
+## Guidelines
+
+| Standardized Statistic | Strength of Evidence |
+| :--------------------- | :------------------- |
+| Between -1.5 and 1.5 | little or no evidence against the null hypothesis |
+| Below -1.5 or above 1.5 | moderate evidence against the null hypothesis | 
+| Below -2 or above 2 | strong evidence against the null hypothesis |
+| Below -3 or above 3 |  very strong evidence against the null hypothesis |
+
+  : Guidelines for evaluating strength of evidence from standardized statistics
+
+Observations that fall more than 2 or 3 standard deviations from the mean can be considered in the tail of the distribution.
+
+## Strength of evidence
+
+9. Let's examine the strength of evidence against the null. 
+    - Based on the value of the standardized statistic, $z$, in #8 and the guidelines shown above, how much evidence do the class data provide against the null hypothesis?
+    - How closely does your evaluation of strength of evidence based on the standardized statistic compare to the strength of evidence based on the p-value in #7?
+
+## Extension: Larger proportion
+
+11. Suppose that the proportion who chose Tim for the picture on the left was actually smaller than what we observed.
+    - How would this have affected the p-value?
+    - How would this have affected the absolute value of the standardized statistic?
+    - How would this have affected the strength of evidence against the null hypothesis?
+
+**Operator:** Enter your groups answers on [this form](https://goo.gl/forms/Js6s7PaUHzBK66RB2).
+
+## Extension: Smaller proportion
+
+12. Suppose that less than half of the students in your class had put Tim's name on the left, so your class result was in the opposite direction of the research conjecture and the alternative hypothesis.
+    - What can you say about the standardized value of the statistic in this case? 
+    - What can you say about the strength of evidence against the null hypothesis and in favor of the alternative hypothesis in this case?
+
+
+

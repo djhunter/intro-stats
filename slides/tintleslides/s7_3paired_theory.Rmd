@@ -1,0 +1,190 @@
+---
+title: "Section 7.3"
+date: "November 1, 2019"
+output: 
+  word_document:
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    center: true
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+
+# Theory-based approach for analyzing paired data
+
+## How Many M&M's do you want? {data-background="http://1.bp.blogspot.com/-rtC_BMawGH0/Tu6wXOwbZjI/AAAAAAAANCY/hmLDW8aOINc/s1600/6533753255_537c347d96_o.jpg"}
+
+## Does portion size affect how much you eat?
+
+- Brian Wansink studied this question with college students over several days. 
+- At one session, the 17 participants were randomly assigned to receive either a small bowl or a large bowl and were allowed to take as many M&Ms as they would like.
+- At the following session, the bowl sizes were switched for each participant.
+
+## How many M&M's do you want?
+
+> - Observational units: 17 students
+> - Explanatory: small bowl/large bowl
+> - Response: number of M&M's
+> - Is this an experiment or an observational study?
+> - Will the resulting data be paired?
+
+## Hypotheses
+
+- Null: Portion size is not associated to M&M consumption.
+    + There is no difference in portion size.
+- Alternative: Larger portions cause you to eat more.
+    + There is a difference in portion size.
+    
+Our parameter is the long-run mean difference (small minus large). In symbols:
+
+$$
+H_0 : \mu_d = 0 \\
+H_a: \mu_d < 0 
+$$
+
+## Data
+
+<div class="column-left">
+```{r, echo=FALSE}
+MandMs <- read.table("http://www.isi-stats.com/isi/data/chap7/BowlsMMs.txt", header=TRUE)
+MandMs$diff <- MandMs$Small - MandMs$Large
+print(MandMs)
+```
+</div>
+
+<div class = "column-right">
+```{r}
+cat(mean(MandMs$Small), sd(MandMs$Small))
+cat(mean(MandMs$Large), sd(MandMs$Large))
+cat(mean(MandMs$diff), sd(MandMs$diff))
+```
+</div>
+
+
+## Simulation-based approach
+
+We can copy the [Data](http://www.math.hope.edu/isi/data/chap7/BowlsMMs.txt) into the [Matched Pairs applet](http://www.rossmanchance.com/applets/MatchedPairs/MatchedPairs.htm?hideExtras=1) to get a simulation-based p-value and 2SD confidence interval.
+
+## Theory-based alternative?
+
+- Our null distribution was centered at zero and fairly bell-shaped.
+- This can all be predicted (along with the variability) using theory-based methods.
+- Theory-based methods should be **valid** if the population distribution of differences is symmetric (we can guess at this by looking at the sample distribution of differences) or our sample size is at least 20 and the sample differences are not skewed..
+- Our sample size was only 17, but this distribution of differences is fairly symmetric, so we will proceed with a theory-based test.
+
+## Distribution of differences
+
+```{r, echo=FALSE}
+library(ggplot2)
+ggplot(MandMs, aes(x=diff)) + geom_density()
+```
+
+## Paired t-test
+
+Two options:
+
+1. Use the Matched Pairs applet, and calculate t-statistic.
+2. Use the [Theory Based Inference Applet](http://www.rossmanchance.com/applets/TBIA.html?hideExtras=1), and enter all the summary statistics. Here we use a test for One Mean.
+
+## Calculating t-statistic
+
+For paired data, the $t$-statistic is:
+
+$$
+t = \frac{\bar{x}_d - 0}{s_d/\sqrt{n}}\approx \frac{-10.88235 - 0}{36.30062/\sqrt{17}} \approx -1.236
+$$
+
+We can enter this $t$-statistic into the [Matched Pairs applet](http://www.rossmanchance.com/applets/MatchedPairs/MatchedPairs.htm?hideExtras=1) to get a p-value.
+
+## Alternative: TBIA one mean scenario
+
+Alternatively, we can use the [Theory Based Inference Applet](http://www.rossmanchance.com/applets/TBIA.html?hideExtras=1), and enter all the summary statistics. Here we use a test for *One Mean*.
+
+## Conclusions
+
+- The theory-based model gives slightly different results than simulation, but we come to the same conclusion.  We don’t have strong evidence that the bowl size affects the number of M&Ms taken.
+- We can see this in the large p-value (0.1172) and the confidence interval that included zero (-29.5, 7.8).
+- The confidence interval tells us that we are 95% confident that when given a small bowl, a person will take between 29.5 fewer M&Ms to 7.8 more M&Ms on average than when given a large bowl.
+
+## Why weren't the results significant?
+
+There could be a number of reasons we didn’t get significant results.
+
+- Maybe bowl size doesn’t matter.
+- Maybe bowl size does matter and the difference was too small to detect with our small sample size.
+- Maybe bowl size does matter with some foods, like pasta or cereal, but not with a snack food like M&Ms.
+
+## Strength of Evidence
+
+We will have stronger evidence against the null (smaller p-value) when:
+
+- The sample size is increased.
+- The variability of the data is reduced.
+- The mean difference is farther from 0.
+
+We will get a narrower confidence interval when:
+
+- The sample size is increased.
+- The variability of the data is reduced.
+- The confidence level is decreased.
+
+# Exploration 7.3
+
+## Dutch Auction
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/zx7buFdpis4?rel=0&amp;start=30&amp;end=152" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+## Preview
+
+The researcher placed pairs of identical cards up for auction; one would go into the Dutch auction and the other to the first-price sealed bid auction. He then looked at the difference in the prices he received on the pair. He repeated this for a total of 88 pairs.
+
+- Explanatory and Response?
+- Hypotheses?
+
+## Matched pairs applet
+
+1. Paste [the data](http://www.math.hope.edu/isi/data/chap7/Auction.txt) into the [Matched Pairs applet](http://www.rossmanchance.com/applets/MatchedPairs/MatchedPairs.htm?hideExtras=1) and **record** the following. 
+    + $\bar{x}_d$
+    + $s_d$
+    + A simulation-based p-value for the test of $H_0: \mu_d = 0$ versus $H_a: \mu \neq 0$. 
+
+## VALIDITY CONDITIONS 
+
+> Theory-based methods of inference will work well for paired data if the distribution of differences has a symmetric distribution, or you have at least 20 pairs (i.e., at least 20 differences) and the distribution of the sample differences is not strongly skewed. This test is known as a *paired t-test*.
+
+2. Are the validity conditions met for these data? Discuss.
+
+## Compute t-statistic
+
+3. Use the formula 
+$t = \frac{\bar{x}_d - 0}{s_d/\sqrt{n}}$
+and **record** the value of the t-statistic. Do you think this value indicates strong evidence against $H_0$?
+
+4. In the applet where you got the simulation-based p-value, choose *t-statistic* above the null distribution. Enter your t-statistic and click *Count*. Click *overlay t-distribution*. **Record** the theory-based p-value that appears in yellow. (If you do it wrong, you will get a warning.)
+
+## Alternative: TBIA Applet
+
+5. Open the [Theory-Based Inference applet](http://www.rossmanchance.com/applets/TBIA.html?hideExtras=1). Choose *One mean* from the pull-down menu.
+
+- Enter the sample size, sample mean, and sample standard deviation for the differences as you found in #1.
+- Do a Test of Significance
+- **Record** a 99% Confidence Interval.
+
+**Operator:** Use [this form](https://docs.google.com/forms/d/e/1FAIpQLScBWWce33Q1ElHRHB3kI4JEfpeiushUGD0_noQ_fSQwc03rAA/viewform?usp=sf_link) to enter a coherent sentence interpreting the endpoints of the confidence interval in the context of the problem.
+
+## Causation and Generalization
+
+6. Can you conclude causation? If yes, what causes what? If not, how are you deciding?
+
+7. Can you extend the results of this study? Other kinds of cards? Other types of items? Anything sold in an auction format on the Internet? How are you deciding?
+
+##  {data-background="http://math.westmont.edu/img/easteregg.jpg" data-background-size="contain"}

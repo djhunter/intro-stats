@@ -1,0 +1,275 @@
+---
+title: "Section 10.1"
+date: "November 18, 2019"
+output: 
+  word_document:
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    center: true
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+
+# Chapter 10: Two Quantitative Variables
+
+## Explanatory and Response
+
+- Chapter 8: Categorical explanatory $\rightarrow$ Categorical response
+- Chapter 9: Categorical explanatory $\rightarrow$ Quantitative response
+
+## *Investigation 8-9* {data-background="https://hw3.thisamericanlife.org/sites/default/files/styles/landscape/public/episodes/images/836401440-672.jpg" data-background-size="contain"}
+
+- [Clip from This American Life](https://www.thisamericanlife.org/672/no-fair/act-one-3)
+- (Start at 38:54, End at 42:02)
+
+## Was there a trend?
+
+```{r, comment=NULL, fig.height = 4, fig.width=7, fig.align='center'}
+drivers <- read.table("http://math.westmont.edu/ma5/carstatus.txt", header = TRUE)
+plot(Behavior ~ Status, data = drivers)
+```
+
+## Chi Square test limitations
+
+- It seemed like there was a trend: higher status people yeilded less.
+- However, the Chi-Square test came back insignificant (p-val > 0.2)
+- Chi-Square only looks at 5 different levels, not in order. (categorical response)
+- We need other tests that deal with *quantiative response* variables.
+
+## Chapter 10 Overview
+
+- Quantitative explanatory $\rightarrow$ Quantitative response
+- How strong is the relationship?
+- How can we model the relationship?
+- How significant is the evidence for the relationship?
+
+## Section 10.1: Scatterplots and Correlation {data-background="https://s16815.pcdn.co/wp-content/uploads/2016/08/iStock_90629725_LARGE.160824.jpg"}
+
+> How is the time a student spends on an exam related to the student's score on the exam?
+
+## Section 10.1: Scatterplots and Correlation
+
+How is the time a student spends on an exam related to the student's score on the exam?
+
+```{r, echo=FALSE}
+library(ggplot2)
+examtimes <- read.table("http://www.isi-stats.com/isi/data/chap10/ExamTimesScores.txt", header = TRUE)
+examtimes
+```
+
+## Scatterplot
+
+- Explanatory variable on horizontal axis
+- Response variable on vertical axis
+
+```{r, echo=FALSE, fig.height=5}
+ggplot(examtimes[1:27,], aes(x=time, y=score)) + geom_point() + coord_cartesian(xlim=c(20,100), ylim=c(50,100))
+```
+
+## Describing Scatterplots
+
+When we describe data in a scatterplot, we describe the 
+
+- Direction (positive or negative)
+- Form (linear or not)
+- Strength (strong-moderate-weak, we will let correlation help us decide)
+- Unusual Observations
+
+How would you describe the time and test scatterplot?
+
+## Correlation coefficient $r$
+
+> - Correlation measures the strength and direction of a linear association between two quantitative variables.
+> - Correlation is a number $r$ between -1 and 1.  
+> - With positive correlation one variable increases, on average, as the other increases.
+> - With negative correlation one variable decreases, on average, as the other increases.
+> - The closer it is to either -1 or 1 the closer the points fit to a line.
+> - The correlation for the test data is -0.56.
+
+## Guidelines for Correlation
+\[
+r= \frac{1}{n-1} \sum_{i=1}^n \left( \frac{x_i - \bar{x}}{s_x} \right) \left( \frac{y_i -\bar{y}}{s_y} \right)
+\]
+
+
+| range of $r$ | Strength | Meaning |
+| ------------ | -------- | ------- |
+| $0.7 \leq \lvert r \rvert \leq 1$ | Strong | Points almost form a line. |
+| $0.3 \leq \lvert r \rvert \leq 0.7$ | Moderate | Clear pattern, but bloblike. |
+| $0.1 \leq \lvert r \rvert \leq 0.3$ | Weak | Slight pattern. |
+| $0 \leq \lvert r \rvert \leq 0.1$ | None | No discernible trend. |
+
+Note: $-1\leq r \leq 1$ always.
+
+## Sensitivity
+
+Original Data: $r =$ `r cor(examtimes[1:27,]$time, examtimes[1:27,]$score)`
+
+```{r, echo=FALSE, fig.height=5}
+ggplot(examtimes[1:27,], aes(x=time, y=score)) + geom_point() + coord_cartesian(xlim=c(20,100), ylim=c(50,100))
+```
+
+## Sensitivity
+
+Add 3 "unusual" points: $r =$ `r cor(examtimes$time, examtimes$score)`
+
+```{r, echo=FALSE, fig.height=5}
+ggplot(examtimes, aes(x=time, y=score)) + geom_point() + coord_cartesian(xlim=c(20,100), ylim=c(50,100))
+```
+
+## Influential Observations
+
+- The correlation changed from -0.56 (a fairly moderate negative correlation) to -0.12 (a fairly weak negative correlation).
+- Points that are far to the left or right and not in the overall direction of the scatterplot can greatly change the correlation.  *(influential observations)*
+
+## Correlation in R
+
+```{r}
+cor(examtimes)
+examtimes
+```
+
+## Basic Facts about Correlation
+
+- $r= \frac{1}{n-1} \sum_{i=1}^n \left( \frac{x_i - \bar{x}}{s_x} \right) \left( \frac{y_i -\bar{y}}{s_y} \right)$
+- Correlation measures the strength and direction of a linear association between two quantitative variables.
+- $-1 \leq r \leq 1$
+- Correlation makes no distinction between explanatory and response variables.
+- Correlation has no unit.
+- Correlation is not a resistant measure.
+
+## Practice with $r$
+
+- Enter the [Height and Finger Length](http://www.math.hope.edu/isi/data/chap10/HeightandFingerLength.txt) data into the [Correlation/Regression Applet](http://www.rossmanchance.com/applets/RegShuffle.htm?hideExtras=2).
+- Experiment with the [Correlation Guessing Game Applet](http://www.rossmanchance.com/applets/GuessCorrelation.html?hideExtras=1).
+
+## Another Application
+
+[Paper in JQAS](https://www.degruyter.com/downloadpdf/j/jqas.2018.14.issue-4/jqas-2018-0061/jqas-2018-0061.pdf)
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/VVf_lFixiKU?end=43" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+## {data-background="http://math.westmont.edu/img/umpcorr.png" data-background-size="contain"}
+
+# Exploration 10.1
+
+## The Delboeuf Illusion
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/wuH9PJTa40w?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+## Preview
+
+- **Research Question:** Have dinner plates gotten bigger over recent years?
+- Quantitative Explanatory: Year plate was produced.
+- Quantitative Response: Size of plate
+
+## Correlation/Regression Applet
+
+1. Paste the [PlateSize data set](http://www.math.hope.edu/isi/data/chap10/PlateSize.txt) into the [Correlation/Regression applet](http://www.rossmanchance.com/applets/RegShuffle.htm?hideExtras=2). Which variable is on the x-(horizontal) axis? Which variable is on the y-(vertical) axis?
+
+## Scatterplots
+
+> A scatterplot is a graph showing a dot for each observational unit, where the location of the dot indicates the values of the observational unit for both the explanatory and response variables. Typically, the explanatory variable is placed on the x-axis and the response variable is placed on the y-axis.
+
+## Three aspects to correlation
+
+- *Direction:* Positive (uphill from left to right) or Negative (downhill)
+- *Form:* Approximately linear (roughly along a straight line) or would a curve describe the data better?
+- *Strength:* How closely do the points fit on a line (clear pattern, or fuzzy?)
+
+## Direction, Form, Strength
+
+2. Is the association between year and plate size positive or negative? **Record** a complete sentence explaining what this means in context.
+
+3. Does the association between year and size appear to be linear or nonlinear?
+
+4. In your opinion, would you say that the association between plate size and year appears to be strong, moderate, or weak?
+
+**Operator:** [Complete this form](https://goo.gl/forms/5YPmZ7RPHbybpyqu2) with your answers.
+
+## Unusual Observations
+
+5. Are there any observational units (dots on the scatterplot, representing individual plates) that seem to fall outside of the overall pattern? **Record** the $(x,y)$ coordinates of the observational unit you think is most unusual, and give a reason why you chose it.
+
+## Influential vs. Outliers
+
+Two types of unusual observations:
+
+- *Influential observation:* Removing it from the data set dramatically changes our perception of the association (usually extreme in explanatory (x) direction). 
+- *Outliers:* Don't fit the overall pattern of the relationship. (may also be influential)
+
+6. Is the observational unit you chose in #5 an influential observation or an outlier, or both? **Record** your answer.
+
+## Correlation Coefficient
+
+\[
+r= \frac{1}{n-1} \sum_{i=1}^n \left( \frac{x_i - \bar{x}}{s_x} \right) \left( \frac{y_i -\bar{y}}{s_y} \right)
+\]
+
+
+| range of $r$ | Strength | Meaning |
+| --- | -------- | ------- |
+| $0.7 \leq \lvert r \rvert \leq 1$ | Strong | Points almost form a line. |
+| $0.3 \leq \lvert r \rvert \leq 0.7$ | Moderate | Clear pattern, but bloblike. |
+| $0.1 \leq \lvert r \rvert \leq 0.3$ | Weak | Slight pattern. |
+| $0 \leq \lvert r \rvert \leq 0.1$ | None | No discernible trend. |
+
+Note: $-1\leq r \leq 1$ always.
+
+## Guess $r$ and check
+
+7. Will the value of the correlation coefficient for the year-plate size data be negative or positive? Why?
+
+8. Without using the applet, give an estimated range for the value of the correlation coefficient $r$ between plate size and year based on the scatterplot.
+
+9. Now, check the *Correlation coefficient* box in the applet to reveal the actual value of the correlation coefficient $r$. **Record** the value.
+
+## Add an observation
+
+10. In the *Add/remove observations* section of the applet, enter a year (x) of 1950 and plate
+size (y) of 11.5 and press *Add*. Note how this is an unusual observation on the scatterplot. **Record the following:**
+
+- How did the correlation coefficient $r$ change as a result? 
+- Was this observation influential?
+- Is this observation an outlier?
+
+## Delete some observations
+
+11. You can delete observations from the data set by clicking on the dot in the scatterplot (so it turns red) and pressing the *Delete* button. Try deleting some observations to make the correlation coefficient $r$ greater than 0.90. **Record** a sentence explaining which kind observations you can delete to increase the value of $r$.
+
+## {data-background="http://math.westmont.edu/img/rvsr.jpg" data-background-size="contain"}
+
+# Something to think about
+
+## Simulation-based approach?
+
+How would we create a chance model to simulate a null distribution for the correlation coefficient? 
+
+# Exam Results
+
+## Hour Exams 1-3
+
+```{r, echo=FALSE, warning=FALSE}
+rosterdf <- read.csv("../rosterf19.csv", stringsAsFactors = FALSE)
+eps <- log(0.6)/log(0.55)
+he1 <- round(100*(rosterdf$he1raw/100)^eps, 1)
+he2 <- round(100*(rosterdf$he2raw/100)^eps, 1)
+he3 <- round(100*(rosterdf$he3raw/100)^eps, 1)
+exam123 <- stack(data.frame(he1, he2, he3))
+colnames(exam123) <- c("score", "exam")
+hep1 <- ggplot(exam123, aes(x = score, color = exam, fill=exam)) + geom_density(alpha=0.3)
+hep1
+```
+
+
+

@@ -1,0 +1,214 @@
+---
+title: "Section 1.2"
+date: "August 30, 2019"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    transition: slide
+    center: true
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(comment = NA)
+```
+
+# Section 1.2: Measuring Strength of Evidence
+
+## Measuring Strength of Evidence
+
+- In the previous section we performed tests of significance.
+- In this section we will make things slightly more complicated, formalize the process, and define new terminology.
+
+## Terminology: Hypotheses
+
+- When conducting a test of significance, one of the first things we do is give the *null and alternative hypotheses*.
+- The null hypothesis is the chance explanation.
+- Typically the alternative hypothesis is what the researchers think is true.
+
+## Example: Harley the Dog
+
+- *Null Hypothesis:* Harley is just picking the cup randomly each time, and so will choose the correct cup 50% of the time, in the long run.
+    - $H_0: \pi = 0.5$
+- *Alternative Hypothesis:* Harley understands the human gestures, so he picks the correct cup more than 50% of the time.
+    - $H_a: \pi > 0.5$
+
+Here $\pi$ is the probability that Harley chooses the correct cup (an unknown *parameter*).
+
+## Example: Rock/Paper/Scissors
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/hgDbafji3xI?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+## Example: Rock/Paper/Scissors
+
+Researchers think that people are less likely to choose scissors.
+
+- *Null Hypothesis:* People choose scissors in equal proportion to rock and paper.
+    - $H_0: \pi = \frac{1}{3}$
+- *Alternative Hypothesis:* People are less likely to choose scissors.
+    - $H_a: \pi < \frac{1}{3}$
+
+## Rock/Paper/Scissors data
+
+- In a class of 12 students, 2 picked scissors. This sample proportion can be described using the symbol $\hat{p} = 2/12 \approx 0.167$ (our observed *statistic*).
+- Is our observed statistic unlikely to have occurred by chance, assuming the null hypothesis is true?
+- Use the [One Proportion applet](http://www.rossmanchance.com/applets/OneProp/OneProp.htm).
+
+## P-Value
+
+- The *p-value* is the proportion of the simulated statistics in the *null distribution* that are at least as extreme (in the direction of the alternative hypothesis) as the value of the statistic actually observed in the research study.
+- The smaller the p-value, the stronger the evidence against the null.
+
+## P-Value guidelines
+
+| Range of p-value          | Strength of evidence | 
+| ------------------------- | ----------------------------------------------- |
+| 0.10 < p-value: | not much evidence against null hypothesis; null is plausible |
+| 0.05 < p-value < 0.10: |    moderate evidence against the null hypothesis |
+| 0.01 < p-value < 0.05:  |  strong evidence against the null hypothesis |
+| p-value < 0.01: | very strong evidence against the null hypothesis |
+
+## Summary
+
+- The *null hypothesis* ($H_0$) is the chance explanation. (=)
+- The *alternative hypothesis* ($H_a$) is what you are trying to show is true. (< or >)
+- A *null distribution* is the distribution of simulated statistics that represent the chance outcome.
+- The *p-value* is the proportion of the simulated statistics in the null distribution that are at least as extreme as the value of the observed statistic.
+
+# Exploration 1.2: Tasting Water
+
+## {data-background="https://media3.giphy.com/media/l1tiZRXU8I2uysKlod/giphy.gif?cid=3640f6095c3634ab532f6c4c496c1226" data-background-size="contain"}
+
+## Tasting Water
+
+People spend a lot of money on bottled water. But do they really prefer bottled water to ordinary tap water? 
+
+- People who came to a booth at a local festival were given four cups of water. 
+- Three cups contained different brands of bottled water.
+- One cup was filled with tap water. 
+- Each subject (person) was asked which of the four cups of water they most preferred.
+- Researchers kept track of how many people chose tap water.
+
+## Preview Questions
+
+1. What is the research question that the researchers hoped to answer?
+
+
+2. Identify the observational units in this study.
+
+3. Identify the variable. Is the variable quantitative or categorical?
+
+4. Write this as a binary variable.
+
+5. Describe the parameter of interest (in words). 
+
+## Binary variable
+
+> A **binary variable** is a categorical variable with only two outcomes. Often we convert categorical variables with more than two outcomes (e.g., four brands of water) into binary variables (e.g., tap water or not). In this case we also define one outcome to be a "success" and one to be a "failure."
+
+----
+
+6. One possibility here is that subjects have an equal preference among all four waters and so are essentially selecting one of the four cups at random. In this case what is the long-run proportion (i.e., probability) that a subject in this study would select tap water?
+
+7. Another possibility is that the subjects are less likely to prefer tap water than the bottled water brands. In this case what can you say about the long-run proportion that a subject in this study would select tap water? (Hint: You are not to specify a particular value this time; instead indicate a direction from a particular value.)
+
+## Hypotheses
+
+The *null hypothesis* typically represents the "by-chance-alone" explanation. The chance model (or "null model") is chosen to reflect this hypothesis. The *alternative hypothesis* typically represents the "there is an effect" explanation that contradicts the null hypothesis. Researchers typically hope this hypothesis will be supported by the data they collect.
+
+## Hypotheses
+
+8. Your answers to #6 and #7 should be the null and alternative hypotheses for this study. 
+**Recorder (on log sheet) and Presenter (on board):** Write the null and alternative hypotheses in symbols. Use the symbol $\pi$ for the parameter of interest. Remember that we write hypotheses like this:
+$$
+H_0: \mbox{___________________} \\
+H_a: \mbox{___________________}
+$$
+
+----
+
+The researchers found that 3 of 27 subjects selected tap water.
+
+9. Calculate the value of the relevant statistic. **Recorder:** Record this value. Use the symbol $\hat{p}$ to represent this statistic.
+
+11. What is the sample size $n$ in this study? **Record** this value.
+
+13. Is the data in the direction of the alternative hypothesis?
+
+14. Is it possible that this proportion could turn out to be this small even if the null hypothesis was true (i.e., even if people did not really dislike the tap water and were essentially selecting at random from among the four cups)?
+
+## Simulate
+
+15. Explain why we cannot use a simple coin toss to simulate the subjects' choices, as we did with the Harley study.
+
+16. We could do the simulation using a set of four playing cards: one black and three red. Explain how the simulation would work in this case.
+
+## Spinners
+
+17. Another option would be to use a spinner like you would use when playing a child's board game. Explain how the simulation would work if you were using a spinner. In particular: 
+    a. What does each region represent?
+    b. How many spins of the spinner will you need to do in order to simulate one repetition of the experiment when there is equal preference between the four waters (null hypothesis is true)?
+
+![](http://images.clipartpanda.com/game-clip-art-gamespinner4c.gif){width=250}
+
+## Do One Repetition with the Applet
+
+18. **Operator:** Open the [One Proportion applet](http://www.rossmanchance.com/applets/OneProp/OneProp.htm). 
+    - First enter the *probability of heads/probability of success value* specified in the null hypothesis.
+    - Enter the appropriate *sample size*.
+    - *Enter 1 for the number of samples*, and press *Draw Samples.* **Record** the number of "successes" in this simulated sample.
+    - Now, select the radio button for *"Proportion of successes."* **Record** this simulated statistic. 
+
+## Null Distribution    
+
+- Uncheck the "Animate" box, and *Draw Samples* four more times. Do you get the same results each time?
+- Now enter 995 for the number of samples and click on *Draw Samples*, bringing the *Total* number of simulated samples to 1,000. **Presenter:** Sketch the overall shape of the resulting distribution of sample proportions on the board. Label the value that lies at the center of the distribution.
+    
+This distribution of simulated sample proportions is called the *null distribution,* because it is based on assuming the null hypothesis to be true.
+
+
+## How unusual is the data?
+
+19. Recall that the observed value of the sample proportion who selected tap water in this study was $\hat{p} = 3/27 \approx 0.1111$.  Looking at the null distribution you have simulated, is this a very unlikely result when the null hypothesis is true? In other words, is this value far in the tail of the null distribution? 
+
+----
+
+The **p-value** is estimated as the proportion of simulated statistics in the null distribution that are at least as extreme (in the direction of the alternative hypothesis) as the value of the statistic actually observed in the research study.
+
+20. To calculate the p-value, first click on the $\geq$ inequality symbol to change it to $\leq$ (to match the alternative hypothesis). Then enter 0.1111 (the observed sample proportion who chose tap water) in the box and click on the *Count* button. Record the number and proportion of simulated sample proportions that are as extreme or more extreme than the observed value. **Recorder:** Write your group's p-value on the log sheet. 
+
+----
+
+| Range of p-value          | Strength of evidence | 
+| ------------------------- | ----------------------------------------------- |
+| 0.10 < p-value: | not much evidence against null hypothesis; null is plausible |
+| 0.05 < p-value < 0.10: |    moderate evidence against the null hypothesis |
+| 0.01 < p-value < 0.05:  |  strong evidence against the null hypothesis |
+| p-value < 0.01: | very strong evidence against the null hypothesis |
+
+*The smaller the p-value, the stronger the evidence.*
+
+21. Is the approximate p-value from your simulation analysis (your answer to #20) small enough to provide much evidence against the null hypothesis that subjects prefer tap water equally to the brands of bottled water? If so, how strong is this evidence? Explain.
+
+## Alternate Analysis
+
+Instead of focusing on the subjects who chose tap water, you could instead analyze the data based on the subjects who chose one of the three bottled waters. Because 3 of 27 subjects chose tap water, we know that 24 of the 27 subjects chose one of the brands of bottled water. Now let the parameter of interest (denoted by $\pi$) be the probability that a subject will select one of the bottled water cups as most preferred.
+
+## Redo the simulation 
+
+26. Conduct a simulation analysis to assess the strength of evidence provided by the sample data (24 of 27 chose bottled water).
+    - State new null and alternative hypotheses.
+    - Calculate the new observed statistic.
+    - Use the [One Proportion applet](http://www.rossmanchance.com/applets/OneProp/OneProp.htm) to compute a p-value. Keep track of the settings that you used (probability of success, sample size, as extreme as, etc.)
+    
+27. Does your analysis based on the number who chose bottled water produce similar conclusions to your previous analysis based on the number who chose tap water? Explain.

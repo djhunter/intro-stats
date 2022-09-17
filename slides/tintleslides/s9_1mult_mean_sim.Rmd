@@ -1,0 +1,270 @@
+---
+title: "Section 9.1"
+date: "November 11, 2020"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+# Chapter 9: Comparing More than Two Means
+
+# Review of Simulation-based tests
+
+## One proportion
+
+- We created a null distribution by flipping a coin, rolling a die, or some computer simulation.  
+- We then found where our sample proportion was in this null distribution.
+
+## Comparing two proportions
+
+- Assuming there was no association between explanatory and response variables (the difference in proportions is zero), we shuffled cards and dealt them into two piles. (This essentially scrambled the response variable.)
+- We then calculated the difference in proportions.
+- We repeated this process many times and built a null distribution.
+- We finally found where the observed difference in sample proportions was located in the null distribution.
+
+## Comparing two means
+
+- Assuming there was no association between explanatory and response variables (the difference in means is zero), we shuffled cards and dealt them into two piles. (This time the cards had numbers on them, the response, instead of words.)
+- We then calculated the difference in means  
+- We repeated this process many times and built a null distribution.
+- We finally found where the observed difference in sample means was located in the null distribution.
+
+## Paired Test 
+
+- Assuming there was no relationship between the explanatory and response variables (so the mean difference should be zero), we randomly switched some of the pairs and calculated the mean of the differences. 
+- We repeated this many times and built a null distribution.
+- We then found where the original mean of the differences from the sample was located in the null distribution.
+
+## Comparing more than two proportions
+
+- Assuming there was no association between explanatory and response variables (all the proportions are the same), we scrambled the response variable and calculated the MAD statistic (or $\chi^2$ statistic).
+- We repeated this many times and built a null distribution.
+- We finally found where the original MAD or $\chi^2$ statistic from our sample was located in the null distribution.
+
+## What's next?
+
+- Comparing multiple means (today)
+- What to do when *both* the explanatory and response are quantitative (Chapter 10)
+
+# Section 9.1: Simulation-based test for comparing multiple means
+
+## Ambiguous Prose
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/7lztHyJKHRM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+## Ambiguous Prose
+
+If the balloons popped, the sound wouldn’t be able to carry since everything would be too far away from the correct floor. A closed window would also prevent the sound from carrying, since most buildings tend to be well insulated. Since the whole operation depends on a steady flow of electricity, a break in the middle of the wire would also cause problems. Of course, the fellow could shout, but the human voice is not loud enough to carry that far. An additional problem is that a string could break on the instrument. Then there could be no accompaniment to the message. It is clear that the best situation would involve less distance. Then there would be fewer potential problems. With face to face contact, the least number of things could go wrong. 
+
+## {data-background="http://math.westmont.edu/img/balloons.jpg" data-background-size="contain"}
+
+## Comprehension Study
+
+Students were read an ambiguous prose passage under one of the following conditions:
+
+- Students were given a picture that could help them interpret the passage before they heard it.
+- Students were given the picture after they heard the passage. 
+- Students were not shown any picture before or after hearing the passage.
+
+They were then asked to evaluate their comprehension of the passage on a 1 to 7 scale.  
+
+## Hypotheses
+
+- Null: In the population there is no association between whether or when a picture was shown and comprehension of the passage.
+- Alternative: In the population there is an association between whether and when a picture was shown and comprehension of the passage.
+
+## Hypotheses
+
+- Null: All three of the long term mean comprehension scores are the same. 
+
+\[
+H_0: \mu_\text{no_picture} = \mu_\text{picture_before} = \mu_\text{picture_after}
+\]
+
+- Alternative: At least one of the mean comprehension scores is different.
+
+\[
+H_a: \mu_\text{no_picture},\mu_\text{picture_before},\mu_\text{picture_after} \text{ are not all equal}
+\]
+
+## Comprehension Data
+
+```{r, echo=FALSE, comment=NULL}
+pcomp <- read.table("http://www.isi-stats.com/isi/data/chap9/Comprehension.txt", header=TRUE)
+pcomp
+```
+
+----
+
+```{r, fig.height=4}
+library(plyr)
+ddply(pcomp, ~Condition, summarize, mean=mean(Comprehension), sd=sd(Comprehension))
+boxplot(Comprehension~Condition, data=pcomp, horizontal=TRUE)
+```
+
+## Why can't we just make three pairwise confidence intervals?
+
+```{r, fig.height=4, echo=FALSE}
+boxplot(Comprehension~Condition, data=pcomp, horizontal=TRUE)
+```
+
+## Why can't we just make three pairwise confidence intervals?
+
+- Each has a 95% chance of catching the difference correctly, due to random variation. With three, you have only a $0.95\times0.95\times0.95 \approx 86\%$ chance. So you have a 14% chance of making a Type I error (false alarm).
+- **Better practice:** Do an overall (omnibus) test first, then follow up with CI's if the overall test indicates more than just random variation.
+
+## Test Statistic: MAD
+
+```{r, echo=FALSE}
+ddply(pcomp, ~Condition, summarize, mean=mean(Comprehension), sd=sd(Comprehension))
+```
+
+\[ 
+\begin{align}
+&\text{MAD:} \\ & \frac{|\bar{x}_\text{after} - \bar{x}_\text{before}| + |\bar{x}_\text{after} - \bar{x}_\text{none}| + |\bar{x}_\text{before} - \bar{x}_\text{none}|}{3} \\[5pt]
+&\approx  \frac{|3.21-4.95|+|3.21-3.37|+|4.95-3.37|}{3} \\
+&\approx 1.16
+\end{align}
+\]
+
+## Simulation
+
+- Similar to testing two means we can shuffle values of the response variable (the comprehension scores) and randomly place them into piles representing the categories of the explanatory variable (the picture condition).
+- This time we have three piles instead of two.
+- After each shuffle, we calculate the MAD statistic of the shuffled data and that will be a point in the null distribution.
+
+## Simulation using Applet
+
+Let's paste the [Reading Comprehension Data](http://www.math.hope.edu/isi/data/chap9/Comprehension.txt) into the [Multiple Means Applet](http://www.rossmanchance.com/applets/AnovaShuffle.htm?hideExtras=2).
+
+## Simulation using R `coin` package
+
+```{r include=FALSE}
+library(coin)
+set.seed(2444)
+```
+
+
+```{r}
+independence_test(Comprehension ~ Condition, data = pcomp, distribution = "approximate")
+```
+
+## Conclusion
+
+- Since we have a small p-value we can conclude at least one of the mean comprehension scores is different.
+- Can we tell which one or ones?
+    + Go back to dotplots and take a look.
+    + We can do pairwise confidence intervals to find which means are significantly different than the other means and will do that in the next section.
+
+## Learning Objectives 
+
+- Be able to calculate the MAD statistic given a data set (or set of means).
+- Understand how a simulation-based test would work using cards and shuffling for comparing multiple means.
+- Understand that we do an overall test when comparing multiple means or proportions instead of pairwise tests to control for the probability of making a type I error.
+- Use the Multiple Means applet to carry out an analysis using the MAD statistic to compare multiple means.
+
+# Exploration 9.1
+
+## Exercise and Brain Volume
+
+<div class="column-left">
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/NObkWjQHNm8?loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+</div>
+
+<div class="column-right">
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/Ag5CUsRNY9Q?rel=0?autoplay=1&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+</div>
+
+## Exercise and Brain Volume
+
+- Researchers randomly assigned elderly adult volunteers into four activity groups: tai chi, walking, social interaction, and no intervention. 
+- 120 participants started the study, and 13 dropped out along the way, so 107 completed the study.
+- Except for the control group, each group met for about an hour three times a week for 40 weeks.
+- Each participant had an MRI to determine brain size before the study began and again at its end. The researchers measured the percentage increase or decrease in brain size during that time. 
+
+## Preview
+
+- **Question:** Can different types of activities affect brain shrinkage in elders?
+- **Categorical Explanatory:** Activity type: tai chi, walking, social interaction, no intervention
+- **Quantitative Response:** Change in brain size (using MRI)
+
+## Hypotheses
+
+- Null: There is no association between the type of activity and the change in brain size.
+
+\[ H_0: \mu_\text{TaiChi}=\mu_\text{walking}= \mu_\text{social}=\mu_\text{none} \]
+
+- Alternative: There is an association between the type of activity and the change in brain size.
+
+\[ H_a: \text{At least one of } \mu_\text{TaiChi},\mu_\text{walking}, \mu_\text{social},\mu_\text{none} \\ 
+ \text{is different from the others}
+\]
+
+## Explore the Data
+
+Paste the data from the [Brain size data](http://www.math.hope.edu/isi/data/chap9/Brain.txt) into the [Multiple Means applet](http://www.rossmanchance.com/applets/AnovaShuffle.htm?hideExtras=2) and press *Use Data*.
+
+1. Which activity group tended to have the largest increase in brain size percentage change? Which tended to have the smallest increase (i.e., largest decrease)?
+
+2. Check the box to make *Boxplots*. What do you notice about the IQR's of the four groups? How is this related to the standard deviations of the four groups?
+
+## One overall Statistic
+
+> To minimize the chance of making a Type I error, we won't run six different tests comparing each group to each other. So, instead we need a single statistic to help test the overall null hypothesis of no association.
+
+## One overall Statistic
+
+3. **Record** out an unsimplified numeric expression for the Mean Absolute Difference (MAD) for this data (Hint: there should be six ways to pair up the four groups). Check your answer using the applet.
+
+4. Explain why it's important to take the absolute values before averaging the six differences.
+
+5. What types of values will the MAD statistic have if the null hypothesis is true (large, small, positive, negative)? If there is strong evidence against the null hypothesis?
+
+## Simulation with cards
+
+6. **Record** a description of how we could do a simulation using cards. Include all the following.
+
+- How many cards will you need?
+- Do the cards just need to be certain colors (like in Chapter 5), or do they need something written on them (like in Chapter 6), and if so, what?
+- When you shuffle and deal, how many piles will you make?
+- How many cards will you place in each pile?
+- What should you be recording after the completion of each shuffle and deal?
+
+## Simulation using applet
+
+7. Use at least 1000 shuffles to create a null distribution for the MAD statistic.
+    + Is the null distribution centered at zero? Explain why your answer makes sense.
+    + Describe the shape of the null distribution (symmetric? skewed?).
+    
+8. Use the null distribution to **record** a *p-value* for our hypothesis test, along with a *sentence* interpreting this p-value in the context of this problem.
+
+## Generalization and Causation
+
+9. Generalization: To what population would you feel comfortable generalizing these results?
+
+10. Causation: Would you feel comfortable with drawing a cause-and-effect conclusion from this study? Between what two variables? Explain why or why not.
+
+## Concerns?
+
+11. Did anything about the design and conclusions of this study concern you? Issues you may want to critique include: 
+
+- The match between the research question and the study design 
+- How the experimental units were selected
+- How the treatments were assigned to the experimental units
+- How the measurements were recorded
+- The number of experimental units in the study 
+- Whether what we observed is of practical value
+
+**Operator:** Enter your critique into [this form](https://goo.gl/forms/VAbAzy4qFxqUTs0K3).

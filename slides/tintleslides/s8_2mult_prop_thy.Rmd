@@ -1,0 +1,277 @@
+---
+title: "Section 8.2"
+date: "November 9, 2020"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+
+# Section 8.2: Comparing Multiple Proportions: Theory-Based Approach
+
+## Theory vs. Simulation
+
+Just as always:
+
+- Simulation based methods 
+    + Always work
+    + Require the ability to simulate (computer). 
+- Theory-based methods  
+    + Avoid the need for simulation 
+    + Additional validity conditions must be met 
+
+## Acupuncture
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/ORc2RYPs45o?rel=0&amp;end=135" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+## Acupuncture
+
+- A randomized experiment was conducted exploring the effectiveness of acupuncture in treating chronic lower back pain in Germany (Haake et al. 2007). 
+- Acupuncture inserts needles into the skin of the patient at acupuncture points to treat a variety of ailments.
+
+## Study design
+
+- 3 treatment groups:
+    + Verum acupuncture: traditional Chinese
+    + Sham acupuncture: needles inserted into the skin, but not deeply and not at acupuncture points
+    + Traditional, non-acupuncture, therapy of drugs, physical therapy and exercise. 
+- 1162 patients were randomly assigned to one of the three treatment groups
+- 10 therapy sessions
+- Did substantial reduction in back pain occur after 6 months as measured on one of two scales?
+
+## Categorical explanatory and response
+
+- Explanatory Variable: Which type of treatment the subject received. (Categorical with 3 categories)
+- Response Variable: Did the subject get substantial relief from their lower back pain? (Categorical with 2 categories)
+
+## Hypotheses
+
+- Null hypothesis - no association between type of treatment received and reduction in back pain. 
+- Alternative hypothesis - there is an association between type of treatment and reduction in back pain.
+
+\[ 
+\begin{align}
+& H_0: \pi_\text{real} = \pi_\text{sham} = \pi_\text{none} \\
+& H_a: \text{At least one of these probabilities is different.}
+\end{align}
+\]
+
+## Data
+
+<div class="column-left">
+```{r, echo=FALSE}
+apunc <- read.table("http://www.isi-stats.com/isi/data/chap8/Acupuncture.txt", header=TRUE)
+print(apunc)
+```
+</div>
+
+<div class="column-right">
+```{r, echo=FALSE, fig.width=3, fig.height=2.8, fig.align="center"}
+addmargins(t(table(apunc)))
+print(prop.table(t(table(apunc)), 2), digits=2)
+barplot(prop.table(t(table(apunc)), 2))
+```
+</div>
+
+## Summary statistic?
+
+Two Choices: 
+
+- MAD
+- $\chi^2$ statistic ("chi-square")
+
+## MAD
+
+```{r, echo=FALSE, fig.width=3, fig.height=2.8, fig.align="center"}
+print(prop.table(t(table(apunc)), 2), digits=4)
+```
+
+\[
+\begin{align}
+ & \text{MAD:} \\ & \frac{|0.2732-0.4755| + |0.2732-0.4419| + |0.4755-0.4419|}{3} \\
+           &\approx 0.135
+\end{align}
+\]
+
+## Chi-Square statistic $\chi^2$
+
+```{r, echo=FALSE, fig.width=3, fig.height=2.8, fig.align="center"}
+addmargins(t(table(apunc)))
+print(prop.table(t(table(apunc)), 2), digits=2)
+```
+- pooled proportion = $\hat{p}= 461/1162 \approx 0.3967$
+- Compute standardized statistic for each proportion.
+- Add up the squares of these.
+
+## Chi-Square statistic $\chi^2$
+\[
+\begin{align}
+\chi^2 & = \left(\frac{0.2732 - 0.3967}{\sqrt{0.3967(1-0.3967)/387}}\right)^2 \\ 
+       & + \left(\frac{0.4755 - 0.3967}{\sqrt{0.3967(1-0.3967)/387}}\right)^2 \\  
+       &  + \left(\frac{0.4419 - 0.3967}{\sqrt{0.3967(1-0.3967)/388}}\right)^2 \\
+       &\approx 38.054
+\end{align}
+\]
+
+## Simulation using applet
+
+- Just like the MAD statistic, the larger the chi-square statistic the more evidence there is against the null, and a chi-square of 0 means proportions are all the same.
+- Let's paste [the data](http://www.math.hope.edu/isi/data/chap8/Acupuncture.txt) into the [Multiple Proportions applet](http://www.rossmanchance.com/applets/ChiSqShuffle.html?hideExtras=1).
+
+## Strength of evidence 
+
+- In both cases, we got p-values of 0. 
+- Nothing as large as a MAD statistic of 0.135 or larger ever occurred in this simulation.
+- Likewise nothing as large as a chi-square statistic of 38.05 or larger ever occurred in this simulation.
+- Hence we have very strong evidence against the null and in support of the alternative: the type of treatment is associated with pain reduction.
+
+## Theory-based method
+
+- The theory-based method will predict the chi-square null distribution.
+- We can use the applet to overlay a theoretical chi-square distribution and find the theory-based p-value.
+- **The theory based method only works well when each cell in the 2-way table has at least 10 observations.**
+- This is easily met here.  The smallest count was 106.
+
+See applet again.
+
+## Two categorical variables in R
+
+```{r, fig.height=4, fig.width=5, fig.align='center'}
+apunc <- read.table("http://www.isi-stats.com/isi/data/chap8/Acupuncture.txt", header=TRUE)
+plot(Improvement ~ Acupunture, data = apunc)
+```
+
+## Chi-Square test using `coin` package
+
+```{r}
+library(coin)
+```
+
+The R package `coin` provides two versions of of the chi-square test with the `chisq_test` command.
+
+- `asymptotic`: Uses the theory-based distribution to approximate the null distribution.
+- `approximate`: Uses a simulation-based null distribution.
+
+## Chi-Square test using `coin` package
+
+```{r}
+chisq_test(Improvement ~ Acupunture, data = apunc, distribution="asymptotic")
+chisq_test(Improvement ~ Acupunture, data = apunc, distribution="approximate")
+```
+
+## Follow up
+
+>- The chi-square test is an "omnibus" test. It tests the whole data set for *some* association in the data set, but it doesn't tell you where the association is.
+>- What if you find evidence of an association?  
+>- How do we determine exactly where the association is? 
+>     + No standard approach to follow. 
+>     + There are many different follow-up approaches.
+>     + We will use **pairwise confidence intervals** for the difference in proportions to determine exactly where the association lies.
+
+## Follow up
+
+- 95% confidence intervals (found in applet) on the difference improvement percentages comparing:
+    + Real to sham   (-0.0366, 0.1038)
+    + Real to none    (0.1356, 0.2689)*
+    + Sham to none  (0.1022, 0.2351)*
+- There is evidence that the probability of pain reduction is different (lower) for no acupuncture treatment than the other two.
+- There is no significant difference between real and sham acupuncture however.
+
+## Why do "post hoc" ci's?
+
+Why don't we just skip the chi-square test and do the confidence intervals?
+
+>- There are $n(n-1)/2$ pairs when you have $n$ groups.
+>- Each pair gives you a chance to make a Type I error.
+>- When you have multiple groups, the chances of making a Type I error on one of the groups becomes quite high: For example, with 5 groups, there are 10 pairs, so the probability of at least one Type I error is $1 - 0.95^{10} \approx 0.4$.
+
+# Exploration 8.2A
+
+## Conserving Hotel Towels
+
+Does the type of hotel towel conservation message influence guest behavior?
+
+![](https://media.treehugger.com/assets/images/2011/10/Hotel-Towel-Sign-thumb-468x351-22689.jpg)
+
+## Different Social Norms
+
+Five different types of hotel signs were randomly assigned to guest rooms:
+
+1. No social norm.
+2. Guest identity norm.
+3. Same room norm.
+4. Citizens norm.
+5. Gender identity norm.
+
+## No Social norm 
+
+HELP SAVE THE ENVIRONMENT. You can show your respect for nature and help save the environment by reusing your towels during your stay. 
+
+## Guest identity norm
+
+JOIN YOUR FELLOW GUESTS IN HELPING TO SAVE THE ENVIRONMENT. In a study conducted in fall 2003, 75% of the guests participated in our new resource savings program by using their towels more than once. You can join your fellow guests in this program to help save the environment by reusing your towels during your stay. 
+ 
+## Same room norm
+
+JOIN YOUR FELLOW GUESTS IN HELPING TO SAVE THE ENVIRONMENT. In a study conducted in fall 2003, 75% of the guests who stayed in this room (#xxx) participated in our new resource savings program by using their towels more than once. You can join your fellow guests in this program to help save the environment by reusing your towels during your stay. 
+
+## Citizens norm
+
+JOIN YOUR FELLOW CITIZENS IN HELPING TO SAVE THE ENVIRONMENT. In a study conducted in fall 2003, 75% of the guests participated in our new resource savings program by using their towels more than once. You can join your fellow citizens in this program to help save the environment by reusing your towels during your stay. 
+
+## Gender identity norm
+
+JOIN THE MEN AND WOMEN WHO ARE HELPING TO SAVE THE ENVIRONMENT. In a study conducted in fall 2003, 76% of the women and 74% of the men participated in our new resource savings program by using their towels more than once. You can join the other men and women in this program to help save the environment by reusing your towels during your stay. 
+
+## Chi-Square statistic ($\chi^2$)
+
+1. Paste [the data](http://www.math.hope.edu/isi/data/chap8/Towels.txt) into the [Multiple Proportions applet](http://www.rossmanchance.com/applets/ChiSqShuffle.html?hideExtras=1). Note that you are using a table, so click on *Use Table*. Compute and **record** the chi-square statistic for this data.
+
+2. What kinds of values (large, small, positive, negative) will the chi-square statistic have if the null hypothesis is true? What kinds of values will provide evidence against the null hypothesis?
+
+## p-values 
+
+3. The applet will also now display the null distribution for the $\chi^2$ statistic rather than the MAD statistic. **Record** the p-value based on the simulated $\chi^2$ statistics. 
+
+4. Change the drop-down option to the *MAD* statistic. How does the p-value based on the $\chi^2$ statistic compare to the one based on the MAD statistic?
+
+## Theory-based approach
+
+The primary advantage of using the $\chi^2$ statistic is that its null distribution can be predicted well by a theoretical distribution. So, once again a theory-based approach could be used without conducting a simulation in the first place.
+
+5. Below the graph of the simulated chi-square statistics, check the box to *Overlay Chi-square distribution.* Does the theoretical distribution match the distribution of simulated statistics reasonably well? **Record** the theory-based p-value. Does it lead you to a similar conclusion about strength of evidence as the simulation-based p-value?
+
+## Validity conditions
+
+Like all theory-based tests, this one also comes with the condition of having a large sample size. We will (very conservatively) consider a sample size large if the sample data include at least 10 observations in each cell of the two-way table. 
+
+6. Is it valid to use a theory-based chi-square test for this data? **Record** a sentence explaining why or why not.
+
+## Follow-up analysis
+
+7. Check the box to Compute 95% CI(s) for difference in proportions. 
+    + How many intervals are produced?
+    + Which conditions are significantly different from each other? How are you deciding?
+    + **Operator:** For one of the significantly different intervals, [use this form](https://goo.gl/forms/PTJ7dhGXzJvHK0mm1) to write a one-sentence interpretation of the interval, being very clear what is supposed to be captured inside the interval and which condition has a more positive effect on towel use and by how much.
+
+## Scope of conclusions
+
+8. Is this an observational study or a randomized experiment? What difference does it make?
+9. Explain how the conclusions of this study are limited by conducting the study at a single hotel.
+
+##  {data-background="http://math.westmont.edu/img/chi.jpg" data-background-size="contain"}
+
+
+

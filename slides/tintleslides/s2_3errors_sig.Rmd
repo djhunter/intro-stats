@@ -1,0 +1,255 @@
+---
+title: "Section 2.3"
+date: "September 16, 2019"
+output: 
+  word_document:
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    center: true
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(comment = NA)
+```
+
+# Section 2.3: Errors and Significance
+
+# Investigation #1 Comments
+
+## Some Advice
+
+- Write as if you were writing a report that your boss and coworkers were going to see.
+- RStudio has a spell checker. It's the button with the $\stackrel{ABC}{\checkmark}$ on it. Use it!
+- Proofread your output before you submit it. 
+- Sentences begin with a capitalized word and end with a period.
+
+## Good p-value explanations
+
+- Assuming the null hypothesis is true, the probability that 10 out of 25 students would choose the right front tire is 0.07.
+- This p-value is the probability of the simulation statistics being as or more extreme than the observed statistic, in this case .4, assuming the null hypothesis is true (students are picking tires randomly).
+- Our p-value is the probability of getting the observed 40% (or more extreme) choosing the right front tire, assuming our null hypothesis is true.
+
+# Significance
+
+## Significance Level
+
+- We think of a p-value as telling us something about the strength of evidence from a test of significance.
+- The lower the p-value the stronger the evidence.
+- Some people think of this in more black-and-white terms.
+- Either we reject the null (and accept alternative) or not.
+
+## Significance Level
+
+- The value that we use to determine how small a p-value needs to be to provide convincing evidence whether or not to reject the null hypothesis is called the *significance level*. 
+- We reject the null when the p-value is less than or equal to $(\leq)$ the significance level.
+- The significance level is often represented by the Greek letter alpha, $\alpha$.
+
+## Significance Level
+
+- Typically we use 0.05 for our significance level.  There is nothing magical about 0.05.  We could set up our test to make it: 
+    - harder to conclude the alternative (smaller significance level say 0.01) or
+    - easier (larger significance level say 0.10).
+
+## Example: The Tire Story
+
+```{r, echo = TRUE}
+prop.test(10, 25, p = 0.25, correct = FALSE, alternative = "greater")
+```
+
+- At a significance level of $\alpha = 0.05$, we reject the null.
+- At a significance level of $\alpha = 0.01$, do not reject the null.
+
+## Quiz
+
+>- If the p-value is 0.023 and the significance level is 0.05, do I reject the null hypothesis?
+>- If the p-value is 0.023 and the significance level is 0.01, do I reject the null hypothesis?
+>- The smaller the significance level the (harder/easier) it is to reject the null and conclude the alternative.
+
+# Errors
+
+## Type I Error
+
+- Think back to the Harley study.
+- We concluded that Harley the dog could understand human gestures.
+- Suppose we were wrong: i.e., Harley was just a lucky guesser.
+- We would have rejected a true null hypothesis.
+    - This is called a *Type I Error*.
+    - A Type I Error is a "false alarm". We falsely concluded an ability where there was none.
+    
+## Type II Error
+
+- Now suppose, in the Harley study, that we ended up getting a large p-value, so we didn't get significant results when we tested Harley.
+- Suppose also, that Harley really could understand human gestures, but he just had a bad day.
+- We failed to conclude that he could understand.
+- We would have failed to reject a false null hypothesis.
+    - This is called a *Type II Error*.
+    - A Type II Error is a "missed opportunity". Our study would have missed the chance to find evidence of an ability that was really there.
+    
+## Type I vs. Type II errors
+
+In medical tests: 
+
+- A type I error is a *false positive*. (They conclude someone has a disease when they don’t.)
+- A type II error is a *false negative*. (They conclude someone does not have a disease then they actually do.)
+
+These errors can have very different consequences.
+
+## Errors are not Mistakes
+
+- The term "error" is used here to describe an unlucky sample.
+- Sometimes, when we do everything right, we will just draw an unlucky sample that leads to the wrong conclusion.
+- Sampling errors are not mistakes.
+- This is different from sampling bias, which is a mistake.
+
+    
+## Error types: Summary
+
+A **Type I error** (false alarm) occurs when a true null hypothesis is rejected. A **Type II error** (missed opportunity) occurs when a false null hypothesis is not rejected.
+
++-----------------------------------+-------------------------------+--------------------------------------+
+|                                   |  **Null hypothesis is true**  |  **Null hypothesis is false**        |
++===================================+===============================+======================================+
+| **Reject hull hypothesis**        | Type I error (false alarm)    | Correct decision                     | 
++-----------------------------------+-------------------------------+--------------------------------------+
+| **Do not reject null hypothesis** |  Correct decision             | Type II error (missed opportunity)   | 
++-----------------------------------+-------------------------------+--------------------------------------+
+
+## Probability of Type I Error
+
+- The probability of a type I error is the significance level.  
+- Suppose the significance level is 0.05.  If the null is true we would reject it 5% of the time and thus make a type I error 5% of the time.
+- If you make the significance level lower, you have reduced the probability of making a type I error, but have increased the probability of making a type II error.
+
+## Probability of Type II Error
+
+- The probability of a type II error is more difficult to calculate.
+- In fact, the probability of a type II error is not even a fixed number.  It depends on the value of the true parameter. 
+- The probability of a type II error can be very high if:
+    - The true value of the parameter and the value you are testing are close.
+    - The sample size is small.
+
+## Power
+
+- The probability of rejecting a false null hypothesis is called the *power* of a test.
+- Power equals 1 minus the probability of a type II error.
+- We want a test with high power and this is accomplished by:
+    - A sample proportion (or mean) far away from the parameter in the null hypothesis.
+    - A large sample size.
+    - For quantitative data---a small standard deviation.  
+
+## Learning Objectives
+
+- Know how p-value and significance level are related, and determine whether we reject $H_0$ or not.
+- Describe what Type I and Type II Errors mean in a particular context and describe consequences of making such an error in that context.
+- The significance level is the probability of a Type I error.
+- Recognize that decreasing the significance level usually means reducing the power, all else being equal.
+- Recognize which error could have been made after drawing a conclusion in a test of significance.
+
+# Exploration 2.3: Parapsychology Studies
+
+## Ganzfeld studies {data-background="https://i.ytimg.com/vi/NnBeNPQT2n8/maxresdefault.jpg"}
+
+## Preview
+
+- The receiver is shown four possible choices of targets, one of which is the correct target and the other three are "decoys." 
+- If the correct target is chosen by the receiver, the session is a "hit." 
+- Data: in 2,124 sessions, there were 709 "hits" (Utts, 2010).
+
+Hypotheses, statistics, p-value, evidence?
+
+## Critiques
+
+"My reaction is that the studies are crucially flawed.... I have found it impossible to usefully judge what actually went on in a parapsychology trial from their published record. Time after time, skeptics have gone to watch trials and found subtle and not-so-subtle errors. Since the field has so far failed to produce a replicable phenomena, it seems to me that any trial that asks us to take its findings seriously should include full participation by qualified skeptics."
+
+-- Persi Diaconis, Harvard University
+
+----
+
+"Both the statistical interpretation of the results of an individual experiment and of the results of a meta-analysis are based on a model of an ideal world.... The appropriateness of any statistical application in a given context is an empirical matter. That is why such issues as the adequacy of randomization, the non-independence of experiments in a meta-analysis and the over analysis of data are central to the debate." 
+
+-- Ray Hyman, University of Oregon
+
+## The desk drawer effect
+
+- Utts got her sample by compiling data from several published studies.
+- Studies showing significant effects are more likely to be published.
+- Studies not showing significant effects are likely to end up not published, in someone's "desk drawer."
+
+## Look at one study.
+
+One parapsychology study found 15 hits in 50 sessions. 
+
+1. Do a quick theory-based test of the hypotheses using the [Theory-Based Inference applet](http://www.rossmanchance.com/applets/TBIA.html?hideExtras=1). **Record** a p-value.
+
+2. Discuss: Does this p-value convince you that the subjects have psychic ability? Why/Why not?
+
+3. Discuss: What would the p-value have to be in order to convince you that the subjects had psychic ability?
+
+**Presenter:** Be ready to summarize your group's discussion.
+
+## Signficance
+
+When the p-value is larger than the prespecified **significance level**, we do not have enough evidence to reject the null hypothesis. When the p-value is less than or equal to the significance level, we do have enough evidence to reject the null hypothesis in favor of the alternative hypothesis.
+
+4. In a study with 50 sessions, what is the fewest number of hits we would need to observe to reject the null hypothesis using a 0.05 significance level? To answer this question, try different numbers of hits in the [Theory-Based Inference applet](http://www.rossmanchance.com/applets/TBIA.html?hideExtras=1).  **Record** your answer.
+
+## Error types
+
+> A **Type I error** (false alarm) occurs when a true null hypothesis is rejected. A **Type II error** (missed opportunity) occurs when a false null hypothesis is not rejected.
+
++-----------------------------------+-------------------------------+--------------------------------------+
+|                                   |  **Null hypothesis is true**  |  **Null hypothesis is false**        |
++===================================+===============================+======================================+
+| **Reject hull hypothesis**        | Type I error (false alarm)    | Correct decision                     | 
++-----------------------------------+-------------------------------+--------------------------------------+
+| **Do not reject null hypothesis** |  Correct decision             | Type II error (missed opportunity)   | 
++-----------------------------------+-------------------------------+--------------------------------------+
+
+## Error types
+
+5. Utts concluded that the data showed that her subjects show psychic ability. Which type of error (I or II) could she have been making?
+
+6. In the study with 15 hits in 50 sessions, there was not enough evidence, at the 0.05 significance level, to conclude that the subjects had psychic ability. Which type of error could these researchers be making?
+
+7. In the context of this study, which type of error do you think is worse?
+
+**Presenter:** Be ready to share your group's answers.
+
+## Significance and errors
+
+8. What if the researchers used a very small significance level? Say, 0.0001. How does this decision affect the probability of making a Type I error? 
+
+9. Choose the correct options in parentheses: Rejecting a true null hypothesis is a (Type I/Type II) error, while failing to reject a false null hypothesis is a (Type I/Type II) error. When we decrease the significance level, we make it (easier/harder) to reject the null hypothesis, so we (increase/decrease) the probability of a Type I error, and we (increase/decrease) the probability of a Type II error.
+
+**Operator:** Enter your group's choices [in this form](https://goo.gl/forms/bHYBhqDK24SNe1zl2).
+
+## Power
+
+> One trade-off for selecting a lower significance level (probability of Type I error if null hypothesis is true) is that the probability of a Type II error will increase.
+
+The probability of rejecting a false null hypothesis is called the **power** of the test. Tests with higher values of power are preferred over tests with lower values of power. Power can also be thought of as one minus the probability of a Type II error.
+
+## Power
+
+10. If the probability of a hit is actually 33%, then which hypothesis is true? Which error is possible?
+
+11. Open the [Power Simulation Applet](http://www.rossmanchance.com/applets/power.html?hideExtras=1). Use a sample size of 50, a hypothesized proportion of 0.25, and alternative proportion of 0.33. Choose *proportion of successes* and a *significance level* of 5%. Assuming that the true proportion is 0.33, what is the probability of failing to reject $H_0$?
+
+12. What is the probability of a Type II error? What is the power of this test? **Record** your answers.
+
+## Increasing power
+
+13. Name at least one thing the researchers could do to improve the power of this test. **Presenter:** be ready to share.
+

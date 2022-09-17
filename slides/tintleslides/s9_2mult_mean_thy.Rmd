@@ -1,0 +1,220 @@
+---
+title: "Section 9.2"
+date: "November 13, 2020"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+# Section 9.2: Comparing Multiple Means: Theory-Based Approach (ANalysis Of Variance: ANOVA)
+
+## ANOVA
+
+- As in chapter 8 when we compared multiple proportions, we need a statistic other than the MAD to make the transition to theory-based a smooth one.
+- This new statistic is called an $F$-statistic and the theory-based distribution that estimates our null distribution is called an $F$-distribution.
+- Unlike the MAD statistic, the $F$-statistic takes into account the variability within each group.
+
+## $F$-Statistic
+
+\[ 
+\begin{align}
+F &= \frac{\frac{1}{I-1} \sum_{i=1}^I n_i(\bar{x}_i - \bar{x})^2}{\frac{1}{N-I}\sum_{i=1}^I(n_i-1)s_i^2} \\[5pt]
+  &= \frac{\text{between-group variability}}{\text{within-group variability}} \\[5pt]
+  &= \frac{\text{variability due to explanatory variable}}{\text{unexplained variability}}
+\end{align}
+\]
+
+## More Ambiguous Prose
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/OYb3abiojco" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+## 
+
+*If the balloons popped, the sound wouldn’t be able to carry since everything would be too far away from the correct floor. A closed window would also prevent the sound from carrying, since most buildings tend to be well insulated. Since the whole operation depends on a steady flow of electricity, a break in the middle of the wire would also cause problems. Of course, the fellow could shout, but the human voice is not loud enough to carry that far. An additional problem is that a string could break on the instrument. Then there could be no accompaniment to the message. It is clear that the best situation would involve less distance. Then there would be fewer potential problems. With face to face contact, the least number of things could go wrong.* 
+
+##  {data-background="http://math.westmont.edu/img/balloons.jpg" data-background-size="contain"}
+
+*If the balloons popped, the sound wouldn’t be able to carry since everything would be too far away from the correct floor. A closed window would also prevent the sound from carrying, since most buildings tend to be well insulated. Since the whole operation depends on a steady flow of electricity, a break in the middle of the wire would also cause problems. Of course, the fellow could shout, but the human voice is not loud enough to carry that far. An additional problem is that a string could break on the instrument. Then there could be no accompaniment to the message. It is clear that the best situation would involve less distance. Then there would be fewer potential problems. With face to face contact, the least number of things could go wrong.* 
+
+## More Ambiguous Prose
+
+<div class="column-left">
+After the students rated their comprehension, the researchers also had the students recall as many ideas from the passage as they could. They were then graded on what they could recall.
+
+```{r, echo=FALSE, comment=NULL}
+precall <- read.table("http://www.isi-stats.com/isi/data/chap9/Recall.txt", header=TRUE)
+library(plyr)
+ddply(precall, ~Condition, summarize, mean=mean(Recall), sd=sd(Recall))
+```
+</div>
+
+<div class="column-right">
+```{r, echo=FALSE, fig.height=5, fig.width=4, fig.align='center'}
+boxplot(Recall~Condition, data=precall, horizontal=FALSE)
+```
+</div>
+
+## Hypotheses
+
+- Null: All three of the long-run mean recall scores for students under the different conditions are the same.  (No association)
+
+- Alternative: At least one of the long-run mean recall scores for students under the different conditions is different.  (Association)
+
+## ANOVA Validity Conditions
+
+- Just as with the simulation-based method, we are assuming we have independent groups.
+- Two extra conditions must be met to use traditional ANOVA:
+    + **Normality:** If sample sizes are small within each group, data shouldn’t be very skewed.  If it is, use simulation approach. (samples sizes of 20 again is a good guideline for means)
+    + **Equal variation:** Largest standard deviation is not more than twice the value of the smallest.
+
+## Validity Conditions?
+
+<div class="column-left">
+
+```{r, echo=FALSE, comment=NULL}
+ddply(precall, ~Condition, summarize, mean=mean(Recall), sd=sd(Recall), n = length(Recall))
+```
+</div>
+
+<div class="column-right">
+```{r, echo=FALSE, fig.height=4, fig.width=5, fig.align='center'}
+library(ggplot2)
+ggplot(precall, aes(Recall, fill=Condition)) + geom_density(alpha=0.4)
+```
+</div>
+
+## ANOVA using applet
+
+- Let’s get the [Recall data](http://www.math.hope.edu/isi/data/chap9/Recall.txt) and run the test using the [Multiple Means applet](http://www.rossmanchance.com/applets/AnovaShuffle.htm?hideExtras=2).
+- Let’s do simulation using the MAD statistic as well as the $F$-statistic.
+- Then do theory-based methods using ANOVA.
+- *If* we get a small p-value, we *then* will follow this overall test up with confidence intervals to determine exactly where the difference occurs.
+
+## ANOVA output
+
+- The applet also gives ANOVA output in the form you would see in most other statistics packages.
+- The variability between the groups is measured by the mean square treatment (40.02).
+- The variability within the groups is measured by the mean square error (3.16). 
+- The $F$-statistic is 40.02/3.16 = 12.67.
+
+## Quick ANOVA in R
+
+```{r}
+r.aov <- aov(Recall ~ Condition, data = precall)
+anova(r.aov)
+```
+
+## Alternative Follow-up in R
+
+7. [Tukey's Honestly Significant Differences Test](https://en.wikipedia.org/wiki/Tukey%27s_range_test) is a more conservative follow-up procedure. To use this test, the group sizes $n_i$ should be the same, or nearly the same.
+
+```{r}
+TukeyHSD(r.aov)
+```
+
+
+## Learning Objectives
+
+- Find the value of the $F$-statistic using the multiple means applet, recognize that larger values of the statistic mean more evidence against the null hypothesis and that the distribution of the $F$-statistic is positive and skewed right.
+- Identify whether or not an ANOVA $F$-test meets appropriate validity conditions.
+- Conduct an ANOVA using the multiple means applet, including appropriate follow-up tests.
+
+# Exploration 9.2
+
+## Comparing Diets
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/H-5aq8C8cxk?rel=0&amp;start=7&amp;end=176?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+## Comparing Diets
+
+- Explanatory: Diet type (Atkins, Zone, LEARN, Ornish)
+    + Categorical, four levels
+- Response: Change in [Body Mass Index](https://www.nhlbi.nih.gov/health/educational/lose_wt/BMI/bmicalc.htm) (BMI)
+    + Quantitative (negative means it went down)
+
+## Preview
+
+- $H_0: \mu_\text{Atkins}=\mu_\text{Zone}= \mu_\text{LEARN}=\mu_\text{Ornish}$
+- $H_a:$ At least one of $\mu_\text{Atkins},\mu_\text{Zone}, \mu_\text{LEARN},\mu_\text{Ornish}$ is different from the others.
+
+- MAD: 0.585
+- Simulation-based p-value using MAD: 0.0118
+
+## Problems with MAD
+
+> Although the MAD statistic is fairly easy to understand and calculate, it is not commonly used.
+
+- There is no theory-based model for the null distribution. 
+- The MAD statistic is not standardized so it is not comparable across studies (e.g., a MAD statistic of 1 in one study might be strong evidence but in another study might not show convincing evidence against the null hypothesis).
+- The MAD doesn't take SD into account.
+
+## Redo simulation using $F$
+
+1. Paste the [Diets](http://www.math.hope.edu/isi/data/chap9/Diets.txt) data into the [Multiple Means applet](http://www.rossmanchance.com/applets/AnovaShuffle.htm?hideExtras=2). Select the Statistic pull-down menu (on the left) to select $F$-statistic, and the null distribution changes from the MAD statistic to the $F$-statistic. Report the observed value of the $F$-statistic, and compute a p-value.
+
+2. **Record** a sentence interpreting this p-value in the context of the study.
+
+## ANOVA $F$-test
+
+3. Check the box to *Overlay F distribution*. Would you say there is good agreement between this theoretical prediction and your simulated null distribution?
+
+4. **Record** a sentence explaining why the [Validity Conditions](#/anova-validity-conditions) are satisfied for the ANOVA $F$-test. Be specific.
+
+5. **Record** a theory-based p-value for the above test using the ANOVA $F$-test. Compare the three p-values you found: simulation-based using MAD, simulation-based using $F$, and theory-based using the ANOVA $F$-test.
+
+## ANOVA in R
+
+```{r}
+diets <- read.table("http://www.math.hope.edu/isi/data/chap9/Diets.txt", header = TRUE)
+diet.aov <- aov(BMI ~ Diet, data = diets)
+anova(diet.aov)
+```
+
+
+## Follow-up
+
+*If an ANOVA test finds evidence that there is at least one long-run or population mean that is different, there are many different follow-up tests designed to help pinpoint where difference(s) occur. One option is to look at all the pairwise theory-based confidence intervals for the difference in long-run or population means.*
+
+6. Use the applet to compute the (six) follow-up confidence intervals. **Record** which differences are significant. Is one diet clearly better than the others?
+
+## Alternative Follow-up in R
+
+7. [Tukey's Honestly Significant Differences Test](https://en.wikipedia.org/wiki/Tukey%27s_range_test) is a more conservative follow-up procedure. **Record** which differences are signficant according to the TukeyHSD test, and compare to #6.
+
+```{r}
+TukeyHSD(diet.aov)
+```
+
+
+## Causation and Generalization
+
+"Researchers randomly assigned women to one of the three diets. The 311 women who volunteered for the program were educated on their assigned diet and were observed periodically as they stayed on the diet for a year. At the end of the year, the researchers calculated the change in BMI."
+
+8. Are you comfortable with concluding from this study that the diet used causes a difference in BMI change?  9. To what population are you comfortable generalizing the results of this study? 
+
+**Operator:** Record your answers on [this form](https://goo.gl/forms/EujBmadGFucsg5JU2).
+
+## Concerns
+
+10. Did anything about the design and conclusions of this study concern you? Issues you may want to critique include the following. **Operator:** Choose one (or make up your own) and [use this form](https://goo.gl/forms/JaVTf3UJvoipQwRC2) to explain your concern. 
+
+- The match between the research question and the study design 
+- How the experimental units were selected 
+- How the treatment was assigned to the experimental units 
+- How the measurements were recorded 
+- The number of experimental units in the study 
+- Whether what we observed is of practical value
+
+

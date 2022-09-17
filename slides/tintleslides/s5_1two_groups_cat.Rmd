@@ -1,0 +1,182 @@
+---
+title: "Section 5.1"
+date: "October 9, 2019"
+output: 
+  word_document:
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+
+    
+# 5.1: Comparing two groups: Categorical Response
+
+## Two Groups: Overview
+
+- In Chapters 1-3, we learned the basic process of statistical inference using tests and confidence intervals.  We did all this by focusing on a single proportion or a single mean.
+
+- In Chapters 5-7, we will take these ideas and extend them to comparing two groups.  We will compare two proportions, two independent means, and paired data.
+
+## Are you having a good day? {data-background="https://media1.giphy.com/media/l396WMbWoqaNeLNPq/source.gif" data-background-size="contain"}
+
+## Are you having a bad day? {data-background="https://media1.giphy.com/media/l396WMbWoqaNeLNPq/source.gif" data-background-size="contain"}
+
+## Does the question matter?
+
+Is the proportion of people who say "no," they are not having a good day the same as the proportion of people who say "yes," they are having a bad day?
+
+## Positive and Negative Perceptions
+
+> - Researchers questioned 30 students (randomly giving them one of the two questions).
+> - They then recorded if a positive (yes-good or not-bad) or negative (not-good or yes-bad) response was given.
+> - Is this an *observational study* or a *randomized experiment*?
+> - Variables? Explanatory/Response?
+
+## Data Frame
+
+```{r, echo=FALSE}
+toq <- c(1,1,0,1,1,0,1,1,1,0,1,0,1,0,1,1,0,1,1,1,0,1,0,1,0,1,0,1,0,0)
+rsp <- c(1,0,1,1,0,1,1,1,1,0,0,0,1,0,1,1,1,1,1,1,0,1,0,1,0,1,0,1,1,0)
+perceptions <- data.frame(Question_type = ifelse(toq==1, "Good Day", "Bad Day"), 
+                          Response = ifelse(rsp==1, "Positive", "Negative"))
+perceptions$Question_type <- factor(perceptions$Question_type, levels = c("Good Day", "Bad Day"))
+perceptions$Response <- factor(perceptions$Response, levels=c("Positive", "Negative"))
+perceptions
+```
+
+## Two-Way Table
+
+```{r}
+ptable <- t(table(perceptions))
+ptable
+prop.table(ptable,2)
+```
+
+## Segmented Bar Graphs
+
+```{r, echo=FALSE, fig.width=5, fig.height=5, fig.align="center"}
+barplot(prop.table(ptable,2), legend = rownames(ptable), width=c(0.5,0.5),xlim=c(0,3), space=0.8,col=c("green", "purple"))
+```
+
+## Statistic
+
+```{r, echo=FALSE}
+ptable <- t(table(perceptions))
+ptable
+prop.table(ptable,2)
+```
+
+**Difference of proportions** of positive responses:
+\[
+\hat{p}_1 - \hat{p}_2 \approx 0.83 - 0.33 = 0.5
+\]
+
+## Another Statistic
+
+```{r, echo=FALSE}
+ptable <- t(table(perceptions))
+ptable
+prop.table(ptable,2)
+```
+
+**Relative Risk** 
+\[
+\frac{\hat{p}_1}{\hat{p}_2} \approx \frac{0.83}{0.33} = 2.5
+\]
+
+# Exploration 5.1
+
+## The case of Nurse Kristen Gilbert {data-background="https://www.southcoasttoday.com/storyimage/NB/20010315/NEWS/303159965/AR/0/AR-303159965.jpg" data-background-size="contain"}
+
+## Preview
+
+Was nurse Gilbert killing patients?
+
+1. Observational units: the 1,641 8-hour shifts.
+2. Two categorical variables: Gilbert on shift (yes/no), Patient died (yes/no)
+3. Explanatory: Gilbert on shift. Response: Patient died.
+4. Observational study.
+
+## 
+
+The researchers found that Gilbert worked on 257 of the 1,641 shifts, and she did not work on 1,384 of them. They also found that a patient died during 74 of the shifts, and no death occurred on the other 1,567 shifts. Among the 74 shifts during which a patient died, 40 were shifts on which Gilbert worked and 34 were shifts on which Gilbert did not work.
+
+1. **Record** a two-way table from this data.
+
+|             | Gilbert worked | Gilbert did not work | Total |
+| ----------- | -------------- | -------------------- | ----- |
+| Patient died |  |  |  |
+| No patients died |  |  |  |
+| Total |  |  |  |
+
+## Conditional proportions?
+
+2. We want to know the conditional proportion of Gilbert shifts on which a patient died. Do we want column proportions or row proportions? **Record** a second table of these proportions.
+
+## Segmented bar graph
+
+3. **Presenter:** On the board, draw and label a segmented bar graph. The bars should be the explanatory variable, and the segments should be the proportions of the response variable.
+
+4. Does there appear to be a tendency for Gilbert shifts to have at least one death more often than non-Gilbert shifts? Explain.
+
+5. Without doing any further analysis, do you consider the difference between the conditional proportions to be striking, worth reporting to a jury?
+
+## Statistics
+
+6. **Record** the difference of proportions $\hat{p}_1 - \hat{p}_2$.
+
+7. **Record** the relative risk $\frac{\hat{p}_1}{\hat{p}_2}$. **Record** a sentence interpreting this ratio value, as the prosecution might present to a jury. Does the value of this ratio strike you as noteworthy?
+
+8. Suggest an alternative explanation that the defense attorneys might use to explain the large difference in death proportions between the two groups.
+
+## Data Set #2
+
+9. Suppose that the data had turned out as follows:
+
+|             | Gilbert worked | Gilbert did not work | Total |
+| ----------- | -------------- | -------------------- | ----- |
+| Patient died | 100 | 357 | 457 |
+| No patients died | 157 | 1027 | 1184 |
+| Total | 257 | 1384 | 1641 |
+
+**Record** $\hat{p}_1 - \hat{p}_2$ and  $\frac{\hat{p}_1}{\hat{p}_2}$ for this data, and compare the values you got for the original data. Which data set (#1 or #2) do you think would be more incriminating? Why? **Operator:** Use [this form](https://goo.gl/forms/7PFMg6T7nJhXP49y1) to share your group's conclusion in one or two sentences.
+
+# Simulation-based comparison of two proportions
+
+## Hypotheses
+
+* Null: Patient deaths are not associated to whether Gilbert was working.
+* Alternative: On Gilbert's shifts, patients more likely to die.
+
+\[
+H_0: \pi_1 - \pi_2 = 0 \\
+H_a: \pi_1 - \pi_2 > 0 
+\]
+
+## Chance model
+
+- Could the different death rates be due to chance?
+- If deaths just occur randomly, how likely is the data that we observed?
+
+## Chance model $\rightarrow$ null distribution
+
+>- Assume the death rate proportions are the same: $\pi_1 = \pi_2 = 74/1641 \approx 0.045$, whether or not Gilbert was working. So there are <span style="color:cyan">74 "death shifts"</span> and <span style="color:lightgreen">1567 "no-death shifts,"</span> for a total of 1641 shifts.
+>- Randomly assign 257 of these shifts to Gilbert. (2-way table)
+>- Compute the simulated $\hat{p}_1-\hat{p}_2$. This gives us one point on the dotplot of the null distribution. 
+>- See how often something as extreme as our observed $\hat{p}_1-\hat{p}_2 = 0.131$ happens. 
+
+## Two Proportion applet
+
+Let's enter the (real) Gilbert data into the [Two Proportion Applet](http://www.rossmanchance.com/applets/ChiSqShuffle.html?hideExtras=2).
+

@@ -1,0 +1,180 @@
+---
+title: "Section 6.2"
+date: "October 23, 2019"
+output: 
+  word_document:
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    center: true
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+  html_document:
+    theme: cosmo
+---
+
+# 6.2: Comparing two Means: Simulation-based approach
+
+## {data-background="https://janheine.files.wordpress.com/2015/12/pbp_01mr.jpg"}
+
+## Carbon Fiber vs. Steel
+
+- Does bicycle weight affect commute time? 
+- British Medical Journal (2010) presented the results of a randomized experiment conducted by Jeremy Groves.
+- Groves wanted to know if bicycle weight affected his commute to work. 
+- For 56 days (January to July) Groves tossed a coin to decide if he would bike the 27 miles to work on his **carbon frame bike** (20.9lbs) or **steel frame bicycle** (29.75lbs). 
+- He recorded the **commute time** for each trip.
+
+## Hypotheses
+
+- Null hypothesis:  Commute time is not affected by which bike is used.
+- Alternative hypothesis:  Commute time is affected by which bike is used.
+
+## Comparing two Means
+
+$\mu_\text{carbon} =$ Long-term average commute time on the carbon bike.
+
+$\mu_\text{steel} =$ Long-term average commute time on the steel bike.
+
+\[
+\begin{align}
+H_0: \mu_\text{carbon} - \mu_\text{steel} &= 0 \\
+H_a: \mu_\text{carbon} - \mu_\text{steel} &\neq 0 
+\end{align}
+\]
+
+## Carbon vs. Steel Data
+
+```{r, echo=FALSE, comment=NULL}
+biketimes <- read.table("http://www.isi-stats.com/isi/data/chap6/BikeTimes.txt", header=TRUE)
+biketimes
+```
+
+----
+
+```{r, fig.height=4}
+library(plyr)
+ddply(biketimes, ~Frame, summarize, mean=mean(Time), sd=sd(Time))
+boxplot(Time~Frame, data=biketimes, horizontal = TRUE)
+```
+
+## Test Statistic: Difference in sample means
+
+```{r, echo=FALSE}
+ddply(biketimes, ~Frame, summarize, mean=mean(Time), sd=sd(Time))
+```
+
+\[ 
+\bar{x}_\text{carbon} - \bar{x}_\text{steel} = 108.34 - 107.81 = 0.53
+\]
+
+## {data-background="https://math.westmont.edu/img/Slide32.png" data-background-size="contain"}
+
+## {data-background="https://math.westmont.edu/img/Slide33.png" data-background-size="contain"}
+
+## {data-background="https://math.westmont.edu/img/Slide34.png" data-background-size="contain"}
+
+## {data-background="https://math.westmont.edu/img/Slide35.png" data-background-size="contain"}
+
+# Exploration 6.2
+
+## Sleep Deprivation {data-background="https://d2ck0sxsjau14o.cloudfront.net/wp-content/uploads/2017/08/sleepy-man.jpg"}
+
+## Sleep Deprivation
+
+Researchers Stickgold, James, and Hobson investigated delayed effects of sleep deprivation on learning in a study published in Nature Neuroscience (2000). The goal of the study was to see whether the improvement scores tend to be higher for the unrestricted sleep treatment than for the sleep deprivation treatment.
+
+## Preview
+
+Unrestricted-sleep group's improvement scores (milliseconds): 
+
+* 25.20, 14.50, -7.00, 12.60, 34.50, 45.60, 11.60, 18.60, 12.10, 30.50
+
+Sleep-deprived group's improvement scores (milliseconds): 
+
+* -10.70, 4.50, 2.20, 21.30, -14.70, -10.70, 9.60, 2.40, 21.80, 7.20, 10.00
+
+\[ 
+\bar{x}_\text{unrestricted} - \bar{x}_\text{deprived} = 15.92 \\
+\text{median}_\text{unrestricted} - \text{median}_\text{deprived} = 12.05 \\
+\\[0.1in]
+\begin{align}
+H_0: \mu_\text{unrestricted} - \mu_\text{deprived} &= 0 \\
+H_a: \mu_\text{unrestricted} - \mu_\text{deprived} &> 0
+\end{align}
+\]
+
+## Simulation with Cards
+
+- Unrestricted-sleep: 25.20, 14.50, -7.00, 12.60, 34.50, 45.60, 11.60, 18.60, 12.10, 30.50
+- Sleep-deprived:  -10.70, 4.50, 2.20, 21.30, -14.70, -10.70, 9.60, 2.40, 21.80, 7.20, 10.00
+
+Because the null hypothesis asserts that improvement score is not associated with sleep condition, we will assume that the 21 subjects would have had exactly the same improvement scores as they did, regardless of which sleep condition group (unrestricted or deprived) the subject had been assigned.
+
+## Simulation with Cards
+
+- Unrestricted-sleep: 25.20, 14.50, -7.00, 12.60, 34.50, 45.60, 11.60, 18.60, 12.10, 30.50
+- Sleep-deprived:  -10.70, 4.50, 2.20, 21.30, -14.70, -10.70, 9.60, 2.40, 21.80, 7.20, 10.00
+
+1. How many cards do you need to conduct this simulation?
+
+2. What will you write on each index card?
+
+3. **Facilitator:** Once your group agrees on 1 and 2, have your group label the cards appropriately. Use two colors to stay organized.
+
+## One repetition
+
+4. To conduct one repetition of this simulation: Shuffle the stack of 21 cards well and then randomly distribute cards into two stacks: one stack with 10 cards (the unrestricted group) and one with 11 (the sleep-deprived group).  **Record** the *sample means* and *sample medians* for each rerandomized group.
+    - Calculate the difference in group means: unrestricted mean minus sleep-deprived mean. **Record** this value.
+    - Calculate the difference in group medians: unrestricted median minus sleep-deprived median. **Record** this value.
+
+**Presenter:** On the board, write your group's simulated values of $\bar{x}_1 - \bar{x}_2$ and $\text{median}_1 - \text{median}_2$.
+
+## Build a null distribution
+
+We can build two null distributions:
+
+- A null distribution of simulated $\bar{x}_1 - \bar{x}_2$ statistics.
+- A null distribution of simulated $\text{median}_1 - \text{median}_2$ statistics.
+
+How unusual would our observed statistics be, assuming $H_0$?
+
+\[ 
+\bar{x}_\text{unrestricted} - \bar{x}_\text{deprived} = 15.92 \\
+\text{median}_\text{unrestricted} - \text{median}_\text{deprived} = 12.05 \\
+\]
+
+## Multiple Means Applet
+
+5. Open the [Multiple Means applet](http://www.rossmanchance.com/applets/AnovaShuffle.htm?hideExtras=2). Check the *Show Shuffle Options* box, select the *Plot* display, and press *Shuffle Responses.*  **Describe what happens** when you press *Shuffle Responses*. How is the location of the next point on the dotplot determined?
+
+6. Use a total of at least 1000 repetitions, and **record a p-value.**  **Record a sentence** summarizing the strength of evidence in the context of this study.
+
+7. **Record** a simulation-based 2SD **95% confidence interval** for $\mu_\text{unrestricted} - \mu_\text{deprived}$. Is zero a plausible value? 
+
+## Difference in Medians
+
+\[
+\begin{align}
+H_0: M_\text{unrestricted} - M_\text{deprived} &= 0 \\
+H_a: M_\text{unrestricted} - M_\text{deprived} &> 0
+\end{align}
+\]
+
+8. Use the *Statistic* pull-down menu (on the left) to select *Difference in Medians.* **Record** the **median improvement score** for each group, as well as the **difference in medians,** which will be used as the test statistic. Then use the applet to **record** a **p-value** for the above test.  With which statistic (difference in means or difference in medians) do the data provide stronger evidence that sleep deprivation has a harmful effect on improvement score? **Explain** how you are deciding.
+
+## Add an outlier
+
+Now let's add a single observational unit to our sample: this person will be in the Sleep Deprived group, but will have an improvement score of 100.
+
+9. Add this observation to the data table in the applet.
+
+10. **Record** p-values for both of the above tests: difference in means, and difference in medians. How do the conclusions change?

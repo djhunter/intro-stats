@@ -1,0 +1,109 @@
+---
+title: "Selected Review Problems for Hour Exam #2"
+date: "October 16, 2018"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    center: true
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+
+<!-- # Exploration 5.3 Answers 
+
+## {data-background="images/exp53.jpg" data-background-size="contain"}
+
+-->
+
+# Hour Exam #2 Review Problems
+
+## For Problems with answers... 
+
+The study guide lists several problems with answers in the BOB.
+
+## {data-background="images/prob3213a.png" data-background-size="contain"}
+
+----
+
+<div class="col2">
+![](images/prob3213a.png)
+
+![](images/prob3213b.png)
+</div>
+
+
+## {data-background="images/prob3219.png" data-background-size="contain"}
+
+----
+
+<div class="col2">
+![](images/prob3315.png)
+
+![](images/prob3315b.png)
+</div>
+
+----
+
+<div class="col2">
+![](images/prob3415a.png)
+![](images/prob3415b.png)
+![](images/prob3415c.png)
+
+</div>
+
+
+----
+
+<div class="col2">
+![](images/prob4221a.png)
+
+![](images/prob4221b.png)
+</div>
+
+
+----
+
+<div class="col2">
+![](images/prob524a.png)
+![](images/prob524b.png)
+![](images/prob524c.png)
+
+</div>
+
+
+----
+
+<div class="col2">
+![](images/prob5232a.png)
+
+![](images/prob5232b.png)
+</div>
+
+----
+
+<div class="col2">
+![](images/prob5234a.png)
+
+![](images/prob5234b.png)
+</div>
+
+
+----
+
+<div class="col2">
+![](images/prob5315a.png)
+
+![](images/prob5315b.png)
+</div>
+
+
+

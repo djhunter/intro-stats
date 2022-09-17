@@ -1,0 +1,213 @@
+---
+title: "Section 1.1"
+date: "August 28, 2019"
+output: 
+  word_document:
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    transition: slide
+    center: true
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(comment = NA)
+```
+
+
+# Review
+
+## Last time: Probability and Simulation
+
+- We can *simulate* a random event to estimate its probability. (e.g., the "switch" strategy)
+- We can think of the probability of a success as the *long-run proportion* of successes, if you were to do the random experiment a very large number of times.
+- The more repetitions we do, the more accurate our estimate, and the more evidence we have that we have the right answer.
+
+# Section 1.1: Introduction to Chance Models
+
+## Example: Organ Donation Forms
+
+<div class="column-left">
+![](http://www.zincmoon.com/wp-content/uploads/2016/02/Organ-Donation-Form-filling-in.jpg)
+</div>
+
+<div class="column-right">
+![](http://mediad.publicbroadcasting.net/p/nhpr/files/styles/x_large/public/201509/organ.PNG)
+</div>
+
+## Organ Donation Study
+
+- Researchers decided to recruit various participants and ask them to pretend to apply for a new driver’s license. 
+- The participants did not know in advance that different options were given for the donor question, or even that this issue was the main focus of the study. 
+- Some of the participants were forced to make a choice of becoming a donor or not, without being given a default option (the *“neutral”* group).
+- Other participants were told that the default option was not to be a donor but that they could choose to become a donor if they wished (the *“opt-in”* group).
+
+----
+
+- Opt-in or Neutral?
+    - 78.6% in neutral group agreed to donate
+    - 41.8% in the opt-in group agreed to donate
+- The researchers found these results to be *statistically significant*.
+
+> - This means that if the recruitment method made no difference in the proportion that would agree, results as different as we found would be unlikely to arise by random chance.
+> - We are going to start to investigate how to determine if results are *unlikely to occur by random chance* (or are statistically significant).
+
+# Exploration 1.1
+
+## Preview
+Dogs have been domesticated for about 14,000 years. In that time, have they been able to develop an understanding of human gestures such as pointing or glancing? How about similar nonhuman cues? Researchers Udell, Giglio, and Wynne tested a small number of dogs in order to answer these questions.
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/wUfufFORmQs?rel=0" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+
+## Harley the Dog
+
+- On each side of the experimenter were two cups. 
+- The experimenter would perform some sort of gesture (pointing, bowing, looking) toward one of the cups.
+- Does the dog go to the cup that was indicated?
+- This exploration looks at the results for a four-year-old mixed breed, was named Harley. Each trial involved one gesture and one pair of cups, with a total of 10 trials in a set.
+
+## Preview Assignment (WeBWorK)
+
+1. Based on the description of the study, state the research question.
+
+Harley was tested 10 times and 9 of those times he chose the correct cup.
+
+2. What are the observational units?
+
+3. Identify the variable in the study. What are the possible outcomes of this variable? Is this variable quantitative or categorical?
+
+4. What is the number of observational units (sample size) in this study?
+
+## Group Roles
+
+- **Facilitator:** Helps ensure that the group stays on task, is focused, and that there is room for everyone in the conversation.
+- **Recorder:** Records specific points from the small group's discussion along with findings or answers.
+- **Presenter:** Presents the group's ideas to the rest of the class, on the board or during class discussion.
+- **Operator:** Performs calculations using technology, or completes online responses. (Can be done with a smartphone, tablet, or laptop. If the assigned operator doesn't have one of these devices, feel free to swap roles.)
+
+## Statistic
+
+> The set of observational units on which we collect data is called the *sample.* The number of observational units in the sample is the *sample size.* A *statistic* is a number summarizing the results in the sample.
+
+5. Harley was tested 10 times and 9 of those times he chose the correct cup. **Recorder:** On the participation log, record the *observed statistic* (the proportion of times he picked the correct cup).
+
+## Discuss
+
+6. If the research conjecture is that Harley can understand what the experimenter means when they bow toward an object, is the statistic in the direction suggested by the research conjecture?
+
+7. Could Harley have gotten 9 out of 10 correct even if he really didn't understand the human gesture and so was randomly guessing between the two cups?
+
+8. Do you think it is likely Harley would have gotten 9 out of 10 correct if he was just guessing randomly each time?
+
+**Presenter:** Write your group's yes/no responses for 6-8 on the board.
+
+## Hypotheses
+
+There are two possibilities for why Harley chose the correct cup 9 out of 10 times:
+
+- He is merely picking a cup at random and in these 10 trials happened to guess correctly in 9 of them. That is, he got more than half correct just by random chance alone.
+- He is doing something other than merely guessing and perhaps understands what the experimenters mean when they bow towards the cup.
+
+## Parameter
+
+For a random process, a *parameter* is a long-run numerical property of the process. In our study, the parameter is the long-run proportion of times that Harley will pick the correct cup.
+
+9. What is the value of the parameter if Harley is picking a cup at random? **Recorder:** Record a specific value.
+
+10. What is the possible range of values for the parameter if Harley is not just guessing and instead understands the experimenter? **Presenter:** On the board, express this range of values using $<$ and/or $>$.
+
+## Chance Model
+
+- Statisticians often use *chance models* to generate data from random processes to help them investigate the process. 
+- A chance model simulates the data under the assumption that variability is due solely to chance.
+- If Harley's results are not consistent with the chance model, then the results are *statistically significant*, meaning unlikely to have occurred by chance alone.
+
+## Simulation
+
+13. **Facilitator:** Simulate one repetition of Harley guessing randomly by flipping a coin 10 times (why 10?) and letting heads represent selecting the correct cup ("success") and tails represent selecting the incorrect cup ("failure"). **Presenter:** Count the number of heads in your 10 flips, and write your group's answer on the board.
+
+We will combine your results with the rest of the class to create a dotplot of the distribution for the number of heads out of 10 flips of a coin. 
+
+## Significance
+
+> A result is *statistically significant* if it is unlikely to occur just by random chance. If our observed result appears to be consistent with the chance model, we say that the chance model is *plausible* or believable.
+
+14. Based on your answer to the previous question, do you think it is plausible (believable) that Harley was just guessing which cup to choose?
+
+## Applet
+
+To really assess the typical values for the number of heads in 10 coin tosses (number of correct picks by Harley assuming he is guessing at random), we need to simulate many more outcomes of the chance model. Open the [One Proportion applet](http://www.rossmanchance.com/applets/OneProp/OneProp.htm) from the textbook webpage.
+
+----
+
+- Set the *number of tosses* to 10 and press the *Draw Samples* button. What was the resulting number of heads?
+- Notice that the number of heads in this set of 10 tosses is then displayed by a dot on the graph. *Uncheck the Animate box* and press the *Draw Samples button 9 more times.* Nine more dots have been added to your dotplot.
+- Now change the *Number of repetitions* from 1 to 990 and press Draw Samples. The applet will now show the results for the number of heads in 1,000 different sets of 10 coin tosses. 
+
+----
+
+- Each dot represents the number of times Harley chooses the correct cup out of 10 attempts assuming he is just guessing.
+
+- Remember why we conducted this simulation: to assess whether Harley's result (9 correct in 10 attempts) would be unlikely to occur by chance alone if he were just guessing between the pair of cups for each attempt.
+
+----
+
+14. Locate the result of getting 9 heads in the dotplot created by the applet. Would you consider this an unlikely result in the tail of the distribution of the number of heads?
+
+15. Based on the results of 1,000 simulated sets of 10 coin flips each, would you conclude that Harley would be very unlikely to have picked the correct cup 9 times in 10 attempts if he was randomly guessing between the two cups each time? *Explain* how your answer relates to the applet's dotplot. **Recorder:** Write your group's answer in a complete sentence on the participation log.
+
+16. Do the results of this study appear to be statistically significant?
+
+## Summary
+
+18. To make sure that you understand the coin-flipping chance model, fill in the table indicating what parts of the real study correspond to the physical (coin-flipping) simulation.
+
+Coin-flipping   vs.    Real Study
+-------------- -----  ------------
+Coin flip      =      
+Heads          =
+Tails          =
+Chance of heads =
+One repetition =       one set of ___ simulated attempts by Harley
+
+## 3S Strategy
+
+> -  Compute a **statistic** from the sample data.
+> - Identify a “by-chance-alone” explanation for the data. Repeatedly **simulate** values of the statistic that could have happened when the chance model is true.
+> - **Strength of evidence.** Consider whether the value of the observed statistic from the research study is unlikely to occur if the chance model is true. If we decide the observed statistic is unlikely to occur by chance alone, then we can conclude that the observed data provide strong evidence against the plausibility of the chance model. 
+
+## 3S Strategy
+
+19. What is the **statistic** in this study?
+
+20. **Simulate.** Fill in the blanks to describe the simulation. We flipped a coin ____ times and kept track of how many times it came up heads. We then repeated this process ____ more times, each time keeping track of how many heads were obtained in each of the ____ flips.
+
+----
+
+21. **Strength of evidence.** Fill in the blanks to summarize how we are assessing the strength of evidence for this study. Because we rarely obtained a value of ________ heads when flipping the coin _______ times, this means that it is ____________ (believable/unlikely) that Harley is just guessing, because if Harley were just guessing he ____________ (rarely/often) would get a value like _________ correct out of ______ attempts.
+
+22. Based on this analysis, are you convinced that Harley can understand human cues? Why or why not?
+
+## Another study
+
+23. In a different study, the researchers used a mechanical arm (roughly the size of a human arm) to point at one of the two cups. The researchers tested this to see whether dogs understood nonhuman gestures. In 10 trials, Harley chose the correct cup 6 times. 
+    a. Using the dotplot you obtained when you simulated 1,000 sets of 10 coin flips assuming Harley was just guessing, locate the result of getting 6 heads. Would you consider this an unlikely result in the tail of the distribution?
+    b. What do you conclude?
+
+**Presenter:** Be prepared to explain your group's conclusion.
+
+----
+
+24. Compare the analyses between the two studies. How does the unusualness of the observed statistic compare between the two studies? Does this make sense based on the value of the observed statistic in the two studies? Does this make sense based on how the two studies were designed? Explain. (Hint: Why might the results differ for human and mechanical arms? Why would this matter?) 
+
+25. A single study will not provide all of the information needed to fully understand a broad, complex research question. Thinking back to the original research question, what additional studies would you suggest conducting next?

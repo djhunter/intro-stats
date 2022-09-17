@@ -1,0 +1,209 @@
+---
+title: "Section 5.3"
+date: "October 16, 2020"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+    
+# Simulation vs. Theory
+
+## Overview: Simulation vs. Theory
+
+- Simulation always works.
+- Under certain conditions, we can predict the result of simulation using theory.
+
+# 5.3: Comparing two Proportions: Theory-based approach
+
+## Smoking During Pregnancy
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/C_hg7-7grZU?rel=0&amp;end=57" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+## Smoking and Babies Gender
+
+How does parents’ behavior affect the sex of their children? Fukuda et al., 2002 (Japan) found the following: 
+
+- 255 of 565 births (45.1%) where both parents smoked more than a pack a day were boys. 
+- 1975 of 3602 births (54.8%) where both parents did not smoke were boys.
+
+Other studies have shown a reduced male to female birth ratio where high concentrations of other environmental chemicals are present (e.g. industrial pollution, pesticides).
+
+## Smoking/Gender data
+
+```{r, echo=FALSE, fig.height=4, fig.width=5}
+smoking <- as.table(matrix(c(1975, 255, 1627, 310), byrow=TRUE, nrow=2))
+rownames(smoking) <- c("Boy", "Girl")
+colnames(smoking) <- c("Nonsmokers", "Smokers")
+addmargins(smoking)
+prop.table(smoking, 2)
+```
+
+## Segmented Bar Graph
+
+```{r, echo=FALSE, fig.height=4, fig.width=5, fig.align='center'}
+barplot(prop.table(smoking,2), legend = rownames(smoking), width=c(0.5,0.5),xlim=c(0,3), space=1.1,col=c("lightblue", "pink"))
+```
+
+
+
+## Simulation-based approach
+
+```{r, echo=FALSE}
+smoking
+prop.table(smoking, 2)
+```
+
+\[ 
+\mbox{test statistic} = \hat{p}_1 - \hat{p}_2 \approx 0.5483 - 0.4513 \approx 0.097
+\]
+
+\[
+H_0: \pi_1 - \pi_2 = 0 \\
+H_a: \pi_1 - \pi_2 \neq 0
+\]
+
+Let's enter the data into the [Two Proportion Applet](http://www.rossmanchance.com/applets/ChiSqShuffle.html).
+
+## Theory-based approach
+
+- The null distribution is approximately normal. 
+- **Validity conditions:** At least 10 observations in each cell of the two-way table.
+- Need standard error of difference of proportions. Assuming $\pi_1 = \pi_2$, 
+
+\[
+\mbox{standard error} \approx \sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1} + \frac{1}{n_2} \right)} 
+\]
+
+where $n_1$ and $n_2$ are the sizes of the two groups, and $\hat{p}$ is the pooled proportion of "successes" in both groups.
+
+## Theory-based $z$-Score
+
+When the validity conditions are met, the standardized statistic is
+
+\[
+\begin{align}
+z &= \frac{\mbox{observed statistic} - \mbox{null value}}{\mbox{standard error of statistic}}  \\ &\approx \frac{(\hat{p}_1 - \hat{p}_2) - 0}{\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1} + \frac{1}{n_2} \right)}}
+\end{align}
+\]
+
+## Theory-based $z$-Score
+
+For our data:
+
+\[
+\begin{align}
+z &= \frac{(\hat{p}_1 - \hat{p}_2) - 0}{\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1} + \frac{1}{n_2} \right)}} \\
+&\approx \frac{(0.548 - 0.451) - 0}{\sqrt{0.535(1-0.535)\left(\frac{1}{3602} + \frac{1}{565} \right)}} \\
+&\approx 4.30
+\end{align}
+\]
+
+## Theory-based Applet
+
+Luckily, there's an applet: [Theory-Based Inference](http://www.rossmanchance.com/applets/TBIA.html)
+
+```{r, echo=FALSE}
+addmargins(smoking)
+```
+
+## Confidence intervals
+
+When computing a confidence interval, there is no $H_0$, so we can't assume that $\pi_1 = \pi_2$. So the standard error is:
+
+\[
+\mbox{standard error} \approx \sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1} + \frac{\hat{p}_2(1-\hat{p}_2)}{n_2}} 
+\]
+
+So a confidence interval for $\pi_1 - \pi_2$ has the form
+
+\[
+(\hat{p}_1-\hat{p}_2) \pm
+\mbox{multiplier} \times \sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1} + \frac{\hat{p}_2(1-\hat{p}_2)}{n_2}} 
+\]
+
+where the multiplier depends on the confidence level (e.g., 1.96 for 95% confidence).
+
+## Use software to get confidence intervals
+
+For example, use the [Theory-Based Inference](http://www.rossmanchance.com/applets/TBIA.html) applet.
+
+## Using R for theory-based approach
+
+```{r}
+prop.test(x = c(1975, 255), n = c(3602, 565))
+```
+
+
+## What you should know
+
+- Identify when a theory-based approach would be **valid** to find the p-value or a confidence interval when evaluating the relationship between two categorical variables.
+- Use the Theory-Based Inference applet or R to find theory based p-values and confidence intervals.
+- Understand the impacts of confidence level and sample size on confidence interval width the difference in two proportions.
+- Understand the impacts of the difference in the sample proportions and sample size on the p-value. 
+
+# Exploration 5.3
+
+## **Blood Donation** {data-background="https://news.psu.edu/sites/default/files/styles/threshold-992/public/BloodDonorNR.jpg"}
+
+<span style="color:darkblue">We are going to look at data from the General Social Survey, which is a **national survey** conducted every two years on a nationwide **random sample** of adult Americans.</span>
+
+## Preview Assignment
+
+Is there a significant difference in blood donation numbers in the US?
+
+<div class="col2">
+```{r, echo=FALSE, fig.height=4, fig.width=5}
+blood <- as.table(matrix(c(210, 230, 1152, 1106), byrow=TRUE, nrow=2))
+rownames(blood) <- c("Donated blood", "Did not donate")
+colnames(blood) <- c("Y2002", "Y2004")
+addmargins(blood)
+print(prop.table(blood, 2), digits=3)
+#barplot(prop.table(blood,2), legend = rownames(blood), width=c(0.5,0.5),xlim=c(0,3), space=1.1,col=c("red", "white"))
+```
+
+\[
+H_0: \pi_{2002} - \pi_{2004} = 0 \\
+H_a: \pi_{2002} - \pi_{2004} \neq 0 
+\]
+
+\[ 
+\begin{align}
+\hat{p}_{2002} - \hat{p}_{2004} &\approx -0.018 \\
+\mbox{p-value} &\approx 0.21 \\
+\mbox{mean}_\mbox{null} &\approx 0.0 \\
+\mbox{SD}_\mbox{null} &\approx 0.014
+\end{align}
+\]
+</div>
+
+## Theory-based approach
+
+1. Use the results of the Preview Assignment to **record** a 95% 2SD confidence interval for $\pi_{2002} - \pi_{2004}$. Is zero a plausible value? What does this fact mean in the context of blood donation?
+2. Now use the [Theory-Based Inference](http://www.rossmanchance.com/applets/TBIA.html) applet to **record** a 95% confidence interval. How close is your interval to the 2SD interval?
+3. **Record** the theory-based p-value, and compare it to what you got in the Preview Assignment.
+4. Are the validity conditions met for the theory-based approach? **Record** a sentence explaining why or why not.
+
+## Men vs. Women
+
+Consider the combined data for 2002 and 2004, classified by gender:
+
+```{r, echo=FALSE}
+blood2 <- as.table(matrix(c(239, 201, 1032, 1226), byrow=TRUE, nrow=2))
+rownames(blood2) <- c("Donated blood", "Did not donate")
+colnames(blood2) <- c("Male", "Female")
+addmargins(blood2)
+```
+
+5. Analyze these data to **address the question of whether American men and women differ with regard to donating blood.** Write down hypotheses, a p-value, and a confidence interval using theory-based methods, if valid. If you decide that men and women differ significantly, be sure to *estimate by how much* they differ. [Use this form to give a summary of your findings](https://goo.gl/forms/YqvQImKqJ3P0mm4n1) in paragraph form.

@@ -1,0 +1,178 @@
+---
+title: "Section 5.2"
+date: "October 11, 2019"
+output: 
+  word_document:
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    center: true
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+
+# 5.2: Comparing two Proportions: Simulation-based approach
+
+## The Verdict on Nurse Gilbert
+
+Last time, we investigated the following data.
+
+|             | Gilbert worked | Gilbert did not work | Total |
+| ----------- | -------------- | -------------------- | ----- |
+| Patient died     | 40  | 34   | 74 |
+| No patients died | 217 | 1350 | 1567 |
+| Total            | 257 | 1384 | 1641 |
+
+The evidence suggests that patients were more likely to die when Gilbert worked. Is this evidence *statistically significant*?
+
+## Chance model
+
+- Could the different death rates be due to chance?
+- If deaths just occur randomly, how likely is the data that we observed?
+
+## Chance model $\rightarrow$ null distribution
+
+>- Assume the death rate proportions are the same: $\pi_1 = \pi_2 = 74/1641 \approx 0.045$, whether or not Gilbert was working. So there are <span style="color:cyan">74 "death shifts"</span> and <span style="color:lightgreen">1567 "no-death shifts,"</span> for a total of 1641 shifts.
+>- Randomly assign 257 of these shifts to Gilbert. (2-way table)
+>- Compute the simulated $\hat{p}_1-\hat{p}_2$. This gives us one point on the dotplot of the null distribution. 
+>- See how often something as extreme as our observed $\hat{p}_1-\hat{p}_2 = 0.131$ happens. 
+
+## Two Proportion applet
+
+Let's enter the (real) Gilbert data into the [Two Proportion Applet](http://www.rossmanchance.com/applets/ChiSqShuffle.html?hideExtras=2).
+
+# Activity: Is Yawning Contagious?
+
+## Is Yawning Contagious? {data-background="https://media.giphy.com/media/RKe73XLbBCKOI/giphy.gif" data-background-size="contain"}
+
+## Is yawning contagious?
+
+Fifty people attending a local flea market were recruited to participate. Subjects were ushered, one at a time, into one of three rooms by co-host Kari. <span style="color:yellow">She yawned (planting a yawn “seed”) as she ushered subjects into two of the rooms,</span> and <span style="color:orchid">for the other room she did not yawn.</span> The researchers decided in advance, with a random mechanism, which subjects went to which room. As time passed, the researchers watched to see which subjects yawned.
+
+## Preview
+
+- There had to be a control because people might just yawn anyway, so we don't know if the seed had any effect.
+- Explanatory Variable: Yawn seed or no seed.
+- Response Variable: Yawn or didn't yawn.
+- Null: Yawning not contagious. Alternative: Yawning is contagious.
+
+## Hypotheses and data
+
+
+\[
+H_0: \pi_1 - \pi_2 = 0 \\
+H_a: \pi_1 - \pi_2 > 0
+\]
+
+|              | Seed observed | Seed not observed | Total |
+| ------------ | ------------- | ----------------- | ----- |
+| Subject yawned  |  11       |       3       |          14 |
+| Did not yawn    |  23       |      13       |          36 | 
+| Total         |    34       |      16       |          50 |
+
+
+\[
+\begin{align}
+\hat{p}_1 &= 11/34 \approx 0.32 \\
+\hat{p}_2 &= 3/16 \approx 0.19 \\
+\hat{p}_1-\hat{p}_2 &= 11/34-3/16 \approx 0.136 = \mbox{test statistic} \\
+\end{align}
+\]
+
+## Two possibilities
+
+1. Yawning is not contagious, and the observed data just reflects that we randomly got more yawners in the seed group.
+2. Yawning is contagious.
+
+> To evaluate the statistical significance of the observed difference, we will investigate how large the difference in conditional proportions tends to be just from the random assignment of response outcomes to the explanatory variable groups.
+
+## Null Hypothesis, in other words (informally)
+
+For any group of 50 people, about <span style="color:cyan">14 will be yawners</span> and <span style="color:lightgreen">36 will be non-yawners</span>, whether or not they have observed the yawn seed.
+
+# Activity: Permutation Test Simulation
+
+## Count the cards and shuffle
+
+1. Count the <span style="color:cyan">blue</span> cards and the <span style="color:lightgreen">green</span> cards. **Record** how many cards of each color that you have, and what each color represents.
+
+2. After you have counted the cards, shuffle them thoroughly and return them to the cup.
+
+## Simulation with cards
+
+3. Randomly deal out 34 to be the yawn seed group (the rest go to the control group).
+4. Count how many yawners (blue cards) you have in each group and how many nonyawners (green cards) you have in each group.
+5. **Record** a *two-way table*, with the same form as the study data.
+6.  **Record** the simulated $\hat{p}_1$, $\hat{p}_2$, and $\hat{p}_1 - \hat{p}_2$. 
+7. **Presenter:** Write your group's *simulated statistic* $\hat{p}_1 - \hat{p}_2$ on the board.
+
+## Null Distribution
+
+- We can compile our simulated statistics in a dotplot.
+- Does our observed statistic seem unusual?
+- The *p-value* is the proporition of simulated statistics in the null distribution that are as or more extreme than our observed statistic.
+- The *p-value* is then the probability of observing data as extreme as our sample, assuming that the null hypothesis is true.
+
+## Simulation with Applet
+
+8. Open the [Two Proportion Applet](http://www.rossmanchance.com/applets/ChisqShuffle.htm?yawning=1) with the yawn data preloaded. Check that the test statistic matches your result from the Preview.
+9. Press the *Shuffle* button once. Discuss with your group what the applet is doing. Press *Shuffle* a couple more times to make sure you are right.
+10. Now do 1000 or more shuffles to create a null distribution. **Record** a *p-value* using the observed test statistic.
+11. **Record** a sentence interpreting the p-value in the context of this study. 
+
+## Data Set #2: Smaller effect
+
+12. Now suppose instead that the data showed that 10 of the 34 subjects in the yawn seed group yawned themselves, and 4 of the 16 in the control group yawned.
+
+- **Record** the new test statistic $\hat{p}_1 - \hat{p}_2$ using data set #2.
+- **Facilitator:** Have your group *predict* which way the p-value will change.
+- If we were going to do the card simulation, how would our set of cards have to be different?
+- *Redo the applet simulation* for the new data, and **record** the new *p-value.* Does your conclusion change?
+
+## Confidence interval for $\pi_1 - \pi_2$
+
+13. For Data set #2, **record** endpoints of a simulation-based 95% 2SD confidence interval for the difference by taking the observed value of the test statistic $\pm$ 2 standard deviations of the null distribution.
+14. Is zero a plausible value for $\pi_1 - \pi_2$? What does this answer mean in the context of the study?
+
+## Conclusions 
+
+15. Based on Data Set #2, is yawning contagious?
+
+16. As we discussed in Chapter 2, in every statistical analysis it is possible to make a Type I or a Type II error. Identify which error you might be making here, describe it in context, and briefly identify the consequences.
+
+## Data Set #3: Larger sample
+
+17. Now let's suppose that this yawning study had involved 500 people, but that the conditional proportions remained the same. 
+
+|              | Seed observed | Seed not observed | Total |
+| ------------ | ------------- | ----------------- | ----- |
+| Subject yawned  |  100       |       40       |          140 |
+| Did not yawn    |  240       |      120       |          360 | 
+| Total         |    340       |      160       |          500 |
+
+**Facilitator:** Have your group do the following.
+
+- *Predict* how $\hat{p}_1 - \hat{p}_2$ will change. 
+- *Predict* how the p-value will change. 
+- *Redo the applet simulation,* and **record** the p-value.
+
+## Relative Risk
+
+18. Redo the simulation for the 500-people data, but this time use relative risk, $\frac{\hat{p}_1}{\hat{p}_2}$, as your test statistic.
+
+|              | Seed observed | Seed not observed | Total |
+| ------------ | ------------- | ----------------- | ----- |
+| Subject yawned  |  100       |       40       |          140 |
+| Did not yawn    |  240       |      120       |          360 | 
+| Total         |    340       |      160       |          500 |
+
+The applet has a pull-down menu where you can select *relative risk*. **Record** the *p-value* using the relative risk. Compare to the p-value you obtained using the difference in proportions.
+

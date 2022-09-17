@@ -1,0 +1,288 @@
+---
+title: "Section 10.6"
+date: "December 5, 2018"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    center: true
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+
+# Section 10.6: Multiple Regression and Friends
+
+## Review of Scenarios
+
+- There are lots of theory-based statistical tests.
+- Knowing which one to use involves knowing what types of variables a study uses.
+- Using the tests is usually straightforward: you need to know how to interpret the results, and when it is valid to use the test.
+
+## Single variable scenarios
+
+| Scenario | Theory-based test |
+| -------------------- | -------------------|
+| One categorical variable: | one-proportion $z$-test |
+| One quantitative variable:  | one‐sample $t$‐test |
+
+## Explanatory $\rightarrow$ Response scenarios
+
+| Scenario | Theory-based test |
+| -------------------------------------------------- | -----------------------------|
+| Categorical (2 levels) $\rightarrow$ Categorical: | two-sample $z$-test |
+| Categorical (2 levels) $\rightarrow$ Quantitative: | two-sample $t$-test |
+| Categorical (2 levels) $\rightarrow$ Quantitative, | paired data: paired $t$-test |
+| Categorical (>2 levels) $\rightarrow$ Categorical: | Chi-square test |
+| Categorical (>2 levels) $\rightarrow$ Quantitative: | ANOVA |
+| Quantitative $\rightarrow$ Quantitative: | linear regression | 
+
+## Other Scenarios
+
+- The following web page contains a good summary of different scenarios used in statistics.
+- Use with caution!
+
+https://stats.idre.ucla.edu/other/mult-pkg/whatstat/
+
+# More than one quantitative explanatory variable: multiple regression
+
+## Breakfast Cereal
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/tjLO4eEp0Xs?start=161?end=231" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+## Breakfast Cereal Ratings
+
+Several variables were recorded on 74 different breakfast cereals: number of calories per serving, grams of protein, grams of fat, milligrams of sodium, grams of fiber, grams of carbohydrates, grams of sugars, milligrams of potassium, typical percentage of the FDA's RDA of vitamins, the weight of one serving, the number of cups in one serving, and the shelf location (1,2 or 3 for bottom, middle or top). A variable named "rating" was calculated by Consumer Reports.
+
+## Research questions
+
+- How was this rating decided? Can we predict how a cereal would be rated?
+- Do manufacturers differ on the amount of sugar in their cereals?
+- Is shelf location associated to the amount of sugar?
+
+## cereal data
+
+```{r}
+cereal <- read.table("http://math.westmont.edu/data/cereal.csv", header=TRUE, sep=";")
+cereal
+```
+
+## Correlation matrix
+
+```{r}
+round(cor(cereal[,c(4,5,6,7,8,9,10,12,16)]),2)
+```
+
+1. Which two measurements have the strongest positive association with `rating`? Which two have the strongest negative association? **Record** your findings, along with how you are deciding.
+
+##
+
+```{r, echo=FALSE}
+library(ggplot2)
+library(GGally)
+ggpairs(cereal[,c(4,5,8,10,16)], lower=list(continuous="smooth"))
+```
+
+## Explore five variables of the data
+
+```{r}
+cereal[,c(4,5,8,10,16)]
+```
+
+
+## Regression: `rating ~ sugars`
+
+```{r}
+summary(lm(rating ~ sugars, data = cereal))
+```
+
+## Regression: `rating ~ fiber`
+
+```{r}
+summary(lm(rating ~ fiber, data = cereal))
+```
+
+## Prediction equations
+
+2. **Record** the equations of the two regression lines for the two regression analyses on the previous slides: `rating ~ sugars` and `rating ~ fiber`. What qualities tend to characterize highly-rated cereals? Predict the rating of a cereal containing 10 grams of sugar.
+
+3. **Record** the coefficients of determination for these two regression analyses also. Which equation is better at predicting the rating of a cereal?
+
+## Confidence bands
+
+```{r, fig.height=4.5, fig.width=7, fig.align='center'}
+ggplot(cereal, aes(x = sugars, y = rating)) + geom_point() + geom_smooth(method = lm)
+```
+
+## Prediction vs Confidence intervals
+
+```{r}
+rs.lm <- lm(rating ~ sugars, data = cereal)
+predict(rs.lm, data.frame(sugars = c(5,10,15)), interval="predict")
+```
+
+```{r}
+rs.lm <- lm(rating ~ sugars, data = cereal)
+predict(rs.lm, data.frame(sugars = c(5,10,15)), interval="confidence")
+```
+
+# Multiple regression
+
+## Multiple Regression
+
+- There is more than one choice for an explanatory variable.
+- Different choices have different $r^2$'s. 
+- Multiple regression gives us a way to combine them. It also gives us a combined coefficient of determination, $R^2$.
+- All we have to do is change the formula.
+
+## `rating ~ sugars + fiber`
+
+```{r}
+summary(lm(rating ~ sugars + fiber, data = cereal))
+```
+
+## Multiple regression prediction equation
+
+- We can write one prediction equation.
+- The relationship explains 82% of the variability in rating: $R^2 = 0.8165$
+
+$$\widehat{\text{rating}} = 51.6 - 2.2\times\text{sugars} + 2.9\times\text{fiber}$$
+
+## More explanatory variables
+
+```{r}
+summary(lm(rating ~ sugars + fiber + calories + protein, data = cereal))
+```
+
+## Better predictions
+
+4. **Record** a prediction equation for rating based on the explanatory variables sugars, fiber, calories, and protein.
+
+5. **Record** the percentage of variability in rating that is determined by this relationship.
+
+6. A new cereal, *Sugar Frosted Chocolate Bombs*, has 140 calories per serving, 2 grams of protein, 16 grams of sugars, and 1 gram of fiber. **Record** a predicted rating for this cereal.
+
+## {data-background="http://math.westmont.edu/img/sugar.jpg" data-background-size="contain"}
+
+## Two types of p-values
+
+- p-values for each coefficient: $H_0: \beta_1 = 0, \, H_0: \beta_2 = 0, \, \ldots, H_0: \beta_k = 0$
+- p-values for an overall association: $H_0: \beta_1 = \beta_2 = \cdots = \beta_k = 0$
+
+Check overall significance *before* looking at individual slopes. 
+
+
+7. **Record** the p-value for the overall association for the `rating ~ sugars + fiber + calories + protein` model. (It will probably be in [scientific notation](https://www.calculatorsoup.com/calculators/math/scientific-notation-converter.php).)
+
+## validity conditions
+
+- Validity conditions for simple linear regression for each variable:
+    + linear relationship
+    + symmetry across regression line
+    + equal variation along regression line
+- *Plus:* The sample size should be at least 10 times the number of explanatory variables.
+
+## Overfitting
+
+- In multiple regression, adding more explanatory variables does not always make the model better.
+- Too many variables can give a misleadingly high $R^2$. It can also amplify noise in the data and make predictions worse (overfitting).
+- *Rule of thumb:* if you add an explanatory variable and the *Adjusted R-squared* goes down, you have too many variables.
+
+## Five-variable model
+
+Adjusted $R^2 \approx 0.8923$.
+
+```{r}
+summary(lm(rating ~ sugars + fiber + calories + protein + fat, data = cereal))
+```
+
+## Six-variable model
+
+Adjusted $R^2 \approx 0.8908$.
+
+```{r}
+summary(lm(rating ~ sugars + fiber + calories + protein + fat + carbo, data = cereal))
+```
+
+## Sometimes less is more
+
+- When we added `carbo` to the model, the Adjusted R-squared went down.
+- This means the additional explanatory variable didn't improve the model.
+- Having too many explanatory variables can throw off predictions.
+
+# anova and more
+
+## Categorical variables
+
+Our breakfast cereal data set also contains information on which shelf the cereal is placed on. 
+
+```{r}
+cereal$shelf <- factor(cereal$shelf) # make R think shelf is categorical
+cereal[,c(1,10,13)]
+```
+
+## Multiple means: Boxplots
+
+```{r}
+boxplot(sugars ~ shelf, data = cereal, horizontal=TRUE)
+```
+
+
+## Review: ANOVA $F$-test
+
+```{r}
+cer.aov <- aov(sugars ~ shelf, data = cereal)
+anova(cer.aov)
+```
+
+8. **Record** a sentence interpreting the result of this test in context.
+
+## Review: Followup CI's
+
+```{r}
+TukeyHSD(cer.aov)
+```
+
+9. **Record** a sentence interpreting the result of this followup test in context. Can you think of a reason why cereals would be shelved this way?
+
+## Multiple response variables?
+
+Now suppose we want to consider `shelf` as the explanatory variable, with both `sugars` and `rating` as the response.
+
+10. Use the [UCLA guide](https://stats.idre.ucla.edu/other/mult-pkg/whatstat/) to determine which test to use. **Record** the name of this test.
+
+## Interpret the result?
+
+```{r}
+summary(manova(cbind(sugars, rating) ~ shelf, data = cereal))
+```
+
+11. How do you suppose we interpret this result? What good is this test?
+
+## Multiple explanatory variables?
+
+Suppose we want to consider `rating` the response, but with two categorical explanatory varaibles, `shelf` and `mfr` (manufacterer). 
+
+12. Use the [UCLA guide](https://stats.idre.ucla.edu/other/mult-pkg/whatstat/) to determine which test to use. **Record** the name of this test.
+
+## Interpret the result?
+
+```{r}
+cer.aov2 <- aov(sugars ~ shelf * mfr, data = cereal)
+anova(cer.aov2)
+```
+
+13. What is your best guess as to what this test is telling us?
+
+## Followup test
+
+```{r}
+TukeyHSD(cer.aov2)
+```
+

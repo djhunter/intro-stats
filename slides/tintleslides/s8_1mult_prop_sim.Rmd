@@ -1,0 +1,189 @@
+---
+title: "Section 8.1"
+date: "November 4, 2019"
+output: 
+  word_document:
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+
+# Unit 3: Analyzing More General Situations
+
+## Units 1-3
+
+- Unit I: Tests of significance, confidence intervals, generalization, and causation mostly in terms of a single proportion.
+- Unit II: Two proportions, two averages (independent), and paired data.  All of these had a binary categorical explanatory variable.
+- **Unit III:**  Multiple proportions, multiple averages, and two quantitative variables. The explanatory variable will be categorical (not necessarily binary) or quantitative.
+
+## General Overview
+
+- Null Hypothesis: No association between the response and the explanatory variable.
+- Alternative Hypothesis: Some association between the response and the explanatory variable. 
+
+We can also be more specific in our hypotheses to reflect the type of data (and hence parameters) we are working with. 
+
+# Chapter 8: Comparing more than two proportions
+
+## Chapter 5 vs Chapter 8
+
+- Chapter 5: Categorical explanatory (two groups), categorical response (proportions)
+- Chapter 8: Categorical explanatory (multiple groups), categorical response (proportions)
+
+## {data-background="https://media.rbl.ms/image?u=%2Ffiles%2F2016%2F05%2F21%2F6359939421011518041210103034_d407a335-55b3-48d2-bb12-a5956337495a.gif&ho=https%3A%2F%2Faz616578.vo.msecnd.net&s=537&h=cc96a6ee0d53b3409674e75719285a0385b985510a2a0745599209a2367c5717&size=980x&c=2804320031"}
+
+## Four-way stops
+
+Virginia Tech students investigated which vehicles came to a stop at a intersection where there was a four-way stop.  While the students examined many factors for an association with coming to a complete stop, we will investigate whether intersection arrival patterns are associated with coming to a complete stop:
+
+- Vehicle arrives alone
+- Vehicle is the lead in a group of vehicles
+- Vehicle is a follower in a group of vehicles 
+
+## Hypotheses
+
+- Null hypothesis: There is no association between the arrival pattern of the vehicle and if it comes to a complete stop. 
+- Alternative hypothesis: There is an association between the arrival pattern of the vehicle and if it comes to a complete stop. 
+
+\[ 
+\begin{align}
+& H_0: \pi_\text{single} = \pi_\text{lead} = \pi_\text{follow} \\
+& H_a: \pi_\text{single} \neq \pi_\text{lead} \text{ or } \pi_\text{follow} \neq \pi_\text{lead} \text{ or } \pi_\text{single} \neq \pi_\text{follow} 
+\end{align}
+\]
+
+## Data
+
+<div class="column-left">
+```{r, echo=FALSE}
+stopsign <- read.table("http://www.isi-stats.com/isi/data/chap8/Stop.txt", header=TRUE)
+print(stopsign)
+```
+</div>
+
+<div class="column-right">
+```{r, echo=FALSE, fig.width=3, fig.height=3, fig.align="center"}
+addmargins(t(table(stopsign)))
+barplot(prop.table(t(table(stopsign)), 2))
+```
+</div>
+
+## Summary Statistic? 
+
+> - In Chapter 5, we had two proportions, $\hat{p}_1$ and $\hat{p}_2$. 
+>     + Summary statistic was $\hat{p}_1 - \hat{p}_2$. 
+>     + Summary statistic far from zero $\Rightarrow$ evidence against null.
+> - Here, we have three proportions: $\hat{p}_\text{single}, \hat{p}_\text{lead}, \hat{p}_\text{follow}$
+>     + We need a formula for a single number that *summarizes* the data (and measures how much evidence we have against the null).
+
+## Mean Absolute Difference (MAD)
+
+> - We want to measure how different three numbers $a, b, c$ are.
+> - Our measurement should be zero if $a = b = c$.
+> - $\text{MAD} = \displaystyle{\frac{|a - b| + |b - c| + |a - c|}{3}}$
+> - For four numbers, $\text{MAD} = \frac{|a-b| + |b-c| + |c-d| + |a-c| + |b-d| + |a-d|}{6}$
+> - For five numbers, the MAD has 10 terms!
+    
+## Simulation using cards
+
+**Think/Pair/Share:**
+
+- How many cards would we use? 
+- How do we color/mark the cards?
+- After we shuffle them, how many piles do we deal? What sizes?
+
+```{r, echo=FALSE, fig.width=3, fig.height=3}
+addmargins(t(table(stopsign)))
+```
+
+**Operator:** Describe the simulation [using this form](https://forms.gle/yzigR4AhDe8EEWXR8). 
+
+## Simulation using applet
+
+Let's paste [the data](http://www.math.hope.edu/isi/data/chap8/Stop.txt) into the [Multiple Proportions applet](http://www.rossmanchance.com/applets/ChiSqShuffle.html?hideExtras=1).
+
+# Exploration 8.1
+
+## Organ Donor Consent
+
+<div class="column-left">
+![](https://a.scpr.org/i/581d5b09935893c2281d4b5aba20ff58/18602-full.jpg)
+</div>
+
+<div class="column-right">
+![](http://2.bp.blogspot.com/_tFavWChioxY/SihUeQlemrI/AAAAAAAAAa4/3ZhC2GgtElI/w1200-h630-p-k-no-nu/Conan+Driver+Licence.jpg)
+</div>
+
+## Preview
+
+Researchers asked *volunteer* subjects to imagine they moved to a new state, applied for a driver’s license, and needed to decide whether or not to become an organ donor. Researchers created *three different versions* of the survey, each with a different donor recruiting strategy. Subjects were *randomly assigned* to one of the three types of recruiting strategies.
+
+## Preview
+
+Organ Donation Recruiting Strategies:
+
+1. The default option is to be an organ donor, and individuals have to opt out of organ donation (opt-*out* group).
+2. The default option is to not be an organ donor, and individuals have to opt in to organ donation (opt-*in* group).
+3. There is no default option, and individuals have to choose whether or not they will be an organ donor (*neutral* group).
+
+## Hypotheses
+
+\[ 
+\begin{align}
+ H_0:\; & \pi_\text{in} = \pi_\text{out} = \pi_\text{neutral} \\
+ H_a:\; & \text{At least one of } \pi_\text{in}, \pi_\text{out}, \pi_\text{neutral} \\ 
+        & \text{ is different from the others.}
+\end{align}
+\]
+
+## Summarize the data
+
+1. Researchers found that 23 of 55 subjects in the opt-in group chose to be organ donors, 41 of 50 in the opt-out group chose to be organ donors, and 44 of 56 in the neutral group chose to be organ donors. 
+Based on these counts, **record** a *two-way table* of counts, labeling the columns with the levels of the explanatory variable.
+
+2. For each of the three groups, **record** the *conditional column proportion* who agreed to become an organ donor. These will be our $\hat{p}_1, \hat{p}_2, \hat{p}_3$.
+
+3. **Record** the *Mean Absolute Difference* of $\hat{p}_1, \hat{p}_2, \hat{p}_3$, showing work.
+
+## Predict
+
+4. From the proportions and the MAD, do you think the data suggests that the default option used in the question appears to affect how likely the person is to become an organ donor?
+
+5. Suggest a possible explanation for how these observed proportions could have turned out to be as different from each other as they are.
+
+## Simulation using cards?
+
+**Record answers to the following:**
+
+6. How many cards would we use? 
+
+7. How do we color/mark the cards?
+
+8. After we shuffle them, how many piles do we deal? What sizes?
+
+## Simulation using applet
+
+9. Use the [Multiple Proportions applet](http://www.rossmanchance.com/applets/ChiSqShuffle.html?hideExtras=1) with the preloaded organ donor data to simulate a null distribution of these MAD statistics. Count the simulated MAD's that are *greater than* the observed MAD and **record** a *p-value.* Based on this p-value, **record** a sentence summarizing your conclusion in the context of this study.
+
+10. Describe the shape of the simulated null distribution. What are its *mean* and *standard deviation?* Is it *skewed?* If so, which way?
+
+## Generalization and Causation
+
+11. Comment on how the sample was obtained and to which population your conclusion can be generalized.
+
+12. Comment on how the study was designed and whether a cause-and-effect conclusion is warranted from this study.
+
+13. What questions do you still have that our analysis has not answered?
+
+##  {data-background="http://math.westmont.edu/img/mad.jpg" data-background-size="contain"}

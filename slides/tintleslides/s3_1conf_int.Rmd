@@ -1,0 +1,192 @@
+---
+title: "Section 3.1"
+date: "September 23, 2019"
+output: 
+  word_document:
+  revealjs::revealjs_presentation:
+    fig_width: 14
+    fig_height: 7
+    self_contained: true
+    theme: black
+    highlight: zenburn
+    css: slidesdjh.css
+    center: true
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 600
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(comment = NA)
+```
+
+
+# Chapter 3
+
+## Chapter 3 Overview
+
+- So far, we can only say things like 
+"We have strong evidence that the long-run probability that Harley picks the correct bowl is larger than 0.5."
+- "We do not have strong evidence that Ganzfeld experiments have a hit rate above 25%."
+
+- We want a method that says 
+"I believe 68 to 75% of all elections can be correctly predicted by the competent face method."
+
+## Chapter 3 Overview
+
+Estimation tells how large the effect is, through an *interval* of values.
+
+- Taking bi-daily aspirin will reduce the rate of heart attacks somewhere between 30% and 50%.
+- 70% of Americans think that the US is [heading in the wrong direction](https://thehill.com/homenews/news/427451-poll-70-percent-say-us-headed-in-wrong-direction) (margin of error $\pm$ 4.1 percentage points).
+
+# Section 3.1: Confidence Intervals
+
+## Can dogs sniff out cancer?
+
+Dogs have been trained to recognize specimens from patients with cancer.
+
+<iframe src='https://players.brightcove.net/665003303001/4k5gFJHRe_default/index.html?videoId=4248381074001' allowfullscreen frameborder=0></iframe>
+
+## Experiment
+
+- Marine the dog smells 5 specimens, 4 from healthy patients and 1 from a cancer patient.
+- She gets a reward for picking the specimen from the cancer patient.
+- $\pi$ is the probability that she picks the cancer patient.
+
+$$ H_0 : \pi = 0.2 \\ H_a: \pi \neq 0.2 $$
+
+## Data
+
+In 33 trials, Marine identified the cancer patient's specimen 30 times.
+
+- $\hat{p} = 30/33 \approx 0.909$
+- P-value = 0.000 using the [One Proportion Applet](http://www.rossmanchance.com/applets/OneProp/OneProp.htm?hideExtras=1)
+
+Let's use a significance level of $\alpha = 0.05$.
+
+We reject $H_0: \pi = 0.2$. It is not plausible that $\pi = 0.2$.
+
+## New Hypotheses
+
+$$ H_0 : \pi = 0.3 \\ H_a: \pi \neq 0.3 $$
+
+- The p-value is still less than $\alpha = 0.05$. 
+- We reject $H_0: \pi = 0.3$. It is not plausible that $\pi = 0.3$.
+
+## Keep trying
+
+| $H_0$ | p-value | Decision | interpretation |
+| ----- | ------- | -------- | -------------- |
+| $\pi = 0.6$ | 0.000 | Reject $H_0$ | $\pi = 0.6$ is not plausible |  
+| $\pi = 0.7$ | 0.008 | Reject $H_0$ | $\pi = 0.7$ is not plausible |  
+| $\pi = 0.8$ | 0.136 | Do not reject $H_0$ | $\pi = 0.8$ is plausible |  
+| $\pi = 0.85$ | 0.462 | Do not reject $H_0$ | $\pi = 0.85$ is plausible |  
+| $\pi = 0.9$ | 1.000 | Do not reject $H_0$ | $\pi = 0.9$ is plausible |  
+| $\pi = 0.95$ | 0.245 | Do not reject $H_0$ | $\pi = 0.95$ is plausible |  
+| $\pi = 0.98$ | 0.024 | Reject $H_0$ | $\pi = 0.98$ is not plausible |  
+
+It is plausible that Marine gets it right between 80% and 95% of the time. (More precisely, between 0.761 and 0.974.)
+
+## A Range of Plausible Values
+
+- If we get a small p-value (like we did with 0.70) we will conclude that the value under the null is not plausible.  This is when we conclude the alternative hypothesis.
+- If we get a large p-value (like we did with 0.80) we will conclude the value under the null is plausible.  This is when we can’t conclude the alternative.
+
+## Confidence intervals
+
+- We found that values between 0.761 and 0.974 are plausible.
+- (0.761, 0.974) is called a **confidence interval**.
+- Since we used $\alpha = 5\%$ as our significance level, this is a 95% confidence interval (100% − 5%).
+- 95% is the *confidence level* of the interval of plausible values.
+
+## Group Question
+
+**Presenter:** Be ready to report your group's answer:
+
+> If we increase the confidence level from 95% to 99%, what will happen to the width of the confidence interval? 
+
+
+# Exploration 3.1: Kissing Right?
+
+## Airport Behavior (PDA's) {data-background="https://i.ytimg.com/vi/XR5WaM9EGdM/maxresdefault.jpg" data-background-size="contain"}
+
+## Left or right?
+
+Do couples lean their heads to the right or left when kissing?
+
+- Observational units: 124 couples
+- Variable: right or left
+- $H_0: \pi = 0.5$
+- $\hat{p} = 80/124 \approx 0.64516$
+- p-value: close to zero
+
+## Estimation
+
+1. Now test whether the data provide evidence that the probability $\pi$ that a couple leans their heads to the right while kissing is *different from 0.60.* Use the [One Proportion applet](http://www.rossmanchance.com/applets/OneProp/OneProp.htm?hideExtras=1) to determine the *two-sided* p-value for testing the null value of 0.60. **Record** the p-value, along with the null value.
+
+2. At a significance level of $\alpha = 0.05$, do you reject $H_0: \pi = 0.6$? Is $\pi = 0.6$ plausible? 
+
+
+## Plausible values
+
+>We will consider a value of the parameter to be *plausible* if the two-sided p-value for testing that parameter value is larger than the level of significance.
+
+## Proving vs. Not rejecting
+
+The p-value you found in the previous question should not have been smaller than 0.05. Hence, you do not reject the null hypothesis at the 0.05 level of significance and therefore you do not reject 0.60 as a plausible value for $\pi$. Thus, it is plausible (i.e., believable) that the probability a kissing couple leans their heads to the right is 0.60.
+
+3. Does this mean that you've proven that exactly 60% of kissing couples lean right? Why or why not?
+
+## Fill in the table
+
+4. **Recorder:** Make a table of p-values for null values between 0.54 and 0.76. Keep track of whether each null value is plausible, at a significance level of $\alpha = 0.05$. 
+
+```
+Null value in H_0    | 0.54 | 0.55 | 0.56 | 0.57 | 0.58 | 0.59 | 0.60 | 0.70 | 0.71 | 0.72 | 0.73 | 0.74 | 0.75 | 0.76 
+-------------------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- 
+(Two-sided) p-value  |      |      |      |      |      |      |      |      |      |      |      |      |      |      
+-------------------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- 
+Reject or plausible? |      |      |      |      |      |      |      |      |      |      |      |      |      |      
+-------------------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- 
+```
+
+**Facilitator:** Keep your group organized, and divide the labor in this task.
+
+## Confidence Intervals
+
+5. Using a 0.05 significance level and your results from #4, provide a list of plausible values for $\pi$, the long-run proportion of kissing couples who lean their heads to the right. This list of values represents an interval containing all values between two endpoints.
+
+> The interval of plausible values in is also called a **95% confidence interval** for $\pi$. 
+
+**Report** this interval, using $(\mbox{left endpoint}, \mbox{right endpoint})$ notation.
+
+## Confidence Interval Properties
+
+6. Does your 95% confidence interval from #12 include the value of 0.50? Does it include the value 0.60? Explain how your answers relate to the significance test and p-value that you calculated in #1.
+
+7. Now suppose we were to use a significance level of 0.01 instead of 0.05 to decide whether or not to reject the corresponding null hypothesis for each listed value of $\pi$. How would you expect the interval of plausible values to change: wider, narrower, or no change? **Record** your prediction.
+
+## Construct a 99% confidence interval
+
+8. Implement the $\alpha = 0.01$ significance level to determine plausible values for the population proportion of all kissing couples that lean their heads to the right. (Hint: Click *Show sliders* and try using the slider bar.) **Report** the interval of plausible values, i.e., the 99% confidence interval.
+
+9. How would you expect a 90% confidence interval to compare to the 95% and 99% confidence intervals? Explain.
+
+## Hour Exam #1 Distribution
+
+```{r, warning=FALSE}
+library(ggplot2)
+rosterdf <- read.csv("../rosterf19.csv", stringsAsFactors = FALSE)
+# ignore the 0's I put in there for groups
+#rosterdf[(rosterdf$he1raw == 0) & !is.na(rosterdf$he1raw), ]$he1raw <- NA
+eps <- log(0.6)/log(0.55)
+fun.1 <- function(x) 100*(x/100)^(log(0.6)/log(0.55))
+rosterdf$he1 <-  round(fun.1(rosterdf$he1raw), 1)
+qplot(he1, data=rosterdf, geom="density")
+cat("Mean:", mean(rosterdf$he1, na.rm = TRUE), "  Median:", median(rosterdf$he1, na.rm = TRUE))
+```
+
