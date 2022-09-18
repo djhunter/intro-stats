@@ -163,19 +163,88 @@ Return to the correlation applet of the previous group exercise.
 
 # 7.2 Least squares regression
 
-## {data-background-image="" data-background-size="contain"}
-
 ## 7.2.1 Gift aid for freshman at Elmhurst College
+
+- Explanatory variable: family income
+- Response variable: how much "gift aid" a student receives
+
+## {data-background-image="https://openintro-ims.netlify.app/07-model-slr_files/figure-html/elmhurstScatterWLine-1.png" data-background-size="contain"}
+
 
 ## 7.2.2 An objective measure for finding the best line
 
-## 7.2.3 Finding and interpreting the least squares line
+- The *least squares regression line* is the line that minimizes the sum of the squares of the residuals.
+- See the [regression applet](https://www.rossmanchance.com/applets/2021/regshuffle/regshuffle.htm) for a demo.
+
+## Elmhurst College data
+
+```{r}
+glimpse(elmhurst)
+```
+
+## 7.2.3 Finding the least squares line
+
+```{r}
+model1 <- lm(gift_aid ~ family_income, data = elmhurst)
+summary(model1)
+```
+
+$$
+\widehat{\texttt{gift_aid}} = 24.3 - 0.0431 \times \texttt{family_income}
+$$
+
+## Interpreting the coefficients
+
+$$
+\widehat{\texttt{gift_aid}} = 24.3 - 0.0431 \times \texttt{family_income}
+$$
+
+- The *regression slope* is the change in $y$ for a one-unit increase in $x$.
+    - For every additional $\$1000$ of `family_income`, the amount of `gift_aid` decreases by about $\$43$. 
+- The *regression intercept* is the predicted value of $y$ when $x$ is zero.
+    - A family with no income should expect about $\$24,300$ in gift aid.
+
+
+## Making predictions
+
+$$
+\widehat{\texttt{gift_aid}} = 24.3 - 0.0431 \times \texttt{family_income}
+$$
+
+```{r}
+predict(model1, data.frame(family_income = 80))
+```
+
+The predicted `gift_aid` for a `family_income` of $\$80,000$ is about $\$20,873$.
+
 
 ## 7.2.4 Extrapolation is treacherous
 
+$$
+\widehat{\texttt{gift_aid}} = 24.3 - 0.0431 \times \texttt{family_income}
+$$
+
+```{r}
+predict(model1, data.frame(family_income = 3000))
+```
+
+The predicted `gift_aid` for a `family_income` of $\$3,000,000$ is negative!
+
+- *Extrapolation* refers to making predictions outside of the range of the observed data.
+- Extrapolation should be avoided.
+
 ## 7.2.5 Describing the strength of a fit
 
-## 7.2.6 Categorical predictors with two levels
+- The square of the correlation coefficient, $r^2$, is the proportion of variation in $y$ that is explained by the linear relationship with $x$.
+    - 24.86% of the variation in `gift_aid` can be explained by the linear relationship with `family_income`.
+    - $r^2$ is called the *coefficient of determination*.
+    - $r^2$ is often denoted $R^2$.
 
 # 7.3 Outliers in linear regression
+
+## The regression line is not robust
+
+- Outliers can have a big effect on the regression line.
+- Observations are *influential* if they lie near the extremes of the $x$-variable.
+- See the [regression applet](https://www.rossmanchance.com/applets/2021/regshuffle/regshuffle.htm) for a demo.
 
