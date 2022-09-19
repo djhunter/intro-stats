@@ -263,5 +263,19 @@ a &= \bar{y} - b\bar{x} && \text{sample $y$-intercept} \\
 
 - Outliers can have a big effect on the regression line.
 - Observations are *influential* if they lie near the extremes of the $x$-variable.
-- See the [regression applet](https://www.rossmanchance.com/applets/2021/regshuffle/regshuffle.htm) for a demo.
+- See the [regression applet](https://www.rossmanchance.com/applets/2021/regshuffle/regshuffle.htm).
+
+## Group Exercise
+
+1. Reload the [regression applet](https://www.rossmanchance.com/applets/2021/regshuffle/regshuffle.htm).
+
+2. Click on *Show Data Options* and *Show Regression Line*.
+
+3. Add the point $(38, 75)$. Did the regression line change?
+
+4. Add the point $(38,36)$. Did the regression line change?
+
+5. Now click on *Move Observations*. Try moving that last observation around, and observe what happens to the regression line.
+
+6. Discuss: What types of observations are most *influential* on the regression line?
 
