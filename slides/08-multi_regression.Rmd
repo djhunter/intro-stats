@@ -224,10 +224,12 @@ summary(model3)$coefficients
 </div>
 
 <div class = "column-right">
-1. Predict the interest rate of a borrower with the following characteristics:
+1. Interpret the coefficients of `credit_checks` and `bankruptcy`.
+
+2. Predict the interest rate of a borrower with the following characteristics:
 
 - Income is Source Verified
-- Debt-to-income Ratio/Percentage is 21
+- Debt-to-income is 21
 - Credit utilized is 0.32
 - Never has had a bankruptcy
 - Term of loan is 36 months
