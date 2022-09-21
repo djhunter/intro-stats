@@ -47,6 +47,7 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 7. [Exploratory Data Analysis in R](slides/06-explore_data_R.html), 9/12
 8. [Review for Test #1](slides/07-test1review.html), 9/14
 9. [Linear Regression with a Single Predictor](slides/07a-lin_regression.html), 9/19
+10. [Linear Regression with Multiple Predictors](slides/08-multi_regression.html), 9/21
 
 # Other Resources
 

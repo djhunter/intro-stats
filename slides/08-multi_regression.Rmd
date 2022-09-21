@@ -1,0 +1,284 @@
+---
+title: "Chapter 8: Linear Regression with Multiple Predictors"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(tidyverse)
+library(openintro)
+library(kableExtra)
+loans <- loans_full_schema %>%
+  mutate(
+    credit_util = total_credit_utilized / total_credit_limit,
+    bankruptcy  = as.factor(if_else(public_record_bankrupt == 0, 0, 1)),
+    verified_income = droplevels(verified_income)
+    ) %>%
+  rename(credit_checks = inquiries_last_12m) %>%
+  select(interest_rate, verified_income, debt_to_income, credit_util, bankruptcy, term, credit_checks, issue_month) 
+theme_set(theme_bw())
+```
+
+# Overview
+
+- 8 Linear regression with multiple predictors
+    - 8.1 Indicator and categorical predictors
+    - 8.2 Many predictors in a model
+    - 8.3 Adjusted R-squared
+    - 8.4 Model selection
+        - 8.4.1 Stepwise selection
+        - 8.4.2 Other model selection strategies
+
+#  8.1 Indicator and categorical predictors
+
+## Indicator variables
+
+```{r}
+glimpse(loans)
+```
+
+`bankruptcy` is an *indicator* (categorical 0 or 1) variable with two levels:
+
+- 0 means the borrower has not had a bankruptcy in the past.
+- 1 means the borrower has had a bankruptcy in the past.
+
+## Regression with categorical predictor
+
+Does having a past bankruptcy predict the interest rate you get?
+
+```{r}
+model1 <- lm(interest_rate ~ bankruptcy, data = loans)
+summary(model1)$coefficients
+```
+
+Regression equation: $\widehat{\texttt{interest_rate}} = 12.34 + 0.74 \times \texttt{bankruptcy}$
+
+- If `bankruptcy` is 0, $\widehat{\texttt{interest_rate}} = 12.34$.
+- If `bankruptcy` is 1, $\widehat{\texttt{interest_rate}} = 12.34 + 0.74 = 13.08$.
+
+## Predictors with more than two levels
+
+`verified_income` has three levels:
+
+- *Verified:* Both the source and amount of income were verified.
+- *Source Verified:* Only the source was verified, not the amount.
+- *Not Verified:* The income was not verified.
+
+```{r}
+model2 <- lm(interest_rate ~ verified_income, data = loans)
+summary(model2)$coefficients
+```
+
+## Interpreting a 3-level predictor
+
+```{r, echo = FALSE}
+model2 <- lm(interest_rate ~ verified_income, data = loans)
+summary(model2)$coefficients
+```
+
+\[
+\begin{aligned}
+\widehat{\texttt{interest_rate}} &= 11.10 \\
+&+ 1.42 \times \texttt{verified_income}_{\texttt{Source Verified}} \\
+&+ 3.25 \times \texttt{verified_income}_{\texttt{Verified}}
+\end{aligned}
+\]
+
+- The *reference level* is `Not Verified`: $\widehat{\texttt{interest_rate}} = 11.10$
+- If `verified_income` is `Source Verified`, you have to add 1.42.
+- If `verified_income` is `Verified`, you have to add 3.25.
+
+## Boxplot of interest rates by verification
+
+```{r, fig.width=6, fig.height=3.8, fig.align='center', message = FALSE, warning=FALSE}
+ggplot(data = loans, aes(x = interest_rate, y = verified_income)) +
+  geom_boxplot()
+```
+
+## Group Discussion
+
+\[
+\begin{aligned}
+\widehat{\texttt{interest_rate}} &= 11.10 \\
+&+ 1.42 \times \texttt{verified_income}_{\texttt{Source Verified}} \\
+&+ 3.25 \times \texttt{verified_income}_{\texttt{Verified}}
+\end{aligned}
+\]
+
+1. Do the variables `interest_rate` and `verified_income` appear to be associated? How?
+
+2. Can you think of a possible *confounding variable* that might account for this association?
+
+## R-squared in model #1
+
+```{r}
+summary(model1)
+```
+
+## R-squared in model #2
+
+```{r}
+summary(model2)
+```
+
+## How much does the model tell us?
+
+- Model #1 only explains about 0.2% of the variation in interest rates.
+- Model #2 only explains about 6% of the variation in interest rates.
+
+#  8.2 Many predictors in a model
+
+## Variable descriptions
+
+```{r, echo = FALSE}
+tribble(
+  ~variable,         ~description,
+  "interest_rate",   "Interest rate on the loan, in an annual percentage.",
+  "verified_income", "Categorical variable describing whether the borrower's income source and amount have been verified, with levels `Verified`, `Source Verified`, and `Not Verified`.",
+  "debt_to_income",  "Debt-to-income ratio, which is the percentage of total debt of the borrower divided by their total income.",
+  "credit_util",     "Of all the credit available to the borrower, what fraction are they utilizing. For example, the credit utilization on a credit card would be the card's balance divided by the card's credit limit.",
+  "bankruptcy",      "An indicator variable for whether the borrower has a past bankruptcy in their record. This variable takes a value of `1` if the answer is *yes* and `0` if the answer is *no*.",
+  "term",            "The length of the loan, in months.",
+  "issue_month",     "The month and year the loan was issued, which for these loans is always during the first quarter of 2018.", 
+  "credit_checks",   "Number of credit checks in the last 12 months. For example, when filing an application for a credit card, it is common for the company receiving the application to run a credit check.",
+) %>%
+  kbl()
+```
+
+## Multiple Regression Model
+
+\[
+\begin{aligned}
+\widehat{\texttt{interest_rate}} &= b_0 \\
+&+ b_1 \times \texttt{verified_income}_{\texttt{Source Verified}} \\
+&+ b_2 \times \texttt{verified_income}_{\texttt{Verified}} \\
+&+ b_3 \times \texttt{debt_to_income} \\
+&+ b_4 \times \texttt{credit_util} \\
+&+ b_5 \times \texttt{bankruptcy} \\
+&+ b_6 \times \texttt{term} \\
+&+ b_9 \times \texttt{credit_checks} \\
+&+ b_7 \times \texttt{issue_month}_{\texttt{Jan-2018}} \\
+&+ b_8 \times \texttt{issue_month}_{\texttt{Mar-2018}}
+\end{aligned}
+\]
+
+## Multiple Regression in R
+
+```{r}
+model3 <- lm(interest_rate ~ verified_income + debt_to_income + credit_util +
+               bankruptcy + term + credit_checks + issue_month, data = loans)
+summary(model3)$coefficients
+```
+
+## Equation for fitted model
+
+\[
+\begin{aligned}
+\widehat{\texttt{interest_rate}} &= 1.89 \\
+&+ 1.00 \times \texttt{verified_income}_{\texttt{Source Verified}} \\
+&+ 2.56 \times \texttt{verified_income}_{\texttt{Verified}} \\
+&+ 0.02 \times \texttt{debt_to_income} \\
+&+ 4.90 \times \texttt{credit_util} \\
+&+ 0.39 \times \texttt{bankruptcy} \\
+&+ 0.15 \times \texttt{term} \\
+&+ 0.23 \times \texttt{credit_checks} \\
+&+ 0.05 \times \texttt{issue_month}_{\texttt{Jan-2018}} \\
+&- 0.04 \times \texttt{issue_month}_{\texttt{Mar-2018}}
+\end{aligned}
+\]
+
+## Group Exercise
+
+<div class = "column-left">
+\[
+\scriptsize{
+\begin{aligned} 
+&\widehat{\texttt{interest_rate}} = 1.89 \\
+&+ 1.00 \times \texttt{verified_income}_{\texttt{Source Verified}} \\
+&+ 2.56 \times \texttt{verified_income}_{\texttt{Verified}} \\
+&+ 0.02 \times \texttt{debt_to_income} \\
+&+ 4.90 \times \texttt{credit_util} \\
+&+ 0.39 \times \texttt{bankruptcy} \\
+&+ 0.15 \times \texttt{term} \\
+&+ 0.23 \times \texttt{credit_checks} \\
+&+ 0.05 \times \texttt{issue_month}_{\texttt{Jan-2018}} \\
+&- 0.04 \times \texttt{issue_month}_{\texttt{Mar-2018}}
+\end{aligned} }
+\]
+</div>
+
+<div class = "column-right">
+1. Predict the interest rate of a borrower with the following characteristics:
+
+- Income is Source Verified
+- Debt-to-income Ratio/Percentage is 21
+- Credit utilized is 0.32
+- Never has had a bankruptcy
+- Term of loan is 36 months
+- Number of credit checks is 3
+- Loan is issued in March
+
+</div>
+
+#  8.3 Adjusted R-squared
+
+## Full summary of regression model
+
+```{r}
+summary(model3)
+```
+
+##  Multiple and Adjusted R-squared
+
+- *Multiple* $R^2$ estimates the percentage of variability in the response variable that is explained by the model.
+    - This combination of variables explains about 26% of the variability in interest rate.
+- *Adjusted* $R^2$ takes into account the complexity of the model.
+    - Adding explanatory variables will always increase the multiple $R^2$, but you might be *overfitting* the data (using too complex a model).
+    - If you add an explanatory variable to a model and the Adjusted $R^2$ goes *down*, you probably have too many variables.
+
+#  8.4 Model selection
+
+
+##  8.4.1 Stepwise selection
+
+The `step` function in R attempts to eliminate explanatory variables that aren't needed.
+
+- It computes a score (the AIC) that measures how good the model is. (lower is better)
+- It tries eliminating variables that *decrease* the AIC. 
+
+## Using `step`
+
+```{r}
+step(model3)
+```
+## Improved model
+
+```{r}
+model4 <- lm(formula = interest_rate ~ verified_income + debt_to_income + 
+    credit_util + bankruptcy + term + credit_checks, data = loans)
+summary(model4)
+```
+
+## Too many variables?
+
+- Model #3 (with all the variables) has an adjusted $R^2$ of 0.2597.
+- Model #4 (without issue_month) has an adjusted $R^2$ of 0.2598.
+    - This suggests that the variable `issue_month` isn't helping the predictive power of the model, so we shouldn't include it.
+
+
