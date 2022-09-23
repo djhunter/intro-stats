@@ -1,0 +1,218 @@
+---
+title: "Chapter 9: Logistic Regression"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(tidyverse)
+library(openintro)
+library(kableExtra)
+theme_set(theme_bw())
+```
+
+# RStudio on Monday
+
+- If you haven't done so already, make sure to [follow the instructions on Canvas](https://westmont.instructure.com/courses/8503/discussion_topics/44046) for installing RStudio (or getting started with rstudio.cloud).
+- We'll be using RStudio on Monday, so it would be helpful if most of us had an RStudio-enabled device.
+
+# Overview
+
+- 9 Logistic regression
+    - 9.1 Discrimination in hiring
+    - 9.2 Modelling the probability of an event
+    - 9.3 Logistic model with many variables
+
+# 9.1 Discrimination in hiring
+
+## Experiment on discrimination
+
+- Research Question: Do employers discriminate based on resume information?
+- Researchers created many fake resumes to send off to jobs to see which would elicit a callback.
+- These resumes listed years of experience and education details.
+- They also *randomly assigned* a name to each resume, where *the name would imply the applicant's sex and race*.
+
+## Resume data
+
+```{r}
+glimpse(resume)
+```
+
+## Names that imply sex and race
+
+```{r}
+resume$firstname[1:200]
+```
+
+## Selected variables
+
+```{r, echo = FALSE}
+tribble(
+  ~variable,           ~description,
+  "received_callback", "Specifies whether the employer called the applicant following submission of the application for the job.",
+  "job_city",          "City where the job was located: Boston or Chicago.",
+  "college_degree",    "An indicator for whether the resume listed a college degree.",
+  "years_experience",  "Number of years of experience listed on the resume.",
+  "honors",            "Indicator for the resume listing some sort of honors, e.g. employee of the month.",
+  "military",          "Indicator for if the resume listed any military experience.",
+  "has_email_address", "Indicator for if the resume listed an email address for the applicant.",
+  "race",              "Race of the applicant, implied by their first name listed on the resume.",
+  "sex",               "Sex of the applicant (limited to only and in this study), implied by the first name listed on the resume."
+) %>%
+  kbl()
+```
+
+# 9.2 Modelling the probability of an event
+
+## Predicting a categorical (binary) variable
+
+- The researchers want a model that will predict whether an applicant gets called for an interview, based on the other explanatory variables. 
+- Response variable: `received_callback`
+    - Categorical 
+    - 0: did not get called for an interview
+    - 1: got called for an interview
+- A **Logistic Regression** model will predict the *probability* that an applicant gets called for an interview.
+
+\[
+\log_e \left( \frac{\widehat{p}}{1-\widehat{p}} \right) = b_0 + b_1 x_{1} + b_2 x_{2} + \cdots + b_k x_{k}
+\]
+
+## {data-background-image="https://openintro-ims.netlify.app/09-model-logistic_files/figure-html/logit-transformation-1.png" data-background-size="contain"}
+
+## Solving for $\hat{p}$
+
+- If $\log_e \left( \frac{\widehat{p}}{1-\widehat{p}} \right) = N$, then $\hat{p} = \frac{e^N}{1+e^N}$.
+- In R, you can use the expression `exp(N)/(1+exp(N))` to calculate $\hat{p}$.
+
+## Single-variable model
+
+Can we predict the callback probability from `honors`?
+
+```{r}
+model1 <- glm(received_callback ~ honors, family = "binomial", data = resume)
+summary(model1)$coefficients
+```
+
+\[
+\log_e \left( \frac{\widehat{p}}{1-\widehat{p}} \right) = -2.4998 + 0.8668 \times {\texttt{honors}} 
+\]
+
+## Prediction: no honors
+
+\[
+\log_e \left( \frac{\widehat{p}}{1-\widehat{p}} \right) = -2.4998 + 0.8668 \times {\texttt{honors}} 
+\]
+
+- If a resume is randomly selected from the study and it does not have any honors listed, what is the probability it resulted in a callback?
+    - $\log_e \left( \frac{\widehat{p}}{1-\widehat{p}} \right) = -2.4998$
+    - $\hat{p} = \frac{e^{-2.4998}}{1+e^{-2.4998}}$.
+    
+```{r}
+exp(-2.4998)/(1+exp(-2.4998))
+```
+
+## Group Exercise
+
+- What would the probability be if the resume did list some honors?
+    - $\log_e \left( \frac{\widehat{p}}{1-\widehat{p}} \right) = -2.4998 + 0.8668 \approx -1.633$
+
+1. Solve for $\hat{p}$.
+2. Compute the value of $\hat{p}$. (Use RStudio if possible.)
+3. Write a sentence interpreting this number in the context of the problem.
+
+# 9.3 Logistic model with many variables
+
+## Multiple logistic regression model
+
+```{r}
+model2 <- glm(received_callback ~ job_city + college_degree + years_experience + 
+                honors + military + has_email_address + race + gender, 
+              family = "binomial", data = resume)
+summary(model2)$coefficients
+```
+
+## Eliminate variables using `step`
+
+```{r}
+step(model2)
+```
+## Better model
+
+```{r}
+model3 <- glm(formula = received_callback ~ job_city + years_experience + 
+                        honors + military + has_email_address + race + gender, 
+              family = "binomial", data = resume)
+summary(model3)$coefficients
+```
+
+## Group Discussion
+
+```{r, echo = FALSE}
+model3 <- glm(formula = received_callback ~ job_city + years_experience + 
+                        honors + military + has_email_address + race + gender, 
+              family = "binomial", data = resume)
+summary(model3)$coefficients
+```
+
+1. In which city, Chicago or Boston, are applicants more likely to get called back?
+2. Does military experience increase an applicant's chances of getting an interview?
+3. Does this study show evidence of racial bias? Explain.
+
+## Multiple logistic regression equation
+
+```{r, echo = FALSE}
+model3 <- glm(formula = received_callback ~ job_city + years_experience + 
+                        honors + military + has_email_address + race + gender, 
+              family = "binomial", data = resume)
+summary(model3)$coefficients
+```
+
+\[
+\begin{aligned}
+&\log_e \left(\frac{p}{1 - p}\right) \\
+&= - 2.7162 - 0.4364 \times \texttt{job_city}_{\texttt{Chicago}} \\
+& \quad \quad + 0.0206 \times \texttt{years_experience} \\
+& \quad \quad + 0.7634 \times \texttt{honors} - 0.3443 \times \texttt{military} + 0.2221 \times \texttt{email} \\
+& \quad \quad + 0.4429 \times \texttt{race}_{\texttt{White}} - 0.1959 \times \texttt{gender}_{\texttt{man}} 
+\end{aligned}
+\]
+
+## Predict a probability
+
+Let's estimate the probability of receiving a callback for a job in Chicago where the candidate lists 14 years experience, no honors, no military experience, includes an email address, and has a first name that implies they are a White male.
+
+\[
+\begin{aligned}
+&\log_e \left(\frac{\widehat{p}}{1 - \widehat{p}}\right) \\
+&\quad= - 2.7162 - 0.4364 \times 1 + 0.0206 \times 14 \\
+&\quad \quad + 0.7634 \times 0 - 0.3443 \times 0 + 0.2221 \times 1 \\
+&\quad \quad + 0.4429 \times 1 - 0.1959 \times 1 = -2.3955  
+\end{aligned}
+\]
+
+```{r}
+exp(-2.3955)/(1+exp(-2.3955))
+```
+
+## Group Exercise
+
+1. Compute the probability of a callback for an individual with a name commonly inferred to be from a Black male but who otherwise has the same characteristics as the one described in the previous example.
+
+2. How does the perceived race of the applicant affect his chances of getting an interview?
+
