@@ -2497,11 +2497,12 @@ racewhite          0.44290806 0.10801777   4.100326 4.125685e-05
 genderm           -0.19590738 0.13520043  -1.449014 1.473335e-01</code></pre>
 <p><span class="math display">\[
 \begin{aligned}
-&amp;\log_e \left(\frac{p}{1 - p}\right) \\
+\log_e \left(\frac{p}{1 - p}\right)
 &amp;= - 2.7162 - 0.4364 \times \texttt{job_city}_{\texttt{Chicago}} \\
 &amp; \quad \quad + 0.0206 \times \texttt{years_experience} \\
 &amp; \quad \quad + 0.7634 \times \texttt{honors} - 0.3443 \times
-\texttt{military} + 0.2221 \times \texttt{email} \\
+\texttt{military} \\
+&amp; \quad \quad+ 0.2221 \times \texttt{email} \\
 &amp; \quad \quad + 0.4429 \times \texttt{race}_{\texttt{White}} -
 0.1959 \times \texttt{gender}_{\texttt{man}}
 \end{aligned}
@@ -2515,10 +2516,10 @@ military experience, includes an email address, and has a first name
 that implies they are a White male.</p>
 <p><span class="math display">\[
 \begin{aligned}
-&amp;\log_e \left(\frac{\widehat{p}}{1 - \widehat{p}}\right) \\
-&amp;\quad= - 2.7162 - 0.4364 \times 1 + 0.0206 \times 14 \\
-&amp;\quad \quad + 0.7634 \times 0 - 0.3443 \times 0 + 0.2221 \times 1
-\\
+\log_e \left(\frac{\widehat{p}}{1 - \widehat{p}}\right)
+&amp;= - 2.7162 - 0.4364 \times 1 + 0.0206 \times 14 \\
+&amp;\quad \quad + 0.7634 \times 0 - 0.3443 \times 0  \\
+&amp;\quad \quad + 0.2221 \times 1 \\
 &amp;\quad \quad + 0.4429 \times 1 - 0.1959 \times 1 = -2.3955  
 \end{aligned}
 \]</span></p>
