@@ -49,6 +49,7 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 9. [Linear Regression with a Single Predictor](slides/07a-lin_regression.html), 9/19
 10. [Linear Regression with Multiple Predictors](slides/08-multi_regression.html), 9/21
 11. [Logistic Regression](slides/09-logit_regression.html), 9/23
+12. [Regression Models in R](slides/10-regression_R.html), 9/26
 
 # Other Resources
 
