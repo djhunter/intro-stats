@@ -49,20 +49,15 @@ Do all the challenges.
 library(tidyverse)
 library(openintro)
 
-# look at the duke_forest data frame
+# Look at the duke_forest data frame
 duke_forest
 glimpse(duke_forest)
 view(duke_forest)
 
-duke_forest$parking
-unique(duke_forest$parking)
-
-# make a new data frame: 
-#   Add a variable anypark: 0 if no spaces, 1 otherwise
+# Make a new data frame: 
 #   Get rid of address, hoa, url columns
 
 homes <- duke_forest %>%
-  mutate(anypark = ifelse(parking == "0 spaces", 0, 1)) %>%
   select(-address, -hoa, -url)
 homes
 view(homes)
@@ -76,12 +71,20 @@ ggplot(homes, aes(x = area, y = price)) +
 
 ## Challenge: Make a scatterplot of price vs lot.
 
+### solution
+ggplot(homes, aes(x = lot, y = price)) +
+  geom_point()
+
 ## Which is the better predictor?
 
 model1 <- lm(price ~ area, data = homes)
 summary(model1)
 
 ## Challenge: make a model predicting price from lot.
+
+### solution
+model2 <- lm(price ~ lot, data = homes)
+summary(model2)
 
 ## Add the regression lines to the plots
 ggplot(homes, aes(x = area, y = price)) +
@@ -91,6 +94,15 @@ ggplot(homes, aes(x = area, y = price)) +
 ## Challenge: 
 ### 1. Add regression line to price vs lot scatterplot.
 ### 2. Modify 1 aesthetics to color by the cooling variable.
+### solution
+ggplot(homes, aes(x = lot, y = price)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+
+ggplot(homes, aes(x = lot, y = price, color = cooling)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+
 
 ## OPTIONAL: side-by-side plots: install cowplot (use packages tab)
 ## load cowplot library
@@ -113,8 +125,12 @@ predict(model3, data.frame(area = 1600, lot = 0.25))
 
 ## Challenge: multiple regression model
 ## Make a new model (model4) that predicts price from 
-## area, lot, bed, bath, year_built, and anypark.
+## area, lot, bed, bath, year_built
 ## Is this an improvement over model 3?
+
+### Solution
+model4 <- lm(price ~ area + lot + bed + bath + year_built, data = homes)
+summary(model4)
 
 ## eliminate some variables
 step(model4)
@@ -124,20 +140,32 @@ step(model4)
 ##    2. Predict the price of a house with 2000 sq feet area, 
 ##       lot size 0.5, 3 baths, built in 1950.
 
-## Categorical response variable
+### Solution
+model5 <- lm(price ~ area + lot + bath + year_built, data = homes)
+summary(model5)
+summary(model4)
+predict(model5, data.frame(area = 2000, lot = 0.5, bath = 3, year_built = 1950))
+## 432615.3
+
+### Probably need to stop here
+
+## Categorical response variable (OPTIONAL)
+
+#   Add a variable anypark: 0 if no spaces, 1 otherwise
+
+homes$parking
+unique(homes$parking)
+
+homespark <- homes %>%
+  mutate(anypark = factor(ifelse(parking == "0 spaces", 0, 1))) 
+view(homespark)
+
 ## Predict anypark from lot size
 
-ggplot(homes, aes(x = lot, y = anypark)) +
+ggplot(homespark, aes(x = lot, y = anypark)) +
   geom_boxplot()
 
-glimpse(homes)
-homes$anypark <- factor(homes$anypark)
-glimpse(homes)
-
-ggplot(homes, aes(x = lot, y = anypark)) +
-  geom_boxplot()
-
-model6 <- glm(anypark ~ lot, family = "binomial", data = homes)
+model6 <- glm(anypark ~ lot, family = "binomial", data = homespark)
 summary(model6)
 
 ## predicted logit for 0.25 acre lot
@@ -158,18 +186,33 @@ predict(model6, data.frame(lot = c(0.25, 0.5)), type = "response")
 ## Challenge: predict anypark from price, lot, area, bath, bed (model7).
 ## Try using step to eliminate variables. What happens? Why did it happen?
 
+model7 <- glm(anypark ~ price + lot + area + bath + bed, family = "binomial", data = homespark)
+summary(model7)
+step(model7)
+
 # Drop rows containing missing values
 
-homes_complete <- drop_na(homes)
-model8 <- glm(anypark ~ price + lot + area + bath + bed, family = "binomial", data = homes_complete)
+homespark_complete <- drop_na(homespark)
+model8 <- glm(anypark ~ price + lot + area + bath + bed, family = "binomial", data = homespark_complete)
 summary(model8)
 step(model8)
 
-ggplot(homes, aes(x = price, y = anypark)) +
+ggplot(homespark_complete, aes(x = price, y = anypark)) +
   geom_boxplot()
 
 ## Challenge: 
 
-# 1. Predict anypark from price (model9).
+# 1. Predict anypark from price (model9). Can use homespark because we are not using lot.
 # 2. Compare predicted probabilites for 400K vs 600K home.
 
+model9 <- glm(anypark ~ price, family = "binomial", data = homespark)
+summary(model9)
+
+## predicted probability for 400K home
+exp(-0.4721 + 0.000001373*400000)/(1 + exp(-0.4721 + 0.000001373*400000))
+
+## predicted probability for 600K home
+exp(-0.4721 + 0.000001373*600000)/(1 + exp(-0.4721 + 0.000001373*600000))
+
+predict(model9, data.frame(price = c(400000, 600000)))
+predict(model9, data.frame(price = c(400000, 600000)), type = "response")
