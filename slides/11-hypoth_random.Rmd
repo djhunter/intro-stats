@@ -145,6 +145,8 @@ The smaller the p-value, the more evidence you have against $H_0$ in favor of $H
 
 ## Dolphin study
 
+ In this study, researchers recruited 30 subjects aged 18-65 with a clinical diagnosis of mild to moderate depression. Subjects were required to discontinue use of any antidepressant drugs or psychotherapy for four weeks prior to the experiment, and throughout the experiment. These 30 subjects went to an island off the coast of Honduras, where they were randomly assigned to one of two treatment groups. Both groups engaged in the same amount of swimming and snorkeling each day, but one group (the animal care program) did so in the presence of bottlenose dolphins and the other group (outdoor nature program) did not. At the end of two weeks, each subjects' level of depression was evaluated, as it had been at the beginning of the study, and it was determined whether they showed substantial improvement (reducing their level of depression) by the end of the study (Antonioli and Reveley, 2005). We we want to determine whether the group that swam with dolphins was significantly more likely to show substantial improvement than the group that swam without dolphins. 
+ 
 https://www.rossmanchance.com/applets/2021/chisqshuffle/ChiSqShuffle.htm?dolphins=1
 
 
