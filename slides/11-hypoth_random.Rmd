@@ -1,0 +1,163 @@
+---
+title: "Chapter 11: Hypothesis Testing with Randomization"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(tidyverse)
+library(openintro)
+library(kableExtra)
+theme_set(theme_bw())
+```
+
+# Overview
+
+- 11 Hypothesis testing with randomization
+    - 11.1 Sex discrimination case study
+        - 11.1.1 Observed data
+        - 11.1.2 Variability of the statistic
+        - 11.1.3 Observed statistic vs. null statistics
+    - 11.2 Opportunity cost case study
+        - 11.2.1 Observed data
+        - 11.2.2 Variability of the statistic
+        - 11.2.3 Observed statistic vs. null statistics
+    - 11.3 Hypothesis testing
+        - 11.3.1 The US court system
+        - 11.3.2 p-value and statistical significance
+
+
+# 11.1 Sex discrimination case study
+
+**Research Question:** Are female employees discriminated against in promotion decisions made by male managers?
+
+- 48 male supervisors were given a simulated personnel file
+- Response variable: should the employee be promoted?
+- Explanatory variable: sex of employee (randomly assigned)
+
+## 11.1.1 Observed data
+
+```{r}
+glimpse(sex_discrimination)
+```
+
+```{r}
+table(sex_discrimination)
+```
+
+## Group Discussion
+
+```{r}
+table(sex_discrimination)
+```
+
+```{r}
+prop.table(table(sex_discrimination), margin = 1)
+```
+
+1. Describe the association between the variables `sex` and `decision`.
+
+2. Do you think these proportions indicate evidence of discrimination, or could they just have occurred by random chance? How are you deciding?
+
+## Statistics, Parameters, Hypotheses
+
+Statistics:
+
+- $\hat{p}_F \approx 0.58333$ is the proportion of females that were promoted.
+- $\hat{p}_M = 0.875$ is the proportion of males that were promoted.
+- $\hat{p}_M - \hat{p}_F \approx 0.292$ is the difference in proportions.
+
+. . . 
+
+Parameters: 
+
+- $\pi_F$ is the actual probability that a female will be promoted.
+- $\pi_M$ is the actual probability that a male will be promoted.
+- $\pi_M - \pi_F$ is the difference in proportions.
+
+. . . 
+
+Hypotheses:
+
+- $H_0: \pi_M - \pi_F = 0$ (*Null Hypotheses:* no discrimination)
+- $H_A: \pi_M - \pi_F > 0$ (*Alternative Hypothesis:* discrimination against women)
+
+## 11.1.2 Variability of the statistic
+
+- Observed Statistic: $\hat{p}_M - \hat{p}_F \approx 0.292$
+- $H_0: \pi_M - \pi_F = 0$ (*Null Hypotheses:* no discrimination)
+- $H_A: \pi_M - \pi_F > 0$ (*Alternative Hypothesis:* discrimination against women)
+
+The observed statistic is in the direction of the alternative hypothesis, but there are two possibilities:
+
+- $H_A$ is true, we have evidence of discrimination.
+- $H_0$ is true, and we are just observing random variation.
+
+## Modeling Random Variation
+
+```{r}
+summary(sex_discrimination)
+```
+
+- Make 35 "promoted" cards (red) and 13 "not promoted" cards (blue)
+- Randomly assign 24 cards male and 24 female
+- Compute the difference in proportions several times.
+- Compare to the observed difference in proportions.
+
+## {data-background-image="https://openintro-ims.netlify.app/images/sex-rand-03-shuffle-1-sort.png" data-background-size="contain"}
+
+## 11.1.3 Observed statistic vs. null statistics
+
+- The *observed statistic* is 0.292.
+- We repeat the card shuffling 100 times and compute 100 *null statistics*.
+    - The null statistic simulates what would happen if $H_0$ were true.
+- If we rarely see null statistics as extreme as the observed statistic, we have evidence that $H_0$ is false.
+
+## {data-background-image="https://openintro-ims.netlify.app/11-foundations-randomization_files/figure-html/sex-rand-dot-plot-1.png" data-background-size="contain"}
+
+## p-value
+
+The simulation-based **p-value** is the proportion of simulated statistics that were as extreme or more extreme than the observed statistic.
+
+- We simulated 100 statistics.
+- Only 2 of them were more extreme that 0.292.
+- p-value $= 2/100 = 0.02$
+
+The smaller the p-value, the more evidence you have against $H_0$ in favor of $H_A$.
+
+## {data-background-image="" data-background-size="contain"}
+
+## Dolphin study
+
+https://www.rossmanchance.com/applets/2021/chisqshuffle/ChiSqShuffle.htm?dolphins=1
+
+
+# 11.2 Opportunity cost case study
+
+## 11.2.1 Observed data
+
+## 11.2.2 Variability of the statistic
+
+## 11.2.3 Observed statistic vs. null statistics
+
+# 11.3 Hypothesis testing
+
+## 11.3.1 The US court system 
+
+## 11.3.2 p-value and statistical significance
