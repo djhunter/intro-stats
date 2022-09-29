@@ -1,0 +1,69 @@
+---
+title: "Chapter 12: Confidence Intervals with Bootstrapping"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(tidyverse)
+library(openintro)
+library(kableExtra)
+library(qrencoder)
+theme_set(theme_bw())
+```
+
+# Overview
+
+- 12 Confidence intervals with bootstrapping
+    - 12.1 Medical consultant case study
+        - 12.1.1 Observed data
+        - 12.1.2 Variability of the statistic
+    - 12.2 Tappers and listeners case study
+        - 12.2.1 Observed data
+        - 12.2.2 Variability of the statistic
+    - 12.3 Confidence intervals
+        - 12.3.1 Plausible range of values for the population parameter
+        - 12.3.2 Bootstrap confidence interval
+
+
+# 12 Confidence intervals with bootstrapping
+
+- Use for *estimating the value of an unknown parameter*.
+    - Get a range (i.e., interval) of plausible values.
+- Best used when data have been generated through *random sampling*.
+    - The range corresponds to the variability of the data in a systematic way.
+    - As we repeatedly sample from a population, what range of sample statistics should we expect to see?
+
+# 12.1 Medical consultant case study
+
+**Research Question:** Do medical consultants lead patients to better outcomes?
+
+## 12.1.1 Observed data
+
+- The average complication rate for liver donor surgeries is about 10%.
+- The clients of a particular consultant had only 3 complications in 62 surgeries.
+
+## 12.1.2 Variability of the statistic
+# 12.2 Tappers and listeners case study
+## 12.2.1 Observed data
+## 12.2.2 Variability of the statistic
+# 12.3 Confidence intervals
+## 12.3.1 Plausible range of values for the population parameter
+## 12.3.2 Bootstrap confidence interval
+
