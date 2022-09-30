@@ -58,12 +58,118 @@ theme_set(theme_bw())
 
 - The average complication rate for liver donor surgeries is about 10%.
 - The clients of a particular consultant had only 3 complications in 62 surgeries.
-
+    - $\hat{p} = 3/62 \approx 0.048$
+    
 ## 12.1.2 Variability of the statistic
+
+- We want to know the actual probability of a complication for the clients of this consultant:
+    - parameter: $\pi$
+- Our best estimate of $\pi$ is the *statistic* $\hat{p} \approx 0.048$.
+    - But this is just one *sample*. How would our estimate differ if we took another sample?
+- **Bootstrapping:** We can approximate the variability in different samples by taking samples from a population that looks like an "infinite" version of the original sample data.
+
+## {data-background-image="https://openintro-ims.netlify.app/images/boot1prop1.png" data-background-size="contain"}
+
+## {data-background-image="https://openintro-ims.netlify.app/images/boot1prop2.png" data-background-size="contain"}
+
+## {data-background-image="https://openintro-ims.netlify.app/images/boot1prop3.png" data-background-size="contain"}
+
+## Sampling with replacement
+
+- In practice, we sample from the original data *with replacement*.
+- This means that when we select an observation, we add it to the "resample" and then put it back in the original data (we replace it).
+- We *resample* multiple times and obtain many different resampled proportions.
+- A dot plot of these *bootstrapped* proportions approximates a distribution that shows how the statistic varies.
+
+## {data-background-image="https://openintro-ims.netlify.app/images/boot1prop4.png" data-background-size="contain"}
+
+## {data-background-image="https://openintro-ims.netlify.app/images/boot1propboth.png" data-background-size="contain"}
+
+## {data-background-image="https://openintro-ims.netlify.app/12-foundations-bootstrapping_files/figure-html/MedConsBSSim-1.png" data-background-size="contain"}
+
+## Bootstrap 95% confidence interval
+
+- 95% of the bootstrapped proportions are between 0 and 0.113.
+- If you repeated this study many times, 95% of the observed proportions would fall between 0 and 0.113.
+    - Interpretation: We are "95% confident" that the actual proportion is between 0 and 0.113.
+    - Based on the consultant's data, it is *plausible* that the actual proportion of complications with her patients is 0.10. This number is within the range of "typical" values: from 0 to 0.113.
+    
+# Reeses Pieces
+
+How many orange Reeses Pieces are in a typical bag of 40?
+
+## Observed Data
+
+- Consider a bag of 40 Reeses Pieces as a random sample from the population of all Reeses Pieces.
+- You obtain a bag of 40 Reeses Pieces and discover that 20 are orange. ($\hat{p} = 0.5$).
+
+## Variability of the statistic
+
+- Your bag of 40 Reeses Pieces had 20 that were orange. ($\hat{p} = 0.5$)
+- Consider an infinite candy machine containing Reeses Pieces, 50% of which are orange 
+- We can construct a *bootstrap sample* by drawing 40 Reeses Pieces out of this machine.
+- Each bootstrap sample has a $\hat{p}_\text{boot}$. Keep track of these in a dotplot to see how the sample proportion varies.
+
+## Reeses Pieces Applet
+
+https://www.rossmanchance.com/applets/2021/oneprop/OneProp.htm?candy=1
+
+```{r, echo = FALSE, fig.height=4}
+image(qrencode_raster("https://www.rossmanchance.com/applets/2021/oneprop/OneProp.htm?candy=1"), 
+      asp=1, col=c("white", "black"), axes=FALSE, 
+      xlab="", ylab="")
+```
+
+## Group Activity
+
+1. Set the *Probability of orange* to 0.5, the *Number of candies* to 40, the *Number of samples* to 1, and choose the *Proportion of orange* statistic. 
+
+2. Click *Draw Samples*. How many orange did you get? What is $\hat{p}_\text{boot}$? Does it equal $\hat{p}$? Is it close?
+
+3. Now change *Number of samples* to 99 and click *Draw Samples* again. When it finishes, make sure *Total Samples* is 100.
+
+4. The dotplot that appears should have 100 dots. Use this dotplot to estimate a bootstrap 90% confidence interval for the proportion of orange Reeses Pieces.
+
+5. Now repeat steps 1-4, but suppose that your bag of candy had 400 Reeses Pieces, 200 of which were orange. How did the confidence interval change? 
+
 # 12.2 Tappers and listeners case study
+
 ## 12.2.1 Observed data
+
+In a sample of 120 listeners, only 3 were able to correctly guess the tune that was being tapped. ($\hat{p} = 0.025$)
+
 ## 12.2.2 Variability of the statistic
+
+Simulation:
+
+- Get a bag of 120 marbles, 3 of which are red, and the rest white.
+- Draw from the bag 120 times, *replacing* the marble each time, and keep track of the number of red.
+- Compute $\hat{p}_\text{boot}$
+- Repeat 10000 times
+
+$$
+0.0417 \quad 0.025 \quad 0.025 \quad 0.0083 \quad 0.05 \quad 0.0333 \quad 0.025 \quad 0 \quad 0.0083 \quad 0
+$$
+{data-background-image="https://openintro-ims.netlify.app/12-foundations-bootstrapping_files/figure-html/tappers-bs-sim-1.png" data-background-size="contain"}
+
 # 12.3 Confidence intervals
+
 ## 12.3.1 Plausible range of values for the population parameter
+
+- Given a sample of data, we can construct a *confidence interval* for $\pi$.
+    - The center of this interval will be at $\hat{p}$.
+- This confidence interval is a range of *plausible values* for the population parameter.
+    - Based on our data, it is *plausible* that the unknown parameter lies somewhere in our confidence interval.
+
+
 ## 12.3.2 Bootstrap confidence interval
 
+>- The 95% bootstrap confidence interval for the parameter $\hat{p}$ can be obtained directly using the ordered $\hat{p}_\text{boot}$ values.
+
+>- Consider the sorted $\hat{p}_\text{boot}$ values. Call the 2.5% bootstrapped proportion value "lower," and call the 97.5% bootstrapped proportion value "upper."
+
+>- The 95% confidence interval is given by: (lower, upper)
+
+>- We can use different *confidence levels* other than 95%. The larger the confidence level, the narrower the interval.
+
+>- Larger samples also give narrower confidence intervals, all else being equal.
