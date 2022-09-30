@@ -171,6 +171,6 @@ $$
 
 >- The 95% confidence interval is given by: (lower, upper)
 
->- We can use different *confidence levels* other than 95%. The larger the confidence level, the narrower the interval.
+>- We can use different *confidence levels* other than 95%. The larger the confidence level, the wider the interval.
 
->- Larger samples also give narrower confidence intervals, all else being equal.
+>- Larger samples give narrower confidence intervals, all else being equal.
