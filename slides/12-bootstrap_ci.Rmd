@@ -166,11 +166,7 @@ $$
 ## 12.3.2 Bootstrap confidence interval
 
 >- The 95% bootstrap confidence interval for the parameter $\hat{p}$ can be obtained directly using the ordered $\hat{p}_\text{boot}$ values.
-
 >- Consider the sorted $\hat{p}_\text{boot}$ values. Call the 2.5% bootstrapped proportion value "lower," and call the 97.5% bootstrapped proportion value "upper."
-
 >- The 95% confidence interval is given by: (lower, upper)
-
 >- We can use different *confidence levels* other than 95%. The larger the confidence level, the wider the interval.
-
 >- Larger samples give narrower confidence intervals, all else being equal.
