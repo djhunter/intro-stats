@@ -1,0 +1,196 @@
+---
+title: "Chapter 13: Inference with Mathematical Models"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(tidyverse)
+library(openintro)
+library(kableExtra)
+library(qrencoder)
+theme_set(theme_bw())
+```
+
+# Overview
+
+- 13 Inference with mathematical models
+- 13.1 Central Limit Theorem
+- 13.2 Normal Distribution
+    - 13.2.1 Normal distribution model
+    - 13.2.2 Standardizing with Z scores
+    - 13.2.3 Normal probability calculations
+    - 13.2.4 Normal probability examples
+- 13.3 Quantifying the variability of a statistic
+    - 13.3.1 68-95-99.7 rule
+    - 13.3.2 Standard error
+    - 13.3.3 Margin of error
+
+# 13.1 Central Limit Theorem
+
+## Sampling Distributions
+
+- A *sampling distribution* is the distribution of all possible values of a sample statistic from samples of a given sample size from a given population. 
+- Think about the sampling distribution as describing as how sample statistics vary from one study to another. 
+- In Chapters 11 and 12, we simulated sampling distributions using card shuffling and bootstrapping.
+    - Hypothesis Tests
+    - Confidence Intervals
+
+## {data-background-image="https://openintro-ims.netlify.app/13-foundations-mathematical_files/figure-html/FourCaseStudies-1.png" data-background-size="contain"}
+
+## Theory: Normal distribution
+
+For large sample sizes, our simulated dotplots tend to look like:
+
+```{r, echo=FALSE, fig.height=3}
+library(ggplot2)
+ggplot(data.frame(x=c(-4,4)), aes(x=x)) + 
+  stat_function(fun=dnorm, color="blueviolet", size=1.5) + 
+  theme(axis.text.x = element_blank())
+```
+
+$$
+f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}, \mbox{ mean} = \mu, \mbox{ SD} = \sigma
+$$
+
+
+## Central Limit Theorem for proportions
+
+**Theorem.** Suppose that $\hat{p}$ is a sample proportion calculated from a sample with *at least 10 successes and 10 failures* (i.e., at least 10 observations of each level). Then the sampling distribution of $\hat{p}$ is approximately normal.
+
+## One-Proportion Applet
+
+https://www.rossmanchance.com/applets/2021/oneprop/OneProp.htm
+
+```{r, echo = FALSE, fig.height=4}
+image(qrencode_raster("https://www.rossmanchance.com/applets/2021/oneprop/OneProp.htm"), 
+      asp=1, col=c("white", "black"), axes=FALSE, 
+      xlab="", ylab="")
+```
+
+## Group Activity
+
+1. Open the [One Proportion Applet](https://www.rossmanchance.com/applets/2021/oneprop/OneProp.htm), set the *probability of heads/success* to 0.6, the *Sample size* to 100, and leave *Number of samples* at 1. *Uncheck Show animation*.
+
+2. Before clicking *Draw Samples*, predict the most likely number of successes and failures in 100 tries, if the probability of success is 0.6.
+
+3. Click the radio button for *Proportion of successes* and click *Draw Samples*. How close was the simulated sample from your prediction in 2?
+
+4. Now set *Number of samples* to 10000 and click *Draw Samples*. Check the *Summary Statistics* box and record the Mean and Standard Deviation (SD). 
+
+5. Does the Central Limit Theorem apply? (i.e., are there enough expected successes and failures?) Check the *Normal Approximation* box and observe how well it fits.
+
+6. Now *Reset* the applet and repeat 1-5 for a success probability of 0.2 and a sample size of 10? How is your answer to 5 different?
+
+
+# 13.2 Normal Distribution
+
+## 13.2.1 Normal distribution model
+
+- Given *parameters* $\mu$ and $\sigma$, the **Normal Distribution** with mean $\mu$ and standard deviation $\sigma$ is written $N(\mu, \sigma)$.
+    - For example, the first distribution in the applet was $N(\mu = 0.6, \sigma = 0.049)$.
+- $N(\mu, \sigma)$ is centered at the mean $\mu$.
+- Most (i.e., about 95%) of $N(\mu, \sigma)$ lies in the interval $(\mu - 2\sigma, \mu + 2\sigma)$.
+- See the [One Proportion Applet](https://www.rossmanchance.com/applets/2021/oneprop/OneProp.htm) again.
+
+## 13.2.2 Standardizing with Z scores
+
+- If an observation $x$ comes from $N(\mu, \sigma)$, it's *Z-Score* is $Z = \frac{x-\mu}{\sigma}$.
+- The Z-score is the number of standard deviations $x$ is above/below the mean.
+    - Z-scores of $\pm 2$ are unusual.
+    - Z-scores of $\pm 3$ are very unusual.
+- Z-scores follow the *Standard Normal Distribution:* $N(\mu = 0, \sigma = 1)$.
+
+## 13.2.3 Normal probability calculations
+
+- We can compare observations from different normal distributions by computing Z-scores.
+
+$$
+Z = \frac{x-\mu}{\sigma}
+$$
+
+## Group Exercise
+
+SAT scores follow a nearly normal distribution with a mean of 1500 points and a standard deviation of 300 points. ACT scores also follow a nearly normal distribution with mean of 21 points and a standard deviation of 5 points. Suppose Nel scored 1800 points on their SAT and Sian scored 24 points on their ACT. 
+
+1. Compute a Z-score for Nel.
+2. Compute a Z-score for Sian.
+3. Who performed better?
+
+## {data-background-image="https://openintro-ims.netlify.app/13-foundations-mathematical_files/figure-html/satActNormals-1.png" data-background-size="contain"}
+
+## 13.2.4 Normal probability examples
+
+Nel's percentile:
+
+```{r}
+pnorm(1)
+```
+
+Sian's percentile:
+
+```{r}
+pnorm(0.6)
+```
+
+# 13.3 Quantifying the variability of a statistic
+
+## 13.3.1 The 68-95-99.7 rule
+
+- About 68% of $N(\mu,\sigma)$ lies within one standard deviation of the mean.
+- About 95% of $N(\mu,\sigma)$ lies within two standard deviations of the mean.
+- About 99.7% of $N(\mu,\sigma)$ lies within three standard deviations of the mean.
+
+```{r}
+pnorm(c(1,2,3)) - pnorm(c(-1,-2,-3))
+```
+
+## {data-background-image="https://openintro-ims.netlify.app/13-foundations-mathematical_files/figure-html/er6895997-1.png" data-background-size="contain"}
+
+
+## 13.3.2 Standard error
+
+- The *Standard Error* ($SE$) of a statistic is the standard deviation of its sampling distribution.
+    - For example, in our first applet activity, $SE_{\hat{p}} = 0.049$.
+- Quick 95% confidence interval: $(\hat{p} - 1.96 \times SE_{\hat{p}}, \hat{p} + 1.96 \times SE_{\hat{p}})$
+- 1.96 is the Z-score with an upper tail area of 2.5%. So it is the correct *multiplier* for a 95% confidence interval.
+- Multipliers for 90%, 95%, 99% CI's:
+
+```{r}
+qnorm(c(0.05, 0.025, 0.005), lower.tail = FALSE)
+```
+
+## 13.3.3 Margin of error
+
+To make a quick confidence interval for $\hat{p}$,
+
+- Choose the multiplier $z^*$ (use $z^* = 1.96$ for a 95% CI).
+- Confidence interval: $(\hat{p} - z^* \times SE_{\hat{p}}, \hat{p} + z^* \times SE_{\hat{p}})$
+    - We can also write the interval as $\hat{p} \pm z^* \times SE_{\hat{p}}$.
+    - The quantity $z^*\times SE_{\hat{p}}$ is called the *margin of error*.
+
+## Group Exercise
+
+A 2013 poll reported that "45% of U.S. adults report that they live with one or more chronic conditions." The study reported a standard error of about 1.2%.
+
+1. Compute a quick 95% confidence interval for the true percentage of U.S. adults who suffer from chronic illness. Write the confidence interval in the form $(L, R)$.
+
+2. Write the confidence interval in the form: $\text{estimate} \pm \text{margin of error}$
+
+3. Write a sentence interpreting the confidence interval in the context of the study.
