@@ -1,0 +1,237 @@
+---
+title: "Chapter 14: Decision Errors"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(tidyverse)
+library(openintro)
+library(kableExtra)
+library(qrencoder)
+theme_set(theme_bw())
+```
+
+# Overview
+
+- 14 Decision Errors
+    - 14.1 Significance level
+    - 14.2 Two-sided hypotheses
+    - 14.3 Controlling the Type 1 Error rate
+    - 14.4 Power
+
+# 14.1 Significance level
+
+## Hypothesis Tests
+
+> **Research Question.** Does the explanatory variable (or variables) have an effect on the response variable?
+
+We are trying to decide between two alternatives:
+
+- $H_0:$ No association.
+- $H_A:$ Some association.
+
+## Example: Discrimination Study
+
+Statistics:
+
+- $\hat{p}_F \approx 0.583$ is the proportion of females that were promoted.
+- $\hat{p}_M = 0.875$ is the proportion of males that were promoted.
+- $\hat{p}_M - \hat{p}_F \approx 0.292$ is the difference in proportions.
+
+. . . 
+
+Parameters: 
+
+- $\pi_F$ is the actual probability that a female will be promoted.
+- $\pi_M$ is the actual probability that a male will be promoted.
+- $\pi_M - \pi_F$ is the difference in proportions.
+
+. . . 
+
+Hypotheses:
+
+- $H_0: \pi_M - \pi_F = 0$ (*Null Hypotheses:* no discrimination)
+- $H_A: \pi_M - \pi_F > 0$ (*Alternative Hypothesis:* discrimination against women)
+
+## P-Values
+
+For a *hypothesis test* of $H_0$ vs. $H_A$, the *p-value* is the probability that you would obtain a sample statistic as or more extreme as the one you observed, assuming that $H_0$ is true.
+
+- Smaller p-values are more evidence against $H_0$ in favor of $H_A$. 
+- Larger p-values indicate a lack of evidence against $H_0$.
+
+## Things that are wrong
+
+>- "The p-value is the probability that the null hypothesis is true."
+>    - No, the p-value is an indication of evidence *against* the null hypothesis.
+>- "The p-value is the probability that your result is due to random chance."
+>    - No, your result is always the result of random chance (i.e., sampling). The question is whether your result indicates significant evidence against $H_0$, taking random chance into account.
+
+. . .
+
+**Correct Interpretation:** The *p-value* is the probability that you would obtain a sample statistic as or more extreme as the one you observed, assuming that $H_0$ is true.
+
+## Significance Level
+
+Sometimes we want a yes/no answer: Decide between $H_0$ and $H_A$.
+
+- The *significance level* $\alpha$ provides the cutoff for the p-value which will lead to a decision of "reject the null hypothesis."
+    - If the p-value is less than $\alpha$, we reject $H_0$.
+    - If the p-value is greater than $\alpha$, we do not reject $H_0$.
+    
+. . .
+
+In many disciplines, $\alpha = 0.05$ is standard. But this choice is arbitrary and debatable.
+
+## Type I and Type II Errors
+
+If we make a decision based on a significance level, there are two ways we could be wrong:
+
+- Type I Error: We rejected $H_0$ when we should not have rejected it.
+    - *False Alarm*
+- Type II Error: We failed to reject $H_0$ when we should have rejected it.
+    - *Missed Opportunity*
+
+## Type I Error
+
+- Think back to the discrimination study.
+- We concluded that hiring managers were discriminating against women.
+- Suppose we were wrong: i.e., we just put grumpy hiring managers into the treatment group.
+- We would have rejected a true null hypothesis.
+    - This is called a *Type I Error*.
+    - A Type I Error is a "false alarm". We falsely concluded discrimination where there was none.
+    
+## Type II Error
+
+- Now suppose, in the discrimination study, that we ended up getting a large p-value, so we didn't get significant results.
+- Suppose also, that there really was discrimination, we just didn't detect it.
+- We failed to conclude that hiring managers were discriminating.
+- We would have failed to reject a false null hypothesis.
+    - This is called a *Type II Error*.
+    - A Type II Error is a "missed opportunity". Our study would have missed the chance to find evidence of discrimination that was really there.
+    
+## Type I vs. Type II errors
+
+In medical tests: 
+
+- A type I error is a *false positive*. (They conclude someone has a disease when they don’t.)
+- A type II error is a *false negative*. (They conclude someone does not have a disease then they actually do.)
+
+These errors can have very different consequences.
+
+## Errors are not Mistakes
+
+- The term "error" is used here to describe an unlucky sample.
+- Sometimes, when we do everything right, we will just draw an unlucky sample that leads to the wrong conclusion.
+- Sampling errors are not mistakes.
+- This is different from sampling bias, which is a mistake.
+
+    
+## Error types: Summary
+
+A **Type I error** (false alarm) occurs when a true null hypothesis is rejected. A **Type II error** (missed opportunity) occurs when a false null hypothesis is not rejected.
+
++-----------------------------------+-------------------------------+--------------------------------------+
+|                                   |  **Null hypothesis is true**  |  **Null hypothesis is false**        |
++===================================+===============================+======================================+
+| **Reject hull hypothesis**        | Type I error (false alarm)    | Correct decision                     | 
++-----------------------------------+-------------------------------+--------------------------------------+
+| **Do not reject null hypothesis** |  Correct decision             | Type II error (missed opportunity)   | 
++-----------------------------------+-------------------------------+--------------------------------------+
+
+## Example: Blood Thinners
+
+**Study:** Patients who underwent CPR for a heart attack and were subsequently admitted to a hospital were randomly assigned to either receive a blood thinner (treatment group) or not receive a blood thinner (control group). The outcome variable of interest was whether the patient survived for at least 24 hours.
+
+- $H_0:$ Blood thinners do not have an overall survival effect, i.e., the survival proportions are the same in each group. 
+    - $H_0: \pi_T - \pi_C = 0$
+- $H_A:$ Blood thinners increase the probability of survival. 
+    - $H_A: \pi_T - \pi_C > 0$
+
+## Group Discussion
+
+1. In the context of the Blood Thinner study, what is a Type I error?
+
+2. In the context of the Blood Thinner study, what is a Type II error?
+
+3. Suppose your job was to make a recommendation as to whether a hospital should administer blood thinners to heart attack victims. Which type of error would you rather make?
+
+# 14.2 Two-sided hypotheses
+
+## What if blood thinners are actually bad?
+
+In the the blood thinner study, we have actually ignored a possibility: What if blood thinners actually harm heart attack victims?
+
+. . .
+
+Our alternative assumed that blood thinners could only help:
+
+- $H_A$ : Blood thinners have a positive impact on survival: $H_A: \pi_T - \pi_C > 0$
+
+A *two-sided* alternative hypothesis admits the possibility that blood thinners could actually harm the patient.
+
+- $H_A$ : Blood thinners have an impact on survival, either positive or negative, but not zero: $H_A: \pi_T - \pi_C \neq 0$
+
+## {data-background-image="https://openintro-ims.netlify.app/14-foundations-errors_files/figure-html/CPR-study-right-tail-1.png" data-background-size="contain"}
+
+## {data-background-image="https://openintro-ims.netlify.app/14-foundations-errors_files/figure-html/CPR-study-p-value-1.png" data-background-size="contain"}
+
+## Two-sided alternative hypotheses 
+
+- A one-sided alternative hypothesis makes certain assumptions.
+- Unless you are absolutely sure that one possiblity is impossible, you should use a two-sided alternative.
+- The two-sided alternative hypothesis will have a p-value that is twice as large as a one-sided alternative.
+- So it is more conservative to use a two-sided alternative.
+
+# 14.3 Controlling the Type I Error rate
+
+- The probability of a Type I error is $\alpha$.
+- So choose a value of $\alpha$ according to how bad a type I error would be.
+
+# 14.4 Power
+
+> One trade-off for selecting a lower significance level (probability of Type I error if null hypothesis is true) is that the probability of a Type II error will increase.
+
+The probability of rejecting a false null hypothesis is called the **power** of the test. Tests with higher values of power are preferred over tests with lower values of power. Power can also be thought of as one minus the probability of a Type II error.
+
+## Power Applet
+
+https://www.rossmanchance.com/applets/2021/power/power.html
+
+```{r, echo = FALSE, fig.height=4}
+image(qrencode_raster("https://www.rossmanchance.com/applets/2021/power/power.html"), 
+      asp=1, col=c("white", "black"), axes=FALSE, 
+      xlab="", ylab="")
+```
+
+## Group Activity
+
+Consider testing $H_0: \pi = 0.25$ vs. $H_A: \pi > 0.25$. You collect a sample and observe a value of the statistic $\hat{p}$.
+
+1. Open the [Power Simulation Applet](http://www.rossmanchance.com/applets/power.html). Use a sample size of 50, a hypothesized proportion of 0.25, and alternative proportion of 0.33. Choose *proportion of successes* and a *Level of significance* of $\alpha = 0.05$. Draw 5000 samples and click *Count*. 
+
+
+
+2. Check *Show alternative*. Assuming that the true proportion is 0.33, what is the probability of failing to reject $H_0$?
+
+3. What is the probability of a Type II error? What is the power of this test? 
+
+4. Name at least one thing the researchers could do to improve the power of this test. Be ready to share.
+
