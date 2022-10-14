@@ -55,6 +55,7 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 15. [Logistic Regression in R](slides/12b-logit_reg_R.html), 10/3
 16. [Review for Test #2](slides/12c-test2review.html), 10/5
 17. [Inference with Mathematical Models](slides/13-math_models.html), 10/12
+18. [Decision Errors](slides/14-decision_errors.html), 10/14
 
 # Other Resources
 

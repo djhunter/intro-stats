@@ -59,16 +59,16 @@ Statistics:
 
 Parameters: 
 
-- $\pi_F$ is the actual probability that a female will be promoted.
-- $\pi_M$ is the actual probability that a male will be promoted.
-- $\pi_M - \pi_F$ is the difference in proportions.
+- $p_F$ is the actual probability that a female will be promoted.
+- $p_M$ is the actual probability that a male will be promoted.
+- $p_M - p_F$ is the difference in proportions.
 
 . . . 
 
 Hypotheses:
 
-- $H_0: \pi_M - \pi_F = 0$ (*Null Hypotheses:* no discrimination)
-- $H_A: \pi_M - \pi_F > 0$ (*Alternative Hypothesis:* discrimination against women)
+- $H_0: p_M - p_F = 0$ (*Null Hypotheses:* no discrimination)
+- $H_A: p_M - p_F > 0$ (*Alternative Hypothesis:* discrimination against women)
 
 ## P-Values
 
@@ -77,16 +77,13 @@ For a *hypothesis test* of $H_0$ vs. $H_A$, the *p-value* is the probability tha
 - Smaller p-values are more evidence against $H_0$ in favor of $H_A$. 
 - Larger p-values indicate a lack of evidence against $H_0$.
 
-## Things that are wrong
+## Use care when describing p-value
 
->- "The p-value is the probability that the null hypothesis is true."
->    - No, the p-value is an indication of evidence *against* the null hypothesis.
->- "The p-value is the probability that your result is due to random chance."
->    - No, your result is always the result of random chance (i.e., sampling). The question is whether your result indicates significant evidence against $H_0$, taking random chance into account.
-
-. . .
-
-**Correct Interpretation:** The *p-value* is the probability that you would obtain a sample statistic as or more extreme as the one you observed, assuming that $H_0$ is true.
+>- *Common wrong interpretation:* "The p-value is the probability that the null hypothesis is true."
+>    - No, the p-value is a measure of the *evidence* against the null hypothesis in favor of the alternative. Smaller p-values give more evidence.
+>- *Common imprecise interpretation:* "The p-value is the probability that your result is due to random chance."
+>    - No, your result is always the product of random chance (i.e., sampling). The question is whether your result indicates significant evidence against $H_0$, taking random chance into account.
+>    - **Correct Interpretation:** The p-value is the probability, *in a certain hypothetical situation* ($H_0$), that you would obtain results that are as or more extreme than the results you obtained.
 
 ## Significance Level
 
@@ -161,9 +158,9 @@ A **Type I error** (false alarm) occurs when a true null hypothesis is rejected.
 **Study:** Patients who underwent CPR for a heart attack and were subsequently admitted to a hospital were randomly assigned to either receive a blood thinner (treatment group) or not receive a blood thinner (control group). The outcome variable of interest was whether the patient survived for at least 24 hours.
 
 - $H_0:$ Blood thinners do not have an overall survival effect, i.e., the survival proportions are the same in each group. 
-    - $H_0: \pi_T - \pi_C = 0$
+    - $H_0: p_T - p_C = 0$
 - $H_A:$ Blood thinners increase the probability of survival. 
-    - $H_A: \pi_T - \pi_C > 0$
+    - $H_A: p_T - p_C > 0$
 
 ## Group Discussion
 
@@ -183,11 +180,11 @@ In the the blood thinner study, we have actually ignored a possibility: What if 
 
 Our alternative assumed that blood thinners could only help:
 
-- $H_A$ : Blood thinners have a positive impact on survival: $H_A: \pi_T - \pi_C > 0$
+- $H_A$ : Blood thinners have a positive impact on survival: $H_A: p_T - p_C > 0$
 
 A *two-sided* alternative hypothesis admits the possibility that blood thinners could actually harm the patient.
 
-- $H_A$ : Blood thinners have an impact on survival, either positive or negative, but not zero: $H_A: \pi_T - \pi_C \neq 0$
+- $H_A$ : Blood thinners have an impact on survival, either positive or negative, but not zero: $H_A: p_T - p_C \neq 0$
 
 ## {data-background-image="https://openintro-ims.netlify.app/14-foundations-errors_files/figure-html/CPR-study-right-tail-1.png" data-background-size="contain"}
 
@@ -197,8 +194,8 @@ A *two-sided* alternative hypothesis admits the possibility that blood thinners 
 
 - A one-sided alternative hypothesis makes certain assumptions.
 - Unless you are absolutely sure that one possiblity is impossible, you should use a two-sided alternative.
-- The two-sided alternative hypothesis will have a p-value that is twice as large as a one-sided alternative.
-- So it is more conservative to use a two-sided alternative.
+- The two-sided alternative hypothesis will have a p-value that is *twice as large* as a one-sided alternative.
+- So it is more conservative to use a two-sided alternative. (A Type I error is less likely.)
 
 # 14.3 Controlling the Type I Error rate
 
@@ -211,6 +208,15 @@ A *two-sided* alternative hypothesis admits the possibility that blood thinners 
 
 The probability of rejecting a false null hypothesis is called the **power** of the test. Tests with higher values of power are preferred over tests with lower values of power. Power can also be thought of as one minus the probability of a Type II error.
 
+## Example: Multiple Choice Tests
+
+Can we tell if a student is guessing randomly on a multiple choice test with 30 questions, where each question has four options?
+
+- *Null Hypothesis:* The student is guessing randomly.
+    - $H_0: p = 0.25$
+- *Alternative Hypothesis:* The student is performing better than just guessing randomly.
+    - $H_A: p > 0.25$.
+    
 ## Power Applet
 
 https://www.rossmanchance.com/applets/2021/power/power.html
@@ -223,15 +229,35 @@ image(qrencode_raster("https://www.rossmanchance.com/applets/2021/power/power.ht
 
 ## Group Activity
 
-Consider testing $H_0: \pi = 0.25$ vs. $H_A: \pi > 0.25$. You collect a sample and observe a value of the statistic $\hat{p}$.
+Consider testing $H_0: p = 0.25$ vs. $H_A: p > 0.25$ with a significance level of $\alpha = 0.05$. 
 
-1. Open the [Power Simulation Applet](http://www.rossmanchance.com/applets/power.html). Use a sample size of 50, a hypothesized proportion of 0.25, and alternative proportion of 0.33. Choose *proportion of successes* and a *Level of significance* of $\alpha = 0.05$. Draw 5000 samples and click *Count*. 
+1. Open the [Power Simulation Applet](http://www.rossmanchance.com/applets/power.html?hideExtras=1). Use a hypothesized probability of 0.25, an alternative probability of 0.33, a sample size of 30, and number of repetitions 10000. Draw Samples. Click the button for *number of successes*.  Choose *Rejection region* and determine (by trial and error) the smallest number of successes that would result in a p-value less than 0.05, i.e., the smallest number of successes that would result in rejecting $H_0$. **Record** this number.
+
+## Group Activity, continued
+
+2. If a student gets 15 questions right on the exam, what do you conclude? If this student was really guessing randomly, what type of error was made (I or II, or no error)?
+
+3. If a student gets 11 questions right on the exam, what do you conclude? If this student was really *not* guessing randomly, what type of error was made (I or II, or no error)?
+
+## Group Activity, continued
+
+4. Now click *Show Alternative*. The applet is now showing what the number of successes would be for a student with an actual success probability of 0.33. In what proportion of these samples would you reject $H_0: p = 0.25$?
+
+5. If the student's success probability is actually 0.33, then what is the probability of a Type II error? What is the power of this test? **Record** your answers.
+
+## Power
+
+>- The *power* of a test is the probability that the test will correctly detect a false null hypothesis. In this situation, the power of this test is very low.
+>- For a student who is not guessing but who has a success probability of $p = 0.33$, our methods would probably not detect that the student is not just guessing.
+>- We can increase the power of a test in two ways:
+>    - Use a bigger sample size.
+>    - Use a bigger significance level $\alpha$.
+
+## Group Activity, continued.
+
+6. Repeat the power calculation (steps 1-5), but use a sample size of 100 instead of 30 (i.e., the multiple choice test now has 100 questions).
+
+7. Repeat the power calculation with a sample size of 100 but now with a significance level of $\alpha = 0.1$.
 
 
-
-2. Check *Show alternative*. Assuming that the true proportion is 0.33, what is the probability of failing to reject $H_0$?
-
-3. What is the probability of a Type II error? What is the power of this test? 
-
-4. Name at least one thing the researchers could do to improve the power of this test. Be ready to share.
 
