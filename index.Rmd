@@ -56,6 +56,7 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 16. [Review for Test #2](slides/12c-test2review.html), 10/5
 17. [Inference with Mathematical Models](slides/13-math_models.html), 10/12
 18. [Decision Errors](slides/14-decision_errors.html), 10/14
+19. [Simulating Sampling Distributions in R](slides/15-samp_dist_R.html), 10/17
 
 # Other Resources
 
