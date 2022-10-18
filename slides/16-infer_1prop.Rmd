@@ -1,0 +1,113 @@
+---
+title: "Chapter 16: Inference for a Single Proportion"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(tidyverse)
+library(openintro)
+library(kableExtra)
+theme_set(theme_bw())
+set.seed(1423)
+```
+
+# Overview
+
+- 16.1 Bootstrap test for a proportion
+    - 16.1.1 Observed data
+    - 16.1.2 Variability of the statistic
+    - 16.1.3 Observed statistic vs. null statistics
+- 16.2 Mathematical model for a proportion
+    - 16.2.1 Conditions
+    - 16.2.2 Confidence interval for a proportion
+    - 16.2.3 Variability of the sample proportion
+    - 16.2.4 Changing the confidence level
+    - 16.2.5 Hypothesis test for a proportion
+    - 16.2.6 Violating conditions
+
+# 16.1 Bootstrap test for a proportion
+
+Two types of bootstrap:
+
+>- **Data Bootstrap:** Observe $\hat{p}$ from a sample of size $n$. Resample the data *with replacement* to generate lots of samples of size $n$, and compute lots of bootstrapped sample proportions.
+>    - This is the same as drawing samples of size $n$ using a "spinner" with a success probability of $\hat{p}$.
+>    - Use the Data Bootstrap for *confidence intervals*.
+>- **Parametric Bootstrap:** Hypothesize $H_0: p = p_0$. Generate lots of samples of size $n$ from an infinite population with a proportion $p_0$ of successes, and compute lots of bootstrapped sample proportions.
+>    - This is the same as drawing samples of size $n$ using a "spinner" with a success probability of $p_0$.
+>    - Use the Parametric Bootstrap for *hypothesis tests*.
+
+## 16.1.1 Observed data
+
+- Suppose we observe a sample of 25 frogs and discover that 14 are infected with a fungal disease ($\hat{p} = 14/25 = 0.56$). 
+- We use the `rbinom` function to draw 10000 samples of size 25 using a "spinner" with success probability of 0.56.
+
+```{r}
+bootPhats <- rbinom(10000, 25, 0.56)/25
+quantile(bootPhats, c(0.025, c(0.975)))
+```
+
+We are 95% confident that the true proportion of frogs in this population who have this disease is between 0.36 and 0.76.
+
+## Data Bootstrapped Distribution
+
+95% of the bootstrapped proportions are between 0.36 and 0.76.
+
+```{r echo=FALSE, fig.align='center', fig.width=10, fig.height=3}
+data.frame(p_hat = bootPhats) %>%
+  ggplot(aes(x = p_hat)) +
+  geom_histogram(binwidth = 0.05) +
+  scale_x_continuous(breaks = c(0.36, 0.56, 0.76))
+```
+
+## Hypothesis test with a parametric bootstrap
+
+- Suppose we observe a sample of 25 frogs and discover that 14 are infected with a fungal disease ($\hat{p} = 14/25 = 0.56$). 
+- We test $H_0: p = 0.5$ versus $H_A: p>0.5$.
+
+```{r}
+bootPhats <- rbinom(10000, 25, 0.5)/25
+sum(bootPhats >= 0.56)/10000
+```
+
+The p-value of 0.34 tells us that we do not have evidence that the population proportion of frogs with this disease is greater than 0.5.
+
+## Parametric Bootstrapped Distribution
+
+0.34 of the bootstrapped proportions are as or more extreme as 0.56.
+
+```{r echo=FALSE, fig.align='center', fig.width=10, fig.height=3}
+data.frame(p_hat = bootPhats) %>%
+  ggplot(aes(x = p_hat)) +
+  geom_histogram(binwidth = 0.05) +
+  scale_x_continuous(breaks = c(0.25, 0.50, 0.56, 0.75))
+```
+
+## 16.1.2 Variability of the statistic
+## 16.1.3 Observed statistic vs. null statistics
+
+# 16.2 Mathematical model for a proportion
+## 16.2.1 Conditions
+## 16.2.2 Confidence interval for a proportion
+## 16.2.3 Variability of the sample proportion
+## 16.2.4 Changing the confidence level
+## 16.2.5 Hypothesis test for a proportion
+## 16.2.6 Violating conditions
+
+
