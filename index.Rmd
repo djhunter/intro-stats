@@ -58,6 +58,7 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 18. [Decision Errors](slides/14-decision_errors.html), 10/14
 19. [Simulating Sampling Distributions in R](slides/15-samp_dist_R.html), 10/17
 20. [Inference for a Single Proportion](slides/16-infer_1prop.html), 10/19
+21. [Inference for Comparing Two Proportions](slides/17-infer_2prop.html), 10/21
 
 # Other Resources
 

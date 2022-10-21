@@ -1,0 +1,250 @@
+---
+title: "Chapter 17: Inference for Comparing Two Proportions"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(tidyverse)
+library(openintro)
+library(kableExtra)
+theme_set(theme_bw())
+set.seed(1423)
+```
+
+# Overview
+
+- 17.1 Randomization test for the difference in proportions
+    - 17.1.1 Observed data
+    - 17.1.2 Variability of the statistic
+    - 17.1.3 Observed statistic vs null statistics
+- 17.2 Bootstrap confidence interval for the difference in proportions
+    - 17.2.1 Observed data
+    - 17.2.2 Variability of the difference in sample proportions
+    - 17.2.3 Bootstrap percentile vs. SE confidence intervals
+    - 17.2.4 What does 95% mean?
+- 17.3 Mathematical model for the difference in proportions
+    - 17.3.1 Variability of the difference between two proportions
+    - 17.3.2 Confidence interval for the difference between two proportions
+    - 17.3.3 Hypothesis test for the difference between two proportions
+
+# 17.1 Randomization test for the difference in proportions
+
+## 17.1.1 Observed data
+
+- Two treatments on patients who underwent CPR for a heart attack and were subsequently admitted to a hospital.   
+    - Blood thinner (treatment group) 
+    - No blood thinner (control group)
+- Outcome variable: whether the patient survived for at least 24 hours.
+
+```{r echo=FALSE}
+table(cpr)
+```
+
+## Observed Statistics
+
+```{r echo=FALSE}
+table(cpr)
+```
+
+\[
+\begin{align*}
+\hat{p}_T &= \frac{14}{40} = 0.35 \\
+\hat{p}_C &= \frac{11}{50} = 0.22 \\
+\hat{p}_T - \hat{p}_C &= 0.35 - 0.22 = 0.13
+\end{align*}
+\]
+
+## Hypotheses
+
+- Null Hypothesis: No association between group and outcome.
+    - $H_0: p_T - p_C = 0$
+- Alternative Hypothesis: Blood thinners increase survival rate.
+    - $H_A: p_T - p_C > 0$
+
+## 17.1.2 Variability of the statistic
+
+To model what would happen if $H_0$ were true:
+
+- 90 Cards (one for each patient)
+    - 65 Blue (those who died)
+    - 25 Green (those who survived)
+- Deal into two piles
+    - Control group (50 cards)
+    - Treatment group (40 cards)
+
+Compute (repeatedly) a simulated difference in survival rates 
+
+## {data-background-image="https://openintro-ims.netlify.app/17-inference-two-props_files/figure-html/cpr-rand-dot-plot-1.png" data-background-size="contain"}
+
+## 17.1.3 Observed statistic vs null statistics
+
+- P-value = 12/100 = 0.12
+    - Not much evidence that blood thinners help.
+    - Do not reject $H_0$ at $\alpha = 0.05$.
+    
+# 17.2 Bootstrap confidence interval for the difference in proportions
+
+To construct a confidence interval, we don't need hypotheses. We just use the data.
+
+## 17.2.1 Observed data
+
+```{r echo=FALSE}
+table(cpr)
+```
+
+\[
+\begin{align*}
+\hat{p}_T &= \frac{14}{40} = 0.35 \\
+\hat{p}_C &= \frac{11}{50} = 0.22 \\
+\hat{p}_T - \hat{p}_C &= 0.35 - 0.22 = 0.13
+\end{align*}
+\]
+
+
+## 17.2.2 Variability of the difference in sample proportions
+
+- Bootstrap two samples (one for each group)
+- Compute the difference in proportions
+- Repeat many times and make a distribution
+
+## {data-background-image="https://openintro-ims.netlify.app/images/boot2proppops.png" data-background-size="contain"}
+## {data-background-image="https://openintro-ims.netlify.app/images/boot2propresamps.png" data-background-size="contain"}
+## {data-background-image="https://openintro-ims.netlify.app/images/boot2prop2.png" data-background-size="contain"}
+## {data-background-image="https://openintro-ims.netlify.app/images/boot2prop1.png" data-background-size="contain"}
+## {data-background-image="https://openintro-ims.netlify.app/17-inference-two-props_files/figure-html/bootCPR1000-1.png" data-background-size="contain"}
+
+## 90% Confidence interval
+
+For a 90% confidence interval, we need 5% in each tail.
+
+## {data-background-image="https://openintro-ims.netlify.app/17-inference-two-props_files/figure-html/bootCPR1000CI-1.png" data-background-size="contain"}
+
+## Interpretation
+
+- The bootstrap 5 percentile proportion is -0.032 and the 95 percentile is 0.284. 
+- We are 90% confident that, in the population, the true difference in probability of survival for individuals receiving blood thinners after CPR is between 0.032 lower and 0.284 higher than those who did not receive blood thinners. 
+- The interval shows that we do not have much definitive evidence of the effect of blood thinners, one way or another.
+
+## 17.2.3 Quick Bootstrap SE confidence interval
+
+Once we have a bootstrap distribution, we can take its standard deviation using `sd()`.
+
+$$
+SE(\hat{p}_T - \hat{p}_C) \approx SE(\hat{p}_{T, boot} - \hat{p}_{C, boot}) = 0.098
+$$
+
+Then use the generic formula to get a 95% confidence interval:
+
+$$
+\hat{p}_T - \hat{p}_C \pm 1.96 \cdot SE =  14/40 - 11/50 \pm 1.96 \cdot 0.098 =   (-0.06, 0.32)
+$$
+
+## 17.2.4 What does 95% mean?
+
+- Suppose we repeated this experiment many times.
+- Each time we would obtain a different 95% confidence interval.
+- *95% of these intervals would contain the actual population parameter.*
+
+## {data-background-image="https://openintro-ims.netlify.app/17-inference-two-props_files/figure-html/ci25ints-1.png" data-background-size="contain"}
+
+# Group Activity: Is Yawning Contagious?
+
+## Is Yawning Contagious? {data-background="https://media.giphy.com/media/RKe73XLbBCKOI/giphy.gif" data-background-size="contain"}
+
+## Is yawning contagious?
+
+Fifty people attending a local flea market were recruited to participate. Subjects were ushered, one at a time, into one of three rooms by co-host Kari. <span style="color:yellow">She yawned (planting a yawn “seed”) as she ushered subjects into two of the rooms,</span> and <span style="color:orchid">for the other room she did not yawn.</span> The researchers decided in advance, with a random mechanism, which subjects went to which room. As time passed, the researchers watched to see which subjects yawned.
+
+## Hypotheses and data
+
+\[
+H_0: p_1 - p_2 = 0 \\
+H_a: p_1 - p_2 > 0
+\]
+
+|              | Seed observed | Seed not observed | Total |
+| ------------ | ------------- | ----------------- | ----- |
+| Subject yawned  |  11       |       3       |          14 |
+| Did not yawn    |  23       |      13       |          36 | 
+| Total         |    34       |      16       |          50 |
+
+
+\[
+\begin{align}
+\hat{p}_1 &= 11/34 \approx 0.32 \\
+\hat{p}_2 &= 3/16 \approx 0.19 \\
+\hat{p}_1-\hat{p}_2 &= 11/34-3/16 \approx 0.136 = \mbox{test statistic} \\
+\end{align}
+\]
+
+## Two possibilities
+
+1. Yawning is not contagious, and the observed data just reflects that we randomly got more yawners in the seed group.
+2. Yawning is contagious.
+
+> To evaluate the statistical significance of the observed difference, we will investigate how large the difference in conditional proportions tends to be just from the random assignment of response outcomes to the explanatory variable groups.
+
+## Null Hypothesis, in other words (informally)
+
+For any group of 50 people, about <span style="color:cyan">14 will be yawners</span> and <span style="color:lightgreen">36 will be non-yawners</span>, whether or not they have observed the yawn seed.
+
+- Blue cards: yawners
+- Green cards: non-yawners
+
+## Group Exercise
+
+1. Open the [Two Proportion Applet](http://www.rossmanchance.com/applets/ChisqShuffle.htm?yawning=1) with the yawn data preloaded. 
+2. Press the *Shuffle* button once. Discuss with your group what the applet is doing. Press *Shuffle* a couple more times to make sure you are right.
+3. Now do 1000 or more shuffles to create a null distribution. **Record** a *p-value* for our hypotheses using the observed test statistic.
+4. **Record** a sentence interpreting the p-value in the context of this study. 
+
+
+# 17.3 Mathematical model for the difference in proportions
+
+Conditions:
+
+1. Independence (e.g., a randomized experiment)
+
+2. Success-failure condition: at least 10 successes and 10 failures *in each of the two groups*.
+
+## 17.3.1 Variability of the difference between two proportions
+
+$$
+SE(\hat{p}_1 - \hat{p}_2) = \sqrt{\frac{p_1(1-p_1)}{n_1} + \frac{p_2(1-p_2)}{n_2}}
+$$
+
+## 17.3.2 Confidence interval for the difference between two proportions
+
+For a confidence interval, we use the "best guess" for $p_1$ and $p_2$, and apply the generic formula:
+
+$$
+\begin{aligned}
+\text{observed statistic} \ &\pm \  z^{\star} \ \times \ SE \\
+(\hat{p}_1 - \hat{p}_2) \ &\pm \ z^{\star} \times \sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1} + \frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}
+\end{aligned}
+$$
+
+
+## 17.3.3 Hypothesis test for the difference between two proportions (yawn study)
+
+```{r}
+prop.test(x = c(11,3), n = c(34, 16), alternative = "greater")
+```
+
