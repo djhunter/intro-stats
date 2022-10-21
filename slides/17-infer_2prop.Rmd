@@ -176,7 +176,7 @@ Fifty people attending a local flea market were recruited to participate. Subjec
 
 \[
 H_0: p_1 - p_2 = 0 \\
-H_a: p_1 - p_2 > 0
+H_A: p_1 - p_2 > 0
 \]
 
 |              | Seed observed | Seed not observed | Total |
@@ -199,7 +199,7 @@ H_a: p_1 - p_2 > 0
 1. Yawning is not contagious, and the observed data just reflects that we randomly got more yawners in the seed group.
 2. Yawning is contagious.
 
-> To evaluate the statistical significance of the observed difference, we will investigate how large the difference in conditional proportions tends to be just from the random assignment of response outcomes to the explanatory variable groups.
+> To evaluate the statistical significance of the observed difference, we will investigate how large the difference in proportions tends to be just from the random assignment of response outcomes to the explanatory variable groups.
 
 ## Null Hypothesis, in other words (informally)
 
@@ -208,12 +208,14 @@ For any group of 50 people, about <span style="color:cyan">14 will be yawners</s
 - Blue cards: yawners
 - Green cards: non-yawners
 
-## Group Exercise
+## Group Exercises
 
 1. Open the [Two Proportion Applet](http://www.rossmanchance.com/applets/ChisqShuffle.htm?yawning=1) with the yawn data preloaded. 
 2. Press the *Shuffle* button once. Discuss with your group what the applet is doing. Press *Shuffle* a couple more times to make sure you are right.
 3. Now do 1000 or more shuffles to create a null distribution. **Record** a *p-value* for our hypotheses using the observed test statistic.
 4. **Record** a sentence interpreting the p-value in the context of this study. 
+5. If we had used $H_A: p_1 - p_2 \neq  0$ instead, how would the p-value be different?
+6. Use the generic formula to obtain a 95% confidence interval for the true difference in proportions. (Get the standard error from the null distribution.)
 
 
 # 17.3 Mathematical model for the difference in proportions
@@ -241,10 +243,48 @@ $$
 \end{aligned}
 $$
 
+## Use R to compute mathematical models
 
-## 17.3.3 Hypothesis test for the difference between two proportions (yawn study)
+- The `prop.test` command can be used for testing the null that the proportions (probabilities of success) in several groups are the same, or that they equal certain given values.
+- `prop.test` also gives confidence intervals.
+    - For confidence intervals, use the two-sided test (default).
+
+## 17.3.3 Hypothesis test for the difference between two proportions (yawn study), one-sided
 
 ```{r}
 prop.test(x = c(11,3), n = c(34, 16), alternative = "greater")
 ```
 
+## Hypothesis test for the difference between two proportions (yawn study), two-sided
+
+```{r}
+prop.test(x = c(11,3), n = c(34, 16))
+```
+## Blood Thinner study (one-sided)
+
+```{r}
+prop.test(x = c(14,11), n = c(40, 50), alternative = "greater")
+```
+
+
+## Blood Thinner study, (two-sided)
+
+```{r}
+prop.test(x = c(14,11), n = c(40, 50))
+```
+
+## Blood Thiner study, (two sided, 90% conf.level)
+
+```{r}
+prop.test(x = c(14,11), n = c(40, 50), conf.level = 0.90)
+```
+
+## Two-sided tests and confidence intervals
+
+Suppose we test $H_0: p_1 - p_2 = 0$ versus $H_A: p_1 - p_2 \neq 0$, and we also construct a confidence interval for $p_1 - p_2$.
+
+>- If zero is in the confidence interval, then it is plausible that there is no difference between the groups.
+>- If zero is not in the confidence interval, then it is not plausible that the groups are the same.
+>    - i.e., the null is not plausible.
+>- Here, the significance level $\alpha$ is $1 - \text{confidence level}$
+>    - e.g., *a 95% confidence interval will contain zero if and only if the p-value for the two-sided test is greater than 0.05.*
