@@ -1,0 +1,238 @@
+---
+title: "Chapter 18: Inference for Two-Way Tables"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(tidyverse)
+library(openintro)
+library(kableExtra)
+theme_set(theme_bw())
+set.seed(1423)
+```
+
+# Overview
+
+- 18.1 Randomization test of independence
+    - 18.1.1 Expected counts in two-way tables
+    - 18.1.2 The observed chi-squared statistic
+    - 18.1.3 Variability of the statistic
+    - 18.1.4 Observed statistic vs. null chi-squared statistics
+- 18.2 Mathematical model for test of independence
+    - 18.2.1 The chi-squared test of independence
+    - 18.2.2 Variability of the chi-squared statistic
+    - 18.2.3 Observed statistic vs. null chi-squared statistics
+
+
+# 18.1 Randomization test of independence
+
+Can the type of question influence how much a seller reveals about defects?
+
+- Explanatory: Question asked 
+    - General: What can you tell me about it?
+    - Positive Assumption: It does not have any problems, does it?
+    - Negative Assumption: What problems does it have?
+
+- Response: Does the seller disclose the problem?
+
+## Two-way table
+
+| Question             |  Disclose problem | 	Hide problem 	| Total | 
+| -------------------- | ----------------- | -------------- | ----- |
+| General 	            |   2              	| 71            |	73 |
+| Positive assumption  |  23              	| 50            |	73 |
+| Negative assumption  |  36              	| 37            |	73 |
+| Total 	              |  61              	| 158           | 	219  |
+
+## 18.1.1 Expected counts in two-way tables
+
+- If the type of question didn't matter (null hypothesis), then we would expect the same number of disclosures, *independent* of the question asked.
+- Overall, the seller disclosed the problem 61 out of 219 times, so we would *expect* $\frac{61}{219} \times 73 \approx 20.33$ disclosures for 73 sellers.
+
+| Question             |  Disclose problem | 	Hide problem 	| Total | 
+| -------------------- | ----------------- | -------------- | ----- |
+| General 	            |   2 *(20.33)*    	| 71    *(52.67)* |	73 |
+| Positive assumption  |  23  *(20.33)*    | 50    *(52.67)* |	73 |
+| Negative assumption  |  36   *(20.33)*    	| 37  *(52.67)*   |	73 |
+| Total 	              |  61             	| 158           | 	219  |
+
+## 18.1.2 The observed chi-squared statistic
+
+The *chi-squared statistic* $X^2$ measures how different our actual results are from the expected results:
+
+$$
+{\scriptsize
+\begin{aligned}
+&\text{General formula} &&
+    \frac{(\text{observed count } - \text{expected count})^2}
+        {\text{expected count}} \\
+&\text{Row 1, Col 1} &&
+    \frac{(2 - 20.33)^2}{20.33} = 16.53 \\
+&\text{Row 2, Col 1} &&
+    \frac{(23 - 20.33)^2}{20.33} = 0.35 \\
+& \hspace{9mm}\vdots &&
+    \hspace{13mm}\vdots \\
+&\text{Row 2, Col 3} &&
+    \frac{(37 - 52.67)^2}{52.67} = 4.66
+\end{aligned}
+} \\
+X^2 = 16.53 + 0.35 + \dots + 4.66 = 40.13
+$$
+
+## 18.1.3 Variability of the statistic
+
+We can simulate $X^2$ statistics under the assumption $H_0$ that the question has no effect:
+
+- 219 Cards
+- 61 green (disclose), 158 blue (hide)
+- Shuffle and deal into *three* piles, 73 each.
+- Make a 2-way table.
+- Compute the *simulated null statistic* $X^2$.
+
+## Simulated Two-way table
+
+Simulated and *(expected)* counts:
+
+| Question             |  Disclose problem | 	Hide problem 	| Total | 
+| -------------------- | ----------------- | -------------- | ----- |
+| General 	            |   29 *(20.33)*    	| 44    *(52.67)* |	73 |
+| Positive assumption  |  15  *(20.33)*    | 58    *(52.67)* |	73 |
+| Negative assumption  |  17   *(20.33)*    	| 56  *(52.67)*   |	73 |
+| Total 	              |  61             	| 158           | 	219  |
+
+
+## Simulated null chi-squared statistic
+
+$$
+{\scriptsize
+\begin{aligned}
+&\text{General formula} &&
+    \frac{(\text{observed count } - \text{expected count})^2}
+        {\text{expected count}} \\
+&\text{Row 1, Col 1} &&
+    \frac{(29 - 20.33)^2}{20.33} = 3.7 \\
+&\text{Row 2, Col 1} &&
+    \frac{(15 - 20.33)^2}{20.33} = 1.4 \\
+& \hspace{9mm}\vdots &&
+    \hspace{13mm}\vdots \\
+&\text{Row 3, Col 2} &&
+    \frac{(56 - 52.67)^2}{52.67} = 0.211
+\end{aligned}
+} \\
+X^2 = 3.7 + 1.4 + \dots + 0.211 = 8
+$$
+
+## 18.1.4 Observed statistic vs. null chi-squared statistics
+
+- We simulate 1000s of $X^2$ statistics this way to create a *null distribution*.
+- Then we count how many are *as or more extreme* as our observed chi-square statistic ($X^2 = 40.13$).
+    - This is the P-value.
+- The distribution only has a right-hand tail, because $X^2$ is always positive.
+
+## {data-background-image="https://openintro-ims.netlify.app/18-inference-tables_files/figure-html/ipodRandDotPlot-1.png" data-background-size="contain"}
+
+## Interpretation
+
+- The P-value is 0.000.
+- We have very strong evidence that the type of question asked is associated with whether or not the seller reveals defects.
+- The two variables are *not independent*.
+
+# Group Activity: Organ Donation
+
+## Organ Donor Consent
+
+<div class="column-left">
+![](https://a.scpr.org/i/581d5b09935893c2281d4b5aba20ff58/18602-full.jpg)
+</div>
+
+<div class="column-right">
+![](http://2.bp.blogspot.com/_tFavWChioxY/SihUeQlemrI/AAAAAAAAAa4/3ZhC2GgtElI/w1200-h630-p-k-no-nu/Conan+Driver+Licence.jpg)
+</div>
+
+## Experiment
+
+Researchers asked *volunteer* subjects to imagine they moved to a new state, applied for a driver’s license, and needed to decide whether or not to become an organ donor. Researchers created *three different versions* of the survey, each with a different donor recruiting strategy. Subjects were *randomly assigned* to one of the three types of recruiting strategies.
+
+1. The default option is to be an organ donor, and individuals have to opt out of organ donation (opt-*out* group).
+2. The default option is to not be an organ donor, and individuals have to opt in to organ donation (opt-*in* group).
+3. There is no default option, and individuals have to choose whether or not they will be an organ donor (*neutral* group).
+
+## Hypotheses
+
+- **Null Hypothesis.** The recruiting strategy is independent of the decision to donate.
+- **Alternative Hypothesis.** The recruiting strategy is associated with whether or not the person decides to donate.
+
+## Organ Donor Data
+
+Researchers found that 23 of 55 subjects in the opt-in group chose to be organ donors, 41 of 50 in the opt-out group chose to be organ donors, and 44 of 56 in the neutral group chose to be organ donors. 
+
+## Group Exercises
+
+1. Open the [Multiple Proportions applet](http://www.rossmanchance.com/applets/ChiSqShuffle.html?hideExtras=1) with the preloaded organ donor data. Click the *Show Table* checkbox to see the two-way table. Select $\chi^2$ from the *Statistic* drop down menu. **Record** the observed chi-squared statistic.
+
+2. Based on the bar blot (or the table), does it appear that the recruiting strategy is associated with the decision to donate? Be ready to give a reason for your answer.
+
+3. Simulate a null distribution of chi-squared statistics. **Record** a *p-value.* Based on this p-value, **record** a sentence summarizing your conclusion in the context of this study.
+
+4. Check the box for *Overlay Chi-squared distribution*. What do you notice?
+
+
+# 18.2 Mathematical model for test of independence
+
+## 18.2.1 The chi-squared test of independence
+
+- The *Chi-squared distribution* is a mathematical model that predicts the sampling distribution of the chi-squared statistic.
+- You need to specify the *degrees of freedom*, which controls how fat the tail is.
+    - The degrees of freedom depends on the number of levels in your categorical variables.
+    
+## {data-background-image="https://openintro-ims.netlify.app/18-inference-tables_files/figure-html/chisqDistDF-1.png" data-background-size="contain"}
+
+## 18.2.2 Variability of the chi-squared statistic
+
+- Conditions: 
+    - The observations should be *independent*.
+    - The *expected counts for each cell of the table should be at least 5.*
+
+If the conditions are met, then the sampling distribution will be approximately Chi-squared with $(R-1)\times(C-1)$ degrees of freedom, where $R$ and $C$ are the number of rows and columns in the two-way table.
+
+## 18.2.3 Observed statistic vs. null chi-squared statistics
+
+In the Question/Seller example, we had $X^2 = 40.13$ with 2 degrees of freedom.
+
+```{r}
+pchisq(40.13, df = 2, lower.tail = FALSE)
+```
+
+Or equivalently,
+
+```{r}
+1- pchisq(40.13, df = 2)
+```
+
+## Chi-squared test in R
+
+```{r}
+sellerTable <- as.table(rbind(c(2, 71), c(23, 50), c(36,37)))
+chisq.test(sellerTable)
+```
+
+## {data-background-image="https://openintro-ims.netlify.app/18-inference-tables_files/figure-html/iPodChiSqTail-1.png" data-background-size="contain"}
+
+
