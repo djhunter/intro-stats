@@ -38,7 +38,7 @@ set.seed(1423)
     - 19.1.5 Bootstrapping is not a solution to small sample sizes!
 - 19.2 Mathematical model for a mean
     - 19.2.1 Mathematical distribution of the sample mean
-    - 19.2.2 Evaluating the two conditions required for modeling ¯x
+    - 19.2.2 Evaluating the two conditions required for modeling $\bar{x}$
     - 19.2.3 Introducing the t-distribution
     - 19.2.4 One sample t-intervals
     - 19.2.5 One sample t-tests
@@ -93,11 +93,11 @@ price
 
 3. Use the SD from the distribution to calculate a 95% SE confidence interval for the mean price.
 
-4. Select *Beyond* from the count samples dropdown. Use trial and error to find the upper endpoint of a 95% percentile confidence interval. (You want the total area in both tails to be 0.05.)
+4. Select *Beyond* from the count samples dropdown. Use trial and error to find the upper endpoint of a 95% percentile confidence interval. 
 
 # 19.2 Mathematical model for a mean
 ## 19.2.1 Mathematical distribution of the sample mean
-## 19.2.2 Evaluating the two conditions required for modeling ¯x
+## 19.2.2 Evaluating the two conditions required for modeling $\bar{x}$ 
 ## 19.2.3 Introducing the t-distribution
 ## 19.2.4 One sample t-intervals
 ## 19.2.5 One sample t-tests
