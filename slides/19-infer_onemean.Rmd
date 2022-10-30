@@ -96,15 +96,37 @@ price
 4. Select *Beyond* from the count samples dropdown. Use trial and error to find the upper endpoint of a 95% percentile confidence interval. 
 
 # 19.2 Mathematical model for a mean
+
 ## 19.2.1 Mathematical distribution of the sample mean
+
+**Central Limit Theorem for the sample mean.** When we collect a sufficiently large sample of $n$ independent observations from a population with mean $\mu$ and standard deviation $\sigma$, the sampling distribution of \bar{x} will be nearly normal with mean $\mu$ and standard deviation $SE = \sigma/\sqrt{n}$.
+
+- In practice, we don't usually know $\sigma$, so we use $SE \approx s/\sqrt{n}$.
+
 ## 19.2.2 Evaluating the two conditions required for modeling $\bar{x}$ 
+
+- *Independence.* e.g., the sample is a simple random sample from the population.
+- *Normality.* If the sample is small, then the data should come from a normal, or nearly normal, population.
+    - "small" means less than 15
+    - "large" means greater than 60
+    - Extreme outliers can cause problems.
+
+## {data-background-image="https://openintro-ims.netlify.app/19-inference-one-mean_files/figure-html/outliersandsscondition-1.png" data-background-size="contain"}
+
 ## 19.2.3 Introducing the t-distribution
+
+- For smaller samples, the sampling distribution of $\bar{x}$ has thicker tails than the normal distribution.
+- A better approximation is the $t-distribution$.
+    - As with the chi-squared distribution, the t-distribution requires you to specify the *degrees of freedom*.
+    - The sampling distribution of $\bar{x}$ has $n-1$ degrees of freedom, where $n$ is the sample size.
+    
+## {data-background-image="https://openintro-ims.netlify.app/19-inference-one-mean_files/figure-html/tDistCompareToNormalDist-1.png" data-background-size="contain"}
+    
+## {data-background-image="https://openintro-ims.netlify.app/19-inference-one-mean_files/figure-html/tDistConvergeToNormalDist-1.png" data-background-size="contain"}
+
 ## 19.2.4 One sample t-intervals
 ## 19.2.5 One sample t-tests
 
-## {data-background-image="" data-background-size="contain"}
-## {data-background-image="" data-background-size="contain"}
-## {data-background-image="" data-background-size="contain"}
 ## {data-background-image="" data-background-size="contain"}
 ## {data-background-image="" data-background-size="contain"}
 ## {data-background-image="" data-background-size="contain"}
