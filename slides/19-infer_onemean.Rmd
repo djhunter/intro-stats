@@ -124,12 +124,75 @@ price
     
 ## {data-background-image="https://openintro-ims.netlify.app/19-inference-one-mean_files/figure-html/tDistConvergeToNormalDist-1.png" data-background-size="contain"}
 
+## Tail probabilities of the t-distribution in R
+
+As with `pnorm` and `pchisq`, you can get lower tail probabilities in R using `pt`.
+
+```{r}
+pt(-2.5, df = 19)  # lower tail below -2.5
+1 - pt(2.5, df = 19) # upper tail above 2.5
+```
+
+## Quantiles of the t-distribution in R
+
+If you know the tail probability you want, you can get the corresponding t.
+
+```{r}
+qt(0.025, df = 11)
+qt(0.975, df = 11)
+```
+Recall that for the normal distribution, these values were $\pm 1.96$ (fatter tails).
+
 ## 19.2.4 One sample t-intervals
+
+The generic formulas for confidence intervals work for t-intervals:
+
+$$
+\begin{aligned}
+\text{point estimate} \ &\pm\  t^{\star}_{df} \times SE \\
+\bar{x} \ &\pm\  t^{\star}_{df} \times \frac{s}{\sqrt{n}}
+\end{aligned}
+$$
+
+To get $t^\star_{df}$ you can use `qt` in R and you need the degrees of freedom ($n-1$).
+
 ## 19.2.5 One sample t-tests
 
-## {data-background-image="" data-background-size="contain"}
-## {data-background-image="" data-background-size="contain"}
-## {data-background-image="" data-background-size="contain"}
-## {data-background-image="" data-background-size="contain"}
-## {data-background-image="" data-background-size="contain"}
+$$
+H_0: \mu = \text{null value} \\
+H_A: \mu \neq \text{null value}
+$$
+
+The generic $Z$-score formula gives us a formula for $T$-score:
+
+$$
+T = \frac{\bar{x} - \mbox{null value}}{s/\sqrt{n}}
+$$
+
+# Group Activity
+
+```{r include=FALSE}
+set.seed(234)
+frogs <- rnorm(14, mean = 27, sd = 3)
+```
+
+A sample of 14 frogs has a mean weight of `r round(mean(frogs), 2)` grams with a sample standard deviation of `r round(sd(frogs), 2)`.
+
+1. Construct a 95% confidence interval for the mean weight of the frogs in this population. (Use `qt` to determine $t^\star_{df}$, and then use the t-interval formula.)
+
+2. Is the mean weight of the frogs in this population significantly different from the Northern Leopard Frog, which has a mean weight of 24 grams?  Obtain a P-value for the following hypothesis test:
+$$ 
+H_0: \mu = 24 \\
+H_A: \mu \neq 24
+$$
+(Use the $T$-score formula, and then use `pt` to get a P-value.)
+
+## t-tests in R
+
+The `frogs` vector contains the weights of the 14 frogs in our sample.
+
+```{r}
+t.test(frogs, mu = 24)
+```
+
 
