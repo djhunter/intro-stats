@@ -62,10 +62,7 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 22. [Inference for Two-Way Tables](slides/18-infer_chisquare.html), 10/24
 23. [Review for Test #3](slides/18b-test3review.html), 10/26
 24. [Class cancelled](https://westmont.instructure.com/courses/8503/discussion_topics/45482), 10/31
-
----
-# 24. [Inference for a Single Mean](slides/19-infer_onemean.html), 11/2
----
+25. [Inference for a Single Mean](slides/19-infer_onemean.html), 11/2
 
 # Other Resources
 
