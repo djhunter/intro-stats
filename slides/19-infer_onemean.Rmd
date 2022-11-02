@@ -116,7 +116,7 @@ price
 ## 19.2.3 Introducing the t-distribution
 
 - For smaller samples, the sampling distribution of $\bar{x}$ has thicker tails than the normal distribution.
-- A better approximation is the $t-distribution$.
+- A better approximation is the *t-distribution*.
     - As with the chi-squared distribution, the t-distribution requires you to specify the *degrees of freedom*.
     - The sampling distribution of $\bar{x}$ has $n-1$ degrees of freedom, where $n$ is the sample size.
     
