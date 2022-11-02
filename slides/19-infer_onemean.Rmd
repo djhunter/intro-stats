@@ -99,7 +99,7 @@ price
 
 ## 19.2.1 Mathematical distribution of the sample mean
 
-**Central Limit Theorem for the sample mean.** When we collect a sufficiently large sample of $n$ independent observations from a population with mean $\mu$ and standard deviation $\sigma$, the sampling distribution of \bar{x} will be nearly normal with mean $\mu$ and standard deviation $SE = \sigma/\sqrt{n}$.
+**Central Limit Theorem for the sample mean.** When we collect a sufficiently large sample of $n$ independent observations from a population with mean $\mu$ and standard deviation $\sigma$, the sampling distribution of $\bar{x}$ will be nearly normal with mean $\mu$ and standard deviation $SE = \sigma/\sqrt{n}$.
 
 - In practice, we don't usually know $\sigma$, so we use $SE \approx s/\sqrt{n}$.
 
