@@ -1,0 +1,235 @@
+---
+title: "Chapter 21: Inference for comparing paired means"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(tidyverse)
+library(openintro)
+library(kableExtra)
+theme_set(theme_bw())
+set.seed(1423)
+```
+
+# Overview
+
+
+- 21.1 Randomization test for the mean paired difference
+    - 21.1.1 Observed data
+    - 21.1.2 Variability of the statistic
+    - 21.1.3 Observed statistic vs. null statistics
+- 21.2 Bootstrap confidence interval for the mean paired difference
+    - 21.2.1 Observed data
+    - 21.2.2 Variability of the statistic
+- 21.3 Mathematical model for the mean paired difference
+    - 21.3.1 Observed data
+    - 21.3.2 Variability of the statistic
+    - 21.3.3 Observed statistic vs. null statistics
+
+# Paired Designs
+
+How would you collect data to answer the following questions?
+
+- You want to compare grocery prices between Vons and Trader Joe's. Are prices different, on average?
+- You want to test "The Freshmen 10" theory. Do college students gain, on average, 10 pounds during their first year?
+
+## Reducing variability
+
+- The paired data sets in this chapter have *one pair of quantitative response values for each observational unit,* allowing for a built-in comparison. 
+- Studies with paired data *remove individual variability* by looking at the difference score for each individual. 
+- Reducing variability in data improves inferences:
+    + Narrower confidence intervals
+    + Smaller p-values when the null hypothesis is false (more power)
+
+# 21.1 Randomization test for the mean paired difference
+
+Example: Compare tread wear between two brands of tire.
+
+- 25 cars. Each car had one tire of each brand.
+- After 1000 miles, the tread reamaining was measured.
+
+## {data-background-image="https://openintro-ims.netlify.app/21-inference-paired-means_files/figure-html/tiredata-1.png" data-background-size="contain"}
+
+## Hypotheses
+
+- $H_0: \mu_\text{diff} = 0$, the average tread wear is the same for the two tire brands.
+- $H_A: \mu_\text{diff} \neq 0$, the average tread wear is different across the two tire brands.
+
+*Observed Statistic:* $\bar{x}_\text{diff} = -0.002$
+ 
+. . .
+
+**Randomization:** Flip a coin for each pair. If heads, reverse the pair. If tails, leave it as is.
+ 
+## {data-background-image="https://openintro-ims.netlify.app/21-inference-paired-means_files/figure-html/tiredata4-1.png" data-background-size="contain"}
+
+## {data-background-image="https://openintro-ims.netlify.app/21-inference-paired-means_files/figure-html/tiredata5-1.png" data-background-size="contain"}
+
+## {data-background-image="https://openintro-ims.netlify.app/21-inference-paired-means_files/figure-html/tiredataPerm-1.png" data-background-size="contain"}
+
+## {data-background-image="https://openintro-ims.netlify.app/21-inference-paired-means_files/figure-html/tiredatarand1-1.png" data-background-size="contain"}
+
+## {data-background-image="https://openintro-ims.netlify.app/21-inference-paired-means_files/figure-html/pairRandomiz-1.png" data-background-size="contain"}
+
+## 21.1.1 Observed data
+## 21.1.2 Variability of the statistic
+## 21.1.3 Observed statistic vs. null statistics
+
+
+# Jumping Jacks vs Bicycle Kicks
+
+<div class="column-left">
+![](https://health.clevelandclinic.org/wp-content/uploads/sites/3/2018/04/GettyImages-621391320-2048x1350.jpg)
+</div>
+
+<div class="column-right">
+![](https://the-optimal-you.com/wp-content/uploads/2018/01/Bicycle-Kick.jpg)
+</div>
+
+## Preview
+
+<div class="column-left">
+Which common exercise, jumping jacks or bicycle kicks, raises your heart rate more?
+
+\[
+\begin{align}
+H_0: \mu_d &= 0 \\
+H_a: \mu_d &\neq 0 \\
+\bar{x}_d &\approx 11.9545
+\end{align}
+\]
+</div>
+
+<div class="column-right">
+```{r, echo=FALSE}
+jjbike <- read.table("http://www.isi-stats.com/isi/data/chap7/JJvsBicycle.txt", header=TRUE)
+#jjbike$difference <- jjbike$JJ - jjbike$bicycle
+print(jjbike)
+```
+</div>
+
+## Group Activity
+
+1. Go to the [Matched Pairs applet](http://www.rossmanchance.com/applets/MatchedPairs/MatchedPairs.htm?hideExtras=1), and select the `JJvsBicycle` data from the dropdown menu. Discuss the following: 
+    + In the top graph, what do the red dots, blue dots, and gray lines represent?
+    + In the bottom graph, what do the dots represent? 
+
+2. Check the box for *Randomize* and then click on the Randomize button.
+    + What do the coin flips determine? 
+    + How is the dot on the null distribution calculated?
+
+3. Perform 1000 (or more) randomizations, and **record** a *p-value* for the above test. In the context of the problem (exercise), **record** a sentence saying what this p-value tells us. 
+
+##  {data-background="http://math.westmont.edu/img/bkjj.jpg" data-background-size="contain"}
+
+# 21.2 Bootstrap confidence interval for the mean paired difference
+
+- Bootstrapping works the same as in the one-mean case.
+- Resample the data, and compute bootstrapped $\bar{x}_\text{diff}$'s.
+- Make a bootstrapped distribution.
+
+## {data-background-image="https://openintro-ims.netlify.app/21-inference-paired-means_files/figure-html/pairboot-1.png" data-background-size="contain"}
+
+# 21.3 Mathematical model for the mean paired difference
+
+```{r include=FALSE}
+textbooks <- ucla_textbooks_f18 %>% 
+  select(subject, course_num, bookstore_new, amazon_new) %>%
+  mutate(price_diff = bookstore_new - amazon_new) %>%
+  filter(!is.na(bookstore_new) & !is.na(amazon_new)) 
+```
+
+*Example.* Data on 68 textbooks, giving their bookstrore price and their price on Amazon.
+
+```{r}
+glimpse(textbooks)
+```
+
+## 21.3.1 Observed data
+
+```{r, fig.height = 5}
+ggplot(textbooks, aes(x = price_diff)) + geom_histogram(binwidth = 5)
+```
+
+## 21.3.2 Variability of the statistic
+
+```{r}
+textbooks %>%
+  summarize(n = n(),
+            meanDiff = mean(price_diff),
+            sdDiff = sd(price_diff))
+```
+
+## Hypotheses
+
+- $H_0: \mu_\text{diff} = 0$, there is no difference in the average textbook price between the bookstore and Amazon
+- $H_A: \mu_\text{diff} \neq 0$, there is a difference in the average price.
+
+
+## 21.3.3 Observed statistic vs. null statistics
+
+The mathematical model is very similar to the one-mean case:
+
+$$
+T = \frac{\bar{x}_\text{diff} - 0}{s_\text{diff}/\sqrt{n}}
+$$
+
+The conditions are similar: Independence, large samples, or normality of the differences.
+
+## Confidence interval for the mean difference
+
+A confidence interval for $\mu_\text{diff}$ is:
+
+$$
+\bar{x}_\text{diff} \pm t^\star_\text{df} \times \frac{s_\text{diff}}{\sqrt{n}}
+$$
+
+As before, $df = n-1$. Use `qt()` to get $t^\star$.
+
+
+# Group Exercise
+
+```{r echo=FALSE}
+textbooks %>%
+  summarize(n = n(),
+            meanDiff = mean(price_diff),
+            sdDiff = sd(price_diff))
+```
+
+1. Use the mathematical model to perform the above hypothesis test. Obtain a $T$ score using the formula and a P-value using `pt()`. Write a sentence explaining your conclusion in context.
+
+2. Use the mathematical model to construct a 95% confidence interval for the mean difference in price between the bookstore and Amazon. Write a sentence interpreting your confidence interval in context.
+
+# Paired t-test in R
+
+## Have R compute the differences
+
+```{r}
+t.test(textbooks$bookstore_new, textbooks$amazon_new, paired = TRUE)
+```
+
+
+## Just to a one-sample test on the differences
+
+```{r}
+t.test(textbooks$price_diff)
+```
+
+
