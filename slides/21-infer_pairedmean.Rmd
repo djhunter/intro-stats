@@ -139,6 +139,11 @@ print(jjbike)
 
 ##  {data-background="http://math.westmont.edu/img/bkjj.jpg" data-background-size="contain"}
 
+## Now do it wrong
+
+- If you mistakenly use the two-mean test, you will lose power.
+- See the [Multiple Means applet](http://www.rossmanchance.com/applets/AnovaShuffle.htm?hideExtras=2), and try the two-mean test on this data.
+
 # 21.2 Bootstrap confidence interval for the mean paired difference
 
 - Bootstrapping works the same as in the one-mean case.

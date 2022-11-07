@@ -64,6 +64,7 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 24. [Class cancelled](https://westmont.instructure.com/courses/8503/discussion_topics/45482), 10/31
 25. [Inference for a Single Mean](slides/19-infer_onemean.html), 11/2
 26. [Inference for Comparing Two Independent Means](slides/20-infer_twomean.html), 11/4
+27. [Inference for Comparing Paired Means](slides/21-infer_pairedmean.html), 11/7
 
 # Other Resources
 
