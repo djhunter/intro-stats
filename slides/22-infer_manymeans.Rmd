@@ -198,7 +198,7 @@ anova(aov(OBP ~ position, data = players))
 
 - Independence (e.g., groups are randomly assigned)
 - Normality (Each group should have a symmetric distribution, or a large sample)
-- Constant variance (the SD of each group should b approximately equal.)
+- Constant variance (the SD of each group should be approximately equal.)
 
 
 # Comparing Diets
@@ -219,7 +219,7 @@ anova(aov(OBP ~ position, data = players))
 
 2. **Record** a sentence interpreting this p-value in the context of the study.
 
-3. Check the box to *Overlay F distribution*. **Record** a theory-based p-value for the above test using the ANOVA $F$-test. Compare the three p-values you found: simulation-based using MAD, simulation-based using $F$, and theory-based using the ANOVA $F$-test.
+3. Check the box to *Overlay F distribution*. **Record** a theory-based p-value for the above test using the ANOVA $F$-test. Compare the two p-values you found: simulation-based using $F$, and theory-based using the ANOVA $F$-test.
 
 ## ANOVA in R
 
