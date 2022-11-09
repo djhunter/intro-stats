@@ -30,29 +30,102 @@ set.seed(1423)
 
 # Overview
 
+- 22.1 Case study: Batting
+- 22.2 Randomization test for comparing many means
+    - 22.2.1 Observed data
+    - 22.2.2 Variability of the statistic
+    - 22.2.3 Observed statistic vs. null statistic
+- 22.3 Mathematical model for test for comparing many means
+    - 22.3.1 Variability of the statistic
+    - 22.3.2 Observed statistic vs. null statistics
+    - 22.3.3 Reading an ANOVA table from software
+    - 22.3.4 Conditions for an ANOVA analysis
 
+# Multiple mean hypotheses
 
+- $H_0$: The mean outcome is the same across all groups.
+    - $H_0: \mu_1 = \mu_2 = \cdots = \mu_k$
+- $H_A$: At least one mean is different.
 
-# Exploration 9.1
+# 22.1 Case study: Batting
 
-## Exercise and Brain Volume
+```{r mlb_players_18-data-prep, include=FALSE}
+players <- mlb_players_18 %>%
+  filter(
+    AB >= 100, 
+    !position %in% c("P", "DH")
+  ) %>%
+  mutate(
+    position = case_when(
+      position %in% c("LF", "CF", "RF")       ~ "OF",
+      position %in% c("1B", "2B", "3B", "SS") ~ "IF",
+      TRUE                                    ~ position
+    ),
+    position = fct_relevel(position, "OF", "IF", "C")
+  )
+```
 
-<div class="column-left">
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/NObkWjQHNm8?loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-</div>
+```{r}
+glimpse(players)
+```
+## Hypotheses
 
-<div class="column-right">
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/Ag5CUsRNY9Q?rel=0?autoplay=1&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-</div>
+- $H_0: \mu_{OF} = \mu_{IF} = \mu_{C}$ (The average OBP is the same for outfielders, infielders, and catchers).
+- $H_A:$ The average OBP is not the same for all three groups.
 
-## Exercise and Brain Volume
+# 22.2 Randomization test for comparing many means
+
+## 22.2.1 Observed data
+
+```{r}
+players %>%
+  group_by(position) %>%
+  summarize(n = n(),
+            Mean = mean(OBP),
+            SD = sd(OBP))
+```
+
+## Side-by-side Box Plots
+
+```{r, fig.height=4}
+ggplot(players, aes(x = position, y = OBP)) +
+  geom_boxplot()
+```
+
+## P-hacking
+
+It is *not* good practice to take several groups and compare selected pairs.
+
+- Given enough groups to compare, you will eventually find a significant difference just by chance.
+- This is the *Multiple Comparisons Problem*
+    - aka, "data snooping", "data fishing", or "p-hacking"
+
+# The F-Statistic
+
+- We want a statistic that measures *all* the groups at once, and reflects the overall difference.
+- The *F-statistic* is the fraction $\displaystyle{\frac{MSG}{MSE}}$
+    - $MSG$ measures the *between-group* variability.
+    - $MSE$ measures the *within-group* variability.
+- The bigger the F-statistic, the more different the groups are, taking into account the variability within the groups.
+
+## 22.2.2 Variability of the statistic
+
+Simulation using cards:
+
+- 429 cards, with the OPB written on each
+- Deal into 3 piles, 160 OFs, 205IFs, 64Cs
+- Compute simulated F-statistic
+    - These statistics make a *null-distribution*
+- Compute P-value by finding the proportion of the null distribution that is as or more extreme as the observed F-statistic.
+
+# Exercise and Brain Volume
 
 - Researchers randomly assigned elderly adult volunteers into four activity groups: tai chi, walking, social interaction, and no intervention. 
 - 120 participants started the study, and 13 dropped out along the way, so 107 completed the study.
 - Except for the control group, each group met for about an hour three times a week for 40 weeks.
 - Each participant had an MRI to determine brain size before the study began and again at its end. The researchers measured the percentage increase or decrease in brain size during that time. 
 
-## Preview
+## Research question
 
 - **Question:** Can different types of activities affect brain shrinkage in elders?
 - **Categorical Explanatory:** Activity type: tai chi, walking, social interaction, no intervention
@@ -70,71 +143,55 @@ set.seed(1423)
  \text{is different from the others}
 \]
 
-## Explore the Data
+## Group Activity
 
-Paste the data from the [Brain size data](http://www.math.hope.edu/isi/data/chap9/Brain.txt) into the [Multiple Means applet](http://www.rossmanchance.com/applets/AnovaShuffle.htm?hideExtras=2) and press *Use Data*.
+Open the [Multiple Means applet](http://www.rossmanchance.com/applets/AnovaShuffle.htm?hideExtras=2), select the *Brain* data from the menu, and press *Use Data*.
 
 1. Which activity group tended to have the largest increase in brain size percentage change? Which tended to have the smallest increase (i.e., largest decrease)?
 
-2. Check the box to make *Boxplots*. What do you notice about the IQR's of the four groups? How is this related to the standard deviations of the four groups?
+2. In the *Select Statistic* dropdown, choose the F-statistic, and record it.
 
-## One overall Statistic
-
-> To minimize the chance of making a Type I error, we won't run six different tests comparing each group to each other. So, instead we need a single statistic to help test the overall null hypothesis of no association.
-
-## One overall Statistic
-
-3. **Record** out an unsimplified numeric expression for the Mean Absolute Difference (MAD) for this data (Hint: there should be six ways to pair up the four groups). Check your answer using the applet.
-
-4. Explain why it's important to take the absolute values before averaging the six differences.
-
-5. What types of values will the MAD statistic have if the null hypothesis is true (large, small, positive, negative)? If there is strong evidence against the null hypothesis?
-
-## Simulation with cards
-
-6. **Record** a description of how we could do a simulation using cards. Include all the following.
-
-- How many cards will you need?
-- Do the cards just need to be certain colors (like in Chapter 5), or do they need something written on them (like in Chapter 6), and if so, what?
-- When you shuffle and deal, how many piles will you make?
-- How many cards will you place in each pile?
-- What should you be recording after the completion of each shuffle and deal?
-
-## Simulation using applet
-
-7. Use at least 1000 shuffles to create a null distribution for the MAD statistic.
-    + Is the null distribution centered at zero? Explain why your answer makes sense.
-    + Describe the shape of the null distribution (symmetric? skewed?).
+3. Use at least 1000 shuffles to create a null distribution for the F-statistic. Describe the shape of the null distribution (symmetric? skewed?).
     
-8. Use the null distribution to **record** a *p-value* for our hypothesis test, along with a *sentence* interpreting this p-value in the context of this problem.
+4. Use the null distribution to **record** a *p-value* for our hypothesis test, along with a *sentence* interpreting this p-value in the context of this problem.
 
-## Generalization and Causation
+# 22.3 Mathematical model for test for comparing many means
 
-9. Generalization: To what population would you feel comfortable generalizing these results?
+The F statistic is a ratio of how the groups differ (MSG) as compared to how the observations within a group vary (MSE).
 
-10. Causation: Would you feel comfortable with drawing a cause-and-effect conclusion from this study? Between what two variables? Explain why or why not.
+$$
+F = \frac{MSG}{MSE}
+$$
 
-## Concerns?
+Conditions:
 
-11. Did anything about the design and conclusions of this study concern you? Issues you may want to critique include: 
+- independent observations, both within and across groups
+- large samples and no extreme outliers
 
-- The match between the research question and the study design 
-- How the experimental units were selected
-- How the treatments were assigned to the experimental units
-- How the measurements were recorded
-- The number of experimental units in the study 
-- Whether what we observed is of practical value
+Then the F-statistic has an F-distribution with $df_1 = k - 1$ and $df_2 = n - k$. ($n$ observations in $k$ groups)
 
-**Operator:** Enter your critique into [this form](https://goo.gl/forms/VAbAzy4qFxqUTs0K3).
+## F-statistic in R
+
+```{r}
+summary(aov(OBP ~ position, data = players))
+1 - pf(5.077, df1 = 2, df2 = 426)
+```
+
+## 22.3.3 Reading an ANOVA table from software
+
+```{r}
+anova(aov(OBP ~ position, data = players))
+```
 
 
-# Exploration 9.2
+## 22.3.4 Conditions for an ANOVA analysis
 
-## Comparing Diets
+- Independence (e.g., groups are randomly assigned)
+- Normality (Each group should have a symmetric distribution, or a large sample)
+- Constant variance (the SD of each group should b approximately equal.)
 
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/H-5aq8C8cxk?rel=0&amp;start=7&amp;end=176?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-## Comparing Diets
+# Comparing Diets
 
 - Explanatory: Diet type (Atkins, Zone, LEARN, Ornish)
     + Categorical, four levels
@@ -146,35 +203,18 @@ Paste the data from the [Brain size data](http://www.math.hope.edu/isi/data/chap
 - $H_0: \mu_\text{Atkins}=\mu_\text{Zone}= \mu_\text{LEARN}=\mu_\text{Ornish}$
 - $H_a:$ At least one of $\mu_\text{Atkins},\mu_\text{Zone}, \mu_\text{LEARN},\mu_\text{Ornish}$ is different from the others.
 
-- MAD: 0.585
-- Simulation-based p-value using MAD: 0.0118
+## Group Activity
 
-## Problems with MAD
-
-> Although the MAD statistic is fairly easy to understand and calculate, it is not commonly used.
-
-- There is no theory-based model for the null distribution. 
-- The MAD statistic is not standardized so it is not comparable across studies (e.g., a MAD statistic of 1 in one study might be strong evidence but in another study might not show convincing evidence against the null hypothesis).
-- The MAD doesn't take SD into account.
-
-## Redo simulation using $F$
-
-1. Paste the [Diets](http://www.math.hope.edu/isi/data/chap9/Diets.txt) data into the [Multiple Means applet](http://www.rossmanchance.com/applets/AnovaShuffle.htm?hideExtras=2). Select the Statistic pull-down menu (on the left) to select $F$-statistic, and the null distribution changes from the MAD statistic to the $F$-statistic. Report the observed value of the $F$-statistic, and compute a p-value.
+1. Open [Multiple Means applet](http://www.rossmanchance.com/applets/AnovaShuffle.htm?hideExtras=2) and choose the *Diets* data. Select the Statistic pull-down menu (on the left) to select $F$-statistic. Record the observed value of the $F$-statistic, and compute a p-value using a simulated null distribution.
 
 2. **Record** a sentence interpreting this p-value in the context of the study.
 
-## ANOVA $F$-test
-
-3. Check the box to *Overlay F distribution*. Would you say there is good agreement between this theoretical prediction and your simulated null distribution?
-
-4. **Record** a sentence explaining why the [Validity Conditions](#/anova-validity-conditions) are satisfied for the ANOVA $F$-test. Be specific.
-
-5. **Record** a theory-based p-value for the above test using the ANOVA $F$-test. Compare the three p-values you found: simulation-based using MAD, simulation-based using $F$, and theory-based using the ANOVA $F$-test.
+3. Check the box to *Overlay F distribution*. **Record** a theory-based p-value for the above test using the ANOVA $F$-test. Compare the three p-values you found: simulation-based using MAD, simulation-based using $F$, and theory-based using the ANOVA $F$-test.
 
 ## ANOVA in R
 
 ```{r}
-diets <- read.table("http://www.math.hope.edu/isi/data/chap9/Diets.txt", header = TRUE)
+diets <- read.table("http://www.isi-stats.com/isi/data/chap9/Diets.txt", header = TRUE)
 diet.aov <- aov(BMI ~ Diet, data = diets)
 anova(diet.aov)
 ```
@@ -184,33 +224,14 @@ anova(diet.aov)
 
 *If an ANOVA test finds evidence that there is at least one long-run or population mean that is different, there are many different follow-up tests designed to help pinpoint where difference(s) occur. One option is to look at all the pairwise theory-based confidence intervals for the difference in long-run or population means.*
 
-6. Use the applet to compute the (six) follow-up confidence intervals. **Record** which differences are significant. Is one diet clearly better than the others?
+4. Use the applet to compute the (six) follow-up confidence intervals. **Record** which differences are significant. Is one diet clearly better than the others?
 
 ## Alternative Follow-up in R
 
-7. [Tukey's Honestly Significant Differences Test](https://en.wikipedia.org/wiki/Tukey%27s_range_test) is a more conservative follow-up procedure. **Record** which differences are signficant according to the TukeyHSD test, and compare to #6.
+5. [Tukey's Honestly Significant Differences Test](https://en.wikipedia.org/wiki/Tukey%27s_range_test) is a more conservative follow-up procedure. **Record** which differences are significant according to the TukeyHSD test, and compare to #4.
 
 ```{r}
 TukeyHSD(diet.aov)
 ```
 
-
-## Causation and Generalization
-
-"Researchers randomly assigned women to one of the three diets. The 311 women who volunteered for the program were educated on their assigned diet and were observed periodically as they stayed on the diet for a year. At the end of the year, the researchers calculated the change in BMI."
-
-8. Are you comfortable with concluding from this study that the diet used causes a difference in BMI change?  9. To what population are you comfortable generalizing the results of this study? 
-
-**Operator:** Record your answers on [this form](https://goo.gl/forms/EujBmadGFucsg5JU2).
-
-## Concerns
-
-10. Did anything about the design and conclusions of this study concern you? Issues you may want to critique include the following. **Operator:** Choose one (or make up your own) and [use this form](https://goo.gl/forms/JaVTf3UJvoipQwRC2) to explain your concern. 
-
-- The match between the research question and the study design 
-- How the experimental units were selected 
-- How the treatment was assigned to the experimental units 
-- How the measurements were recorded 
-- The number of experimental units in the study 
-- Whether what we observed is of practical value
 
