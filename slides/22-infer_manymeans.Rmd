@@ -108,6 +108,16 @@ It is *not* good practice to take several groups and compare selected pairs.
     - $MSE$ measures the *within-group* variability.
 - The bigger the F-statistic, the more different the groups are, taking into account the variability within the groups.
 
+## F-Statistic Formula (just FYI)
+
+\[ 
+\begin{align}
+F &= \frac{\frac{1}{I-1} \sum_{i=1}^I n_i(\bar{x}_i - \bar{x})^2}{\frac{1}{N-I}\sum_{i=1}^I(n_i-1)s_i^2} \\[5pt]
+  &= \frac{\text{between-group variability}}{\text{within-group variability}} \\[5pt]
+  &= \frac{\text{variability due to explanatory variable}}{\text{unexplained variability}}
+\end{align}
+\]
+
 ## 22.2.2 Variability of the statistic
 
 Simulation using cards:
