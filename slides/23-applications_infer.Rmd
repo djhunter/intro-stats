@@ -79,9 +79,9 @@ set.seed(1423)
 | Categorical (2 levels, paired) | Numeric | Paired t-test |
 | Categorical (> 2 levels) | Numeric | ANOVA F-test |
 
-## Practice Problems: Identify the Scenario
+## Group Activity
 
-Complete the quiz at the following Google Form:
+For each study description, choose the appropriate scenario/model. At least one person from each group should complete the following Google Form:
 
 https://forms.gle/ibCCkVJrt6EubG4b9
 
