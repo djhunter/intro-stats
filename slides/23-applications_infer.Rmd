@@ -1,0 +1,93 @@
+---
+title: "Chapter 22: Inference for comparing many means"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(tidyverse)
+library(openintro)
+library(kableExtra)
+theme_set(theme_bw())
+set.seed(1423)
+```
+
+# Overview
+
+- 23.1 Recap: Computational methods
+    - 23.1.1 Randomization
+    - 23.1.2 Bootstrapping
+- 23.2 Recap: Mathematical models
+    - 23.2.1 z-procedures
+    - 23.2.2 t-procedures
+- 23.3 Case study: Redundant adjectives
+    - 23.3.1 Exploratory analysis
+    - 23.3.2 Confidence interval for a single mean
+    - 23.3.3 Paired mean test
+    - 23.3.4 Two independent means test
+    
+# 23.1 Recap: Computational methods
+
+- Two types of inference for *an unknown parameter*.
+    - Hypothesis Tests 
+        - Assume $H_0$ about your parameter, and assess how extreme your observed statistic would be.
+        - Extreme statistics (low P-values) indicate evidence against $H_0$ in favor of $H_A$.
+    - Confidence intervals
+        - Measure the observed statistic, and compute a margin of error.
+        - The confidence interval represents a range of plausible values for the unknown parameter.
+
+## 23.1.1 Randomization (Hypothesis Tests)
+
+- Write appropriate hypotheses.
+- Compute the observed statistic of interest.
+- Permute the data repeatedly, each time, recalculating the statistic of interest.
+- Compute the proportion of times the permuted statistics are as extreme as or more extreme than the observed statistic, this is the p-value.
+- Make a conclusion based on the p-value, and write the conclusion in context and in plain language so anyone can understand the result.
+
+## 23.1.2 Bootstrapping (Confidence Intervals)
+
+- Repeatedly resample the original data, with replacement, using the same sample size as the original data.
+- For each resample, calculate the statistic of interest.
+- Calculate the confidence interval using one of the following methods:
+- Bootstrap percentile interval: Obtain the endpoints representing the middle (e.g., 95%) of the bootstrapped statistics. The endpoints will be the confidence interval.
+- Bootstrap standard error (SE) interval: Find the SE of the bootstrapped statistics. The confidence interval will be given by the original observed statistic plus or minus some multiple (e.g., 2) of SEs.
+- Put the conclusions in context and in plain language so even non-statisticians and data scientists can understand the results.
+
+# 23.2 Recap: Mathematical models
+
+| Explanatory | Response | Model |
+| ----------- | -------- | ----- |
+| Categorical ($\geq$ 2 levels) | Categorical ($\geq$ 2 levels) | Chi-squared |
+| none | Numeric | One-sample t-test |
+| Categorical (2 levels) | Numeric | Two-sample t-test |
+| Categorical (2 levels, paired) | Numeric | Paired t-test |
+| Categorical (> 2 levels) | Numeric | ANOVA F-test |
+
+## Practice Problems: Identify the Scenario
+
+Complete the quiz at the following Google Form:
+
+https://forms.gle/ibCCkVJrt6EubG4b9
+
+
+# 23.3 Case study: Redundant adjectives
+## 23.3.1 Exploratory analysis
+## 23.3.2 Confidence interval for a single mean
+## 23.3.3 Paired mean test
+## 23.3.4 Two independent means test
