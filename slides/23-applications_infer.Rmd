@@ -1,5 +1,5 @@
 ---
-title: "Chapter 22: Inference for comparing many means"
+title: "Chapter 23: Applications of Inference"
 output: 
   revealjs::revealjs_presentation:
     fig_width: 14 
@@ -65,9 +65,9 @@ set.seed(1423)
 - Repeatedly resample the original data, with replacement, using the same sample size as the original data.
 - For each resample, calculate the statistic of interest.
 - Calculate the confidence interval using one of the following methods:
-- Bootstrap percentile interval: Obtain the endpoints representing the middle (e.g., 95%) of the bootstrapped statistics. The endpoints will be the confidence interval.
-- Bootstrap standard error (SE) interval: Find the SE of the bootstrapped statistics. The confidence interval will be given by the original observed statistic plus or minus some multiple (e.g., 2) of SEs.
-- Put the conclusions in context and in plain language so even non-statisticians and data scientists can understand the results.
+    - Bootstrap percentile interval: Obtain the endpoints representing the middle (e.g., 95%) of the bootstrapped statistics. 
+    - Bootstrap standard error (SE) interval: Find the SE of the bootstrapped statistics. The confidence interval will be the observed statistic plus or minus some multiple (e.g., 2) of SEs.
+- Put the conclusions in context and in plain language so even non-statisticians can understand the results.
 
 # 23.2 Recap: Mathematical models
 
@@ -87,7 +87,147 @@ https://forms.gle/ibCCkVJrt6EubG4b9
 
 
 # 23.3 Case study: Redundant adjectives
+
+- What factors affect whether people use "redundant adjectives"?
+    - Context
+    - Native Language
+- Experiment: show two images to 22 native English speakers (undergraduates from University College London) and 22 native Spanish speakers (undergraduates from the Universidad de las Islas Baleares). 
+
+## {data-background-image="https://openintro-ims.netlify.app/images/redundant-adjectives-blue-triangle.png" data-background-size="contain"}
+
+
 ## 23.3.1 Exploratory analysis
+
+```{r include=FALSE}
+# analysis based on 
+# https://osf.io/fqnms/ > Production data > AnalyzeProduction.R
+# one row per question
+redundant_individual <- read_csv("data/ENGLISH-SPANISH PRODUCTION.csv") %>%
+  mutate(
+    items = if_else(Question > 10, 16, 4),
+    items = as.factor(items),
+    adjective = if_else(`Color Response` == 1, "redundant", "not redundant")
+    ) %>%
+  select(-`Color Response`)
+# one row per individual
+redundant <- redundant_individual %>%
+  group_by(Language, Subject, items) %>%
+  summarise(
+    n_questions = n(),
+    redundant_perc = sum(adjective == "redundant") * 100 / n_questions,
+    .groups = "drop"
+    )
+```
+
+```{r}
+glimpse(redundant)
+```
+
+## Redundant adjectives: boxplots
+
+```{r, fig.height=4, fig.width=6, fig.align='center'}
+ggplot(redundant, aes(x = items, y = redundant_perc, color = Language)) + geom_boxplot()
+``` 
+
+
+## Redundant adjectives: violin plots
+
+```{r, fig.height=4, fig.width=6, fig.align='center'}
+ggplot(redundant, aes(x = items, y = redundant_perc, color = Language)) + geom_violin()
+``` 
+
 ## 23.3.2 Confidence interval for a single mean
+
+Mean redundant adjective usage: English speakers, 4 items
+
+```{r}
+redundant %>%
+  filter(Language == "English",
+         items == 4) %>%
+  t.test(redundant_perc ~ 1, data = .)
+```
+
+## {data-background-image="https://openintro-ims.netlify.app/23-inference-applications_files/figure-html/boot-eng-4-viz-1.png" data-background-size="contain"}
+
+# Group Activty
+
+For each research question, (1) determine the appropriate *scenario*, (2) state *hypotheses* in symbols, and (3) describe the *observed statistic* in words.
+
+- Do the data provide convincing evidence of a difference in mean redundant adjective usage percentages between sparse (4 item) and dense (16 item) displays for English speakers?
+
+- How does redundant adjective usage differ between English speakers and Spanish speakers?
+
 ## 23.3.3 Paired mean test
+
+```{r}
+redundant %>%
+  filter(Language == "English") %>%
+  pivot_wider(names_from = items, 
+              values_from = redundant_perc,
+              names_prefix = "item") %>%
+  {t.test(.$item16, .$item4, paired = TRUE)}
+```
+
+## {data-background-image="https://openintro-ims.netlify.app/23-inference-applications_files/figure-html/eng-viz-1.png" data-background-size="contain"}
+
+## Item comparison (English speakers)
+
+```{r, fig.height=4, fig.width=6, fig.align='center'}
+redundant %>%
+  filter(Language == "English") %>%
+  ggplot(aes(x = items, y = redundant_perc)) +
+    geom_boxplot()
+```
+
+## Item comparison (English speakers)
+
+```{r, fig.height=4, fig.width=6, fig.align='center'}
+redundant %>%
+  filter(Language == "English") %>%
+  ggplot(aes(x = items, y = redundant_perc)) +
+    geom_violin()
+```
+
+
 ## 23.3.4 Two independent means test
+
+
+## Two mean t-test (4 items)
+
+```{r}
+redundant %>%
+  filter(items == 4) %>%
+  t.test(redundant_perc ~ Language, data = .)
+```
+
+
+
+## Two mean t-test (16 items)
+
+```{r}
+redundant %>%
+  filter(items == 16) %>%
+  t.test(redundant_perc ~ Language, data = .)
+```
+
+
+## {data-background-image="https://openintro-ims.netlify.app/23-inference-applications_files/figure-html/compare-lang-viz-1.png" data-background-size="contain"}
+
+## English vs. Spanish (4 items)
+
+```{r, fig.height=4, fig.width=6, fig.align='center'}
+redundant %>%
+  filter(items == 4) %>%
+  ggplot(aes(x = redundant_perc, fill = Language)) +
+    geom_histogram(binwidth = 10, position = "dodge")
+```
+
+
+## English vs. Spanish (16 items)
+
+```{r, fig.height=4, fig.width=6, fig.align='center'}
+redundant %>%
+  filter(items == 16) %>%
+  ggplot(aes(x = redundant_perc, fill = Language)) +
+    geom_histogram(binwidth = 10, position = "dodge")
+```
