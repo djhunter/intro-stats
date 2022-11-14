@@ -62,3 +62,12 @@ edu.aov <- aov(amt_weekends ~ highest_qualification, data = smokers)
 anova(edu.aov)
 TukeyHSD(edu.aov)
 
+## Paired t-test
+
+t.test(smokers$amt_weekdays, smokers$amt_weekends, paired = TRUE)
+ggplot(smokers, aes(x = amt_weekdays, y = amt_weekends)) + geom_point()
+
+## Challenge: Do men and women separately? Same difference?
+
+
+

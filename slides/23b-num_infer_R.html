@@ -1972,6 +1972,16 @@ own later.</li>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="do">## associated with how much someone smokes on weekends? </span></span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Try some. Make a boxplot, and then do an anova. </span></span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Is there evidence of an association? If so, follow up with TukeyHSD.</span></span></code></pre></div>
+</section>
+<section class="slide level2">
+
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Paired t-test</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(smokers<span class="sc">$</span>amt_weekdays, smokers<span class="sc">$</span>amt_weekends, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(smokers, <span class="fu">aes</span>(<span class="at">x =</span> amt_weekdays, <span class="at">y =</span> amt_weekends)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Challenge: Do men and women separately. Do both men and women smoke more on</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="do">## the weekends? Is the difference the same?</span></span></code></pre></div>
 </section></section>
     </div>
   </div>

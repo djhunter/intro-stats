@@ -111,3 +111,14 @@ anova(mstat.aov)
 ## Is there evidence of an association? If so, follow up with TukeyHSD.
 ```
 
+---
+
+```{r, eval = FALSE}
+## Paired t-test
+
+t.test(smokers$amt_weekdays, smokers$amt_weekends, paired = TRUE)
+ggplot(smokers, aes(x = amt_weekdays, y = amt_weekends)) + geom_point()
+
+## Challenge: Do men and women separately. Do both men and women smoke more on
+## the weekends? Is the difference the same?
+```
