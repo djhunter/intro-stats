@@ -3,37 +3,62 @@
 library(tidyverse)
 library(openintro)
 
-data(yrbss)
-glimpse(yrbss)
-?yrbss
+data(smoking)
+glimpse(smoking)
+?smoking
+summary(smoking)
 
-summary(yrbss$weight)
-summary(yrbss$physically_active_7d)
+summary(smoking$age)
 
-active_weight <- yrbss %>%
-  select(physically_active_7d, weight) %>%
-  drop_na() %>%
-  mutate(active = if_else(physically_active_7d > 4, "yes", "no"))
+ggplot(smoking, aes(x = age)) +  geom_boxplot() 
+ggplot(smoking, aes(x = age)) +  geom_histogram() 
+ggplot(smoking, aes(x = age)) +  geom_density() 
 
-table(active_weight$active)
+ggplot(smoking, aes(x = age, fill = smoke)) +  geom_boxplot() 
+ggplot(smoking, aes(x = age, fill = smoke)) +  geom_histogram(position = "dodge") 
+ggplot(smoking, aes(x = age, fill = smoke)) +  geom_density(alpha = 0.3) 
 
-# Is weight associated to activity level?
+t.test(age ~ smoke, data = smoking)
 
-ggplot(active_weight, aes(x = active, y = weight)) + geom_boxplot()
-ggplot(active_weight, aes(x = active, y = weight)) + geom_violin()
+## Let's restrict our attention to just people who smoke.
 
-t.test(weight ~ active, data = active_weight)
+smokers <- smoking %>%
+  filter(smoke == "Yes")
 
-table(yrbss$strength_training_7d)
+summary(smokers)
 
-## Challenge: do youth who do strength training more than 3 days per week weigh
-## more than those who don't? 
+ggplot(smokers, aes(x = amt_weekends)) + geom_boxplot()
 
-## Solution:
-strength_weight <- yrbss %>%
-  select(strength_training_7d, weight) %>%
-  drop_na() %>%
-  mutate(train = if_else(strength_training_7d > 3, "yes", "no"))
+## Challenge: Do men and women differ in how much they smoke on weekends? Make a plot
+## and do a t-test.
 
-ggplot(strength_weight, aes(x = train, y = weight)) + geom_violin()
-t.test(weight ~ train, data = strength_weight)
+# solution:
+ggplot(smokers, aes(x = amt_weekends, fill = gender)) +  geom_boxplot() 
+ggplot(smokers, aes(x = amt_weekends, fill = gender)) +  geom_histogram(position = "dodge") 
+ggplot(smokers, aes(x = amt_weekends, fill = gender)) +  geom_density(alpha = 0.3) 
+
+t.test(amt_weekends ~ gender, data = smokers)
+
+## Multiple means
+
+ggplot(smokers, aes(x = amt_weekends, fill = marital_status)) + geom_boxplot()
+mstat.aov <- aov(amt_weekends ~ marital_status, data = smokers)
+anova(mstat.aov)
+
+levels(smokers$ethnicity)
+
+## Challenge: Can you find a factor that predicts how much someone smokes
+## on weekends? Try some. Make a boxplot, and then do an 
+## anova. Is there evidence of an association? If so, follow up with TukeyHSD.
+
+## Solution: 
+ggplot(smokers, aes(x = amt_weekends, fill = region)) + geom_boxplot()
+region.aov <- aov(amt_weekends ~ region, data = smokers)
+anova(region.aov)
+TukeyHSD(region.aov)
+
+ggplot(smokers, aes(x = amt_weekends, fill = highest_qualification)) + geom_boxplot()
+edu.aov <- aov(amt_weekends ~ highest_qualification, data = smokers)
+anova(edu.aov)
+TukeyHSD(edu.aov)
+
