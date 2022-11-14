@@ -1,0 +1,113 @@
+---
+title: "Inference for Numerical Data in R"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(tidyverse)
+library(openintro)
+theme_set(theme_bw())
+```
+
+# Pairs Today
+
+- Please pair up (your choice).
+    - At least one person in each pair needs to have a device that can use RStudio (installed or using rstudio.cloud). This person is the *Operator*.
+    - Ideally, everyone has an RStudio-enabled device. If you don't, you can still take notes by keeping track of the code and trying it on your own later.
+    
+# Review
+
+## Categorical Explanatory, Numerical Response
+
+- Two-sample $t$-test
+    - Explanatory variable has 2 levels.
+    - Data is *not* paired; groups are *independent*.
+    - Statistic: $\bar{x}_1 - \bar{x}_2$
+- ANOVA $F$-test
+    - Explanatory variable has more than 2 levels.
+    - Statistic: $F = \frac{MSG}{MSE}$
+    - Omnibus test
+        - If significant, follow up with Tukey HSD.
+        - If not significant, there is no association. Don't follow up.
+    
+# Data Carpentry
+
+## Group Exercises
+
+Do all the challenges.
+
+```{r, eval = FALSE}
+library(tidyverse)
+library(openintro)
+
+data(smoking)
+glimpse(smoking)
+?smoking
+summary(smoking)
+
+summary(smoking$age)
+```
+
+---
+
+```{r, eval = FALSE}
+ggplot(smoking, aes(x = age)) +  geom_boxplot() 
+ggplot(smoking, aes(x = age)) +  geom_histogram() 
+ggplot(smoking, aes(x = age)) +  geom_density() 
+
+ggplot(smoking, aes(x = age, fill = smoke)) +  geom_boxplot() 
+ggplot(smoking, aes(x = age, fill = smoke)) +  geom_histogram(position = "dodge") 
+ggplot(smoking, aes(x = age, fill = smoke)) +  geom_density(alpha = 0.3) 
+
+t.test(age ~ smoke, data = smoking)
+```
+
+---
+
+```{r, eval = FALSE}
+## Let's restrict our attention to just people who smoke.
+
+smokers <- smoking %>%
+  filter(smoke == "Yes")
+
+summary(smokers)
+
+ggplot(smokers, aes(x = amt_weekends)) + geom_boxplot()
+
+## Challenge: Do men and women differ in how much they smoke on weekends? ## Make a plot and do a t-test.
+```
+
+---
+
+```{r, eval = FALSE}
+## Multiple means: Grouping variables with more than 2 levels
+
+summary(smokers$marital_status)
+
+ggplot(smokers, aes(x = amt_weekends, fill = marital_status)) + geom_boxplot()
+mstat.aov <- aov(amt_weekends ~ marital_status, data = smokers)
+anova(mstat.aov)
+
+## Challenge: Can you find a factor in the data set that is
+## associated with how much someone smokes on weekends? 
+## Try some. Make a boxplot, and then do an anova. 
+## Is there evidence of an association? If so, follow up with TukeyHSD.
+```
+

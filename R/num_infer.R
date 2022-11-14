@@ -39,13 +39,13 @@ ggplot(smokers, aes(x = amt_weekends, fill = gender)) +  geom_density(alpha = 0.
 
 t.test(amt_weekends ~ gender, data = smokers)
 
-## Multiple means
+## Multiple means: Grouping variables with more than 2 levels
+
+summary(smokers$marital_status)
 
 ggplot(smokers, aes(x = amt_weekends, fill = marital_status)) + geom_boxplot()
 mstat.aov <- aov(amt_weekends ~ marital_status, data = smokers)
 anova(mstat.aov)
-
-levels(smokers$ethnicity)
 
 ## Challenge: Can you find a factor that predicts how much someone smokes
 ## on weekends? Try some. Make a boxplot, and then do an 
