@@ -1,0 +1,91 @@
+---
+title: "Review for Test #4"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(tidyverse)
+library(openintro)
+```
+
+# General Advice 
+
+- See the [study guide](https://westmont.instructure.com/courses/8503/files/625761). The test covers chapters 19-23, but lots of the material depends on Chapters 11-18, so you might want to go back and do some selected review of those chapters.
+- Review the slides and your class notes. 
+    - As you review, follow along with the *textbook*.
+    - As you review, keep a list of key terms and concepts.
+    - Make sure you can answer all the *group activity questions*.
+- Review your homework, keeping in mind that these have been graded very leniently.
+- Do some of the *odd-numbered problems* in the textbook.
+    - The answers to the odd-numbered questions are in the back of the book.
+- Study the *Chapter Review* sections at the end of each chapter.
+
+## Equations provided
+
+- Generic SE confidence interval
+    - $\mbox{point estimate} \pm 2 \cdot SE$
+- One-sample t-test
+    - $\displaystyle{T = \frac{\bar{x} - \text{null value}}{s/\sqrt{n}}}$, $df = n-1$ 
+- One mean t-interval
+    - $\displaystyle{\bar{x}  \pm  t^{\star}_{df} \times \frac{s}{\sqrt{n}}}$ 
+- Two-sample t-test (independent means)
+    - $\displaystyle{T = \frac{(\bar{x}_1 - \bar{x}_2) - 0}{\sqrt{s_1^2/n_1 + s_2^2/n_2}}}$, $df = \text{min}(n_1-1, n_2-1)$ 
+    
+## Equations provided (continued)
+
+- Two-sample t-interval
+    - $\displaystyle{\bar{x}_1 - \bar{x}_2 \pm t^\star_{df} \times \sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}}$ 
+- Paired t-test
+    - $\displaystyle{T = \frac{\bar{x}_\text{diff} - 0}{s_\text{diff}/\sqrt{n}}}$, $df = n-1$ 
+- Paired t-interval
+    - $\displaystyle{\bar{x}_\text{diff}  \pm  t^{\star}_{df} \times \frac{s_\text{diff}}{\sqrt{n}}}$ 
+- ANOVA F-test
+    - $\displaystyle{F = \frac{MSG}{MSE}}$, $df_1 = k-1$, $df_2 = n-k$
+
+# Review Problems
+
+## Questions on Homework Problems?
+
+https://openintro-ims.netlify.app/
+
+## Group Activity
+
+- Chapter 19, Exercises 13, 17
+- Chapter 20, Exercises 5, 6
+- Chapter 21, Exercises 4, 7 
+- Chapter 22, Exercises 5 (see next slides)
+
+Recorder and Presenter may have some assigned tasks.
+
+## Chapter 22, Exercise 5
+
+```{r}
+chick.aov <- aov(weight ~ feed, data = chickwts)
+anova(chick.aov)
+```
+
+## Follow-up test
+
+```{r}
+TukeyHSD(chick.aov)
+```
+
+
+
