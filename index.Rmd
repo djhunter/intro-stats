@@ -68,7 +68,8 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 28. [Inference for Comparing Many Means](slides/22-infer_manymeans.html), 11/9
 29. [Inference: Applications](slides/23-applications_infer.html), 11/11
 30. [Inference for Numerical Data in R](slides/23b-num_infer_R.html), 11/14
-23. [Review for Test #4](slides/23c-test4review.html), 11/16
+31. [Review for Test #4](slides/23c-test4review.html), 11/16
+32. [Inference for Linear Regression](slides/24a-infer_regression.html), 11/21
 
 # Other Resources
 
