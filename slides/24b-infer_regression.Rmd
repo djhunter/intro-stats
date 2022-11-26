@@ -1,0 +1,88 @@
+---
+title: "Chapter 24: Inference for linear regression, continued"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(tidyverse)
+library(openintro)
+library(kableExtra)
+theme_set(theme_bw())
+set.seed(1423)
+```
+
+# Overview
+
+- 24.4 Mathematical model for testing the slope
+    - 24.4.1 Observed data
+    - 24.4.2 Variability of the statistic
+    - 24.4.3 Observed statistic vs. null statistics
+- 24.5 Mathematical model, interval for the slope
+    - 24.5.1 Observed data
+    - 24.5.2 Variability of the statistic
+- 24.6 Checking model conditions
+    - 24.6.1 What are the technical conditions for the mathematical model?
+    - 24.6.2 Why do we need technical conditions?
+    - 24.6.3 What if all the technical conditions are met?
+
+# Last time: regression inference
+
+- Linear regression model: $y = \beta_0 + \beta_1x + \varepsilon$
+- Regression equation: $\hat{y} = b_0 + b_1x$
+- $b_0$ and $b_1$ are *statistics*.
+    - $b_0$ is our best guess for the parameter $\beta_0$
+    - $b_1$ is our best guess for the parameter $\beta_1$
+- Null Hypothesis: No linear association
+    - $H_0: \beta_1 = 0$
+        - Regression slope is zero
+    - $H_A: \beta_1 \neq 0$
+        - Some linear association
+        
+## Randomization test for regression slope
+
+- You have $n$ observations of two numeric variables, explanatory and response.
+- Write the values of the response variable on $n$ cards.
+- Shuffle, then randomly pair up with values of the explanatory variable.
+- Compute a shuffled $b_1$. (lots)
+- Make a null distribution.
+- Get a p-value
+
+
+##  {data-background="https://openintro-ims.netlify.app/24-inf-model-slr_files/figure-html/permweightScatter-1.png" data-background-size="contain"}
+
+##  {data-background="https://openintro-ims.netlify.app/24-inf-model-slr_files/figure-html/permweekslm-1.png" data-background-size="contain"}
+
+##  {data-background="https://openintro-ims.netlify.app/24-inf-model-slr_files/figure-html/nulldistBirths-1.png" data-background-size="contain"}
+
+# 24.4 Mathematical model for testing the slope
+
+
+## 24.4.1 Observed data
+## 24.4.2 Variability of the statistic
+## 24.4.3 Observed statistic vs. null statistics
+# 24.5 Mathematical model, interval for the slope
+## 24.5.1 Observed data
+## 24.5.2 Variability of the statistic
+# 24.6 Checking model conditions
+## 24.6.1 What are the technical conditions for the mathematical model?
+## 24.6.2 Why do we need technical conditions?
+## 24.6.3 What if all the technical conditions are met?
+
+
