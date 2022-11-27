@@ -62,7 +62,7 @@ set.seed(1423)
 - Shuffle, then randomly pair up with values of the explanatory variable.
 - Compute a shuffled $b_1$. (lots)
 - Make a null distribution.
-- Get a p-value
+- Get a p-value.
 
 
 ##  {data-background="https://openintro-ims.netlify.app/24-inf-model-slr_files/figure-html/permweightScatter-1.png" data-background-size="contain"}
@@ -73,8 +73,64 @@ set.seed(1423)
 
 # 24.4 Mathematical model for testing the slope
 
+- We can get a $T$-statistic from the *correlation coefficient* $r$.
+- This will have a $t$-distribution with $n-2$ degrees of freedom.
+- Usually we will use software to get the $t$-statistic and P-value.
+
+\[
+T = \frac{r}{\sqrt{\frac{1-r^2}{n-2}}} = \frac{b}{SE(b)}
+\]
 
 ## 24.4.1 Observed data
+
+- Midterm elections from 1898 to 2018.
+- Explanatory: unemployment rate
+- Response: percent change in House for president's party
+
+**Research Question:** Can the unemployment rate predict how the president's party will do in the midterm elections?
+
+## House-Midterms data set
+
+```{r}
+glimpse(midterms_house)
+```
+
+## Scatterplot and Regression Line
+
+## Regression Table
+
+```{r, message=FALSE, fig.width=5, fig.height=4, fig.align='center'}
+ggplot(midterms_house, aes(x=unemp, y=house_change)) + 
+  geom_point() +
+  geom_smooth(method=lm)
+```
+
+## Influential Outliers
+
+- There are two very influential outliers (high unemployment)
+- These both took place during the depression:
+
+```{r}
+midterms_house %>% filter(unemp > 15)
+```
+
+## Remove outliers and replot
+
+```{r, message=FALSE, fig.width=5, fig.height=4, fig.align='center'}
+midhouse_nodep <- midterms_house %>% filter(unemp < 15)
+ggplot(midhouse_nodep, aes(x=unemp, y=house_change)) + 
+  geom_point() +
+  geom_smooth(method=lm)
+```
+
+## Regression Table
+
+```{r}
+summary(lm(house_change ~ unemp, data = midhouse_nodep))
+```
+
+
+
 ## 24.4.2 Variability of the statistic
 ## 24.4.3 Observed statistic vs. null statistics
 # 24.5 Mathematical model, interval for the slope
