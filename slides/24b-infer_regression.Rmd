@@ -165,11 +165,156 @@ summary(lm(rating ~ sugars, data = cerealsugar))
 ```
 
 # 24.5 Mathematical model, interval for the slope
+
 ## 24.5.1 Observed data
-## 24.5.2 Variability of the statistic
+
+You need:
+
+- The point estimate $b_1$
+- The standard error $SE$
+    - Usually you use software to get this.
+- $t^\star_{df}$
+    - $df = n - 2$
+    - The confidence level determines the tail probabilities.
+    
+$$
+\text{point estimate} \pm t^\star_{df} \times SE
+$$
+
+## Example: College Gift Aid
+
+```{r}
+glimpse(elmhurst)
+```
+
+## Scatterplot and Regression Line
+
+```{r, message=FALSE, fig.width=5, fig.height=4, fig.align='center'}
+ggplot(elmhurst, aes(x=family_income, y=gift_aid)) + 
+  geom_point() +
+  geom_smooth(method=lm)
+```
+
+## Regression Model
+
+```{r}
+summary(lm(gift_aid ~ family_income, data = elmhurst))
+```
+
+## Compute a confidence interval
+
+```{r echo=FALSE}
+mod1 <- lm(gift_aid ~ family_income, data = elmhurst)
+summary(mod1)$coefficients
+```
+
+- $SE_{b_1} \approx 0.0108$
+- $df = 48$
+- $b_1 \approx -0.0431$
+- To obtain $t^\star_{48}$, we have to use `qt`. We want a 95% confidence interval.
+
+```{r}
+qt(0.975, df = 48)
+```
+
+95% CI for $\beta_1$: $-0.0431 \pm 2.01 \times 0.0108 \approx (-0.0648, -0.0214)$
+
+## Group Activity
+
+Recall the regression model for predicting cereal rating (in points) from sugar content (in grams).
+
+```{r echo=FALSE}
+summary(lm(rating ~ sugars, data = cerealsugar))$coefficients
+```
+
+1. Compute a 90% confidence interval for the regression slope.
+
+2. Write a sentence interpreting this confidence interval in the context of the study.
+
+
 # 24.6 Checking model conditions
+
+- Every mathematical model is based on theorems that assume that our data has certain properties.
+- The P-values and confidence intervals that we compute using mathematical models are not guaranteed to be correct unless these conditions are met.
+
+
 ## 24.6.1 What are the technical conditions for the mathematical model?
-## 24.6.2 Why do we need technical conditions?
-## 24.6.3 What if all the technical conditions are met?
+
+
+>- **Linearity.** The data should show a linear trend. 
+>- **Independent observations.** The ordered pairs describe independent observations (e.g., from a random sample).
+>- **Nearly normal residuals.** Generally, the residuals must be nearly normal. 
+>- **Constant or equal variability.** The variability of points around the least squares line remains roughly constant. 
+
+## {data-background="https://openintro-ims.netlify.app/24-inf-model-slr_files/figure-html/whatCanGoWrongWithLinearModel-1.png" data-background-size="contain"}
+
+## Plotting residuals versus fitted
+
+```{r, message=FALSE, fig.width=5, fig.height=4, fig.align='center'}
+cerealmodel <- lm(rating ~ sugars, data = cerealsugar)
+ggplot(cerealmodel, aes(x = .fitted, y = .resid)) + geom_point()
+```
+
+## More diagnostic plots
+
+```{r, message=FALSE, fig.width=8, fig.height=4, fig.align='center'}
+library(ggfortify)
+autoplot(cerealmodel)
+```
+
+
+## Failures to meet the conditions
+
+<div class="column-left">
+- Data is *not symmetric* above and below the line:
+
+```{r, echo=FALSE, fig.width=4, fig.height=3, fig.align='center', message=FALSE}
+library(ggplot2)
+sleepgpa <- read.table("http://www.isi-stats.com/isi/data/chap10/SleepGPA.txt", header = TRUE)
+ggplot(sleepgpa, aes(x=Sleep, y=GPA)) + geom_point() +geom_smooth(method=lm, se=FALSE)
+```
+</div>
+
+<div class="column-right">
+- Data doesn't follow a linear pattern:
+
+```{r, echo=FALSE, fig.width=4, fig.height=3, fig.align='center', message=FALSE}
+library(ggplot2)
+examtimes <- read.table("http://www.isi-stats.com/isi/data/chap10/StroopAgeTime.txt", header = TRUE)
+ggplot(examtimes, aes(x=Age, y=time)) + geom_point() +geom_smooth(method=lm, se=FALSE)
+```
+</div>
+
+## More Failures
+
+Variability of vertical slices changes (heteroscedasticity):
+
+
+<div class="column-left">
+```{r, echo=FALSE, fig.width=4, fig.height=3, fig.align='center', message=FALSE}
+library(ggplot2)
+tvlife <- read.table("http://www.isi-stats.com/isi/data/chap10/TVLife.txt", header = TRUE)
+ggplot(tvlife, aes(x=TVsperK, y=LifeExpectancy)) + geom_point() +geom_smooth(method=lm, se=FALSE)
+```
+</div>
+
+<div class="column-right">
+```{r, echo=FALSE, fig.width=4, fig.height=3, fig.align='center', message=FALSE}
+library(ggplot2)
+smoke <- read.table("http://www.isi-stats.com/isi/data/chap10/AlcoholSmoke.txt", header = TRUE)
+ggplot(smoke, aes(x=Alcohol_Drinks, y=Smoked)) + geom_point() +geom_smooth(method=lm, se=FALSE)
+```
+</div>
+
+## What to do when conditions fail
+
+- What do you do when validity conditions aren’t met for theory-based inference?
+    + If it's not too bad, the theory-based tests are probably OK
+    + Use the simulation-based approach...
+        + *instead of* the theory-based test, for really bad failures 
+        + or *in addition to* the theory-based test, in borderline cases
+- Another strategy is to “transform” the data on a different scale so conditions are met.  
+    + The logarithmic scale is common
+    
 
 

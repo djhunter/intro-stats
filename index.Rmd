@@ -70,6 +70,7 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 30. [Inference for Numerical Data in R](slides/23b-num_infer_R.html), 11/14
 31. [Review for Test #4](slides/23c-test4review.html), 11/16
 32. [Inference for Linear Regression](slides/24a-infer_regression.html), 11/21
+33. [Inference for Linear Regression, continued](slides/24b-infer_regression.html), 11/28
 
 # Other Resources
 
