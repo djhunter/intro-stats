@@ -97,8 +97,6 @@ glimpse(midterms_house)
 
 ## Scatterplot and Regression Line
 
-## Regression Table
-
 ```{r, message=FALSE, fig.width=5, fig.height=4, fig.align='center'}
 ggplot(midterms_house, aes(x=unemp, y=house_change)) + 
   geom_point() +
