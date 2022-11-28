@@ -78,7 +78,7 @@ set.seed(1423)
 - Usually we will use software to get the $t$-statistic and P-value.
 
 \[
-T = \frac{r}{\sqrt{\frac{1-r^2}{n-2}}} = \frac{b}{SE(b)}
+T = \frac{r}{\sqrt{\frac{1-r^2}{n-2}}} = \frac{b_1 - 0}{SE_{b_1}}
 \]
 
 ## 24.4.1 Observed data
@@ -123,16 +123,47 @@ ggplot(midhouse_nodep, aes(x=unemp, y=house_change)) +
   geom_smooth(method=lm)
 ```
 
-## Regression Table
+## 24.4.2 Variability of the statistic
 
 ```{r}
 summary(lm(house_change ~ unemp, data = midhouse_nodep))
 ```
 
+The data do not show much evidence that unemployment rate is associated with gains/losses in the midterm elections.
 
+# Breakfast Cereal Ratings
 
-## 24.4.2 Variability of the statistic
-## 24.4.3 Observed statistic vs. null statistics
+Several variables were recorded on 74 different breakfast cereals: number of calories per serving, grams of protein, grams of fat, milligrams of sodium, grams of fiber, grams of carbohydrates, grams of sugars, milligrams of potassium, typical percentage of the FDA's RDA of vitamins, the weight of one serving, the number of cups in one serving, and the shelf location (1,2 or 3 for bottom, middle or top). A variable named "rating" was calculated by Consumer Reports.
+
+## Sugar and Cereal Rating 
+
+Is there a linear relationship between the sugar content of a cereal and its rating?
+
+- Null Hypothesis: There is no association between sugar content and rating.
+    + $H_0: \beta_1 = 0$
+- Alternative Hypothesis: There is a linear relationship between between sugar content and rating.
+    + $H_A: \beta_1 \neq 0$ 
+
+## Group Activity
+
+1. Paste the [CerealSugar](http://math.westmont.edu/data/cerealsugar.txt) data into the [Applet](http://www.rossmanchance.com/applets/RegShuffle.htm?hideExtras=2) and record the correlation coefficient $r$.
+
+2. Find the $T$-statistic using the following formula.
+\[
+t = \frac{r}{\sqrt{\frac{1-r^2}{n-2}}} 
+\]
+
+3. Run a simulation with 1000 shuffles. Select the *t-statistic* radio button, then check the *Overlay t distribution* button. Does the t-distribution appear to do a good job of predicting the distribution of the simulated t-statistics? 
+
+4. In the applet, click the box for *Regression Table*. This table provides the observed $T$-statistic for the data as well as the two-sided, theory-based test P-value. Compare the $T$-statistic to the value you calculated in #2. Record the P-value, along with an interpretation of its meaning in context.
+
+## Regression table using R
+
+```{r}
+cerealsugar <- read.table("http://math.westmont.edu/data/cerealsugar.txt", header = TRUE)
+summary(lm(rating ~ sugars, data = cerealsugar))
+```
+
 # 24.5 Mathematical model, interval for the slope
 ## 24.5.1 Observed data
 ## 24.5.2 Variability of the statistic
