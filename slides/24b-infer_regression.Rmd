@@ -151,7 +151,7 @@ Is there a linear relationship between the sugar content of a cereal and its rat
 t = \frac{r}{\sqrt{\frac{1-r^2}{n-2}}} 
 \]
 
-3. Run a simulation with 1000 shuffles. Select the *t-statistic* radio button, then check the *Overlay t distribution* button. Does the t-distribution appear to do a good job of predicting the distribution of the simulated t-statistics? 
+3. Run a simulation with 1000 shuffles. Select *t-statistic*, then check the *Overlay t distribution* button. Does the t-distribution appear to do a good job of predicting the distribution of the simulated t-statistics? 
 
 4. In the applet, click the box for *Regression Table*. This table provides the observed $T$-statistic for the data as well as the two-sided, theory-based test P-value. Compare the $T$-statistic to the value you calculated in #2. Record the P-value, along with an interpretation of its meaning in context.
 
