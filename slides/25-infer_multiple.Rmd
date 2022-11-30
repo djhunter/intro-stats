@@ -32,8 +32,8 @@ set.seed(1423)
 
 - 25.1 Multiple regression output from software
 - 25.2 Multicollinearity
-- 25.3 Cross-validation for prediction error
-    - 25.3.1 Comparing two models to predict body mass in penguins
+- ~~25.3 Cross-validation for prediction error~~
+- Cereal: Creating Multiple Regression Models
 
 # 25.1 Multiple regression output from software
 
@@ -165,6 +165,127 @@ cor(money)
 - Hard to interpret the regression coefficients.
 - Still OK for making predictions using the regression equation.
 
-# 25.3 Cross-validation for prediction error
-## 25.3.1 Comparing two models to predict body mass in penguins
+## Loan Data Correlations
+
+```{r}
+round(cor(loans[, c(1,3,6,7)], use = "na.or.complete"), 3)
+```
+
+# Cereal Ratings: Other Variables
+
+- Last time, we found that sugar content was a good predictor of cereal rating. 
+- In addition to sugar content, the researchers recorded several other variables for each box of cereal. Using these variables, can we predict how a cereal would be rated?
+
+## Cereal Data
+
+```{r echo=FALSE}
+cereal <- read.table("http://math.westmont.edu/data/cereal.csv", header=TRUE, sep=";")
+glimpse(cereal)
+```
+
+## Group Question
+
+```{r}
+round(cor(cereal[,c(4,5,6,7,8,9,10,12,16)]),2)
+```
+
+1. Which two measurements have the strongest positive association with `rating`? Which two have the strongest negative association? 
+2. Which two predictor variables are most strongly correlated?
+
+## Explore five variables of the data
+
+```{r}
+glimpse(cereal[,c(4,5,8,10,16)])
+```
+
+## Regression: `rating ~ sugars`
+
+```{r}
+summary(lm(rating ~ sugars, data = cereal))
+```
+
+## Regression: `rating ~ fiber`
+
+```{r}
+summary(lm(rating ~ fiber, data = cereal))
+```
+
+## Multiple Regression
+
+- There is more than one choice for an explanatory variable.
+- Different choices have different $r^2$'s. 
+- Multiple regression gives us a way to combine them. It also gives us a combined coefficient of determination, $R^2$.
+- All we have to do is change the formula.
+
+## `rating ~ sugars + fiber`
+
+```{r}
+summary(lm(rating ~ sugars + fiber, data = cereal))
+```
+
+## Multiple regression prediction equation
+
+- We can write one prediction equation.
+- The relationship explains 82% of the variability in rating: $R^2 = 0.8165$
+
+$$\widehat{\text{rating}} = 51.6 - 2.2\times\text{sugars} + 2.9\times\text{fiber}$$
+
+## More explanatory variables
+
+```{r}
+summary(lm(rating ~ sugars + fiber + calories + protein, data = cereal))
+```
+
+## Group Exercise
+
+1. **Record** a prediction equation for rating based on the explanatory variables sugars, fiber, calories, and protein.
+
+2. **Record** the percentage of variability in rating that is determined by this relationship.
+
+3. A new cereal, *Sugar Frosted Chocolate Bombs*, has 140 calories per serving, 2 grams of protein, 16 grams of sugars, and 1 gram of fiber. **Record** a predicted rating for this cereal.
+
+## {data-background="http://math.westmont.edu/img/sugar.jpg" data-background-size="contain"}
+
+## Two types of p-values
+
+- p-values for each coefficient: $H_0: \beta_1 = 0, \, H_0: \beta_2 = 0, \, \ldots, H_0: \beta_k = 0$
+- p-values for an overall association: $H_0: \beta_1 = \beta_2 = \cdots = \beta_k = 0$
+
+Check overall significance *before* looking at individual slopes. 
+
+## Validity Conditions
+
+- Validity conditions for simple linear regression for each variable:
+    + linear relationship
+    + independent observations
+    + symmetry across regression line
+    + equal variation along regression line
+
+## Overfitting
+
+- In multiple regression, adding more explanatory variables does not always make the model better.
+- Too many variables can give a misleadingly high $R^2$. It can also amplify noise in the data and make predictions worse (overfitting).
+- *Rule of thumb:* if you add an explanatory variable and the *Adjusted R-squared* goes down, you have too many variables.
+
+## Five-variable model
+
+Adjusted $R^2 \approx 0.8923$.
+
+```{r}
+summary(lm(rating ~ sugars + fiber + calories + protein + fat, data = cereal))
+```
+
+## Six-variable model
+
+Adjusted $R^2 \approx 0.8908$.
+
+```{r}
+summary(lm(rating ~ sugars + fiber + calories + protein + fat + carbo, data = cereal))
+```
+
+## Sometimes less is more
+
+- When we added `carbo` to the model, the Adjusted R-squared went down.
+- This means the additional explanatory variable didn't improve the model.
+- Having too many explanatory variables can throw off predictions.
 

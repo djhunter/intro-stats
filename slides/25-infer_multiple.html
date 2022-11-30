@@ -1878,10 +1878,8 @@ continued</h1>
 <ul>
 <li>25.1 Multiple regression output from software</li>
 <li>25.2 Multicollinearity</li>
-<li>25.3 Cross-validation for prediction error
-<ul>
-<li>25.3.1 Comparing two models to predict body mass in penguins</li>
-</ul></li>
+<li><del>25.3 Cross-validation for prediction error</del></li>
+<li>Cereal: Creating Multiple Regression Models</li>
 </ul>
 </section>
 
@@ -2064,14 +2062,308 @@ correlated within themselves.</p>
 <li>Hard to interpret the regression coefficients.</li>
 <li>Still OK for making predictions using the regression equation.</li>
 </ul>
+</section>
+<section id="loan-data-correlations" class="slide level2">
+<h2>Loan Data Correlations</h2>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">cor</span>(loans[, <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">6</span>,<span class="dv">7</span>)], <span class="at">use =</span> <span class="st">&quot;na.or.complete&quot;</span>), <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>               interest_rate debt_to_income  term credit_checks
+interest_rate          1.000          0.142 0.358         0.131
+debt_to_income         0.142          1.000 0.046         0.025
+term                   0.358          0.046 1.000         0.030
+credit_checks          0.131          0.025 0.030         1.000</code></pre>
 </section></section>
 <section>
-<section id="cross-validation-for-prediction-error" class="title-slide slide level1">
-<h1>25.3 Cross-validation for prediction error</h1>
-
+<section id="cereal-ratings-other-variables" class="title-slide slide level1">
+<h1>Cereal Ratings: Other Variables</h1>
+<ul>
+<li>Last time, we found that sugar content was a good predictor of
+cereal rating.</li>
+<li>In addition to sugar content, the researchers recorded several other
+variables for each box of cereal. Using these variables, can we predict
+how a cereal would be rated?</li>
+</ul>
 </section>
-<section id="comparing-two-models-to-predict-body-mass-in-penguins" class="slide level2">
-<h2>25.3.1 Comparing two models to predict body mass in penguins</h2>
+<section id="cereal-data" class="slide level2">
+<h2>Cereal Data</h2>
+<pre><code>Rows: 74
+Columns: 16
+$ name     &lt;chr&gt; &quot;100 Percent Bran&quot;, &quot;100 Percent Natural Bran&quot;, &quot;All-Bran&quot;, &quot;All-Bran with Extra …
+$ mfr      &lt;chr&gt; &quot;N&quot;, &quot;Q&quot;, &quot;K&quot;, &quot;K&quot;, &quot;G&quot;, &quot;K&quot;, &quot;G&quot;, &quot;R&quot;, &quot;P&quot;, &quot;Q&quot;, &quot;G&quot;, &quot;G&quot;, &quot;G&quot;, &quot;G&quot;, &quot;R&quot;, &quot;K&quot;, &quot;…
+$ type     &lt;chr&gt; &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;…
+$ calories &lt;int&gt; 70, 120, 70, 50, 110, 110, 130, 90, 90, 120, 110, 120, 110, 110, 110, 100, 110, 1…
+$ protein  &lt;int&gt; 4, 3, 4, 4, 2, 2, 3, 2, 3, 1, 6, 1, 3, 1, 2, 2, 1, 1, 3, 2, 2, 2, 2, 1, 3, 3, 3, …
+$ fat      &lt;int&gt; 1, 5, 1, 0, 2, 0, 2, 1, 0, 2, 2, 3, 2, 1, 0, 0, 0, 1, 3, 0, 1, 0, 1, 0, 0, 2, 0, …
+$ sodium   &lt;int&gt; 130, 15, 260, 140, 180, 125, 210, 200, 210, 220, 290, 210, 140, 180, 280, 290, 90…
+$ fiber    &lt;dbl&gt; 10.0, 2.0, 9.0, 14.0, 1.5, 1.0, 2.0, 4.0, 5.0, 0.0, 2.0, 0.0, 2.0, 0.0, 0.0, 1.0,…
+$ carbo    &lt;dbl&gt; 5.0, 8.0, 7.0, 8.0, 10.5, 11.0, 18.0, 15.0, 13.0, 12.0, 17.0, 13.0, 13.0, 12.0, 2…
+$ sugars   &lt;int&gt; 6, 8, 5, 0, 10, 14, 8, 6, 5, 12, 1, 9, 7, 13, 3, 2, 12, 13, 7, 3, 10, 5, 13, 11, …
+$ potass   &lt;int&gt; 280, 135, 320, 330, 70, 30, 100, 125, 190, 35, 105, 45, 105, 55, 25, 35, 20, 65, …
+$ vitamins &lt;int&gt; 25, 0, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25…
+$ shelf    &lt;int&gt; 3, 3, 3, 3, 1, 2, 3, 1, 3, 2, 1, 2, 3, 2, 1, 1, 2, 2, 3, 3, 3, 3, 2, 1, 2, 3, 3, …
+$ weight   &lt;dbl&gt; 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.33, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.0…
+$ cups     &lt;dbl&gt; 0.33, 1.00, 0.33, 0.50, 0.75, 1.00, 0.75, 0.67, 0.67, 0.75, 1.25, 0.75, 0.50, 1.0…
+$ rating   &lt;dbl&gt; 68.40297, 33.98368, 59.42551, 93.70491, 29.50954, 33.17409, 37.03856, 49.12025, 5…</code></pre>
+</section>
+<section id="group-question" class="slide level2">
+<h2>Group Question</h2>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">cor</span>(cereal[,<span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>,<span class="dv">12</span>,<span class="dv">16</span>)]),<span class="dv">2</span>)</span></code></pre></div>
+<pre><code>         calories protein   fat sodium fiber carbo sugars vitamins rating
+calories     1.00    0.03  0.51   0.30 -0.30  0.27   0.57     0.26  -0.69
+protein      0.03    1.00  0.20   0.01  0.51 -0.04  -0.29     0.05   0.47
+fat          0.51    0.20  1.00   0.00  0.01 -0.28   0.29    -0.03  -0.41
+sodium       0.30    0.01  0.00   1.00 -0.07  0.33   0.04     0.33  -0.38
+fiber       -0.30    0.51  0.01  -0.07  1.00 -0.38  -0.15    -0.04   0.60
+carbo        0.27   -0.04 -0.28   0.33 -0.38  1.00  -0.45     0.25   0.06
+sugars       0.57   -0.29  0.29   0.04 -0.15 -0.45   1.00     0.07  -0.76
+vitamins     0.26    0.05 -0.03   0.33 -0.04  0.25   0.07     1.00  -0.21
+rating      -0.69    0.47 -0.41  -0.38  0.60  0.06  -0.76    -0.21   1.00</code></pre>
+<ol type="1">
+<li>Which two measurements have the strongest positive association with
+<code>rating</code>? Which two have the strongest negative
+association?</li>
+<li>Which two predictor variables are most strongly correlated?</li>
+</ol>
+</section>
+<section id="explore-five-variables-of-the-data" class="slide level2">
+<h2>Explore five variables of the data</h2>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(cereal[,<span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">16</span>)])</span></code></pre></div>
+<pre><code>Rows: 74
+Columns: 5
+$ calories &lt;int&gt; 70, 120, 70, 50, 110, 110, 130, 90, 90, 120, 110, 120, 110, 110, 110, 100, 110, 1…
+$ protein  &lt;int&gt; 4, 3, 4, 4, 2, 2, 3, 2, 3, 1, 6, 1, 3, 1, 2, 2, 1, 1, 3, 2, 2, 2, 2, 1, 3, 3, 3, …
+$ fiber    &lt;dbl&gt; 10.0, 2.0, 9.0, 14.0, 1.5, 1.0, 2.0, 4.0, 5.0, 0.0, 2.0, 0.0, 2.0, 0.0, 0.0, 1.0,…
+$ sugars   &lt;int&gt; 6, 8, 5, 0, 10, 14, 8, 6, 5, 12, 1, 9, 7, 13, 3, 2, 12, 13, 7, 3, 10, 5, 13, 11, …
+$ rating   &lt;dbl&gt; 68.40297, 33.98368, 59.42551, 93.70491, 29.50954, 33.17409, 37.03856, 49.12025, 5…</code></pre>
+</section>
+<section id="regression-rating-sugars" class="slide level2">
+<h2>Regression: <code>rating ~ sugars</code></h2>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(rating <span class="sc">~</span> sugars, <span class="at">data =</span> cereal))</span></code></pre></div>
+<pre><code>
+Call:
+lm(formula = rating ~ sugars, data = cereal)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-17.944  -5.596  -1.380   4.773  34.034 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  59.6709     2.0672  28.866  &lt; 2e-16 ***
+sugars       -2.4337     0.2484  -9.799 6.92e-15 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 9.25 on 72 degrees of freedom
+Multiple R-squared:  0.5715,    Adjusted R-squared:  0.5655 
+F-statistic: 96.02 on 1 and 72 DF,  p-value: 6.924e-15</code></pre>
+</section>
+<section id="regression-rating-fiber" class="slide level2">
+<h2>Regression: <code>rating ~ fiber</code></h2>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(rating <span class="sc">~</span> fiber, <span class="at">data =</span> cereal))</span></code></pre></div>
+<pre><code>
+Call:
+lm(formula = rating ~ fiber, data = cereal)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-20.154  -7.970  -1.696   6.787  27.550 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  34.7693     1.7657  19.691  &lt; 2e-16 ***
+fiber         3.4943     0.5442   6.421 1.27e-08 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 11.27 on 72 degrees of freedom
+Multiple R-squared:  0.3641,    Adjusted R-squared:  0.3553 
+F-statistic: 41.23 on 1 and 72 DF,  p-value: 1.269e-08</code></pre>
+</section>
+<section id="multiple-regression" class="slide level2">
+<h2>Multiple Regression</h2>
+<ul>
+<li>There is more than one choice for an explanatory variable.</li>
+<li>Different choices have different <span class="math inline">\(r^2\)</span>’s.</li>
+<li>Multiple regression gives us a way to combine them. It also gives us
+a combined coefficient of determination, <span class="math inline">\(R^2\)</span>.</li>
+<li>All we have to do is change the formula.</li>
+</ul>
+</section>
+<section id="rating-sugars-fiber" class="slide level2">
+<h2><code>rating ~ sugars + fiber</code></h2>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(rating <span class="sc">~</span> sugars <span class="sc">+</span> fiber, <span class="at">data =</span> cereal))</span></code></pre></div>
+<pre><code>
+Call:
+lm(formula = rating ~ sugars + fiber, data = cereal)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-12.096  -4.302  -1.017   2.610  16.476 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  51.6328     1.5930  32.412  &lt; 2e-16 ***
+sugars       -2.1904     0.1656 -13.229  &lt; 2e-16 ***
+fiber         2.8996     0.2978   9.735 1.04e-14 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 6.096 on 71 degrees of freedom
+Multiple R-squared:  0.8165,    Adjusted R-squared:  0.8113 
+F-statistic: 157.9 on 2 and 71 DF,  p-value: &lt; 2.2e-16</code></pre>
+</section>
+<section id="multiple-regression-prediction-equation" class="slide level2">
+<h2>Multiple regression prediction equation</h2>
+<ul>
+<li>We can write one prediction equation.</li>
+<li>The relationship explains 82% of the variability in rating: <span class="math inline">\(R^2 = 0.8165\)</span></li>
+</ul>
+<p><span class="math display">\[\widehat{\text{rating}} = 51.6 -
+2.2\times\text{sugars} + 2.9\times\text{fiber}\]</span></p>
+</section>
+<section id="more-explanatory-variables" class="slide level2">
+<h2>More explanatory variables</h2>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(rating <span class="sc">~</span> sugars <span class="sc">+</span> fiber <span class="sc">+</span> calories <span class="sc">+</span> protein, <span class="at">data =</span> cereal))</span></code></pre></div>
+<pre><code>
+Call:
+lm(formula = rating ~ sugars + fiber + calories + protein, data = cereal)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-11.7960  -3.1484  -0.5602   2.7014  13.0237 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 68.18926    3.84392  17.740  &lt; 2e-16 ***
+sugars      -1.51063    0.19066  -7.923 2.76e-11 ***
+fiber        2.03753    0.32769   6.218 3.37e-08 ***
+calories    -0.23225    0.04312  -5.386 9.40e-07 ***
+protein      2.12632    0.76016   2.797  0.00667 ** 
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 5.184 on 69 degrees of freedom
+Multiple R-squared:  0.871, Adjusted R-squared:  0.8635 
+F-statistic: 116.5 on 4 and 69 DF,  p-value: &lt; 2.2e-16</code></pre>
+</section>
+<section id="group-exercise" class="slide level2">
+<h2>Group Exercise</h2>
+<ol type="1">
+<li><p><strong>Record</strong> a prediction equation for rating based on
+the explanatory variables sugars, fiber, calories, and protein.</p></li>
+<li><p><strong>Record</strong> the percentage of variability in rating
+that is determined by this relationship.</p></li>
+<li><p>A new cereal, <em>Sugar Frosted Chocolate Bombs</em>, has 140
+calories per serving, 2 grams of protein, 16 grams of sugars, and 1 gram
+of fiber. <strong>Record</strong> a predicted rating for this
+cereal.</p></li>
+</ol>
+</section>
+<section id="section-2" class="slide level2" data-background="http://math.westmont.edu/img/sugar.jpg" data-background-size="contain">
+<h2 data-background="http://math.westmont.edu/img/sugar.jpg" data-background-size="contain"></h2>
+</section>
+<section id="two-types-of-p-values" class="slide level2">
+<h2>Two types of p-values</h2>
+<ul>
+<li>p-values for each coefficient: <span class="math inline">\(H_0:
+\beta_1 = 0, \, H_0: \beta_2 = 0, \, \ldots, H_0: \beta_k =
+0\)</span></li>
+<li>p-values for an overall association: <span class="math inline">\(H_0: \beta_1 = \beta_2 = \cdots = \beta_k =
+0\)</span></li>
+</ul>
+<p>Check overall significance <em>before</em> looking at individual
+slopes.</p>
+</section>
+<section id="validity-conditions" class="slide level2">
+<h2>Validity Conditions</h2>
+<ul>
+<li>Validity conditions for simple linear regression for each variable:
+<ul>
+<li>linear relationship</li>
+<li>independent observations</li>
+<li>symmetry across regression line</li>
+<li>equal variation along regression line</li>
+</ul></li>
+</ul>
+</section>
+<section id="overfitting" class="slide level2">
+<h2>Overfitting</h2>
+<ul>
+<li>In multiple regression, adding more explanatory variables does not
+always make the model better.</li>
+<li>Too many variables can give a misleadingly high <span class="math inline">\(R^2\)</span>. It can also amplify noise in the
+data and make predictions worse (overfitting).</li>
+<li><em>Rule of thumb:</em> if you add an explanatory variable and the
+<em>Adjusted R-squared</em> goes down, you have too many variables.</li>
+</ul>
+</section>
+<section id="five-variable-model" class="slide level2">
+<h2>Five-variable model</h2>
+<p>Adjusted <span class="math inline">\(R^2 \approx 0.8923\)</span>.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(rating <span class="sc">~</span> sugars <span class="sc">+</span> fiber <span class="sc">+</span> calories <span class="sc">+</span> protein <span class="sc">+</span> fat, <span class="at">data =</span> cereal))</span></code></pre></div>
+<pre><code>
+Call:
+lm(formula = rating ~ sugars + fiber + calories + protein + fat, 
+    data = cereal)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-10.431  -2.820  -1.019   2.449  11.418 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 61.91805    3.69847  16.742  &lt; 2e-16 ***
+sugars      -1.46592    0.16966  -8.641 1.51e-12 ***
+fiber        2.13785    0.29196   7.323 3.71e-10 ***
+calories    -0.16230    0.04145  -3.915 0.000212 ***
+protein      2.55314    0.68210   3.743 0.000376 ***
+fat         -2.82459    0.64035  -4.411 3.76e-05 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 4.605 on 68 degrees of freedom
+Multiple R-squared:  0.8997,    Adjusted R-squared:  0.8923 
+F-statistic:   122 on 5 and 68 DF,  p-value: &lt; 2.2e-16</code></pre>
+</section>
+<section id="six-variable-model" class="slide level2">
+<h2>Six-variable model</h2>
+<p>Adjusted <span class="math inline">\(R^2 \approx 0.8908\)</span>.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(rating <span class="sc">~</span> sugars <span class="sc">+</span> fiber <span class="sc">+</span> calories <span class="sc">+</span> protein <span class="sc">+</span> fat <span class="sc">+</span> carbo, <span class="at">data =</span> cereal))</span></code></pre></div>
+<pre><code>
+Call:
+lm(formula = rating ~ sugars + fiber + calories + protein + fat + 
+    carbo, data = cereal)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-10.456  -2.904  -1.007   2.444  11.335 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 61.70925    3.98629  15.480  &lt; 2e-16 ***
+sugars      -1.40148    0.46996  -2.982  0.00399 ** 
+fiber        2.15018    0.30577   7.032 1.33e-09 ***
+calories    -0.17752    0.11152  -1.592  0.11613    
+protein      2.60630    0.77622   3.358  0.00130 ** 
+fat         -2.68376    1.15385  -2.326  0.02306 *  
+carbo        0.07322    0.49745   0.147  0.88342    
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 4.638 on 67 degrees of freedom
+Multiple R-squared:  0.8997,    Adjusted R-squared:  0.8908 
+F-statistic: 100.2 on 6 and 67 DF,  p-value: &lt; 2.2e-16</code></pre>
+</section>
+<section id="sometimes-less-is-more" class="slide level2">
+<h2>Sometimes less is more</h2>
+<ul>
+<li>When we added <code>carbo</code> to the model, the Adjusted
+R-squared went down.</li>
+<li>This means the additional explanatory variable didn’t improve the
+model.</li>
+<li>Having too many explanatory variables can throw off
+predictions.</li>
+</ul>
 </section></section>
     </div>
   </div>
