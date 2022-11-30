@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
-  <title>Chapter 24: Inference for linear regression, continued</title>
+  <title>Chapter 24: Inference for multiple linear regression</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -1869,17 +1869,19 @@ document.addEventListener('DOMContentLoaded', function(e) {
     <div class="slides">
 
 <section>
-    <h1 class="title">Chapter 24: Inference for linear regression,
-continued</h1>
+    <h1 class="title">Chapter 24: Inference for multiple linear
+regression</h1>
 </section>
 
 <section id="overview" class="title-slide slide level1">
 <h1>Overview</h1>
 <ul>
 <li>25.1 Multiple regression output from software</li>
-<li>25.2 Multicollinearity</li>
-<li><del>25.3 Cross-validation for prediction error</del></li>
+<li>25.2 Multicollinearity
+<ul>
 <li>Cereal: Creating Multiple Regression Models</li>
+</ul></li>
+<li>25.3 Cross-validation for prediction error</li>
 </ul>
 </section>
 
@@ -1986,6 +1988,26 @@ variables in the model</p>
 associated with interest rate, when the other variables are taken into
 account.</li>
 </ul>
+</section>
+<section id="condtioning-on-other-variables" class="slide level2">
+<h2>Condtioning on other variables</h2>
+<p>In a multivariable model, the P-values for each coefficient measure
+the effect of the variable <em>assuming the other variables remain
+constant</em>.</p>
+<pre><code>               Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)        4.31       0.20   22.07        0
+debt_to_income     0.04       0.00   13.30        0
+term               0.16       0.00   37.91        0
+credit_checks      0.25       0.02   12.80        0</code></pre>
+<ul>
+<li><em>For loans with a given term and borrowers with a given
+debt-to-income ratio,</em> we have very strong evidence that the number
+of credit checks has a positive association with interest rate.</li>
+<li>The number of credit checks has a significant effect, <em>even when
+term and debt-to-income ratio are taken into account.</em></li>
+<li><em>Controlling term and debt-to-income ratio,</em> the number of
+credit checks has a significant effect.</li>
+</ul>
 </section></section>
 <section>
 <section id="multicollinearity" class="title-slide slide level1">
@@ -2008,18 +2030,18 @@ coins (i.e., coins smaller than quarters)</li>
 </section>
 <section id="predicting-amount-single-variable-models" class="slide level2">
 <h2>Predicting amount: single variable models</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(total_amount <span class="sc">~</span> number_of_coins, <span class="at">data =</span> money))<span class="sc">$</span>coefficients</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(total_amount <span class="sc">~</span> number_of_coins, <span class="at">data =</span> money))<span class="sc">$</span>coefficients</span></code></pre></div>
 <pre><code>                 Estimate Std. Error  t value     Pr(&gt;|t|)
 (Intercept)     0.5455854 0.44310536 1.231277 2.301490e-01
 number_of_coins 0.1341547 0.02422195 5.538560 1.070416e-05</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(total_amount <span class="sc">~</span> number_of_low_coins, <span class="at">data =</span> money))<span class="sc">$</span>coefficients</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(total_amount <span class="sc">~</span> number_of_low_coins, <span class="at">data =</span> money))<span class="sc">$</span>coefficients</span></code></pre></div>
 <pre><code>                      Estimate Std. Error   t value     Pr(&gt;|t|)
 (Intercept)         2.27979939 0.58478523 3.8985242 0.0006806597
 number_of_low_coins 0.02012241 0.05082503 0.3959153 0.6956652745</code></pre>
 </section>
 <section id="predicting-amount-multivariable-model" class="slide level2">
 <h2>Predicting amount: multivariable model</h2>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(total_amount <span class="sc">~</span> number_of_coins <span class="sc">+</span> number_of_low_coins, <span class="at">data =</span> money))<span class="sc">$</span>coefficients</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(total_amount <span class="sc">~</span> number_of_coins <span class="sc">+</span> number_of_low_coins, <span class="at">data =</span> money))<span class="sc">$</span>coefficients</span></code></pre></div>
 <pre><code>                      Estimate Std. Error   t value     Pr(&gt;|t|)
 (Intercept)          0.7981116 0.30066739  2.654467 1.416556e-02
 number_of_coins      0.2062375 0.02085594  9.888671 9.438697e-10
@@ -2051,7 +2073,7 @@ explain why they would be different?</p></li>
 </section>
 <section id="multicollinearity-1" class="slide level2">
 <h2>Multicollinearity</h2>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(money)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(money)</span></code></pre></div>
 <pre><code>                    number_of_coins number_of_low_coins total_amount
 number_of_coins           1.0000000          0.62720820   0.74903117
 number_of_low_coins       0.6272082          1.00000000   0.08055325
@@ -2065,12 +2087,29 @@ correlated within themselves.</p>
 </section>
 <section id="loan-data-correlations" class="slide level2">
 <h2>Loan Data Correlations</h2>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">cor</span>(loans[, <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">6</span>,<span class="dv">7</span>)], <span class="at">use =</span> <span class="st">&quot;na.or.complete&quot;</span>), <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">cor</span>(loans[, <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">6</span>,<span class="dv">7</span>)], <span class="at">use =</span> <span class="st">&quot;na.or.complete&quot;</span>), <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>               interest_rate debt_to_income  term credit_checks
 interest_rate          1.000          0.142 0.358         0.131
 debt_to_income         0.142          1.000 0.046         0.025
 term                   0.358          0.046 1.000         0.030
 credit_checks          0.131          0.025 0.030         1.000</code></pre>
+</section>
+<section id="conditioning-on-other-variables" class="slide level2">
+<h2>Conditioning on other variables</h2>
+<pre><code>                Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)         0.55       0.44    1.23     0.23
+number_of_coins     0.13       0.02    5.54     0.00</code></pre>
+<pre><code>                    Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)             2.28       0.58     3.9      0.0
+number_of_low_coins     0.02       0.05     0.4      0.7</code></pre>
+<pre><code>                    Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)             0.80       0.30    2.65     0.01
+number_of_coins         0.21       0.02    9.89     0.00
+number_of_low_coins    -0.16       0.03   -5.51     0.00</code></pre>
+<ul>
+<li>If we <em>hold the number of coins constant</em>, then the number of
+low coins has a negative association.</li>
+</ul>
 </section></section>
 <section>
 <section id="cereal-ratings-other-variables" class="title-slide slide level1">
@@ -2104,9 +2143,9 @@ $ weight   &lt;dbl&gt; 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.33, 1.00, 1.00, 1.0
 $ cups     &lt;dbl&gt; 0.33, 1.00, 0.33, 0.50, 0.75, 1.00, 0.75, 0.67, 0.67, 0.75, 1.25, 0.75, 0.50, 1.0…
 $ rating   &lt;dbl&gt; 68.40297, 33.98368, 59.42551, 93.70491, 29.50954, 33.17409, 37.03856, 49.12025, 5…</code></pre>
 </section>
-<section id="group-question" class="slide level2">
-<h2>Group Question</h2>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">cor</span>(cereal[,<span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>,<span class="dv">12</span>,<span class="dv">16</span>)]),<span class="dv">2</span>)</span></code></pre></div>
+<section id="group-activity-1" class="slide level2">
+<h2>Group Activity</h2>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">cor</span>(cereal[,<span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>,<span class="dv">12</span>,<span class="dv">16</span>)]),<span class="dv">2</span>)</span></code></pre></div>
 <pre><code>         calories protein   fat sodium fiber carbo sugars vitamins rating
 calories     1.00    0.03  0.51   0.30 -0.30  0.27   0.57     0.26  -0.69
 protein      0.03    1.00  0.20   0.01  0.51 -0.04  -0.29     0.05   0.47
@@ -2126,7 +2165,7 @@ association?</li>
 </section>
 <section id="explore-five-variables-of-the-data" class="slide level2">
 <h2>Explore five variables of the data</h2>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(cereal[,<span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">16</span>)])</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(cereal[,<span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">16</span>)])</span></code></pre></div>
 <pre><code>Rows: 74
 Columns: 5
 $ calories &lt;int&gt; 70, 120, 70, 50, 110, 110, 130, 90, 90, 120, 110, 120, 110, 110, 110, 100, 110, 1…
@@ -2137,7 +2176,7 @@ $ rating   &lt;dbl&gt; 68.40297, 33.98368, 59.42551, 93.70491, 29.50954, 33.1740
 </section>
 <section id="regression-rating-sugars" class="slide level2">
 <h2>Regression: <code>rating ~ sugars</code></h2>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(rating <span class="sc">~</span> sugars, <span class="at">data =</span> cereal))</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(rating <span class="sc">~</span> sugars, <span class="at">data =</span> cereal))</span></code></pre></div>
 <pre><code>
 Call:
 lm(formula = rating ~ sugars, data = cereal)
@@ -2159,7 +2198,7 @@ F-statistic: 96.02 on 1 and 72 DF,  p-value: 6.924e-15</code></pre>
 </section>
 <section id="regression-rating-fiber" class="slide level2">
 <h2>Regression: <code>rating ~ fiber</code></h2>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(rating <span class="sc">~</span> fiber, <span class="at">data =</span> cereal))</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(rating <span class="sc">~</span> fiber, <span class="at">data =</span> cereal))</span></code></pre></div>
 <pre><code>
 Call:
 lm(formula = rating ~ fiber, data = cereal)
@@ -2191,7 +2230,7 @@ a combined coefficient of determination, <span class="math inline">\(R^2\)</span
 </section>
 <section id="rating-sugars-fiber" class="slide level2">
 <h2><code>rating ~ sugars + fiber</code></h2>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(rating <span class="sc">~</span> sugars <span class="sc">+</span> fiber, <span class="at">data =</span> cereal))</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(rating <span class="sc">~</span> sugars <span class="sc">+</span> fiber, <span class="at">data =</span> cereal))</span></code></pre></div>
 <pre><code>
 Call:
 lm(formula = rating ~ sugars + fiber, data = cereal)
@@ -2223,7 +2262,7 @@ F-statistic: 157.9 on 2 and 71 DF,  p-value: &lt; 2.2e-16</code></pre>
 </section>
 <section id="more-explanatory-variables" class="slide level2">
 <h2>More explanatory variables</h2>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(rating <span class="sc">~</span> sugars <span class="sc">+</span> fiber <span class="sc">+</span> calories <span class="sc">+</span> protein, <span class="at">data =</span> cereal))</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(rating <span class="sc">~</span> sugars <span class="sc">+</span> fiber <span class="sc">+</span> calories <span class="sc">+</span> protein, <span class="at">data =</span> cereal))</span></code></pre></div>
 <pre><code>
 Call:
 lm(formula = rating ~ sugars + fiber + calories + protein, data = cereal)
@@ -2300,7 +2339,7 @@ data and make predictions worse (overfitting).</li>
 <section id="five-variable-model" class="slide level2">
 <h2>Five-variable model</h2>
 <p>Adjusted <span class="math inline">\(R^2 \approx 0.8923\)</span>.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(rating <span class="sc">~</span> sugars <span class="sc">+</span> fiber <span class="sc">+</span> calories <span class="sc">+</span> protein <span class="sc">+</span> fat, <span class="at">data =</span> cereal))</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(rating <span class="sc">~</span> sugars <span class="sc">+</span> fiber <span class="sc">+</span> calories <span class="sc">+</span> protein <span class="sc">+</span> fat, <span class="at">data =</span> cereal))</span></code></pre></div>
 <pre><code>
 Call:
 lm(formula = rating ~ sugars + fiber + calories + protein + fat, 
@@ -2328,7 +2367,7 @@ F-statistic:   122 on 5 and 68 DF,  p-value: &lt; 2.2e-16</code></pre>
 <section id="six-variable-model" class="slide level2">
 <h2>Six-variable model</h2>
 <p>Adjusted <span class="math inline">\(R^2 \approx 0.8908\)</span>.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(rating <span class="sc">~</span> sugars <span class="sc">+</span> fiber <span class="sc">+</span> calories <span class="sc">+</span> protein <span class="sc">+</span> fat <span class="sc">+</span> carbo, <span class="at">data =</span> cereal))</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(rating <span class="sc">~</span> sugars <span class="sc">+</span> fiber <span class="sc">+</span> calories <span class="sc">+</span> protein <span class="sc">+</span> fat <span class="sc">+</span> carbo, <span class="at">data =</span> cereal))</span></code></pre></div>
 <pre><code>
 Call:
 lm(formula = rating ~ sugars + fiber + calories + protein + fat + 
@@ -2364,6 +2403,94 @@ model.</li>
 <li>Having too many explanatory variables can throw off
 predictions.</li>
 </ul>
+</section></section>
+<section>
+<section id="cross-validation-for-prediction-error" class="title-slide slide level1">
+<h1>25.3 Cross-validation for prediction error</h1>
+
+</section>
+<section id="comparing-models" class="slide level2">
+<h2>Comparing Models</h2>
+<ul>
+<li><strong>Goal:</strong> We want to assess how well our models will
+predict <em>future observations</em> that are not in our data set.</li>
+<li>In <strong>Cross Validation</strong>, you fit the model on part of
+the data set, and then you test the residuals on the rest of the data
+set.
+<ul>
+<li>The “held out” data plays the role of future observations.</li>
+</ul></li>
+</ul>
+</section>
+<section id="cross-validation-in-r" class="slide level2">
+<h2>Cross Validation in R</h2>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span></code></pre></div>
+<pre><code>Loading required package: lattice</code></pre>
+<pre><code>
+Attaching package: &#39;lattice&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:openintro&#39;:
+
+    ethanol, lsegments</code></pre>
+<pre><code>
+Attaching package: &#39;caret&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:openintro&#39;:
+
+    dotPlot</code></pre>
+<pre><code>The following object is masked from &#39;package:purrr&#39;:
+
+    lift</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>tc <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>)</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">train</span>(rating <span class="sc">~</span> sugars <span class="sc">+</span> fiber, <span class="at">data =</span> cereal, <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">trControl =</span> tc)</span></code></pre></div>
+<pre><code>Linear Regression 
+
+74 samples
+ 2 predictor
+
+No pre-processing
+Resampling: Cross-Validated (5 fold) 
+Summary of sample sizes: 59, 58, 58, 62, 59 
+Resampling results:
+
+  RMSE      Rsquared  MAE     
+  6.152191  0.835021  5.072003
+
+Tuning parameter &#39;intercept&#39; was held constant at a value of TRUE</code></pre>
+</section>
+<section class="slide level2">
+
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">train</span>(rating <span class="sc">~</span> sugars <span class="sc">+</span> fiber <span class="sc">+</span> calories <span class="sc">+</span> protein <span class="sc">+</span> fat, <span class="at">data =</span> cereal, <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">trControl =</span> tc)</span></code></pre></div>
+<pre><code>Linear Regression 
+
+74 samples
+ 5 predictor
+
+No pre-processing
+Resampling: Cross-Validated (5 fold) 
+Summary of sample sizes: 59, 60, 59, 60, 58 
+Resampling results:
+
+  RMSE      Rsquared  MAE     
+  5.062506  0.88427   3.998817
+
+Tuning parameter &#39;intercept&#39; was held constant at a value of TRUE</code></pre>
+</section>
+<section class="slide level2">
+
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">train</span>(rating <span class="sc">~</span> sugars <span class="sc">+</span> fiber <span class="sc">+</span> calories <span class="sc">+</span> protein <span class="sc">+</span> fat <span class="sc">+</span> carbo, <span class="at">data =</span> cereal, <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">trControl =</span> tc)</span></code></pre></div>
+<pre><code>Linear Regression 
+
+74 samples
+ 6 predictor
+
+No pre-processing
+Resampling: Cross-Validated (5 fold) 
+Summary of sample sizes: 59, 58, 60, 59, 60 
+Resampling results:
+
+  RMSE      Rsquared   MAE     
+  5.077437  0.8827979  4.090109
+
+Tuning parameter &#39;intercept&#39; was held constant at a value of TRUE</code></pre>
 </section></section>
     </div>
   </div>

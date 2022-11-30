@@ -1,5 +1,5 @@
 ---
-title: "Chapter 24: Inference for linear regression, continued"
+title: "Chapter 24: Inference for multiple linear regression"
 output: 
   revealjs::revealjs_presentation:
     fig_width: 14 
@@ -32,8 +32,8 @@ set.seed(1423)
 
 - 25.1 Multiple regression output from software
 - 25.2 Multicollinearity
-- ~~25.3 Cross-validation for prediction error~~
-- Cereal: Creating Multiple Regression Models
+    - Cereal: Creating Multiple Regression Models
+- 25.3 Cross-validation for prediction error
 
 # 25.1 Multiple regression output from software
 
@@ -103,6 +103,20 @@ We say that these hypotheses are *conditioned on* the other variables in the mod
 
 - e.g., we have strong evidence that `term` is positively associated with interest rate, when the other variables are taken into account.
 
+## Condtioning on other variables
+
+In a multivariable model, the P-values for each coefficient measure the effect of the variable *assuming the other variables remain constant*.
+
+```{r echo=FALSE}
+loan.model <- lm(interest_rate ~ debt_to_income + term + credit_checks, data = loans)
+round(summary(loan.model)$coefficients, 2)
+```
+
+- *For loans with a given term and borrowers with a given debt-to-income ratio,* we have very strong evidence that the number of credit checks has a positive association with interest rate.
+- The number of credit checks has a significant effect, *even when term and debt-to-income ratio are taken into account.*
+- *Controlling term and debt-to-income ratio,* the number of credit checks has a significant effect. 
+
+
 # 25.2 Multicollinearity
 
 ## Example: Predict the value of a coin dish
@@ -140,7 +154,7 @@ summary(lm(total_amount ~ number_of_coins + number_of_low_coins, data = money))$
 
 ## Compare the three models
 
-```{r echo=FALSE, size="tiny"}
+```{r echo=FALSE}
 round(summary(lm(total_amount ~ number_of_coins, data = money))$coefficients, 2)
 round(summary(lm(total_amount ~ number_of_low_coins, data = money))$coefficients, 2)
 round(summary(lm(total_amount ~ number_of_coins + number_of_low_coins, data = money))$coefficients, 2)
@@ -171,6 +185,17 @@ cor(money)
 round(cor(loans[, c(1,3,6,7)], use = "na.or.complete"), 3)
 ```
 
+## Conditioning on other variables
+
+```{r echo=FALSE}
+round(summary(lm(total_amount ~ number_of_coins, data = money))$coefficients, 2)
+round(summary(lm(total_amount ~ number_of_low_coins, data = money))$coefficients, 2)
+round(summary(lm(total_amount ~ number_of_coins + number_of_low_coins, data = money))$coefficients, 2)
+```
+
+- If we *hold the number of coins constant*, then the number of low coins has a negative association.
+
+
 # Cereal Ratings: Other Variables
 
 - Last time, we found that sugar content was a good predictor of cereal rating. 
@@ -183,7 +208,7 @@ cereal <- read.table("http://math.westmont.edu/data/cereal.csv", header=TRUE, se
 glimpse(cereal)
 ```
 
-## Group Question
+## Group Activity
 
 ```{r}
 round(cor(cereal[,c(4,5,6,7,8,9,10,12,16)]),2)
@@ -289,3 +314,31 @@ summary(lm(rating ~ sugars + fiber + calories + protein + fat + carbo, data = ce
 - This means the additional explanatory variable didn't improve the model.
 - Having too many explanatory variables can throw off predictions.
 
+# 25.3 Cross-validation for prediction error
+
+## Comparing Models
+
+- **Goal:** We want to assess how well our models will predict *future observations* that are not in our data set.
+- In **Cross Validation**, you fit the model on part of the data set, and then you test the residuals on the rest of the data set.
+    - The "held out" data plays the role of future observations.
+
+## Cross Validation in R
+
+```{r}
+library(caret)
+tc <- trainControl(method = "cv", number = 5)
+train(rating ~ sugars + fiber, data = cereal, method = "lm", trControl = tc)
+```
+
+---
+
+
+```{r}
+train(rating ~ sugars + fiber + calories + protein + fat, data = cereal, method = "lm", trControl = tc)
+```
+
+---
+
+```{r}
+train(rating ~ sugars + fiber + calories + protein + fat + carbo, data = cereal, method = "lm", trControl = tc)
+```
