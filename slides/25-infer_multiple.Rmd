@@ -1,0 +1,170 @@
+---
+title: "Chapter 24: Inference for linear regression, continued"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(tidyverse)
+library(openintro)
+library(kableExtra)
+theme_set(theme_bw())
+set.seed(1423)
+```
+
+# Overview
+
+- 25.1 Multiple regression output from software
+- 25.2 Multicollinearity
+- 25.3 Cross-validation for prediction error
+    - 25.3.1 Comparing two models to predict body mass in penguins
+
+# 25.1 Multiple regression output from software
+
+## Data on loans
+
+- Response variable: interest rate
+- Explanatory variables: debt to income ratio, term of loan, number of credit checks
+
+```{r include=FALSE}
+loans <- loans_full_schema %>%
+  mutate(
+    credit_util = total_credit_utilized / total_credit_limit,
+    bankruptcy = as.factor(if_else(public_record_bankrupt == 0, 0, 1)),
+    verified_income = droplevels(verified_income)
+  ) %>%
+  rename(credit_checks = inquiries_last_12m) %>%
+  select(interest_rate, verified_income, debt_to_income, credit_util, bankruptcy, term, credit_checks, issue_month)
+```
+
+```{r}
+glimpse(loans)
+```
+
+## Regression model
+
+$$
+\begin{aligned}
+\texttt{interest_rate} = \beta_0 &+ \beta_1\times \texttt{debt_to_income} \\
+&+ \beta_2 \times \texttt{term}\\
+&+ \beta_3 \times \texttt{credit_checks}\\
+&+ \varepsilon
+\end{aligned}
+$$
+
+The model coefficients $\beta_0, \beta_1, \beta_2, \beta_3$ are unknown parameters. The $\varepsilon$ models the residuals, which are assumed to be normally distributed. 
+
+## Regression output 
+
+```{r}
+summary(lm(interest_rate ~ debt_to_income + term + credit_checks, data = loans))
+```
+
+## Regression Table and Equation
+
+```{r echo=FALSE}
+loan.model <- lm(interest_rate ~ debt_to_income + term + credit_checks, data = loans)
+round(summary(loan.model)$coefficients, 2)
+```
+
+$$
+\begin{aligned}
+\widehat{\texttt{interest_rate}} = 4.31 &+ 0.041 \times \texttt{debt_to_income} \\
+&+ 0.16 \times \texttt{term} \\
+&+ 0.25 \times \texttt{credit_checks}
+\end{aligned}
+$$
+
+## Interpreting the P-values
+
+Each P-value corresponds to a different two-sided hypothesis test:
+
+- $H_0: \beta_1 = 0$, given `term` and `credit_checks` are included in the model
+- $H_0: \beta_2 = 0$, given `debt_to_income` and `credit_checks` are included in the model
+- $H_0: \beta_3 = 0$, given `debt_to_income` and `term` are included in the model
+
+We say that these hypotheses are *conditioned on* the other variables in the model 
+
+- e.g., we have strong evidence that `term` is positively associated with interest rate, when the other variables are taken into account.
+
+# 25.2 Multicollinearity
+
+## Example: Predict the value of a coin dish
+
+- Response Variable: Total value of coins
+- Explanatory Variables: total number of coins, total number of low coins (i.e., coins smaller than quarters)
+
+## {data-background="https://openintro-ims.netlify.app/images/money.png" data-background-size="contain"}
+
+```{r include=FALSE}
+money <- tibble(
+  number_of_coins = c(9, 10, 3, 5, 10, 37, 28, 9, 11, 4, 6, 17, 15, 7, 9, 1, 5, 9, 36, 30, 47, 13, 5, 7, 18, 16),
+  number_of_low_coins = c(4, 8, 0, 4, 9, 34, 9, 3, 2, 2, 5, 12, 11, 4, 8, 0, 4, 9, 34, 9, 3, 2, 2, 5, 12, 11),
+  total_amount = c(1.37, 1.01, 1.5, 0.56, 0.61, 3.06, 5.42, 1.75, 5.4, 0.56, 0.34, 2.33, 3.34, 1.3, 1.2, 1.7, 0.86, 0.61, 2.96, 5.52, 8.95, 5.2, 1.56, 0.74, 1.83, 3.74)
+)
+```
+
+## {data-background="https://openintro-ims.netlify.app/25-inf-model-mlr_files/figure-html/coinfig-1.png" data-background-size="contain"}
+
+## Predicting amount: single variable models
+
+```{r}
+summary(lm(total_amount ~ number_of_coins, data = money))$coefficients
+```
+
+```{r}
+summary(lm(total_amount ~ number_of_low_coins, data = money))$coefficients
+```
+
+## Predicting amount: multivariable model
+
+```{r}
+summary(lm(total_amount ~ number_of_coins + number_of_low_coins, data = money))$coefficients
+```
+
+## Compare the three models
+
+```{r echo=FALSE, size="tiny"}
+round(summary(lm(total_amount ~ number_of_coins, data = money))$coefficients, 2)
+round(summary(lm(total_amount ~ number_of_low_coins, data = money))$coefficients, 2)
+round(summary(lm(total_amount ~ number_of_coins + number_of_low_coins, data = money))$coefficients, 2)
+```
+
+## Group Activity
+
+1. In the first model, is the number of coins associated to the total amount? Does this make sense?
+
+2. In the second model, is the number of low coins associated to the total amount? Does this make sense?
+
+3. In the third model, how are these associations different? Can you explain why they would be different?
+
+## Multicollinearity
+
+```{r}
+cor(money)
+```
+
+*Multicollinearity* happens when the predictor variables are correlated within themselves.
+
+- Hard to interpret the regression coefficients.
+- Still OK for making predictions using the regression equation.
+
+# 25.3 Cross-validation for prediction error
+## 25.3.1 Comparing two models to predict body mass in penguins
+
