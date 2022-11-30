@@ -324,8 +324,9 @@ summary(lm(rating ~ sugars + fiber + calories + protein + fat + carbo, data = ce
 
 ## Cross Validation in R
 
-```{r}
+```{r, message=FALSE}
 library(caret)
+set.seed(1234)
 tc <- trainControl(method = "cv", number = 5)
 train(rating ~ sugars + fiber, data = cereal, method = "lm", trControl = tc)
 ```

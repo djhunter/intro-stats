@@ -2424,23 +2424,10 @@ set.
 </section>
 <section id="cross-validation-in-r" class="slide level2">
 <h2>Cross Validation in R</h2>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span></code></pre></div>
-<pre><code>Loading required package: lattice</code></pre>
-<pre><code>
-Attaching package: &#39;lattice&#39;</code></pre>
-<pre><code>The following objects are masked from &#39;package:openintro&#39;:
-
-    ethanol, lsegments</code></pre>
-<pre><code>
-Attaching package: &#39;caret&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:openintro&#39;:
-
-    dotPlot</code></pre>
-<pre><code>The following object is masked from &#39;package:purrr&#39;:
-
-    lift</code></pre>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>tc <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>)</span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">train</span>(rating <span class="sc">~</span> sugars <span class="sc">+</span> fiber, <span class="at">data =</span> cereal, <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">trControl =</span> tc)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>tc <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>)</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="fu">train</span>(rating <span class="sc">~</span> sugars <span class="sc">+</span> fiber, <span class="at">data =</span> cereal, <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">trControl =</span> tc)</span></code></pre></div>
 <pre><code>Linear Regression 
 
 74 samples
@@ -2448,17 +2435,17 @@ Attaching package: &#39;caret&#39;</code></pre>
 
 No pre-processing
 Resampling: Cross-Validated (5 fold) 
-Summary of sample sizes: 59, 58, 58, 62, 59 
+Summary of sample sizes: 60, 60, 59, 58, 59 
 Resampling results:
 
-  RMSE      Rsquared  MAE     
-  6.152191  0.835021  5.072003
+  RMSE      Rsquared   MAE    
+  6.139208  0.7928003  4.84502
 
 Tuning parameter &#39;intercept&#39; was held constant at a value of TRUE</code></pre>
 </section>
 <section class="slide level2">
 
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">train</span>(rating <span class="sc">~</span> sugars <span class="sc">+</span> fiber <span class="sc">+</span> calories <span class="sc">+</span> protein <span class="sc">+</span> fat, <span class="at">data =</span> cereal, <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">trControl =</span> tc)</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">train</span>(rating <span class="sc">~</span> sugars <span class="sc">+</span> fiber <span class="sc">+</span> calories <span class="sc">+</span> protein <span class="sc">+</span> fat, <span class="at">data =</span> cereal, <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">trControl =</span> tc)</span></code></pre></div>
 <pre><code>Linear Regression 
 
 74 samples
@@ -2466,17 +2453,17 @@ Tuning parameter &#39;intercept&#39; was held constant at a value of TRUE</code>
 
 No pre-processing
 Resampling: Cross-Validated (5 fold) 
-Summary of sample sizes: 59, 60, 59, 60, 58 
+Summary of sample sizes: 59, 58, 59, 60, 60 
 Resampling results:
 
-  RMSE      Rsquared  MAE     
-  5.062506  0.88427   3.998817
+  RMSE      Rsquared   MAE     
+  4.761086  0.8908491  3.778557
 
 Tuning parameter &#39;intercept&#39; was held constant at a value of TRUE</code></pre>
 </section>
 <section class="slide level2">
 
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">train</span>(rating <span class="sc">~</span> sugars <span class="sc">+</span> fiber <span class="sc">+</span> calories <span class="sc">+</span> protein <span class="sc">+</span> fat <span class="sc">+</span> carbo, <span class="at">data =</span> cereal, <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">trControl =</span> tc)</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">train</span>(rating <span class="sc">~</span> sugars <span class="sc">+</span> fiber <span class="sc">+</span> calories <span class="sc">+</span> protein <span class="sc">+</span> fat <span class="sc">+</span> carbo, <span class="at">data =</span> cereal, <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">trControl =</span> tc)</span></code></pre></div>
 <pre><code>Linear Regression 
 
 74 samples
@@ -2484,11 +2471,11 @@ Tuning parameter &#39;intercept&#39; was held constant at a value of TRUE</code>
 
 No pre-processing
 Resampling: Cross-Validated (5 fold) 
-Summary of sample sizes: 59, 58, 60, 59, 60 
+Summary of sample sizes: 58, 61, 60, 59, 58 
 Resampling results:
 
   RMSE      Rsquared   MAE     
-  5.077437  0.8827979  4.090109
+  5.251644  0.8866954  4.182147
 
 Tuning parameter &#39;intercept&#39; was held constant at a value of TRUE</code></pre>
 </section></section>
