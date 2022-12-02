@@ -121,6 +121,23 @@ exp(-2.3955)/(1+exp(-2.3955))
 glimpse(email)
 ```
 
+## Model with parameters
+
+- Response variable: Is the email spam or not (*categorical, two levels*)
+- Explanatory variables: some choice of the other variables in our data set.
+    - Need to choose: "Model Selection"
+    
+$$
+\begin{aligned}
+\log_e\bigg(\frac{p}{1-p}\bigg) &= \beta_0 + \beta_1 \times \texttt{to_multiple} + \beta_2 \times \texttt{cc} \\
+&+ \beta_3 \times \texttt{dollar} + \beta_4 \times \texttt{urgent_subj} + \varepsilon
+\end{aligned}
+$$
+
+As usual, the observations should be *independent*, e.g., from a random sample.
+
+# 26.2 Multiple logistic regression output from software
+
 ## Spam detector model
 
 ```{r}
@@ -128,18 +145,6 @@ model.spam <- glm(spam ~ to_multiple + cc + dollar + urgent_subj, data = email, 
 summary(model.spam)
 ```
 
-## {data-background="https://openintro-ims.netlify.app/26-inf-model-logistic_files/figure-html/spam-predict-1.png" data-background-size="contain"}
-
-## How good are these predictions?
-
-1. Bucket the data into groups based on their predicted probabilities.
-2. Compute the average predicted probability for each group.
-3. Compute the observed probability for each group, along with a 95% confidence interval for the true probability of success for those individuals.
-4. Plot the observed probabilities (with 95% confidence intervals) against the average predicted probabilities for each group.
-
-## {data-background="https://openintro-ims.netlify.app/26-inf-model-logistic_files/figure-html/logisticModelBucketDiag-1.png" data-background-size="contain"}
-
-# 26.2 Multiple logistic regression output from software
 
 ## Logistic regression table and equation
 
@@ -161,6 +166,32 @@ $$
 - $H_0: \beta_3 = 0$,  given to_multiple, cc, and urgent_subj are included in the model
 - $H_0: \beta_4 = 0$,  given to_multiple, dollar, and dollar are included in the model
 
+## Inference
+
+```{r echo=FALSE}
+round(summary(model.spam)$coefficients, 2)
+```
+
+>- We can examine the coefficients and P-values to draw conclusions about the nature of spam (*inference*)
+>    - This is different from *prediction*.
+>- We can make the following *inferences*:
+>    - It appears that the presence of a CC field is not a significant property of spam email (P-value = 0.25).
+>    - We have evidence that the presence of the word "urgent" in the subject makes an email more likely to be spam (P-value = 0.25, positive coefficient 2.66)
+>- These inferences are conditioned on the other variables in the model.
+
+## Prediction
+
+>- We can use the logistic regression equation to *predict* whether a given email is spam.
+>- Suppose we have an email addressed to multiple people, without the word dollar, without a CC field, and without urgent in the subject.
+>- The model predicts a logit of $-2.05 + (-1.91)\times 1 + 0.02 \times 0 - 0.07 \times 0 + 2.66 \times 0 = -3.96$
+>    - A logit of -3.96 corresponds to a low predicted probability.
+>    - We can use the conversion equation to calculate the predicted probability exactly:
+
+. . . 
+
+$$
+\frac{e^{-3.96}}{1 + e^{-3.96}} \approx 0.02
+$$
 
 # 26.3 Cross-validation for prediction error
 

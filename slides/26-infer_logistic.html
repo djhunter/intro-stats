@@ -2051,6 +2051,33 @@ $ urgent_subj  &lt;fct&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 $ exclaim_mess &lt;dbl&gt; 0, 1, 6, 48, 1, 1, 1, 18, 1, 0, 2, 1, 0, 10, 4, 10, 20, 0, 2, 0, 3, 4, 3, 0, …
 $ number       &lt;fct&gt; big, small, small, small, none, none, big, small, small, small, small, small,…</code></pre>
 </section>
+<section id="model-with-parameters" class="slide level2">
+<h2>Model with parameters</h2>
+<ul>
+<li>Response variable: Is the email spam or not (<em>categorical, two
+levels</em>)</li>
+<li>Explanatory variables: some choice of the other variables in our
+data set.
+<ul>
+<li>Need to choose: “Model Selection”</li>
+</ul></li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+\log_e\bigg(\frac{p}{1-p}\bigg) &amp;= \beta_0 + \beta_1 \times
+\texttt{to_multiple} + \beta_2 \times \texttt{cc} \\
+&amp;+ \beta_3 \times \texttt{dollar} + \beta_4 \times
+\texttt{urgent_subj} + \varepsilon
+\end{aligned}
+\]</span></p>
+<p>As usual, the observations should be <em>independent</em>, e.g., from
+a random sample.</p>
+</section></section>
+<section>
+<section id="multiple-logistic-regression-output-from-software" class="title-slide slide level1">
+<h1>26.2 Multiple logistic regression output from software</h1>
+
+</section>
 <section id="spam-detector-model" class="slide level2">
 <h2>Spam detector model</h2>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>model.spam <span class="ot">&lt;-</span> <span class="fu">glm</span>(spam <span class="sc">~</span> to_multiple <span class="sc">+</span> cc <span class="sc">+</span> dollar <span class="sc">+</span> urgent_subj, <span class="at">data =</span> email, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>)</span>
@@ -2082,30 +2109,6 @@ AIC: 2352.8
 
 Number of Fisher Scoring iterations: 6</code></pre>
 </section>
-<section id="section-1" class="slide level2" data-background="https://openintro-ims.netlify.app/26-inf-model-logistic_files/figure-html/spam-predict-1.png" data-background-size="contain">
-<h2 data-background="https://openintro-ims.netlify.app/26-inf-model-logistic_files/figure-html/spam-predict-1.png" data-background-size="contain"></h2>
-</section>
-<section id="how-good-are-these-predictions" class="slide level2">
-<h2>How good are these predictions?</h2>
-<ol type="1">
-<li>Bucket the data into groups based on their predicted
-probabilities.</li>
-<li>Compute the average predicted probability for each group.</li>
-<li>Compute the observed probability for each group, along with a 95%
-confidence interval for the true probability of success for those
-individuals.</li>
-<li>Plot the observed probabilities (with 95% confidence intervals)
-against the average predicted probabilities for each group.</li>
-</ol>
-</section>
-<section id="section-2" class="slide level2" data-background="https://openintro-ims.netlify.app/26-inf-model-logistic_files/figure-html/logisticModelBucketDiag-1.png" data-background-size="contain">
-<h2 data-background="https://openintro-ims.netlify.app/26-inf-model-logistic_files/figure-html/logisticModelBucketDiag-1.png" data-background-size="contain"></h2>
-</section></section>
-<section>
-<section id="multiple-logistic-regression-output-from-software" class="title-slide slide level1">
-<h1>26.2 Multiple logistic regression output from software</h1>
-
-</section>
 <section id="logistic-regression-table-and-equation" class="slide level2">
 <h2>Logistic regression table and equation</h2>
 <pre><code>             Estimate Std. Error z value Pr(&gt;|z|)
@@ -2134,6 +2137,55 @@ to_multiple, cc, and urgent_subj are included in the model</li>
 <li><span class="math inline">\(H_0: \beta_4 = 0\)</span>, given
 to_multiple, dollar, and dollar are included in the model</li>
 </ul>
+</section>
+<section id="inference" class="slide level2">
+<h2>Inference</h2>
+<pre><code>             Estimate Std. Error z value Pr(&gt;|z|)
+(Intercept)     -2.05       0.06  -34.67     0.00
+to_multiple1    -1.91       0.30   -6.37     0.00
+cc               0.02       0.02    1.16     0.25
+dollar          -0.07       0.02   -3.38     0.00
+urgent_subj1     2.66       0.80    3.32     0.00</code></pre>
+<ul>
+<li class="fragment">We can examine the coefficients and P-values to
+draw conclusions about the nature of spam (<em>inference</em>)
+<ul>
+<li class="fragment">This is different from <em>prediction</em>.</li>
+</ul></li>
+<li class="fragment">We can make the following <em>inferences</em>:
+<ul>
+<li class="fragment">It appears that the presence of a CC field is not a
+significant property of spam email (P-value = 0.25).</li>
+<li class="fragment">We have evidence that the presence of the word
+“urgent” in the subject makes an email more likely to be spam (P-value =
+0.25, positive coefficient 2.66)</li>
+</ul></li>
+<li class="fragment">These inferences are conditioned on the other
+variables in the model.</li>
+</ul>
+</section>
+<section id="prediction" class="slide level2">
+<h2>Prediction</h2>
+<ul>
+<li class="fragment">We can use the logistic regression equation to
+<em>predict</em> whether a given email is spam.</li>
+<li class="fragment">Suppose we have an email addressed to multiple
+people, without the word dollar, without a CC field, and without urgent
+in the subject.</li>
+<li class="fragment">The model predicts a logit of <span class="math inline">\(-2.05 + (-1.91)\times 1 + 0.02 \times 0 - 0.07
+\times 0 + 2.66 \times 0 = -3.96\)</span>
+<ul>
+<li class="fragment">A logit of -3.96 corresponds to a low predicted
+probability.</li>
+<li class="fragment">We can use the conversion equation to calculate the
+predicted probability exactly:</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<p><span class="math display">\[
+\frac{e^{-3.96}}{1 + e^{-3.96}} \approx 0.02
+\]</span></p>
+</div>
 </section></section>
 <section>
 <section id="cross-validation-for-prediction-error" class="title-slide slide level1">
@@ -2142,7 +2194,7 @@ to_multiple, dollar, and dollar are included in the model</li>
 </section>
 <section id="one-variable-model" class="slide level2">
 <h2>One-variable model</h2>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">glm</span>(spam <span class="sc">~</span> to_multiple, <span class="at">data =</span> email, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>))<span class="sc">$</span>coefficients</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">glm</span>(spam <span class="sc">~</span> to_multiple, <span class="at">data =</span> email, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>))<span class="sc">$</span>coefficients</span></code></pre></div>
 <pre><code>              Estimate Std. Error    z value     Pr(&gt;|z|)
 (Intercept)  -2.116086 0.05618136 -37.665268 0.000000e+00
 to_multiple1 -1.809182 0.29685236  -6.094553 1.097437e-09</code></pre>
@@ -2151,12 +2203,12 @@ to_multiple1 -1.809182 0.29685236  -6.094553 1.097437e-09</code></pre>
 \texttt{to_multiple}
 \]</span></p>
 </section>
-<section id="section-3" class="slide level2" data-background="https://openintro-ims.netlify.app/images/emailCV1.png" data-background-size="contain">
+<section id="section-1" class="slide level2" data-background="https://openintro-ims.netlify.app/images/emailCV1.png" data-background-size="contain">
 <h2 data-background="https://openintro-ims.netlify.app/images/emailCV1.png" data-background-size="contain"></h2>
 </section>
 <section id="use-more-variables" class="slide level2">
 <h2>Use more variables</h2>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">glm</span>(spam <span class="sc">~</span> to_multiple <span class="sc">+</span> attach <span class="sc">+</span> winner <span class="sc">+</span> format <span class="sc">+</span> re_subj <span class="sc">+</span> exclaim_mess <span class="sc">+</span> number, <span class="at">data =</span> email, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>))<span class="sc">$</span>coefficients</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">glm</span>(spam <span class="sc">~</span> to_multiple <span class="sc">+</span> attach <span class="sc">+</span> winner <span class="sc">+</span> format <span class="sc">+</span> re_subj <span class="sc">+</span> exclaim_mess <span class="sc">+</span> number, <span class="at">data =</span> email, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>))<span class="sc">$</span>coefficients</span></code></pre></div>
 <pre><code>                  Estimate   Std. Error    z value     Pr(&gt;|z|)
 (Intercept)  -0.3351615175 0.1110731202 -3.0174854 2.548813e-03
 to_multiple1 -2.5633102398 0.3094851918 -8.2824972 1.206188e-16
@@ -2168,7 +2220,7 @@ exclaim_mess  0.0002294836 0.0008722253  0.2631013 7.924725e-01
 numbersmall  -1.0650600623 0.1413210827 -7.5364556 4.829174e-14
 numberbig    -0.4241614328 0.2019394825 -2.1004383 3.569030e-02</code></pre>
 </section>
-<section id="section-4" class="slide level2" data-background="https://openintro-ims.netlify.app/images/emailCV2.png" data-background-size="contain">
+<section id="section-2" class="slide level2" data-background="https://openintro-ims.netlify.app/images/emailCV2.png" data-background-size="contain">
 <h2 data-background="https://openintro-ims.netlify.app/images/emailCV2.png" data-background-size="contain"></h2>
 </section></section>
 <section>
@@ -2183,7 +2235,7 @@ numberbig    -0.4241614328 0.2019394825 -2.1004383 3.569030e-02</code></pre>
 and Other)</li>
 <li>Response variable: pop, (1 = Victoria, 0 = Other)</li>
 </ul>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(possum)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(possum)</span></code></pre></div>
 <pre><code>Rows: 104
 Columns: 8
 $ site    &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
@@ -2205,7 +2257,7 @@ $ tail_l  &lt;dbl&gt; 36.0, 36.5, 39.0, 38.0, 36.0, 35.5, 36.0, 37.0, 37.0, 37.5
 \]</span></p>
 <p>We use 4-fold cross validation</p>
 </section>
-<section id="section-5" class="slide level2" data-background="https://openintro-ims.netlify.app/26-inf-model-logistic_files/figure-html/unnamed-chunk-12-1.png" data-background-size="contain">
+<section id="section-3" class="slide level2" data-background="https://openintro-ims.netlify.app/26-inf-model-logistic_files/figure-html/unnamed-chunk-12-1.png" data-background-size="contain">
 <h2 data-background="https://openintro-ims.netlify.app/26-inf-model-logistic_files/figure-html/unnamed-chunk-12-1.png" data-background-size="contain"></h2>
 </section>
 <section id="group-exercise" class="slide level2">
@@ -2230,7 +2282,7 @@ correctly classified?</p></li>
 \end{aligned}
 \]</span></p>
 </section>
-<section id="section-6" class="slide level2" data-background="https://openintro-ims.netlify.app/26-inf-model-logistic_files/figure-html/unnamed-chunk-12-2.png" data-background-size="contain">
+<section id="section-4" class="slide level2" data-background="https://openintro-ims.netlify.app/26-inf-model-logistic_files/figure-html/unnamed-chunk-12-2.png" data-background-size="contain">
 <h2 data-background="https://openintro-ims.netlify.app/26-inf-model-logistic_files/figure-html/unnamed-chunk-12-2.png" data-background-size="contain"></h2>
 </section>
 <section id="group-exercise-1" class="slide level2">
@@ -2252,10 +2304,10 @@ correctly classified?</p></li>
 </section>
 <section id="single-variable-model" class="slide level2">
 <h2>Single variable model</h2>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>tc <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">4</span>)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">train</span>(pop <span class="sc">~</span> tail_l, <span class="at">data =</span> possum, <span class="at">method =</span> <span class="st">&quot;glm&quot;</span>, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>, <span class="at">trControl =</span> tc)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>tc <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">4</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">train</span>(pop <span class="sc">~</span> tail_l, <span class="at">data =</span> possum, <span class="at">method =</span> <span class="st">&quot;glm&quot;</span>, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>, <span class="at">trControl =</span> tc)</span></code></pre></div>
 <pre><code>Generalized Linear Model 
 
 104 samples
@@ -2272,8 +2324,8 @@ Resampling results:
 </section>
 <section id="two-variable-model" class="slide level2">
 <h2>Two-variable model</h2>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1432</span>)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">train</span>(pop <span class="sc">~</span> total_l <span class="sc">+</span> sex, <span class="at">data =</span> possum, <span class="at">method =</span> <span class="st">&quot;glm&quot;</span>, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>, <span class="at">trControl =</span> tc)</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1432</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">train</span>(pop <span class="sc">~</span> total_l <span class="sc">+</span> sex, <span class="at">data =</span> possum, <span class="at">method =</span> <span class="st">&quot;glm&quot;</span>, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>, <span class="at">trControl =</span> tc)</span></code></pre></div>
 <pre><code>Generalized Linear Model 
 
 104 samples
@@ -2290,8 +2342,8 @@ Resampling results:
 </section>
 <section id="three-predictors" class="slide level2">
 <h2>Three predictors</h2>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1262</span>)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">train</span>(pop <span class="sc">~</span> total_l <span class="sc">+</span> head_l <span class="sc">+</span> tail_l, <span class="at">data =</span> possum, <span class="at">method =</span> <span class="st">&quot;glm&quot;</span>, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>, <span class="at">trControl =</span> tc)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1262</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">train</span>(pop <span class="sc">~</span> total_l <span class="sc">+</span> head_l <span class="sc">+</span> tail_l, <span class="at">data =</span> possum, <span class="at">method =</span> <span class="st">&quot;glm&quot;</span>, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>, <span class="at">trControl =</span> tc)</span></code></pre></div>
 <pre><code>Generalized Linear Model 
 
 104 samples
