@@ -1,0 +1,271 @@
+---
+title: "Chapter 26: Inference for logistic regression"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(tidyverse)
+library(openintro)
+library(kableExtra)
+theme_set(theme_bw())
+set.seed(1423)
+```
+
+# Overview
+
+- 26.1 Model diagnostics
+- 26.2 Multiple logistic regression output from software
+- 26.3 Cross-validation for prediction error
+
+# Review: Logistic Regression
+
+## Predicting a categorical (binary) variable
+
+- Response variable
+    - Categorical, 2 levels
+- A **Logistic Regression** model will predict the *probability* that the response variable is a "success".
+
+\[
+\log_e \left( \frac{\widehat{p}}{1-\widehat{p}} \right) = b_0 + b_1 x_{1} + b_2 x_{2} + \cdots + b_k x_{k}
+\]
+
+## {data-background-image="https://openintro-ims.netlify.app/09-model-logistic_files/figure-html/logit-transformation-1.png" data-background-size="contain"}
+
+## Solving for $\hat{p}$
+
+- If $\log_e \left( \frac{\widehat{p}}{1-\widehat{p}} \right) = N$, then $\hat{p} = \frac{e^N}{1+e^N}$.
+- In R, you can use the expression `exp(N)/(1+exp(N))` to calculate $\hat{p}$.
+
+## Example: Experiment on discrimination
+
+- Research Question: Do employers discriminate based on resume information?
+- Researchers created many fake resumes to send off to jobs to see which would elicit a callback.
+- These resumes listed years of experience and education details.
+- They also *randomly assigned* a name to each resume, where *the name would imply the applicant's sex and race*.
+
+## Resume data
+
+```{r}
+glimpse(resume)
+```
+
+## Hiring discrimination model
+
+```{r}
+model3 <- glm(formula = received_callback ~ job_city + years_experience + 
+                        honors + military + has_email_address + race + gender, 
+              family = "binomial", data = resume)
+summary(model3)$coefficients
+```
+
+## Logistic regression equation
+
+```{r echo=FALSE}
+model3 <- glm(formula = received_callback ~ job_city + years_experience + 
+                        honors + military + has_email_address + race + gender, 
+              family = "binomial", data = resume)
+summary(model3)$coefficients
+```
+
+\[
+\begin{aligned}
+\log_e \left(\frac{\hat{p}}{1 - \hat{p}}\right) 
+&= - 2.7162 - 0.4364 \times \texttt{job_city}_{\texttt{Chicago}} \\
+& \quad \quad + 0.0206 \times \texttt{years_experience} \\
+& \quad \quad + 0.7634 \times \texttt{honors} - 0.3443 \times \texttt{military} \\
+& \quad \quad+ 0.2221 \times \texttt{email} \\
+& \quad \quad + 0.4429 \times \texttt{race}_{\texttt{White}} - 0.1959 \times \texttt{gender}_{\texttt{man}} 
+\end{aligned}
+\]
+
+## Predict a probability
+
+Let's estimate the probability of receiving a callback for a job in Chicago where the candidate lists 14 years experience, no honors, no military experience, includes an email address, and has a first name that implies they are a White male.
+
+\[
+\begin{aligned}
+\log_e \left(\frac{\widehat{p}}{1 - \widehat{p}}\right) 
+&= - 2.7162 - 0.4364 \times 1 + 0.0206 \times 14 \\
+&\quad \quad + 0.7634 \times 0 - 0.3443 \times 0  \\
+&\quad \quad + 0.2221 \times 1 \\
+&\quad \quad + 0.4429 \times 1 - 0.1959 \times 1 = -2.3955  
+\end{aligned}
+\]
+
+```{r}
+exp(-2.3955)/(1+exp(-2.3955))
+```
+
+# 26.1 Model diagnostics
+
+## Example: email spam detector
+
+```{r}
+glimpse(email)
+```
+
+## Spam detector model
+
+```{r}
+model.spam <- glm(spam ~ to_multiple + cc + dollar + urgent_subj, data = email, family = "binomial")
+summary(model.spam)
+```
+
+## {data-background="https://openintro-ims.netlify.app/26-inf-model-logistic_files/figure-html/spam-predict-1.png" data-background-size="contain"}
+
+## How good are these predictions?
+
+1. Bucket the data into groups based on their predicted probabilities.
+2. Compute the average predicted probability for each group.
+3. Compute the observed probability for each group, along with a 95% confidence interval for the true probability of success for those individuals.
+4. Plot the observed probabilities (with 95% confidence intervals) against the average predicted probabilities for each group.
+
+## {data-background="https://openintro-ims.netlify.app/26-inf-model-logistic_files/figure-html/logisticModelBucketDiag-1.png" data-background-size="contain"}
+
+# 26.2 Multiple logistic regression output from software
+
+## Logistic regression table and equation
+
+```{r echo=FALSE}
+round(summary(model.spam)$coefficients, 2)
+```
+
+$$
+\begin{aligned}
+\log_e\bigg(\frac{\hat{p}}{1-\hat{p}}\bigg) &= -2.05 + -1.91 \times \texttt{to_multiple} + 0.02 \times \texttt{cc} \\
+&- 0.07 \times \texttt{dollar} + 2.66 \times \texttt{urgent_subj}
+\end{aligned}
+$$
+
+## Hypotheses
+
+- $H_0: \beta_1 = 0$,  given cc, dollar, and urgent_subj are included in the model
+- $H_0: \beta_2 = 0$, given to_multiple, dollar, and urgent_subj are included in the model
+- $H_0: \beta_3 = 0$,  given to_multiple, cc, and urgent_subj are included in the model
+- $H_0: \beta_4 = 0$,  given to_multiple, dollar, and dollar are included in the model
+
+
+# 26.3 Cross-validation for prediction error
+
+## One-variable model
+
+```{r}
+summary(glm(spam ~ to_multiple, data = email, family = "binomial"))$coefficients
+```
+
+$$
+\log_e\bigg(\frac{\hat{p}}{1-\hat{p}}\bigg) =  -2.12 + -1.81 \times \texttt{to_multiple}
+$$
+
+## {data-background="https://openintro-ims.netlify.app/images/emailCV1.png" data-background-size="contain"}
+
+## Use more variables
+
+```{r}
+summary(glm(spam ~ to_multiple + attach + winner + format + re_subj + exclaim_mess + number, data = email, family = "binomial"))$coefficients
+```
+
+## {data-background="https://openintro-ims.netlify.app/images/emailCV2.png" data-background-size="contain"}
+
+# Possum Classification
+
+## Which region is the possum from?
+
+- Data: 104 brushtail possums from two regions in Australia (Victoria and Other)
+- Response variable: pop, (1 = Victoria, 0 = Other)
+
+```{r}
+glimpse(possum)
+```
+
+## Model with tail length predictor
+
+$$
+\begin{aligned}
+ \log_e \bigg(\frac{p}{1-p}\bigg) = \beta_0 &+ \beta_1\times \texttt{tail_l}
+ \end{aligned}
+$$
+
+We use 4-fold cross validation
+
+
+
+## {data-background="https://openintro-ims.netlify.app/26-inf-model-logistic_files/figure-html/unnamed-chunk-12-1.png" data-background-size="contain"}
+
+## Group Exercise
+
+Consider the model predicting region from tail length.
+
+1. In Fold1, how many of the observations were correctly classified?
+
+2. In all four folds, how many of the observations were correctly classified? 
+
+3. In all four folds, what proportion of the observations were correctly classified?
+
+
+
+## Model with two predictors
+
+Explanatory variables: total length and sex
+
+$$
+\begin{aligned}
+ \log_e \bigg(\frac{p}{1-p}\bigg) = \beta_0 &+ \beta_1\times \texttt{total_l} + \beta_2\times     \texttt{sex}
+ \end{aligned}
+$$
+
+## {data-background="https://openintro-ims.netlify.app/26-inf-model-logistic_files/figure-html/unnamed-chunk-12-2.png" data-background-size="contain"}
+
+## Group Exercise
+
+Consider the model predicting region from total length and sex.
+
+1. In all four folds, how many of the observations were correctly classified? 
+
+2. In all four folds, what proportion of the observations were correctly classified?
+
+3. Which model is better?
+
+4. Propose a better model.
+
+# Cross validation in R
+
+## Single variable model
+
+```{r, message=FALSE}
+library(caret)
+set.seed(1234)
+tc <- trainControl(method = "cv", number = 4)
+train(pop ~ tail_l, data = possum, method = "glm", family = "binomial", trControl = tc)
+```
+
+## Two-variable model
+
+```{r}
+set.seed(1432)
+train(pop ~ total_l + sex, data = possum, method = "glm", family = "binomial", trControl = tc)
+```
+
+## Three predictors
+
+```{r}
+set.seed(1262)
+train(pop ~ total_l + head_l + tail_l, data = possum, method = "glm", family = "binomial", trControl = tc)
+```

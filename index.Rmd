@@ -72,6 +72,7 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 32. [Inference for Linear Regression](slides/24a-infer_regression.html), 11/21
 33. [Inference for Linear Regression, continued](slides/24b-infer_regression.html), 11/28
 33. [Inference for Multiple Regression](slides/25-infer_multiple.html), 11/30
+34. [Inference for Logistic Regression](slides/26-infer_logistic.html), 12/2
 
 # Other Resources
 

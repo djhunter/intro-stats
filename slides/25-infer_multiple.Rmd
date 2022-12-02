@@ -1,5 +1,5 @@
 ---
-title: "Chapter 24: Inference for multiple linear regression"
+title: "Chapter 25: Inference for multiple linear regression"
 output: 
   revealjs::revealjs_presentation:
     fig_width: 14 
