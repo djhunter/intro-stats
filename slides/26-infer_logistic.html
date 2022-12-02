@@ -2340,23 +2340,8 @@ Resampling results:
   Accuracy   Kappa     
   0.5584473  0.08151834</code></pre>
 </section>
-<section id="three-predictors" class="slide level2">
-<h2>Three predictors</h2>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1262</span>)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">train</span>(pop <span class="sc">~</span> total_l <span class="sc">+</span> head_l <span class="sc">+</span> tail_l, <span class="at">data =</span> possum, <span class="at">method =</span> <span class="st">&quot;glm&quot;</span>, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>, <span class="at">trControl =</span> tc)</span></code></pre></div>
-<pre><code>Generalized Linear Model 
-
-104 samples
-  3 predictor
-  2 classes: &#39;Vic&#39;, &#39;other&#39; 
-
-No pre-processing
-Resampling: Cross-Validated (4 fold) 
-Summary of sample sizes: 78, 77, 79, 78 
-Resampling results:
-
-  Accuracy   Kappa    
-  0.8183191  0.6313448</code></pre>
+<section id="better-model" class="slide level2">
+<h2>Better Model?</h2>
 </section></section>
     </div>
   </div>

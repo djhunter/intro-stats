@@ -294,9 +294,5 @@ set.seed(1432)
 train(pop ~ total_l + sex, data = possum, method = "glm", family = "binomial", trControl = tc)
 ```
 
-## Three predictors
+## Better Model?
 
-```{r}
-set.seed(1262)
-train(pop ~ total_l + head_l + tail_l, data = possum, method = "glm", family = "binomial", trControl = tc)
-```
