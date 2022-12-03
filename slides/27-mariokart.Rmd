@@ -1,0 +1,59 @@
+---
+title: "Inference for Multiple Regression in R"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(tidyverse)
+library(openintro)
+theme_set(theme_bw())
+```
+
+# Pairs Today
+
+- Please pair up (your choice).
+    - At least one person in each pair needs to have a device that can use RStudio (installed or using rstudio.cloud). This person is the *Operator*.
+    - Ideally, everyone has an RStudio-enabled device. If you don't, you can still take notes by keeping track of the code and trying it on your own later.
+    
+# Case Study: Mario Kart {data-background="https://images.nintendolife.com/screenshots/9506/900x.jpg" data-background-size="contain"}
+
+## Mario Kart Data
+
+>- Observational Units: 141 Ebay auctions of Mario Kart Wii.
+>- Response (Outcome) Variable: total price of the auction.
+>- Several possible explanatory variables: duration of auction in days, condition (new/used), number of bids, starting price, seller rating, etc.
+>- Can we determine how total price is related to these variables, controlling for other variables? For example:
+>    - All other characteristics held constant, are longer auctions associated with higher or lower prices?
+>    - On average, how much more do buyers tend to pay for additional Wii wheels (plastic steering wheels that attach to the Wii controller) in auctions?
+
+# Data Carpentry
+
+## Group Exercises
+
+Do all the challenges.
+
+```{r, eval = FALSE}
+library(tidyverse)
+library(openintro)
+library(caret)
+```
+
+---
+
