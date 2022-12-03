@@ -36,7 +36,7 @@ theme_set(theme_bw())
 
 ## Mario Kart Data
 
->- Observational Units: 141 Ebay auctions of Mario Kart Wii.
+>- Observational Units: 143 Ebay auctions of Mario Kart Wii.
 >- Response (Outcome) Variable: total price of the auction.
 >- Several possible explanatory variables: duration of auction in days, condition (new/used), number of bids, starting price, seller rating, etc.
 >- Can we determine how total price is related to these variables, controlling for other variables? For example:
@@ -57,3 +57,73 @@ library(caret)
 
 ---
 
+```{r, eval = FALSE}
+## View the data
+
+view(mariokart)
+
+?mariokart
+```
+
+---
+
+```{r, eval = FALSE}
+## Check for outliers
+
+ggplot(mariokart, aes(x = total_pr)) + geom_histogram()
+
+## What is the deal with those?
+
+mariokart %>%
+  filter(total_pr > 100) %>% 
+  view()
+
+## Remove outliers
+
+mk <- mariokart %>%
+  filter(total_pr < 100)
+
+ggplot(mk, aes(x = total_pr)) + geom_histogram()
+```
+
+---
+
+```{r, eval = FALSE}
+## Linear regression model
+
+mmod1 <- lm(total_pr ~ cond, data = mk)
+summary(mmod1)
+
+ggplot(mk, aes(x = total_pr, y = cond)) + geom_violin()
+```
+
+---
+
+```{r, eval = FALSE}
+## Control for Wii wheels
+glimpse(mk)
+
+ggplot(mk, aes(x = wheels, y = total_pr)) + geom_point()
+ggplot(mk, aes(x = wheels, y = total_pr, color = cond)) + geom_point()
+
+## Challenge: Control for wheels by adding it as a predictor. Call your new
+## model mmod2. Compare with mmod1.
+```
+
+---
+
+```{r, eval = FALSE}
+## Cross Validation
+set.seed(3456)
+tc <- trainControl(method = "cv", number = 5)
+train(total_pr ~ cond, data = mk, method = "lm", trControl = tc)
+train(total_pr ~ cond + wheels, data = mk, method = "lm", trControl = tc)
+
+## Challenge: Find a model for predicting total_pr with a lower RMSE.
+
+## Challenge: For the best model you found, 
+## 1. Are all the predictors significant? 
+## 2. Record the adjusted R^2.
+
+## Challenge: make some plots illustrating the important predictors that you found.
+```
