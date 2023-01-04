@@ -40,9 +40,10 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 
 | Date | Topics |
 |:---- |:-------------------------- |
-| 1/10 | [Hello Data](slides/01-hellodata.html) <br> [Association and Experiments](slides/01b-association.html) |
+|      |                            |
 
 ---
+# | 1/10 | [Hello Data](slides/01-hellodata.html) <br> [Association and Experiments](slides/01b-association.html) |
 # | 1/12 | [Study Design](slides/02-studydesign.html) <br> [Getting Started with Data in R](slides/03-intro_data_R.html) |
 # 1/19 [Exploring Categorical Data](slides/04-catdata.html)
 #  [Exploring Numerical Data](slides/05-numdata.html)
@@ -89,7 +90,7 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 
 - [Syllabus](syllabus/ma005hunterS23.pdf) (PDF)
 - [Textbook Website](https://openintro-ims.netlify.app/)
-- [How to install R and RStudio](assignments/)
+- [How to install R and RStudio](slides/installRStudio.html)
 
 All of the pages and slides on this site were authored in RMarkdown.  The source code is available on GitHub: https://github.com/djhunter/intro-stats
 
