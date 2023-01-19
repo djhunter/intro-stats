@@ -1,49 +1,19 @@
-library(tidyverse)
 library(openintro)
+library(tidyverse)
 
 glimpse(hsb2)
+view(hsb2)
+?hsb2
 
-glimpse(email50)
 hsb2 %>% 
   count(schtyp)
-hsb2_public <- hsb2 %>%
-  filter(schtyp == "public")
-hsb2_public %>%
-  count(schtyp)
-email50_big <- email50 %>%
-  filter(number == "big")
 
-mean(hsb2$read)
-avg_read <- mean(hsb2$read)
-hsb2 <- hsb2 %>%
-  mutate(read_cat = if_else(read < avg_read,
-                            "below average",
-                            "at or above average")
-  )
-hsb2
+## Challenge: How many different values of the race variable are there 
+#             in the data, and how many observations are in each category?
 
-# Calculate median number of characters: med_num_char
-med_num_char <- median(email50$num_char)
-
-# Create num_char_cat variable in email50
-email50_updated <- email50 %>%
-  mutate(num_char_cat = if_else(num_char < med_num_char,
-                                "below median",
-                                "at or above median")
-  )
-
-# Count emails in each category
-email50_updated %>%
-  count(num_char_cat)
-
-email50_updated <- email50 %>%
-  mutate(number_cat = if_else(number == "none", 
-                       "no", 
-                       "yes")
-  )
-
-ggplot(email50_updated, aes(x = number_cat)) +
-  geom_bar()
+## Solution:
+hsb2 %>% 
+  count(race)
 
 ggplot(data = hsb2, aes(x = science, y = math)) + 
   geom_point()
@@ -51,8 +21,15 @@ ggplot(data = hsb2, aes(x = science, y = math)) +
 ggplot(data = hsb2, aes(x = science, y = math, color = prog)) +
   geom_point()
 
+## Challenge: Take a look at the email50 data frame. Count the number of emails 
+# that are spam and the number that are not spam. Make a scatterplot of two of 
+# the quantitative variables in the data set, colored by one of the categorical
+# variables
+
+## Solution
+email50 %>% 
+  count(spam)
+
 ggplot(email50, aes(x = num_char, y = exclaim_mess, color = spam)) +
   geom_point()
 
-ggplot(email, aes(x = num_char, y = exclaim_mess, color = spam)) +
-  geom_point()
