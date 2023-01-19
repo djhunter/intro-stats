@@ -1,6 +1,6 @@
 library(openintro)
 library(tidyverse)
-
+  
 glimpse(hsb2)
 view(hsb2)
 ?hsb2
