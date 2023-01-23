@@ -25,7 +25,6 @@ options(width = 100)
 
 # Overview
 
-- Statistical Software
 - 4 Exploring categorical data
     - 4.1 Contingency tables and bar plots
     - 4.2 Visualizing two categorical variables
@@ -35,41 +34,6 @@ options(width = 100)
     - 4.4 Pie charts
     - 4.5 Waffle charts
     - 4.6 Comparing numerical data across groups
-
-# Statistical Software
-
-## MA-005 Catalog Description
-
-MA 005 Introduction to Statistics (4) Prerequisite: Admissions mathematics requirement. A truly liberally educated person must have a basic knowledge of statistics, as its use permeates society. This course provides that grounding. Topics include exploratory data analysis, correlation, hypothesis testing, and regression. Graphs that model certain phenomena such as the normal, t, and chi-square distributions are set in an applied context. Non-parametric tests, such as the goodness-of-fit and Mann-Whitney, are also explored. The course involves *extensive use of statistical software.*
-
-## Install R and RStudio
-
-- The [announcement on Canvas](https://westmont.instructure.com/courses/8503/discussion_topics/44046) said *optional*, but if you have a laptop, please follow those instructions to install R and RStudio on it before Monday.
-- If you don't have a laptop, or if you can't get the installation to work, you have two options:
-    - Use [rstudio.cloud](https://rstudio.cloud/)
-    - Use the computers in the library, which should have R and RStudio installed.
-
-## Mutate command in the tutorial
-
-```{r message = FALSE}
-library(tidyverse)
-library(openintro)
-evals <- evals %>%
-  mutate(cls_type = case_when(
-    cls_students <= 18                      ~ "small",
-    cls_students >= 19 & cls_students <= 59 ~ "midsize",
-    cls_students >= 60                      ~ "large"
-    )
-  )
-```
-
-
-## Last Plot on the Tutorial
-
-```{r, fig.width=5, fig.height=4, fig.align='center'}
-ggplot(evals, aes(x = bty_avg, y = score, color = cls_type)) +
-  geom_point() + ggtitle("Hunter's Scatterplot")
-```
 
 # Exploring Data
 
@@ -225,6 +189,12 @@ Waffle charts are a slight improvement over pie charts.
 - *Response variable:* numeric
 
 ## Example: teaching evaluations
+
+```{r}
+glimpse(evals)
+```
+
+## Group by gender and summarize
 
 Do men get higher teaching evaluations than women?
 

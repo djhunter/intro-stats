@@ -26,8 +26,6 @@ library(kableExtra)
 
 # Overview
 
-- Reminder: Install RStudio
-    - [Updated instructions on Canvas](https://westmont.instructure.com/courses/8503/discussion_topics/44046)
 - Chapter 5: Exploring numerical data
     - 5.1 Scatterplots for paired data
     - 5.2 Dot plots and the mean
