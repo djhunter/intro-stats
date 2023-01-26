@@ -178,6 +178,14 @@ Return to the correlation applet of the previous group exercise.
 - The *least squares regression line* is the line that minimizes the sum of the squares of the residuals.
 - See the [regression applet](https://www.rossmanchance.com/applets/2021/regshuffle/regshuffle.htm) for a demo.
 
+## Group Exercise
+
+1. Reload the applet.
+
+2. Under *Explore Lines*, check on *show movable line* and show squared residuals.
+
+3. Move the line around and try to make **SSE** as small as possible. (SSE is the sum of the squared residuals, i.e., the total area of all those squares.)
+
 ## Elmhurst College data
 
 ```{r}
