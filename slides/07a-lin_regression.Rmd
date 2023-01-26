@@ -96,7 +96,7 @@ The equation of the regression line for predicting Head Length from Total Length
 - Each observation (i.e., point) has a residual.
 - The residual of a point is the vertical distance between the point and the regression line.
     - Data = Fit + Residual
-    - Residual = Data - Fit
+    - Residual = Data - Fit = Observed - Predicted
     - In symbols, the residual of the $i$th observation $(x_i, y_i)$ is $e_i = y_i - \hat{y}_i$.
 
 ## {data-background-image="https://openintro-ims.netlify.app/07-model-slr_files/figure-html/scattHeadLTotalLLine-highlighted-1.png" data-background-size="contain"}
@@ -279,3 +279,11 @@ a &= \bar{y} - b\bar{x} && \text{sample $y$-intercept} \\
 
 6. Discuss: What types of observations are most *influential* on the regression line?
 
+## Leverage
+
+- Points with large residuals are *outliers*.
+- Points at the extremes of the $x$ variable (left or right) are *influential*.
+    - Influential points are said to have *leverage*: they tend to tilt the regression line (i.e., change the slope) when they are added/removed.
+    - The slope is *not robust* in the presence of influential observations.
+    - The slope is more robust to outliers that fall near the middle range of the $x$ variable.
+    
