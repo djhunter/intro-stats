@@ -269,6 +269,7 @@ The `step` function in R attempts to eliminate explanatory variables that aren't
 ```{r}
 step(model3)
 ```
+
 ## Improved model
 
 ```{r}

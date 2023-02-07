@@ -1,51 +1,3 @@
----
-title: "Multiple Regression Models in R"
-output: 
-  revealjs::revealjs_presentation:
-    fig_width: 14 
-    fig_height: 7
-    self_contained: true
-    theme: night
-    highlight: zenburn
-    css: slidesdjh.css
-    center: false
-    transition: slide
-    reveal_options:
-      controls: true
-      progress: false
-      width: 1080
-      height: 540
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_chunk$set(comment = NA)
-options(width = 100)
-library(tidyverse)
-library(openintro)
-theme_set(theme_bw())
-```
-
-# Pairs Today
-
-- Please pair up (your choice).
-    - At least one person in each pair needs to have a device that can use RStudio (installed or using rstudio.cloud). This person is the *Operator*.
-    - Ideally, everyone has an RStudio-enabled device. If you don't, you can still take notes by keeping track of the code and trying it on your own later.
-    
-# Data Carpentry
-
-- Fundamental tools for working with data.
-    - Open
-    - Reproducible
-- Live Coding
-    - I type, you type.
-    - Challenges
-
-## Group Exercises
-
-Do all the challenges.
-
-```{r, eval = FALSE}
 library(tidyverse)
 library(openintro)
 
@@ -77,6 +29,10 @@ predict(model3, data.frame(area = 1600, lot = 0.25))
 ## area, lot, bed, bath, year_built
 ## Is this an improvement over model 3?
 
+### Solution
+model4 <- lm(price ~ area + lot + bed + bath + year_built, data = homes)
+summary(model4)
+
 ## eliminate some variables
 step(model4)
 
@@ -84,6 +40,13 @@ step(model4)
 ##    1. Compare adjusted R^2 to model4.
 ##    2. Predict the price of a house with 2000 sq feet area, 
 ##       lot size 0.5, 3 baths, built in 1950.
+
+### Solution
+model5 <- lm(price ~ area + lot + bath + year_built, data = homes)
+summary(model5)
+summary(model4)
+predict(model5, data.frame(area = 2000, lot = 0.5, bath = 3, year_built = 1950))
+## 432615.3
 
 ## Categorical response variable 
 
@@ -97,5 +60,6 @@ homespark <- homes %>%
 view(homespark)
 
 ## Challenge: Add anypark to model 5. Does the model improve?
-
-```
+### Solution
+model6 <- lm(price ~ area + lot + bath + year_built + anypark, data = homespark)
+summary(model6)
