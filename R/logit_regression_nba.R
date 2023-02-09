@@ -24,8 +24,8 @@ summary(bbmod1)
 # Write down the logistic regression equation
 
 # Ayo Desunmo rookie stats
-#GP	GS MIN	FGM-FGA	FG%	  3PTM-3PA	3P%	  FTm-FTA	FT%	  OR	DR	REB	AST	BLK	STL	PF	TO	PTS
-#77	40 27.4	3.6-6.9	52.0	0.9-2.4	  37.6	0.7-1.0	67.9	0.4	2.4	2.8	3.3	0.4	0.8	2.4	1.4	8.8
+#GP GS MIN  FGM-FGA FG%  3PTM-3PA 3P%  FTm-FTA FT%  OR  DR  REB AST BLK STL PF  TO  PTS
+#77 40 27.4 3.6-6.9 52.0 0.9-2.4  37.6 0.7-1.0 67.9 0.4 2.4 2.8 3.3 0.4 0.8 2.4 1.4 8.8
 
 ## Predict if Ayo will be in the league in 5 years:
 predict(bbmod1, data.frame(PTS = 8.8))
