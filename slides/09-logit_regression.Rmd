@@ -27,11 +27,6 @@ library(kableExtra)
 theme_set(theme_bw())
 ```
 
-# RStudio on Monday
-
-- If you haven't done so already, make sure to [follow the instructions on Canvas](https://westmont.instructure.com/courses/8503/discussion_topics/44046) for installing RStudio (or getting started with rstudio.cloud).
-- We'll be using RStudio on Monday, so it would be helpful if most of us had an RStudio-enabled device.
-
 # Overview
 
 - 9 Logistic regression
@@ -93,6 +88,23 @@ tribble(
 \log_e \left( \frac{\widehat{p}}{1-\widehat{p}} \right) = b_0 + b_1 x_{1} + b_2 x_{2} + \cdots + b_k x_{k}
 \]
 
+## Predicted logit
+
+\[
+\log_e \left( \frac{\widehat{p}}{1-\widehat{p}} \right) = b_0 + b_1 x_{1} + b_2 x_{2} + \cdots + b_k x_{k}
+\]
+
+- When we plug values into the right-hand side of this equation, we get a **predicted logit** of the probability we are trying to predict.
+- We usually want to convert the logit $\log_e \left( \frac{\widehat{p}}{1-\widehat{p}} \right)$ to a probability $\hat{p}$.
+
+| $\log_e \left( \frac{\widehat{p}}{1-\widehat{p}} \right)$ | $\hat{p}$ |
+|-------------|-------------|
+| -5          | very small  |
+| -3          | below 0.05  |
+|  0          | 0.5         |
+|  3          | above 0.95  |
+| 5           | close to 1  |
+
 ## {data-background-image="https://openintro-ims.netlify.app/09-model-logistic_files/figure-html/logit-transformation-1.png" data-background-size="contain"}
 
 ## Solving for $\hat{p}$
@@ -152,6 +164,7 @@ summary(model2)$coefficients
 ```{r}
 step(model2)
 ```
+
 ## Better model
 
 ```{r}
@@ -185,7 +198,7 @@ summary(model3)$coefficients
 
 \[
 \begin{aligned}
-\log_e \left(\frac{p}{1 - p}\right) 
+\log_e \left(\frac{\hat{p}}{1 - \hat{p}}\right) 
 &= - 2.7162 - 0.4364 \times \texttt{job_city}_{\texttt{Chicago}} \\
 & \quad \quad + 0.0206 \times \texttt{years_experience} \\
 & \quad \quad + 0.7634 \times \texttt{honors} - 0.3443 \times \texttt{military} \\
