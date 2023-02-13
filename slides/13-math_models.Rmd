@@ -24,7 +24,6 @@ options(width = 100)
 library(tidyverse)
 library(openintro)
 library(kableExtra)
-library(qrencoder)
 theme_set(theme_bw())
 ```
 
@@ -77,12 +76,6 @@ $$
 ## One-Proportion Applet
 
 https://www.rossmanchance.com/applets/2021/oneprop/OneProp.htm
-
-```{r, echo = FALSE, fig.height=4}
-image(qrencode_raster("https://www.rossmanchance.com/applets/2021/oneprop/OneProp.htm"), 
-      asp=1, col=c("white", "black"), axes=FALSE, 
-      xlab="", ylab="")
-```
 
 ## Group Activity
 

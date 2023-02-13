@@ -24,7 +24,6 @@ options(width = 100)
 library(tidyverse)
 library(openintro)
 library(kableExtra)
-library(qrencoder)
 theme_set(theme_bw())
 ```
 
@@ -114,15 +113,9 @@ How many orange Reeses Pieces are in a typical bag of 40?
 
 https://www.rossmanchance.com/applets/2021/oneprop/OneProp.htm?candy=1
 
-```{r, echo = FALSE, fig.height=4}
-image(qrencode_raster("https://www.rossmanchance.com/applets/2021/oneprop/OneProp.htm?candy=1"), 
-      asp=1, col=c("white", "black"), axes=FALSE, 
-      xlab="", ylab="")
-```
-
 ## Group Activity
 
-1. Set the *Probability of orange* to 0.5, the *Number of candies* to 40, the *Number of samples* to 1, and choose the *Proportion of orange* statistic. 
+1. Using [the applet](https://www.rossmanchance.com/applets/2021/oneprop/OneProp.htm?candy=1), set the *Probability of orange* to 0.5, the *Number of candies* to 40, the *Number of samples* to 1, and choose the *Proportion of orange* statistic. 
 
 2. Click *Draw Samples*. How many orange did you get? What is $\hat{p}_\text{boot}$? Does it equal $\hat{p}$? Is it close?
 

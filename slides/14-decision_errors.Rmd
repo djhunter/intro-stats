@@ -24,7 +24,6 @@ options(width = 100)
 library(tidyverse)
 library(openintro)
 library(kableExtra)
-library(qrencoder)
 theme_set(theme_bw())
 ```
 
@@ -220,12 +219,6 @@ Can we tell if a student is guessing randomly on a multiple choice test with 30 
 ## Power Applet
 
 https://www.rossmanchance.com/applets/2021/power/power.html
-
-```{r, echo = FALSE, fig.height=4}
-image(qrencode_raster("https://www.rossmanchance.com/applets/2021/power/power.html"), 
-      asp=1, col=c("white", "black"), axes=FALSE, 
-      xlab="", ylab="")
-```
 
 ## Group Activity
 

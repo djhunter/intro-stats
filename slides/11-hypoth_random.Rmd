@@ -24,7 +24,6 @@ options(width = 100)
 library(tidyverse)
 library(openintro)
 library(kableExtra)
-library(qrencoder)
 theme_set(theme_bw())
 ```
 
@@ -154,15 +153,9 @@ The smaller the p-value, the more evidence you have against $H_0$ in favor of $H
 
 https://www.rossmanchance.com/applets/2021/chisqshuffle/ChiSqShuffle.htm?dolphins=1
 
-```{r, echo = FALSE, fig.height=4}
-image(qrencode_raster("https://www.rossmanchance.com/applets/2021/chisqshuffle/ChiSqShuffle.htm?dolphins=1"), 
-      asp=1, col=c("white", "black"), axes=FALSE, 
-      xlab="", ylab="")
-```
-
 ## Group Activity
 
-1. The applet shows you a contingency table and a standardized barplot of the dolphin data. Record the observed difference in proportions $\hat{p}_\text{dolphin} - \hat{p}_\text{control}$ between the treatment group and the control group.
+1. The [applet](https://www.rossmanchance.com/applets/2021/chisqshuffle/ChiSqShuffle.htm?dolphins=1) shows you a contingency table and a standardized barplot of the dolphin data. Record the observed difference in proportions $\hat{p}_\text{dolphin} - \hat{p}_\text{control}$ between the treatment group and the control group.
 
 2. Check the box for Show Shuffle Options. Click the Shuffle button and observe what happens. Click it a couple more times and observe.
 
