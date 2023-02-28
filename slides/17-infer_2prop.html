@@ -1951,7 +1951,7 @@ group       died survived
 </section>
 <section id="variability-of-the-statistic" class="slide level2">
 <h2>17.1.2 Variability of the statistic</h2>
-<p>To model what would happen if <span class="math inline">\(H_0\)</span> were true:</p>
+<p>To model <em>what would happen if <span class="math inline">\(H_0\)</span> were true:</em></p>
 <ul>
 <li>90 Cards (one for each patient)
 <ul>
@@ -1964,7 +1964,8 @@ group       died survived
 <li>Treatment group (40 cards)</li>
 </ul></li>
 </ul>
-<p>Compute (repeatedly) a simulated difference in survival rates</p>
+<p>Compute (repeatedly) a simulated difference in survival rates to get
+a <strong>null distribution.</strong></p>
 </section>
 <section id="section" class="slide level2" data-background-image="https://openintro-ims.netlify.app/17-inference-two-props_files/figure-html/cpr-rand-dot-plot-1.png" data-background-size="contain">
 <h2 data-background-image="https://openintro-ims.netlify.app/17-inference-two-props_files/figure-html/cpr-rand-dot-plot-1.png" data-background-size="contain"></h2>
@@ -2284,8 +2285,8 @@ sample estimates:
 prop 1 prop 2 
   0.35   0.22 </code></pre>
 </section>
-<section id="blood-thiner-study-two-sided-90-conf.level" class="slide level2">
-<h2>Blood Thiner study, (two sided, 90% conf.level)</h2>
+<section id="blood-thinner-study-two-sided-90-conf.level" class="slide level2">
+<h2>Blood Thinner study, (two sided, 90% conf.level)</h2>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.test</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">14</span>,<span class="dv">11</span>), <span class="at">n =</span> <span class="fu">c</span>(<span class="dv">40</span>, <span class="dv">50</span>), <span class="at">conf.level =</span> <span class="fl">0.90</span>)</span></code></pre></div>
 <pre><code>
     2-sample test for equality of proportions with continuity correction

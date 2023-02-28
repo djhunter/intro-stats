@@ -80,7 +80,7 @@ table(cpr)
 
 ## 17.1.2 Variability of the statistic
 
-To model what would happen if $H_0$ were true:
+To model *what would happen if $H_0$ were true:*
 
 - 90 Cards (one for each patient)
     - 65 Blue (those who died)
@@ -89,7 +89,7 @@ To model what would happen if $H_0$ were true:
     - Control group (50 cards)
     - Treatment group (40 cards)
 
-Compute (repeatedly) a simulated difference in survival rates 
+Compute (repeatedly) a simulated difference in survival rates to get a **null distribution.**
 
 ## {data-background-image="https://openintro-ims.netlify.app/17-inference-two-props_files/figure-html/cpr-rand-dot-plot-1.png" data-background-size="contain"}
 
@@ -273,7 +273,7 @@ prop.test(x = c(14,11), n = c(40, 50), alternative = "greater")
 prop.test(x = c(14,11), n = c(40, 50))
 ```
 
-## Blood Thiner study, (two sided, 90% conf.level)
+## Blood Thinner study, (two sided, 90% conf.level)
 
 ```{r}
 prop.test(x = c(14,11), n = c(40, 50), conf.level = 0.90)
