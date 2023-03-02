@@ -1,0 +1,72 @@
+---
+title: "Review for Test #2, Chapters 8-18"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(tidyverse)
+library(openintro)
+```
+
+# General Advice 
+
+See the study guide.
+
+- Review the slides and your class notes. 
+    - As you review, follow along with the *textbook*.
+    - As you review, keep a list of key terms and concepts.
+    - Make sure you can answer all the *group activity questions*.
+- Review your homework, keeping in mind that these have been graded very leniently and not all of your answers will be correct, even if you didn't have points deducted.
+- Do some of the *odd-numbered problems* in the textbook.
+    - The answers to the odd-numbered questions are in the back of the book.
+- Study the *Chapter Review* sections at the end of each chapter.
+
+# Review Problems
+
+## Review Problems: Regression
+
+- Chapter 8, Exercises 7, 9
+- Chapter 9, Exercise 5
+
+## Review Problems: Inference
+
+- Chapter 11, Exercise 7
+- Chapter 12, Exercises 3, 7
+- Chapter 13, Exercise 5
+- Chapter 14, Exercises 3, 4
+- Chapter 16, Exercise 23
+- Chapter 17, Exercise 5
+- Chapter 18, Exercise 13 (see next slide)
+
+## Chapter 18, Exercise 13
+
+- State null and alternative hypotheses.
+- Use the following R output to make a conclusion.
+
+```{r}
+sleepTable <- as.table(rbind(c(35, 193, 64), c(104, 499, 192)))
+chisq.test(sleepTable)
+```
+
+
+
+
+
+
