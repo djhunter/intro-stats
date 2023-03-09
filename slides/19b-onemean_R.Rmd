@@ -39,13 +39,30 @@ Do all the challenges.
 ```{r, eval = FALSE}
 library(tidyverse)
 library(openintro)
-
-## Find a good data set
+glimpse(cherry)
 
 ## Load and inspect the data (graph)
+glimpse(cherry)
+ggplot(cherry, aes(x = height)) +
+  geom_histogram()
+
+## Challenge: Try a density plot instead of a histogram. Then try
+# it for diam instead of height. How are each skewed? 
 
 ## Bootstrap samples
+boots <- replicate(1000, mean(sample(cherry$height, 
+                                     nrow(cherry), 
+                                     replace = TRUE)))
+sd(boots)
+mean(boots) + c(-1,1)*2*sd(boots)
+quantile(boots, c(0.025, 0.975))
 
 ## t test
+t.test(cherry$height)
 
 ## Challenge (other variable)
+# Do a t.test for the diam variable, and record a 95% confidence interval.
+# Then do a bootstrap confidence interval for diam, and compare the results.
+```
+
+
