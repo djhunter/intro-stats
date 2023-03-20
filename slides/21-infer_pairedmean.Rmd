@@ -63,7 +63,7 @@ How would you collect data to answer the following questions?
 Example: Compare tread wear between two brands of tire.
 
 - 25 cars. Each car had one tire of each brand.
-- After 1000 miles, the tread reamaining was measured.
+- After 1000 miles, the tread remaining was measured.
 
 ## {data-background-image="https://openintro-ims.netlify.app/21-inference-paired-means_files/figure-html/tiredata-1.png" data-background-size="contain"}
 
@@ -87,11 +87,6 @@ Example: Compare tread wear between two brands of tire.
 ## {data-background-image="https://openintro-ims.netlify.app/21-inference-paired-means_files/figure-html/tiredatarand1-1.png" data-background-size="contain"}
 
 ## {data-background-image="https://openintro-ims.netlify.app/21-inference-paired-means_files/figure-html/pairRandomiz-1.png" data-background-size="contain"}
-
-## 21.1.1 Observed data
-## 21.1.2 Variability of the statistic
-## 21.1.3 Observed statistic vs. null statistics
-
 
 # Jumping Jacks vs Bicycle Kicks
 
@@ -231,7 +226,7 @@ t.test(textbooks$bookstore_new, textbooks$amazon_new, paired = TRUE)
 ```
 
 
-## Just to a one-sample test on the differences
+## Just do a one-sample test on the differences
 
 ```{r}
 t.test(textbooks$price_diff)
