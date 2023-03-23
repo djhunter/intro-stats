@@ -55,10 +55,10 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 | 3/2 | [Review for Test #2](slides/18c-test2review.html) |
 | 3/9 |  [Inference for a Single Mean](slides/19-infer_onemean.html) <br> [Bootstrapping and t-tests in R](slides/19b-onemean_R.html) |
 | 3/21 | [Inference for Comparing Two Independent Means](slides/20-infer_twomean.html) |
+| 3/23 | [Inference for Comparing Paired Means](slides/21-infer_pairedmean.html) |
 
 ---
-# | 3/23 | [Inference for Comparing Paired Means](slides/21-infer_pairedmean.html) |
-# 3/23  [Inference for Comparing Many Means](slides/22-infer_manymeans.html)
+# 3/28  [Inference for Comparing Many Means](slides/22-infer_manymeans.html)
 #  [Inference for Numerical Data in R](slides/23b-num_infer_R.html)
 # 3/28 [Inference for Linear Regression](slides/24a-infer_regression.html) 
 #  [Inference for Linear Regression, continued](slides/24b-infer_regression.html)
