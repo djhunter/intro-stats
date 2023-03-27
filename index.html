@@ -2684,17 +2684,23 @@ overflow-y: auto;
 border: 1px solid #ddd;
 border-radius: 4px;
 }
-.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-content: "\e259";
+.tabset-dropdown > .nav-tabs > li.active:before {
+content: "";
 font-family: 'Glyphicons Halflings';
 display: inline-block;
 padding: 10px;
 border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-content: "\e258";
-font-family: 'Glyphicons Halflings';
+content: "";
 border: none;
+}
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+content: "";
+font-family: 'Glyphicons Halflings';
+display: inline-block;
+padding: 10px;
+border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs > li.active {
 display: block;
@@ -2916,6 +2922,12 @@ Comparing Two Independent Means</a></td>
 <td align="left">3/23</td>
 <td align="left"><a href="slides/21-infer_pairedmean.html">Inference for
 Comparing Paired Means</a></td>
+</tr>
+<tr class="odd">
+<td align="left">3/28</td>
+<td align="left"><a href="slides/22-infer_manymeans.html">Inference for
+Comparing Many Means</a> <br> <a href="slides/23b-num_infer_R.html">Inference for Numerical Data in
+R</a></td>
 </tr>
 </tbody>
 </table>

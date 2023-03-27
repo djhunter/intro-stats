@@ -56,21 +56,22 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 | 3/9 |  [Inference for a Single Mean](slides/19-infer_onemean.html) <br> [Bootstrapping and t-tests in R](slides/19b-onemean_R.html) |
 | 3/21 | [Inference for Comparing Two Independent Means](slides/20-infer_twomean.html) |
 | 3/23 | [Inference for Comparing Paired Means](slides/21-infer_pairedmean.html) |
+| 3/28 | [Inference for Comparing Many Means](slides/22-infer_manymeans.html) <br> [Inference for Numerical Data in R](slides/23b-num_infer_R.html) |
 
 ---
-# 3/28  [Inference for Comparing Many Means](slides/22-infer_manymeans.html)
-#  [Inference for Numerical Data in R](slides/23b-num_infer_R.html)
 # 3/28 [Inference for Linear Regression](slides/24a-infer_regression.html) 
 #  [Inference for Linear Regression, continued](slides/24b-infer_regression.html)
 # 3/30 [Inference for Multiple Regression](slides/25-infer_multiple.html) 
-#  [Inference for Logistic Regression](slides/26-infer_logistic.html)
-# 3/30 [Inference for Multiple Regression in R](slides/27-mariokart.html)
+# 4/4 [Inference for Logistic Regression](slides/26-infer_logistic.html)
+# 4/6 [Inference for Multiple Regression in R](slides/27-mariokart.html)
 #  [Inference for Logistic Regression in R](slides/27b-nbarookies.html)
-# 4/4 Data Carpentry
-# Review for Test #3
-# 3/23 [Inference: Applications](slides/23-applications_infer.html) # Save for test review?
-# 4/6 Test #3
-# five more content days
+
+# 4/11 Review for Test #3
+#  [Inference: Applications](slides/23-applications_infer.html) # Save for test review?
+# 4/13 Test #3
+# 4/18 (recycle some tintle content?)
+# 4/20
+# 4/25 
 # 4/27 [Final Exam Review](slides/27c-test4review.html)
 ---
 
