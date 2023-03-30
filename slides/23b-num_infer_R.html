@@ -1902,6 +1902,11 @@ own later.</li>
 <li>Statistic: <span class="math inline">\(\bar{x}_1 -
 \bar{x}_2\)</span></li>
 </ul></li>
+<li>Paired <span class="math inline">\(t\)</span>-test
+<ul>
+<li>Data has a natural <em>pairing</em>.</li>
+<li>Statistic: <span class="math inline">\(\bar{x}_\text{diff}\)</span></li>
+</ul></li>
 <li>ANOVA <span class="math inline">\(F\)</span>-test
 <ul>
 <li>Explanatory variable has more than 2 levels.</li>
@@ -1956,7 +1961,10 @@ own later.</li>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(smokers, <span class="fu">aes</span>(<span class="at">x =</span> amt_weekends)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Challenge: Do men and women differ in how much they smoke on weekends? ## Make a plot and do a t-test.</span></span></code></pre></div>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Challenge: Do men and women differ in how much they smoke on weekends? </span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Make a plot and do a t-test. </span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Write a sentence as a comment interpreting your result</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="do">## in context.</span></span></code></pre></div>
 </section>
 <section class="slide level2">
 
@@ -1980,8 +1988,10 @@ own later.</li>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(smokers<span class="sc">$</span>amt_weekdays, smokers<span class="sc">$</span>amt_weekends, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(smokers, <span class="fu">aes</span>(<span class="at">x =</span> amt_weekdays, <span class="at">y =</span> amt_weekends)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Challenge: Do men and women separately. Do both men and women smoke more on</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="do">## the weekends? Is the difference the same?</span></span></code></pre></div>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Challenge: Do the above t.test twice: Once for only the men </span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="do">## and a second time for only the women. (use filter) </span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Do both men and women smoke more on the weekends? </span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Is the difference the same?</span></span></code></pre></div>
 </section></section>
     </div>
   </div>

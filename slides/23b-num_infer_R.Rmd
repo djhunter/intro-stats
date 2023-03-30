@@ -40,6 +40,9 @@ theme_set(theme_bw())
     - Explanatory variable has 2 levels.
     - Data is *not* paired; groups are *independent*.
     - Statistic: $\bar{x}_1 - \bar{x}_2$
+- Paired $t$-test
+    - Data has a natural *pairing*.
+    - Statistic: $\bar{x}_\text{diff}$
 - ANOVA $F$-test
     - Explanatory variable has more than 2 levels.
     - Statistic: $F = \frac{MSG}{MSE}$
@@ -91,7 +94,10 @@ summary(smokers)
 
 ggplot(smokers, aes(x = amt_weekends)) + geom_boxplot()
 
-## Challenge: Do men and women differ in how much they smoke on weekends? ## Make a plot and do a t-test.
+## Challenge: Do men and women differ in how much they smoke on weekends? 
+## Make a plot and do a t-test. 
+## Write a sentence as a comment interpreting your result
+## in context.
 ```
 
 ---
@@ -111,6 +117,18 @@ anova(mstat.aov)
 ## Is there evidence of an association? If so, follow up with TukeyHSD.
 ```
 
+
+---
+
+```{r, eval = FALSE}
+smoke_ed <- smokers %>%
+  mutate(education = factor(case_when(
+#    highest_qualification == "GCSE/CSE" ~ "GCSE",
+    highest_qualification == "GCSE/O Level" ~ "GCSE",
+    TRUE ~ highest_qualification
+  )))
+```
+
 ---
 
 ```{r, eval = FALSE}
@@ -119,6 +137,8 @@ anova(mstat.aov)
 t.test(smokers$amt_weekdays, smokers$amt_weekends, paired = TRUE)
 ggplot(smokers, aes(x = amt_weekdays, y = amt_weekends)) + geom_point()
 
-## Challenge: Do men and women separately. Do both men and women smoke more on
-## the weekends? Is the difference the same?
+## Challenge: Do the above t.test twice: Once for only the men 
+## and a second time for only the women. (use filter) 
+## Do both men and women smoke more on the weekends? 
+## Is the difference the same?
 ```
