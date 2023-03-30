@@ -117,28 +117,31 @@ anova(mstat.aov)
 ## Is there evidence of an association? If so, follow up with TukeyHSD.
 ```
 
-
----
-
-```{r, eval = FALSE}
-smoke_ed <- smokers %>%
-  mutate(education = factor(case_when(
-#    highest_qualification == "GCSE/CSE" ~ "GCSE",
-    highest_qualification == "GCSE/O Level" ~ "GCSE",
-    TRUE ~ highest_qualification
-  )))
-```
-
 ---
 
 ```{r, eval = FALSE}
 ## Paired t-test
 
+## Do people smoke more on weekends?
+
 t.test(smokers$amt_weekdays, smokers$amt_weekends, paired = TRUE)
-ggplot(smokers, aes(x = amt_weekdays, y = amt_weekends)) + geom_point()
 
 ## Challenge: Do the above t.test twice: Once for only the men 
 ## and a second time for only the women. (use filter) 
 ## Do both men and women smoke more on the weekends? 
 ## Is the difference the same?
+```
+
+---
+
+Optional:
+
+```{r, eval = FALSE}
+smokers %>%
+  select(gender, amt_weekdays, amt_weekends) %>%
+  pivot_longer(cols = c(amt_weekdays, amt_weekends),
+               names_to = "day_type",
+               values_to = "amount") %>%
+  ggplot(aes(x = amount, y = gender, color = day_type)) +
+  geom_boxplot()
 ```
