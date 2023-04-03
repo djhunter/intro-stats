@@ -58,21 +58,16 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 | 3/23 | [Inference for Comparing Paired Means](slides/21-infer_pairedmean.html) |
 | 3/28 | [Inference for Comparing Many Means](slides/22-infer_manymeans.html) |
 | 3/30 | [Inference for Numerical Data in R](slides/23b-num_infer_R.html) |
+| 4/4 | [Inference for Linear Regression](slides/24-infer_regression.html) |
 
 ---
-# 3/28 [Inference for Linear Regression](slides/24a-infer_regression.html) 
-#  [Inference for Linear Regression, continued](slides/24b-infer_regression.html)
-# 3/30 [Inference for Multiple Regression](slides/25-infer_multiple.html) 
-# 4/4 [Inference for Logistic Regression](slides/26-infer_logistic.html)
-# 4/6 [Inference for Multiple Regression in R](slides/27-mariokart.html)
-#  [Inference for Logistic Regression in R](slides/27b-nbarookies.html)
-
+# | 4/6 | [Inference for Linear Regression, continued](slides/24-infer_regression.html) 
 # 4/11 Review for Test #3
 #  [Inference: Applications](slides/23-applications_infer.html) # Save for test review?
-# 4/13 Test #3
-# 4/18 (recycle some tintle content?)
-# 4/20
-# 4/25 
+# 4/18 [Inference for Multiple Regression](slides/25-infer_multiple.html) 
+# 4/20 [Inference for Logistic Regression](slides/26-infer_logistic.html)
+# 4/25 [Inference for Multiple Regression in R](slides/27-mariokart.html)
+#  [Inference for Logistic Regression in R](slides/27b-nbarookies.html)
 # 4/27 [Final Exam Review](slides/27c-test4review.html)
 ---
 

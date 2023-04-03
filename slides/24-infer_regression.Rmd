@@ -1,5 +1,5 @@
 ---
-title: "Chapter 24: Inference for linear regression, continued"
+title: "Chapter 24: Inference for linear regression"
 output: 
   revealjs::revealjs_presentation:
     fig_width: 14 
@@ -30,6 +30,16 @@ set.seed(1423)
 
 # Overview
 
+- 24.1 Case study: Sandwich store
+    - 24.1.1 Observed data
+    - 24.1.2 Variability of the statistic
+- 24.2 Randomization test for the slope
+    - 24.2.1 Observed data
+    - 24.2.2 Variability of the statistic
+    - 24.2.3 Observed statistic vs. null statistics
+- 24.3 Bootstrap confidence interval for the slope
+    - 24.3.1 Observed data
+    - 24.3.2 Variability of the statistic
 - 24.4 Mathematical model for testing the slope
     - 24.4.1 Observed data
     - 24.4.2 Variability of the statistic
@@ -42,34 +52,158 @@ set.seed(1423)
     - 24.6.2 Why do we need technical conditions?
     - 24.6.3 What if all the technical conditions are not met?
 
-# Last time: regression inference
 
+# 24.1 Case study: Sandwich store
+
+- Explanatory variable: Amount spent on advertising
+    - Numeric
+- Response variable: Revenue
+    - Numeric
 - Linear regression model: $y = \beta_0 + \beta_1x + \varepsilon$
+    - $\beta_0$ and $\beta_1$ are *unknown parameters*
+    - $\beta_0$ is the regression intercept.
+    - $\beta_1$ is the regression slope.
+    - $\varepsilon$ models the residuals.
+- A while ago, we estimated these parameters and used regression models to make predictions.
+
+##  {data-background="https://openintro-ims.netlify.app/24-inf-model-slr_files/figure-html/sandpop-1.png" data-background-size="contain"}
+
+## 24.1.1 Observed data
+
+We can estimate the unknown parameters by taking a random sample of 20 stores, and using R to compute the least squares regression line.
+
 - Regression equation: $\hat{y} = b_0 + b_1x$
 - $b_0$ and $b_1$ are *statistics*.
     - $b_0$ is our best guess for the parameter $\beta_0$
     - $b_1$ is our best guess for the parameter $\beta_1$
+
+## 24.1.2 Variability of the statistic
+
+- Before, we never considered how good these estimates were.
+- We can estimate the variability of the statistics $b_0$ and $b_1$ using randomization.
+    - Resampling from a hypothetical distribution, 
+    - Bootstrapping, or
+    - Randomizing the data to create a null distribution
+
+##  {data-background="https://openintro-ims.netlify.app/24-inf-model-slr_files/figure-html/unnamed-chunk-4-1.png" data-background-size="contain"}
+
+##  {data-background="https://openintro-ims.netlify.app/24-inf-model-slr_files/figure-html/unnamed-chunk-5-1.png" data-background-size="contain"}
+
+##  {data-background="https://openintro-ims.netlify.app/24-inf-model-slr_files/figure-html/unnamed-chunk-6-1.png" data-background-size="contain"}
+
+##  {data-background="https://openintro-ims.netlify.app/24-inf-model-slr_files/figure-html/slopes-1.png" data-background-size="contain"}
+
+##  {data-background="https://openintro-ims.netlify.app/24-inf-model-slr_files/figure-html/sand20lm-1.png" data-background-size="contain"}
+
+# 24.2 Randomization test for the slope
+
+## 24.2.1 Observed data
+
+- Data on weights of 100 babies at birth (response)
+- Several possible numeric explanatory variables:
+   - weight gained by mother
+   - mother's age
+   - number of hospital visits during pregnancy
+   - weeks of gestation
+
+##  {data-background="https://openintro-ims.netlify.app/24-inf-model-slr_files/figure-html/babyweight-1.png" data-background-size="contain"}
+
+## Hypotheses
+
+Is there an association between weeks of gestation and the weight of the baby?
+
 - Null Hypothesis: No linear association
     - $H_0: \beta_1 = 0$
         - Regression slope is zero
     - $H_A: \beta_1 \neq 0$
         - Some linear association
         
-## Randomization test for regression slope
+## 24.2.2 Variability of the statistic
 
-- You have $n$ observations of two numeric variables, explanatory and response.
-- Write the values of the response variable on $n$ cards.
-- Shuffle, then randomly pair up with values of the explanatory variable.
-- Compute a shuffled $b_1$. (lots)
-- Make a null distribution.
-- Get a p-value.
-
+- Randomization test: 
+    - Write the values of the response variable on 100 cards.
+    - Shuffle, then randomly pair up with values of the explanatory variable.
+    - Compute a shuffled $b_1$. (lots)
+    - Make a null distribution.
+    - Get a p-value
 
 ##  {data-background="https://openintro-ims.netlify.app/24-inf-model-slr_files/figure-html/permweightScatter-1.png" data-background-size="contain"}
 
+
 ##  {data-background="https://openintro-ims.netlify.app/24-inf-model-slr_files/figure-html/permweekslm-1.png" data-background-size="contain"}
 
+## 24.2.3 Observed statistic vs. null statistics
+
 ##  {data-background="https://openintro-ims.netlify.app/24-inf-model-slr_files/figure-html/nulldistBirths-1.png" data-background-size="contain"}
+
+# Activities and GPA
+
+- The subjects were 42 undergraduate students from the University of Minnesota.
+- They were asked questions about how much time they spent in activities like work, watching TV, exercising, non-academic computer use, etc. as well as what their current GPA was.
+- We are going to test to see if there is a *negative* association between the number of hours per week spent on nonacademic activities and GPA.
+
+## Hypotheses
+
+- *Null Hypothesis:* There is no association between the number of hours students spend on nonacademic activities and student GPA in the population.
+- *Alternative Hypothesis:* There is a negative association between the number of hours students spend on nonacademic activities and student GPA in the population.
+
+Symbols?
+
+## Regression coefficients using R
+
+```{r}
+actgpa <- read.table("http://www.isi-stats.com/isi/data/chap10/GPA.txt", header = TRUE)
+model1 <- lm(gpa ~ hours, data = actgpa)
+summary(model1)$coefficients
+```
+
+$\widehat{\text{gpa}} = 3.60 - 0.0059 \times \text{hours}$
+
+## Scatterplot and Regression line
+
+```{r, message=FALSE, fig.width=5, fig.height=4, fig.align='center'}
+ggplot(actgpa, aes(x=hours, y=gpa)) + 
+  geom_point() +
+  geom_smooth(method=lm)
+```
+
+## Group Activity
+
+1. Copy [the data](http://www.isi-stats.com/isi/data/chap10/GPA.txt) and paste it in the [correlation/regression applet](http://www.rossmanchance.com/applets/RegShuffle.htm?hideExtras=2) (clear the data before pasting). Click *Use Data*.
+
+2. Use the applet to find the regression slope $b_1$. Write a sentence interpreting the meaning of the regression slope in the context of this study.
+
+3. Check *Show Shuffle Options* and make sure *Slope* is selected. Click *Shuffle Y-values* a few times and pay attention to the plot that appears. Make sure you understand the meanings of the red, blue, and gray lines. Now do at least 1,000 shuffles with the applet and **Record** the p-value, along with an interpretation of the p-value in the context of the study.
+
+
+# 24.3 Bootstrap confidence interval for the slope
+
+- No hypotheses to check.
+- Resample the data (with replacement), and compute resampled $b_1$'s
+- Get a bootstrap distribution.
+- Use it to get a percentile (or SE) confidence interval for $\beta_1$
+
+## 24.3.1 Observed data
+
+- Look at baby weight as predicted by mother's age
+- We want to infer something about the regression slope $\beta_1$.
+    - For each additional year older the mom is, the baby's weight increases/decreases by $\beta_1$.
+    - $\beta_1$ is an unknown parameter, but the data can give us a *confidence interval* for it.
+
+##  {data-background="https://openintro-ims.netlify.app/24-inf-model-slr_files/figure-html/magePlot-1.png" data-background-size="contain"}
+
+## 24.3.2 Variability of the statistic
+
+- Resample the original 100 pairs to obtain a bootstrap sample of 100 pairs.
+- Compute $b_1$ for this bootstrap sample.
+- Repeat lots of times.
+- Make a percentile confidence interval.
+
+##  {data-background="https://openintro-ims.netlify.app/24-inf-model-slr_files/figure-html/birth2BS-1.png" data-background-size="contain"}
+
+##  {data-background="https://openintro-ims.netlify.app/24-inf-model-slr_files/figure-html/birthBS-1.png" data-background-size="contain"}
+
+##  {data-background="https://openintro-ims.netlify.app/24-inf-model-slr_files/figure-html/mageBSslopes-1.png" data-background-size="contain"}
 
 # 24.4 Mathematical model for testing the slope
 
@@ -314,5 +448,3 @@ ggplot(smoke, aes(x=Alcohol_Drinks, y=Smoked)) + geom_point() +geom_smooth(metho
 - Another strategy is to “transform” the data on a different scale so conditions are met.  
     + The logarithmic scale is common
     
-
-
