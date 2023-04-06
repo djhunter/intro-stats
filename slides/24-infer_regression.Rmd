@@ -448,3 +448,44 @@ ggplot(smoke, aes(x=Alcohol_Drinks, y=Smoked)) + geom_point() +geom_smooth(metho
 - Another strategy is to “transform” the data on a different scale so conditions are met.  
     + The logarithmic scale is common
     
+# Inference for Linear Regression in R
+
+## Data Carpentry Script
+
+```{r, eval = FALSE}
+library(tidyverse)
+library(palmerpenguins)
+
+glimpse(penguins)
+ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm)) +
+  geom_point()
+
+bfit1 <- lm(bill_depth_mm ~ bill_length_mm, data = penguins)
+summary(bfit1)
+
+## Challenges. 
+# 1. Look at the diagnostic plots. Do you notice any
+# patterns in the residuals? Use plot(bfit1, 1)
+# 2. Redo the above scatterplot, but color the points according
+# to the different species. What do you notice?
+
+# Consider the species separately.
+penGentoo <- penguins %>%
+  filter(species == "Gentoo")
+view(penGentoo)
+
+## Challenges.
+# 1. Make separate data frames for the other two species.
+# 2. Make a separate regression model for each species. 
+#    Record the regression slopes for each model. 
+#    Are they significant?
+# 3. Investigate the residual vs. fit plots for each model.
+
+## Confidence intervals
+bfit2 <- lm(bill_depth_mm ~ bill_length_mm, data = penGentoo)
+summary(bfit2)
+0.20484 + c(-1,1) * 2 * 0.022
+confint(bfit2)
+```
+
+
