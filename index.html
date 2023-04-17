@@ -2684,17 +2684,23 @@ overflow-y: auto;
 border: 1px solid #ddd;
 border-radius: 4px;
 }
-.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-content: "\e259";
+.tabset-dropdown > .nav-tabs > li.active:before {
+content: "";
 font-family: 'Glyphicons Halflings';
 display: inline-block;
 padding: 10px;
 border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-content: "\e258";
-font-family: 'Glyphicons Halflings';
+content: "";
 border: none;
+}
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+content: "";
+font-family: 'Glyphicons Halflings';
+display: inline-block;
+padding: 10px;
+border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs > li.active {
 display: block;
@@ -2941,6 +2947,11 @@ Linear Regression, continued</a></td>
 <td align="left">4/11</td>
 <td align="left"><a href="slides/24c-test3review.html">Review for Test
 #3</a></td>
+</tr>
+<tr class="even">
+<td align="left">4/18</td>
+<td align="left"><a href="slides/25-infer_multiple.html">Inference for
+Multiple Regression</a></td>
 </tr>
 </tbody>
 </table>
