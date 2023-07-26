@@ -32,20 +32,20 @@ predict(bbmod1, data.frame(PTS = 8.8))
 exp(1.064908)/(1+exp(1.06498))
 predict(bbmod1, data.frame(PTS = 8.8), type = "response")
 
-## Challenge: Add games played  (GP) as another predictor in your model. (bbmod2)
+## Challenge: Add games played  (G) as another predictor in your model. (bbmod2)
 ## Ayo played 77 games as a rookie and averaged 8.8 points. What
 ## probability does the model predict?
 
 # Solution
-bbmod2 <- glm(TARGET_5Yrs ~ PTS + GP, family = "binomial", data = nba)
+bbmod2 <- glm(TARGET_5Yrs ~ PTS + G, family = "binomial", data = nba)
 summary(bbmod2)
-predict(bbmod2, data.frame(PTS = 8.8, GP = 77), type = "response")
+predict(bbmod2, data.frame(PTS = 8.8, G = 77), type = "response")
 # 0.823
 
-## Challenge: make a scatterplot of GP vs PTS, colored by TARGET_5Yrs
+## Challenge: make a scatterplot of G vs PTS, colored by TARGET_5Yrs
 ## What do you notice? Where would Ayo be?
 ## Solution
-ggplot(nba, aes(x = PTS, y = GP, color = TARGET_5Yrs)) +
+ggplot(nba, aes(x = PTS, y = G, color = TARGET_5Yrs)) +
   geom_point() +
   geom_smooth() +
   scale_color_brewer(palette = "Set2")
@@ -54,20 +54,14 @@ ggplot(nba, aes(x = PTS, y = GP, color = TARGET_5Yrs)) +
 # variables (your choice). Use the step function on your model.
 # Does it eliminate any variables?
 # Solution:
-model3 <- glm(TARGET_5Yrs ~ PTS + GP + AST + REB + TOV, 
+model3 <- glm(TARGET_5Yrs ~ PTS + G + AST + TRB + TOV, 
               family = "binomial", data = nba)
 step(model3)
 
 ## Challenge: how could you display three variables in a plot,
 # giving some information about 5yr success?
-ggplot(nba, aes(x = PTS, y = GP, size = REB, color = TARGET_5Yrs)) +
+ggplot(nba, aes(x = PTS, y = G, size = TRB, color = TARGET_5Yrs)) +
   geom_point(alpha = 0.5) +
   scale_color_brewer(palette = "Set1")
 
-## Challenge: Use filter to locate the players who played all 82 games 
-# but didn't last in the NBA. Can you find some mistakes in the data set?
 
-nba %>% 
-  filter(GP == 82, TARGET_5Yrs == 0) %>%
-  view()
-# KAT, Dee Brown are obviously wrong.
