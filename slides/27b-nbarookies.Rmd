@@ -36,8 +36,8 @@ theme_set(theme_bw())
 
 ## NBA Rookie Data
 
->- Observational Units: 1294 NBA Rookies.
->- Response (Outcome) Variable: Are they still in the NBA after 5 years? (1/0)
+>- Observational Units: 2621 NBA Rookies.
+>- Response (Outcome) Variable: Are they still in the NBA after 5 years? (TRUE/FALSE)
 >- Several possible explanatory variables: games played, minutes per game, points per game, rebounds, assists, etc.
 >- Can we predict which types of players will remain in the NBA?
 >    - Which predictors are important?
@@ -65,11 +65,6 @@ view(nba)
 
 ggplot(nba, aes(x = PTS)) + geom_histogram()
 ggplot(nba, aes(x = PTS, y = TARGET_5Yrs)) + geom_point()
-ggplot(nba, aes(x = PTS, y = TARGET_5Yrs)) + geom_boxplot() # doesn't work
-
-## Convert response variable to a factor
-nba$TARGET_5Yrs <- factor(nba$TARGET_5Yrs)
-
 ggplot(nba, aes(x = PTS, y = TARGET_5Yrs)) + geom_boxplot()
 ```
 
@@ -79,10 +74,11 @@ ggplot(nba, aes(x = PTS, y = TARGET_5Yrs)) + geom_boxplot()
 ## Logistic regression models
 bbmod1 <- glm(TARGET_5Yrs ~ PTS, family = "binomial", data = nba)
 summary(bbmod1)
-bbmod2 <- glm(TARGET_5Yrs ~ 3P Made, family = "binomial", data = nba) # error
 
-glimpse(nba)
-bbmod2 <- glm(TARGET_5Yrs ~ `3P Made`, family = "binomial", data = nba)
+bbmod2 <- glm(TARGET_5Yrs ~ 3P, family = "binomial", data = nba)
+## Need backticks:
+bbmod2 <- glm(TARGET_5Yrs ~ `3P`, family = "binomial", data = nba)
+
 summary(bbmod2)
 
 # Challenge: Improve bbmod2 by controlling for 3 point attempts (3PA). Do
@@ -94,10 +90,10 @@ summary(bbmod2)
 
 ```{r, eval = FALSE}
 ## Correlated predictors?
-cor(nba[,2:19])
-round(cor(nba[,2:19]), 2)
+cor(nba[,7:31])
+round(cor(nba[,7:31]), 1)
 
-ggplot(nba, aes(x = `3PA`, y = `3P Made`)) + geom_point()
+ggplot(nba, aes(x = `3PA`, y = `3P`)) + geom_point()
 ggplot(nba, aes(x = `3P%`)) + geom_histogram()
 ```
 
@@ -109,8 +105,12 @@ ggplot(nba, aes(x = `3P%`)) + geom_histogram()
 tc <- trainControl(method = "cv", number = 10)
 bbcv1 <- train(TARGET_5Yrs ~ PTS, 
                data = nba, method = "glm", family = "binomial", trControl = tc)
+# Error: Needs to be a factor
+nba$TARGET_5Yrs <- factor(nba$TARGET_5Yrs)
+bbcv1 <- train(TARGET_5Yrs ~ PTS, 
+               data = nba, method = "glm", family = "binomial", trControl = tc)
 confusionMatrix(bbcv1)
-bbcv2 <- train(TARGET_5Yrs ~ `3P Made` + `3PA`, 
+bbcv2 <- train(TARGET_5Yrs ~ `3P` + `3PA`, 
                data = nba, method = "glm", family = "binomial", trControl = tc)
 confusionMatrix(bbcv2)
 bbcv2
@@ -126,7 +126,7 @@ bbcv2
 ## Search for best model?
 nba_complete <- nba %>%
   drop_na() %>%
-  select(-Name)
+  select(-Player, -PlayerID, -Pos, -Tm)
 fullmod <- glm(TARGET_5Yrs ~ ., family = "binomial", data = nba_complete)
 summary(fullmod)
 step(fullmod)
