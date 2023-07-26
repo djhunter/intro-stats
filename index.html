@@ -2684,23 +2684,17 @@ overflow-y: auto;
 border: 1px solid #ddd;
 border-radius: 4px;
 }
-.tabset-dropdown > .nav-tabs > li.active:before {
-content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+content: "\e259";
 font-family: 'Glyphicons Halflings';
 display: inline-block;
 padding: 10px;
 border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-content: "";
-border: none;
-}
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-content: "";
+content: "\e258";
 font-family: 'Glyphicons Halflings';
-display: inline-block;
-padding: 10px;
-border-right: 1px solid #ddd;
+border: none;
 }
 .tabset-dropdown > .nav-tabs > li.active {
 display: block;
@@ -2963,6 +2957,11 @@ Logistic Regression</a></td>
 <td align="left"><a href="slides/27-mariokart.html">Inference for
 Multiple Regression in R</a> <br> <a href="slides/27b-nbarookies.html">Inference for Logistic Regression in
 R</a></td>
+</tr>
+<tr class="odd">
+<td align="left">4/27</td>
+<td align="left"><a href="slides/27c-test4review.html">Final Exam
+Review</a></td>
 </tr>
 </tbody>
 </table>
