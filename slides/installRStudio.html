@@ -2666,23 +2666,17 @@ overflow-y: auto;
 border: 1px solid #ddd;
 border-radius: 4px;
 }
-.tabset-dropdown > .nav-tabs > li.active:before {
-content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+content: "\e259";
 font-family: 'Glyphicons Halflings';
 display: inline-block;
 padding: 10px;
 border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-content: "";
-border: none;
-}
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-content: "";
+content: "\e258";
 font-family: 'Glyphicons Halflings';
-display: inline-block;
-padding: 10px;
-border-right: 1px solid #ddd;
+border: none;
 }
 .tabset-dropdown > .nav-tabs > li.active {
 display: block;
@@ -2801,11 +2795,13 @@ your laptop as described below.</p>
 <h2>Step 1: Install R</h2>
 <p>The installer is here: <a href="https://cran.rstudio.com/" class="uri">https://cran.rstudio.com/</a></p>
 <p>Choose the appropriate installer for your operating system. The
-latest release of R is 4.2.2 (Innocent and Trusting).</p>
+latest release of R is 4.3.1 (Innocent and Trusting).</p>
 <ul>
 <li>Mac users: pay attention to the MacOS prerequisites, and choose the
-appropriate version for your system (Apple silicon arm64 or Intel). R
-version 4.2.2 requires MacOS 10.13 or greater.</li>
+appropriate version for your system (Apple silicon (M1/M2) arm64 or
+Intel). R version 4.3.1 requires MacOS 11 or greater. If you have an
+older version of MacOS, you can try installing one of the older versions
+of R.</li>
 <li>Windows users: just run the .exe file.</li>
 <li>Linux users: R can often be found using the package manager (e.g.,
 see <a href="https://www.digitalocean.com/community/tutorials/how-to-install-r-on-ubuntu-22-04">these

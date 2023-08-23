@@ -20,9 +20,9 @@ R and RStudio are both free and open-source. Please install them on your laptop 
 
 The installer is here: https://cran.rstudio.com/
 
-Choose the appropriate installer for your operating system. The latest release of R is 4.2.2 (Innocent and Trusting). 
+Choose the appropriate installer for your operating system. The latest release of R is 4.3.1 (Innocent and Trusting). 
 
-- Mac users: pay attention to the MacOS prerequisites, and choose the appropriate version for your system (Apple silicon arm64 or Intel). R version 4.2.2 requires MacOS 10.13 or greater. 
+- Mac users: pay attention to the MacOS prerequisites, and choose the appropriate version for your system (Apple silicon (M1/M2) arm64 or Intel). R version 4.3.1 requires MacOS 11 or greater. If you have an older version of MacOS, you can try installing one of the older versions of R.
 - Windows users: just run the .exe file. 
 - Linux users: R can often be found using the package manager (e.g., see [these instructions](https://www.digitalocean.com/community/tutorials/how-to-install-r-on-ubuntu-22-04) for getting the latest version of R for Ubuntu.)
 
