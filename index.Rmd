@@ -40,35 +40,43 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 
 | Date | Topics |
 |:---- |:-------------------------- |
-| 1/12 | [Hello Data](slides/01-hellodata.html) <br> [Association and Experiments](slides/01b-association.html) |
-| 1/19 | [Study Design](slides/02-studydesign.html) <br> [Getting Started with Data in R](slides/03-intro_data_R.html) |
-| 1/24 | [Exploring Categorical Data](slides/04-catdata.html) <br> [Exploring Numerical Data](slides/05-numdata.html) |
-| 1/26 | [Linear Regression with a Single Predictor](slides/07a-lin_regression.html) |
-| 1/31 | [Linear Regression in R](slides/07b-linear_regression_R.html) <br> [Review for Test #1](slides/07c-test1review.html) |
-| 2/2 | Test #1, Chapters 1-7 |
-| 2/7 | [Linear Regression with Multiple Predictors](slides/08-multi_regression.html) <br> [Multiple Regression in R](slides/10-regression_R.html) |
-| 2/9 | [Logistic Regression](slides/09-logit_regression.html) <br> [Logistic Regression in R](slides/09b-logit_reg_R.html) |
-| 2/14 | [Hypothesis Testing with Randomization](slides/11-hypoth_random.html) <br> [Confidence Intervals with Bootstrapping](slides/12-bootstrap_ci.html) |
-| 2/16 | [Inference with Mathematical Models](slides/13-math_models.html) <br> [Decision Errors](slides/14-decision_errors.html) |
-| 2/23 | [Simulating Sampling Distributions in R](slides/15-samp_dist_R.html) <br> [Inference for a Single Proportion](slides/16-infer_1prop.html) |
-| 2/28 | [Inference for Comparing Two Proportions](slides/17-infer_2prop.html) <br> [Inference for Two-Way Tables](slides/18-infer_chisquare.html) |
-| 3/2 | [Review for Test #2](slides/18c-test2review.html) |
-| 3/9 |  [Inference for a Single Mean](slides/19-infer_onemean.html) <br> [Bootstrapping and t-tests in R](slides/19b-onemean_R.html) |
-| 3/21 | [Inference for Comparing Two Independent Means](slides/20-infer_twomean.html) |
-| 3/23 | [Inference for Comparing Paired Means](slides/21-infer_pairedmean.html) |
-| 3/28 | [Inference for Comparing Many Means](slides/22-infer_manymeans.html) |
-| 3/30 | [Inference for Numerical Data in R](slides/23b-num_infer_R.html) |
-| 4/4 | [Inference for Linear Regression](slides/24-infer_regression.html) |
-| 4/6 | [Inference for Linear Regression, continued](slides/24-infer_regression.html)  |
-| 4/11 | [Review for Test #3](slides/24c-test3review.html) |
-| 4/18 |  [Inference for Multiple Regression](slides/25-infer_multiple.html) |
-| 4/20 | [Inference for Logistic Regression](slides/26-infer_logistic.html) |
-| 4/25 | [Inference for Multiple Regression in R](slides/27-mariokart.html) <br> [Inference for Logistic Regression in R](slides/27b-nbarookies.html) |
-| 4/27 | [Final Exam Review](slides/27c-test4review.html) |
+| 8/28 | [Hello Data](slides/01-hellodata.html) |
+
+---
+# | 8/30 | [Association and Experiments](slides/01b-association.html) |
+# |  9/1 | [Study Design](slides/02-studydesign.html) |
+# | 9/4 | [Getting Started with Data in R](slides/03-intro_data_R.html) |
+# | 9/6 | [Exploring Categorical Data](slides/04-catdata.html) 
+# | 9/8 | [Exploring Numerical Data](slides/05-numdata.html) |
+# | 9/11 | [Linear Regression with a Single Predictor](slides/07a-lin_regression.html) |
+# | 9/13 | [Linear Regression in R](slides/07b-linear_regression_R.html) 
+# | 9/15 | [Linear Regression with Multiple Predictors](slides/08-multi_regression.html) |
+# | 9/18 | [Multiple Regression in R](slides/10-regression_R.html) |
+# | 9/20 |  [Review for Test #1](slides/07c-test1review.html) |
+# | 9/22 | Test #1, Chapters 1-8 |
+# | 2/9 | [Logistic Regression](slides/09-logit_regression.html) <br> [Logistic Regression in R](slides/09b-logit_reg_R.html) |
+# | 2/14 | [Hypothesis Testing with Randomization](slides/11-hypoth_random.html) <br> [Confidence Intervals with Bootstrapping](slides/12-bootstrap_ci.html) |
+# | 2/16 | [Inference with Mathematical Models](slides/13-math_models.html) <br> [Decision Errors](slides/14-decision_errors.html) |
+# | 2/23 | [Simulating Sampling Distributions in R](slides/15-samp_dist_R.html) <br> [Inference for a Single Proportion](slides/16-infer_1prop.html) |
+# | 2/28 | [Inference for Comparing Two Proportions](slides/17-infer_2prop.html) <br> [Inference for Two-Way Tables](slides/18-infer_chisquare.html) |
+# | 3/2 | [Review for Test #2](slides/18c-test2review.html) |
+# | 3/9 |  [Inference for a Single Mean](slides/19-infer_onemean.html) <br> [Bootstrapping and t-tests in R](slides/19b-onemean_R.html) |
+# | 3/21 | [Inference for Comparing Two Independent Means](slides/20-infer_twomean.html) |
+# | 3/23 | [Inference for Comparing Paired Means](slides/21-infer_pairedmean.html) |
+# | 3/28 | [Inference for Comparing Many Means](slides/22-infer_manymeans.html) |
+# | 3/30 | [Inference for Numerical Data in R](slides/23b-num_infer_R.html) |
+# | 4/4 | [Inference for Linear Regression](slides/24-infer_regression.html) |
+# | 4/6 | [Inference for Linear Regression, continued](slides/24-infer_regression.html)  |
+# | 4/11 | [Review for Test #3](slides/24c-test3review.html) |
+# | 4/18 |  [Inference for Multiple Regression](slides/25-infer_multiple.html) |
+# | 4/20 | [Inference for Logistic Regression](slides/26-infer_logistic.html) |
+# | 4/25 | [Inference for Multiple Regression in R](slides/27-mariokart.html) <br> [Inference for Logistic Regression in R](slides/27b-nbarookies.html) |
+# | 4/27 | [Final Exam Review](slides/27c-test4review.html) |
+---
 
 # Other Resources
 
-- [Syllabus](syllabus/ma005hunterS23.pdf) (PDF)
+- [Syllabus](syllabus/ma005hunterF23.pdf) (PDF)
 - [Textbook Website](https://openintro-ims.netlify.app/)
 - [How to install R and RStudio](slides/installRStudio.html)
 
