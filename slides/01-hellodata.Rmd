@@ -40,6 +40,10 @@ options(width = 100)
 
 # 1.1 Case study: Using stents to prevent strokes
 
+## {data-background-image="https://www.usavascularcenters.com/wp-content/uploads/2021/12/Depositphotos_26395257_xl-2015-scaled-1-1024x584.jpg" data-background-size="contain"}
+
+## Research Question
+
 > Does the use of stents reduce the risk of stroke?
 
 -   **Treatment group**. Patients in the treatment group received a stent and medical management. The medical management included medications, management of risk factors, and help in lifestyle modification.
