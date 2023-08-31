@@ -15,10 +15,12 @@ hsb2 %>%
 hsb2 %>% 
   count(race)
 
-ggplot(data = hsb2, aes(x = science, y = math)) + 
+hsb2 %>%
+  ggplot(aes(x = science, y = math)) +
   geom_point()
 
-ggplot(data = hsb2, aes(x = science, y = math, color = prog)) +
+hsb2 %>%
+  ggplot(aes(x = science, y = math, color = prog)) +
   geom_point()
 
 ## Challenge: Take a look at the email50 data frame. Count the number of emails 
@@ -27,9 +29,12 @@ ggplot(data = hsb2, aes(x = science, y = math, color = prog)) +
 # variables
 
 ## Solution
+glimpse(email50)
+
 email50 %>% 
   count(spam)
 
-ggplot(email50, aes(x = num_char, y = exclaim_mess, color = spam)) +
+email50 %>%
+  ggplot(aes(x = num_char, y = exclaim_mess, color = spam)) +
   geom_point()
 

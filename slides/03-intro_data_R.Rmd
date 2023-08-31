@@ -34,10 +34,24 @@ options(width = 100)
 - Powerful, professional, widely-used
 - Optimized for statistics, ML
 - Huge community of support (CRAN)
+- [Installation instructions](installRStudio.html) (hopefully you did this already)
 
 # Data Carpentry
 
-## Language of Data
+## Work in Pairs
+
+- Please pair up (your choice).
+    - At least one person in each pair needs to have a device that can use RStudio (installed or using posit.cloud). This person is the *Operator*.
+    - Ideally, everyone has an RStudio-enabled device. If you don't, you can still take notes by keeping track of the code and trying it on your own later.
+    
+## Data Carpentry
+
+- Fundamental tools for working with data.
+    - Open
+    - Reproducible
+- Live Coding
+    - I type, you type.
+    - Challenges
 
 ## Group Activity
 
@@ -67,19 +81,21 @@ hsb2 %>%
 
 ## Challenge
 
-Challenge: How many different values of the `race` variable are there in the data, and how many observations are in each category?
+Challenge: How many different values of the `race` variable are there in the data, and how many observations are in each level?
 
 ## Make scatterplots
 
 ```{r}
-ggplot(data = hsb2, aes(x = science, y = math)) + 
+hsb2 %>%
+  ggplot(aes(x = science, y = math)) +
   geom_point()
 ```
 
 ## Group by color
 
 ```{r}
-ggplot(data = hsb2, aes(x = science, y = math, color = prog)) +
+hsb2 %>%
+  ggplot(aes(x = science, y = math, color = prog)) +
   geom_point()
 ```
 
