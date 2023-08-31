@@ -104,6 +104,20 @@ We can easily access ratings for products, sellers, and companies through websit
 
 # Experiments vs. Observational Studies
 
+## Last Time: Air Pollution and Preterm Births
+
+- Response variable: Full-term or preterm
+- Explanatory variable: $PM_{10}$ level
+
+This *observational study* found an association (higher $PM_{10} \Rightarrow$ more preterm births).
+
+. . .
+
+- A **confounding variable** is a third variable that is associated to both the explanatory variable and the response. 
+- Confounding variables may be the true cause of the response. Possibilities:
+    - Access to health care?
+    - Urban lifestyle choices?
+
 ## 2.2 Experiments
 
 Recall:
