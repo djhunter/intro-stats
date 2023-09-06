@@ -117,6 +117,14 @@ A *mosaic plot* is like a standardized bar plot, but with widths that vary accor
 
 ## {data-background-image="https://openintro-ims.netlify.app/04-explore-categorical_files/figure-html/loan-app-type-mosaic-plot-1.png" data-background-size="contain"}
 
+## Group Activity
+
+The previous two slides show two mosaic plots of the same data. The first plot displays Application Type vs. Homeownership, and the second plot displays Homeownership vs. Application Type. 
+
+1. If an application is filed jointly, what is the most likely homeownership status? Which plot makes it easier to answer this question?
+
+2. Which homeownership group is least likely to file jointly? Which plot makes it easier to answer this question?
+
 # 4.3 Row and column proportions
 
 ## Row proportions
