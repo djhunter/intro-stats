@@ -110,8 +110,12 @@ A *mosaic plot* is like a standardized bar plot, but with widths that vary accor
 
 **General Principle:**
 
+Assuming the bars are stacked vertically,
+
 - The *explanatory* variable goes on the horizontal axis.
 - The *response* variable goes on the vertical axis.
+
+If the bars are stacked horizontally (e.g., Exercise 6), these assignments are flipped.
 
 ## {data-background-image="https://openintro-ims.netlify.app/04-explore-categorical_files/figure-html/loan-homeownership-type-mosaic-plot-1.png" data-background-size="contain"}
 
