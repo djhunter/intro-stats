@@ -189,7 +189,9 @@ loan50 %>%
 <div class = "column-left">
 1. Why would interest rates be skewed right? What sort of loans would be in the right tail? What sort of borrowers would take out such a loan?
 
-2. What is a range of interest rates for the majority of loans in this sample?
+2. Estimate a range of interest rates that captures 50% of the loans in this sample.
+
+3. What is the most common interest rate in this sample?
 </div>
 
 <div class = "column-right">
@@ -230,7 +232,7 @@ Smaller standard deviation
 bigsmall %>%
   ggplot(aes(x = x1)) +
   geom_density(fill = "purple", alpha = 0.5) +
-  xlim(0,10)
+  xlim(0,10) + ylim(0, 0.75)
 ```
 </div>
 
@@ -241,7 +243,7 @@ Bigger standard deviation
 bigsmall %>%
   ggplot(aes(x = x2)) +
   geom_density(fill = "purple", alpha = 0.5) +
-  xlim(0,10)
+  xlim(0,10) + ylim(0, 0.75)
 ```
 
 </div>
@@ -250,6 +252,32 @@ bigsmall %>%
 
 
 # 5.5 Box plots, quartiles, and the median
+
+## Group Activity
+
+Consider the following ordered list of 50 interest rates.
+
+```{r, echo=FALSE}
+rates <- loan50 %>% 
+  arrange(interest_rate) %>% 
+  transmute(rate = interest_rate) %>% 
+  as_vector() %>%
+  round(digits = 1)
+options(width = 90)
+print(rates)
+```
+
+1. Estimate the **median** interest rate. (The median is the middle value.)
+
+2. Estimate the **first quartile**. The first quartile is the 25th percentile, i.e., the value below which 25% of the data lies.
+
+3. Estimate the **third quartile** (i.e., the 75th percentile).
+
+## Five-number summary
+
+```{r}
+summary(rates)
+```
 
 ## Box Plots
 
@@ -294,7 +322,7 @@ bigsmall %>%
   ggplot(aes(x = x1)) +
   geom_boxplot() +
   geom_density(fill = "purple", alpha = 0.2) +
-  xlim(0,10)
+  xlim(0,10) + ylim(-0.4, 0.75)
 ```
 </div>
 
@@ -306,7 +334,7 @@ bigsmall %>%
   ggplot(aes(x = x2)) +
   geom_boxplot() +
   geom_density(fill = "purple", alpha = 0.2) +
-  xlim(0,10) 
+  xlim(0,10) + ylim(-0.4, 0.75)
 ```
 </div>
 
