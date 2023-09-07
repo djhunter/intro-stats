@@ -195,6 +195,33 @@ Waffle charts are a slight improvement over pie charts.
 
 ## {data-background-image="https://openintro-ims.netlify.app/04-explore-categorical_files/figure-html/loan-waffle-1.png" data-background-size="contain"}
 
+# Group Exercise
+
+## Black Lives Matter
+
+A Washington Post-Schar School poll conducted in the United States in June 2020, among a random national sample of 1,006 adults, asked respondents whether they support or oppose protests following George Floyd’s killing that have taken place in cities across the US. The survey also collected information on the age of the respondents. (Washington Post 2020)
+
+1. What are the observational units?
+2. What are the variables recorded and what are their types?
+3. Is this an experiment or an observational study?
+4. Can the conclusions based on this data be generalized to a larger population? Why/why not?
+
+## {data-background-image="https://openintro-ims.netlify.app/04-explore-categorical_files/figure-html/unnamed-chunk-14-1.png" data-background-size="contain"}
+
+## Association?
+
+<div class = "column-left">
+```{r, echo=FALSE, out.width = '100%'}
+knitr::include_graphics("https://openintro-ims.netlify.app/04-explore-categorical_files/figure-html/unnamed-chunk-14-1.png")
+```
+</div>
+
+<div class = "column-right">
+5. Based on the stacked bar plot, do views on the protests and age appear to be associated? Explain.
+6. Which is the explanatory variable, and which is the response?
+7. Come up with a possible confounding variable that explains this association.
+</div>
+
 # 4.6 Comparing numerical data across groups
 
 - *Explanatory variable:* categorical
@@ -277,30 +304,3 @@ evals %>%
   ggplot(aes(x = score, y = gender, fill = gender)) +
   geom_density_ridges(alpha = 0.3)
 ```
-
-# Group Exercise
-
-## Black Lives Matter
-
-A Washington Post-Schar School poll conducted in the United States in June 2020, among a random national sample of 1,006 adults, asked respondents whether they support or oppose protests following George Floyd’s killing that have taken place in cities across the US. The survey also collected information on the age of the respondents. (Washington Post 2020)
-
-1. What are the observational units?
-2. What are the variables recorded and what are their types?
-3. Is this an experiment or an observational study?
-4. Can the conclusions based on this data be generalized to a larger population? Why/why not?
-
-## {data-background-image="https://openintro-ims.netlify.app/04-explore-categorical_files/figure-html/unnamed-chunk-14-1.png" data-background-size="contain"}
-
-## Association?
-
-<div class = "column-left">
-```{r, echo=FALSE, out.width = '100%'}
-knitr::include_graphics("https://openintro-ims.netlify.app/04-explore-categorical_files/figure-html/unnamed-chunk-14-1.png")
-```
-</div>
-
-<div class = "column-right">
-5. Based on the stacked bar plot, do views on the protests and age appear to be associated? Explain.
-6. Which is the explanatory variable, and which is the response?
-7. Come up with a possible confounding variable that explains this association.
-</div>
