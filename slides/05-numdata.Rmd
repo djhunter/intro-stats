@@ -226,6 +226,7 @@ bigsmall <- tibble(x1 = rnorm(50, mean = 5, sd= 0.5), x2 = rnorm(50, mean = 5, s
 ```
 
 <div class = "column-left">
+
 Smaller standard deviation
 
 ```{r, message = FALSE, warning=FALSE, echo = FALSE, fig.width=5, fig.height=3}
