@@ -395,3 +395,85 @@ loan50_robust_check %>%
 1. When realtors report the housing prices in an area, they usually report the median, rather than the mean. Why do you think they do that?
 2. When professors compute final grades for a course, they usually compute the mean of all your test scores, rather than the median. Why do you think they do that?
 
+# 4.6 (last time) Comparing numerical data across groups
+
+- *Explanatory variable:* categorical
+- *Response variable:* numeric
+
+## Example: teaching evaluations
+
+```{r}
+glimpse(evals)
+```
+
+## Group by gender and summarize
+
+Do men get higher teaching evaluations than women?
+
+```{r}
+evals %>%
+  group_by(gender) %>%
+  summarize(ave_eval = mean(score))
+```
+
+## Side-by-side Boxplots {data-transition="fade"}
+
+```{r, fig.width=5, fig.height=4, fig.align='center'}
+evals %>%
+  ggplot(aes(x = gender, y = score)) +
+  geom_boxplot()
+```
+
+
+## Side-by-side Boxplots (horizontal) {data-transition="fade"}
+
+```{r, fig.width=5, fig.height=4, fig.align='center'}
+evals %>%
+  ggplot(aes(x = score, y = gender)) +
+  geom_boxplot()
+```
+
+## Histograms {data-transition="fade"}
+
+```{r, fig.width=5, fig.height=4, fig.align='center', message=FALSE}
+evals %>%
+  ggplot(aes(x = score, fill = gender)) +
+  geom_histogram()
+```
+
+
+## Dodged Histograms {data-transition="fade"}
+
+```{r, fig.width=5, fig.height=4, fig.align='center', message=FALSE}
+evals %>%
+  ggplot(aes(x = score, fill = gender)) +
+  geom_histogram(position = "dodge")
+```
+
+
+## Density Plots {data-transition="fade"}
+
+```{r, fig.width=5, fig.height=4, fig.align='center', message=FALSE}
+evals %>%
+  ggplot(aes(x = score, fill = gender)) +
+  geom_density()
+```
+
+
+## Density Plots {data-transition="fade"}
+
+```{r, fig.width=5, fig.height=4, fig.align='center', message=FALSE}
+evals %>%
+  ggplot(aes(x = score, fill = gender)) +
+  geom_density(alpha = 0.3)
+```
+
+
+## Ridge Plots {data-transition="fade"}
+
+```{r, fig.width=5, fig.height=3.5, fig.align='center', message=FALSE}
+library(ggridges)
+evals %>%
+  ggplot(aes(x = score, y = gender, fill = gender)) +
+  geom_density_ridges(alpha = 0.3)
+```
