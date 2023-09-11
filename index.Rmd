@@ -46,6 +46,7 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 | 9/4 | [Getting Started with Data in R](slides/03-intro_data_R.html) |
 | 9/6 | [Exploring Categorical Data](slides/04-catdata.html) 
 | 9/8 | [Exploring Numerical Data](slides/05-numdata.html) |
+| 9/11 | [Exploring Data in R](slides/06b-explore_data_R.html) |
 
 ---
 # | 9/11 | [Linear Regression with a Single Predictor](slides/07a-lin_regression.html) |

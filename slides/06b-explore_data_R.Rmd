@@ -1,0 +1,83 @@
+---
+title: "Chapter 6: Exploring Data in R"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+```
+
+# Data Carpentry
+
+## Work in Pairs
+
+- Please pair up (your choice).
+    - At least one person in each pair needs to have a device that can use RStudio (installed or using posit.cloud). This person is the *Operator*.
+    - Ideally, everyone has an RStudio-enabled device. If you don't, you can still take notes by keeping track of the code and trying it on your own later.
+    
+## Group Activity
+
+Follow along with the code. Do the challenges. Record answers to any questions asked.
+
+```{r eval=FALSE}
+library(tidyverse)
+library(openintro)
+data(smoking)
+view(smoking)
+?smoking
+
+## Categorical Variables
+
+smoking %>% count(marital_status)
+smoking %>% count(smoke)
+smoking %>% count(marital_status, smoke)
+smoking %>%
+  ggplot(aes(x = marital_status, fill = smoke)) +
+  geom_bar(position = "stack")
+
+## Challenge: Which marital category has the highest proportion of smokers?
+## Hints: Try "fill" and/or "dodge" for position
+
+## Challenge: Find another pair of associated categorical variables in this
+## data set and illustrate the association.
+
+
+# Age?
+summary(smoking$age)
+ggplot(smoking, aes(x = age)) +
+  geom_boxplot()
+## Challenge: Find another geometry that makes sense for this plot.
+
+## Is there an association between age and whether someone smokes?
+ggplot(smoking, aes(x = age, color = smoke)) +
+  geom_boxplot()
+
+## Now restrict to just the smokers.
+smokers <- smoking %>%
+  filter(smoke == "Yes")
+glimpse(smoking)
+glimpse(smokers)
+ggplot(smokers, aes(x = amt_weekends)) +
+  geom_boxplot()
+
+## Challenge: Q. Do men and women smokers differ in how much they smoke on 
+## weekends? Make a plot and record (log sheet) a
+## conclusion sentence.
+```
+
