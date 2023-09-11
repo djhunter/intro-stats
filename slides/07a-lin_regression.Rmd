@@ -21,7 +21,6 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(comment = NA)
 options(width = 100)
-library(qrencoder)
 library(tidyverse)
 library(openintro)
 ```
@@ -108,12 +107,6 @@ The equation of the regression line for predicting Head Length from Total Length
 Everyone (especially the Operator): open the following applet:
 
 https://www.rossmanchance.com/applets/2021/regshuffle/regshuffle.htm
-
-```{r, echo = FALSE, fig.height=4}
-image(qrencode_raster("https://www.rossmanchance.com/applets/2021/regshuffle/regshuffle.htm"), 
-      asp=1, col=c("white", "black"), axes=FALSE, 
-      xlab="", ylab="")
-```
 
 ## Group Exercise
 

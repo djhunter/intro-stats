@@ -49,9 +49,9 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 | 9/11 | [Exploring Data in R](slides/06b-explore_data_R.html) |
 
 ---
-# | 9/11 | [Linear Regression with a Single Predictor](slides/07a-lin_regression.html) |
-# | 9/13 | [Linear Regression in R](slides/07b-linear_regression_R.html) 
+# | 9/13 | [Linear Regression with a Single Predictor](slides/07a-lin_regression.html) |
 # | 9/15 | [Linear Regression with Multiple Predictors](slides/08-multi_regression.html) |
+# | 9/18 | [Linear Regression in R](slides/07b-linear_regression_R.html) 
 # | 9/18 | [Multiple Regression in R](slides/10-regression_R.html) |
 # | 9/20 |  [Review for Test #1](slides/07c-test1review.html) |
 # | 9/22 | Test #1, Chapters 1-8 |
