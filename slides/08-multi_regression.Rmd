@@ -53,7 +53,7 @@ theme_set(theme_bw())
 glimpse(loans)
 ```
 
-`bankruptcy` is an *indicator* (categorical 0 or 1) variable with two levels:
+`bankruptcy` is an *indicator* (categorical 0 or 1) variable with two levels: 
 
 - 0 means the borrower has not had a bankruptcy in the past.
 - 1 means the borrower has had a bankruptcy in the past.
