@@ -171,7 +171,7 @@ Return to the correlation applet of the previous group exercise.
 - The *least squares regression line* is the line that minimizes the sum of the squares of the residuals.
 - See the [regression applet](https://www.rossmanchance.com/applets/2021/regshuffle/regshuffle.htm) for a demo.
 
-## Group Exercise
+## Demonstration
 
 1. Reload the applet.
 
