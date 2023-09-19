@@ -50,10 +50,10 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 | 9/13 | [Linear Regression with a Single Predictor](slides/07a-lin_regression.html) |
 | 9/15 | [Linear Regression with Multiple Predictors](slides/08-multi_regression.html) |
 | 9/18 | [Regression Models in R](slides/8b-regression_R.html) |
+| 9/20 |  [Review for Test #1](slides/08c-test1review.html) |
+| 9/22 | Test #1, Chapters 1-8 |
 
 ---
-# | 9/20 |  [Review for Test #1](slides/07c-test1review.html) |
-# | 9/22 | Test #1, Chapters 1-8 |
 # | 9/25 | [Logistic Regression](slides/09-logit_regression.html) |
 # | 9/27 | [Logistic Regression in R](slides/09b-logit_reg_R.html) |
 # | 9/29 | [Hypothesis Testing with Randomization](slides/11-hypoth_random.html) |
