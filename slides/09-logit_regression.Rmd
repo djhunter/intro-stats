@@ -73,6 +73,10 @@ tribble(
   kbl()
 ```
 
+. . .
+
+**Response Variable:** received_callback (Yes(1)/No(0))
+
 # 9.2 Modelling the probability of an event
 
 ## Predicting a categorical (binary) variable
