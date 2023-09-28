@@ -163,6 +163,41 @@ https://www.rossmanchance.com/applets/2021/chisqshuffle/ChiSqShuffle.htm?dolphin
 
 4. Do you think the study is just showing random variation, or do you think the treatment group is showing significantly better improvement than the control group?
 
+# Penguin Study
+
+## {data-background-image="https://www.penguinsinternational.org/wp-content/uploads/2019/01/P1010034-e1572414407211.jpg" data-background-size="contain"}
+
+## Do flipper bands hurt penguins?
+
+Researchers followed a random sample of 30 penguins for a period of time. Some were banded, some not. They recorded whether they were still alive at the end of the time period.
+
+- Explanatory variable: Banded/Not Banded
+- Response variable: Alive/Not Alive
+
+## Group Activity
+
+1. Return to the [applet](https://www.rossmanchance.com/applets/2021/chisqshuffle/ChiSqShuffle.htm?dolphins=1), and click on the link for [Penguin study](https://www.rossmanchance.com/applets/2021/chisqshuffle/ChiSqShuffle.htm?penguins=1). 
+
+2. Check the box for Show Shuffle Options. Enter 1000 in the Number of Shuffles box and click Shuffle. Use the Count Samples box to count the number of samples that are more extreme than the observed statistic (enter the observed statistic in the box and click Count). Record the proportion that are more extreme (i.e., the p-value).
+
+3. Do you think the study is just showing random variation, or do you think there is a significant difference in the survival rates between banded and non-banded penguins?
+
+# 11.3 Hypothesis testing
+
+## 11.3.1 The US court system 
+
+- Defendants are presumed not guilty unless proven guilty.
+    - We prefer to err on the side of letting guilty people go, rather than convicting innocent people.
+- In statistics, we either find evidence for $H_A$, or we fail to find evidence. 
+    - In the latter case, it doesn't mean we've proved that $H_0$ is true, only that we have failed to prove that it is false.
+
+## 11.3.2 p-value and statistical significance
+
+- **General Principle:** The smaller the p-value, the more evidence we have for an association.
+- *Misguided simplification:* A p-value smaller than 0.05 is "significant".
+
+##
+
 # 11.2 Opportunity cost case study
 
 **Research Question:** Are students influenced by advice about being prudent with their money?
@@ -218,18 +253,3 @@ summary(opportunity_cost)
 - The observed statistic was 0.2.
 - In the simulated statistics, only 6 of 1000 null statistic were this extreme.
 - p-value: $6/1000 = 0.006$
-
-# 11.3 Hypothesis testing
-
-## 11.3.1 The US court system 
-
-- Defendants are presumed not guilty unless proven guilty.
-    - We prefer to err on the side of letting guilty people go, rather than convicting innocent people.
-- In statistics, we either find evidence for $H_A$, or we fail to find evidence. 
-    - In the latter case, it doesn't mean we've proved that $H_0$ is true, only that we have failed to prove that it is false.
-
-## 11.3.2 p-value and statistical significance
-
-- **General Principle:** The smaller the p-value, the more evidence we have for an association.
-- *Misguided simplification:* A p-value smaller than 0.05 is "significant".
-
