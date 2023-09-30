@@ -62,8 +62,8 @@ theme_set(theme_bw())
 ## 12.1.2 Variability of the statistic
 
 - We want to know the actual probability of a complication for the clients of this consultant:
-    - parameter: $\pi$
-- Our best estimate of $\pi$ is the *statistic* $\hat{p} \approx 0.048$.
+    - parameter: $p$
+- Our best estimate of $p$ is the *statistic* $\hat{p} \approx 0.048$.
     - But this is just one *sample*. How would our estimate differ if we took another sample?
 - **Bootstrapping:** We can approximate the variability in different samples by taking samples from a population that looks like an "infinite" version of the original sample data.
 
@@ -123,8 +123,6 @@ https://www.rossmanchance.com/applets/2021/oneprop/OneProp.htm?candy=1
 
 4. The dotplot that appears should have 100 dots. Use this dotplot to estimate a bootstrap 90% confidence interval for the proportion of orange Reeses Pieces.
 
-5. Now repeat steps 1-4, but suppose that your bag of candy had 400 Reeses Pieces, 200 of which were orange. How did the confidence interval change? 
-
 # 12.2 Tappers and listeners case study
 
 ## 12.2.1 Observed data
@@ -146,11 +144,27 @@ $$
 
 ## {data-background-image="https://openintro-ims.netlify.app/12-foundations-bootstrapping_files/figure-html/tappers-bs-sim-1.png" data-background-size="contain"}
 
+# Experiments with confidence intervals
+
+## Group Activity
+
+1. Reload [the applet](https://www.rossmanchance.com/applets/2021/oneprop/OneProp.htm?candy=1), set the *Probability of orange* to 0.5, the *Number of candies* to 200, and choose the *Proportion of orange* statistic. You probably also want to uncheck *Show animation*. Now change *Number of samples* to 100 and click *Draw Samples* again. When it finishes, make sure *Total Samples* is 100.
+
+2. Use this dotplot to estimate a bootstrap 90% confidence interval for the proportion of orange Reeses Pieces.
+
+3. Compare your confidence interval from #2 with your confidence interval from the last activity. How does changing the sample size affect the confidence interval?
+
+## Group Activity (continued)
+
+4. Now use the same plot of bootstrapped $\hat{p}_\text{boot}$'s to estimate an 80% confidence interval. How does changing the confidence level change the confidence interval?
+
+5. Experiment with some different values for *Probability of orange*. How does changing the observed $\hat{p}$ affect the confidence interval?
+
 # 12.3 Confidence intervals
 
 ## 12.3.1 Plausible range of values for the population parameter
 
-- Given a sample of data, we can construct a *confidence interval* for $\pi$.
+- Given a sample of data, we can construct a *confidence interval* for $p$.
     - The center of this interval will be at $\hat{p}$.
 - This confidence interval is a range of *plausible values* for the population parameter.
     - Based on our data, it is *plausible* that the unknown parameter lies somewhere in our confidence interval.
@@ -158,8 +172,9 @@ $$
 
 ## 12.3.2 Bootstrap confidence interval
 
->- The 95% bootstrap confidence interval for the parameter $\hat{p}$ can be obtained directly using the ordered $\hat{p}_\text{boot}$ values.
+>- The 95% bootstrap confidence interval for the parameter $p$ can be obtained directly using the ordered $\hat{p}_\text{boot}$ values.
 >- Consider the sorted $\hat{p}_\text{boot}$ values. Call the 2.5% bootstrapped proportion value "lower," and call the 97.5% bootstrapped proportion value "upper."
 >- The 95% confidence interval is given by: (lower, upper)
 >- We can use different *confidence levels* other than 95%. The larger the confidence level, the wider the interval.
 >- Larger samples give narrower confidence intervals, all else being equal.
+>- The bootstrap confidence interval will usually be centered on the observed value of $\hat{p}$.
