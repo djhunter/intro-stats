@@ -56,9 +56,9 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 | 9/27 | [Logistic Regression in R](slides/09b-logit_reg_R.html) |
 | 9/29 | [Hypothesis Testing with Randomization](slides/11-hypoth_random.html) |
 | 10/2 |  [Confidence Intervals with Bootstrapping](slides/12-bootstrap_ci.html) |
+| 10/4 | [Inference with Mathematical Models](slides/13-math_models.html) | 
 
 ---
-# | 10/4 | [Inference with Mathematical Models](slides/13-math_models.html) | 
 # | 10/6 | [Decision Errors](slides/14-decision_errors.html) |
 # | 10/6 | [Simulating Sampling Distributions in R](slides/15-samp_dist_R.html) |
 # | 10/11| [Inference for a Single Proportion](slides/16-infer_1prop.html) |
@@ -66,7 +66,7 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 # | 10/16 | [Inference for Two-Way Tables](slides/18-infer_chisquare.html) |
 # | 10/18 | [Review for Test #2](slides/18c-test2review.html) |
 # | 10/20 | Test #2, Chapters 9-18 |
-# Note: modify spreadsheet
+# Note: modify spreadsheet if dates change for tests
 # | 10/23 |  [Inference for a Single Mean](slides/19-infer_onemean.html) |
 # | 10/25 | [Bootstrapping and t-tests in R](slides/19b-onemean_R.html) |
 # | 10/27 | [Inference for Comparing Two Independent Means](slides/20-infer_twomean.html) |
