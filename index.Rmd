@@ -66,6 +66,7 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 # | 10/16 | [Inference for Two-Way Tables](slides/18-infer_chisquare.html) |
 # | 10/18 | [Review for Test #2](slides/18c-test2review.html) |
 # | 10/20 | Test #2, Chapters 9-18 |
+# Note: modify spreadsheet
 # | 10/23 |  [Inference for a Single Mean](slides/19-infer_onemean.html) |
 # | 10/25 | [Bootstrapping and t-tests in R](slides/19b-onemean_R.html) |
 # | 10/27 | [Inference for Comparing Two Independent Means](slides/20-infer_twomean.html) |
