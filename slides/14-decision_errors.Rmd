@@ -224,7 +224,7 @@ https://www.rossmanchance.com/applets/2021/power/power.html
 
 Consider testing $H_0: p = 0.25$ vs. $H_A: p > 0.25$ with a significance level of $\alpha = 0.05$. 
 
-1. Open the [Power Simulation Applet](http://www.rossmanchance.com/applets/power.html?hideExtras=1). Use a hypothesized probability of 0.25, an alternative probability of 0.33, a sample size of 30, and number of repetitions 10000. Draw Samples. Click the button for *number of successes*.  Choose *Rejection region* and determine (by trial and error) the smallest number of successes that would result in a p-value less than 0.05, i.e., the smallest number of successes that would result in rejecting $H_0$. **Record** this number.
+1. Open the [Power Simulation Applet](http://www.rossmanchance.com/applets/power.html?hideExtras=1). Use a hypothesized probability of 0.25, an alternative probability of 0.33, a sample size of 30, and number of samples 10000. Draw Samples. Click the button for *number of successes*.  Choose *Rejection region* and determine (by trial and error) the smallest number of successes that would result in a p-value less than 0.05, i.e., the smallest number of successes that would result in rejecting $H_0$. **Record** this number.
 
 ## Group Activity, continued
 
