@@ -35,6 +35,15 @@ theme_set(theme_bw())
     - 14.3 Controlling the Type 1 Error rate
     - 14.4 Power
 
+## {data-background-image="https://openintro-ims.netlify.app/13-foundations-mathematical_files/figure-html/95PercentConfidenceInterval-1.png" data-background-size="contain"}
+
+## Sampling "errors"
+
+Sampling from a population is a random process, so
+
+- Sometimes confidence intervals are wrong.
+- Sometimes hypothesis tests are wrong.
+
 # 14.1 Significance level
 
 ## Hypothesis Tests
