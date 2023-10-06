@@ -60,7 +60,7 @@ For large sample sizes, our simulated dotplots tend to look like:
 ```{r, echo=FALSE, fig.height=3}
 library(ggplot2)
 ggplot(data.frame(x=c(-4,4)), aes(x=x)) + 
-  stat_function(fun=dnorm, color="blueviolet", size=1.5) + 
+  stat_function(fun=dnorm, color="blueviolet", linewidth=1.5) + 
   theme(axis.text.x = element_blank())
 ```
 
@@ -73,24 +73,27 @@ $$
 
 **Theorem.** Suppose that $\hat{p}$ is a sample proportion calculated from a sample with *at least 10 successes and 10 failures* (i.e., at least 10 observations of each level). Then the sampling distribution of $\hat{p}$ is approximately normal.
 
+## {data-background-image="https://m.media-amazon.com/images/I/516XPLnSNhL._SL1000_.jpg" data-background-size="contain"}
+
+## Group Activity
+
+1. Suppose you have a spinner with two regions: SUCCESS and FAILURE. The probability of the spinner landing on SUCCESS is 0.6. You spin the spinner 100 times. Predict the most likely number of times the spinner lands on SUCCESS.
+
 ## One-Proportion Applet
 
 https://www.rossmanchance.com/applets/2021/oneprop/OneProp.htm
 
-## Group Activity
+## Group Activity (continued)
 
-1. Open the [One Proportion Applet](https://www.rossmanchance.com/applets/2021/oneprop/OneProp.htm), set the *probability of heads/success* to 0.6, the *Sample size* to 100, and leave *Number of samples* at 1. *Uncheck Show animation*.
+2. Open the [One Proportion Applet](https://www.rossmanchance.com/applets/2021/oneprop/OneProp.htm), set the *probability of heads/success* to 0.6, the *Sample size* to 100, and leave *Number of samples* at 1. Click *Draw Samples*. How close was the simulated sample from your prediction?
 
-2. Before clicking *Draw Samples*, predict the most likely number of successes and failures in 100 tries, if the probability of success is 0.6.
+3. Click the radio button for *Proportion of successes*, set *Number of samples* to 10000, and click *Draw Samples*. Check the *Summary Statistics* box and record the Mean and Standard Deviation (SD) of the distribution. 
 
-3. Click the radio button for *Proportion of successes* and click *Draw Samples*. How close was the simulated sample from your prediction in 2?
+4. Does the Central Limit Theorem apply? (i.e., are there enough expected successes and failures?) Check the *Normal Approximation* box and observe how well it fits.
 
-4. Now set *Number of samples* to 10000 and click *Draw Samples*. Check the *Summary Statistics* box and record the Mean and Standard Deviation (SD). 
+## What if the CLT conditions don't hold?
 
-5. Does the Central Limit Theorem apply? (i.e., are there enough expected successes and failures?) Check the *Normal Approximation* box and observe how well it fits.
-
-6. Now *Reset* the applet and repeat 1-5 for a success probability of 0.2 and a sample size of 10? How is your answer to 5 different?
-
+Suppose $n = 10$ and $\hat{p} = 0.9$. How good is the normal approximation? ([Applet](https://www.rossmanchance.com/applets/2021/oneprop/OneProp.htm))
 
 # 13.2 Normal Distribution
 
@@ -182,8 +185,8 @@ To make a quick confidence interval for $\hat{p}$,
 
 A 2013 poll reported that "45% of U.S. adults report that they live with one or more chronic conditions." The study reported a standard error of about 1.2%.
 
-1. Compute a quick 95% confidence interval for the true percentage of U.S. adults who suffer from chronic illness. Write the confidence interval in the form $(L, R)$.
+1. Compute a quick 95% confidence interval for the true percentage of U.S. adults who suffer from chronic illness. Write the confidence interval in the form: $\text{estimate} \pm \text{margin of error}$.
 
-2. Write the confidence interval in the form: $\text{estimate} \pm \text{margin of error}$
+2. Write the confidence interval in the form $(L, R)$.
 
 3. Write a sentence interpreting the confidence interval in the context of the study.
