@@ -1,0 +1,127 @@
+---
+title: "Bootstrapping in R"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(tidyverse)
+theme_set(theme_bw())
+```
+
+# Pairs Today
+
+- Please pair up (your choice).
+    - At least one person in each pair needs to have a device that can use RStudio (installed or using rstudio.cloud). This person is the *Operator*.
+    - Ideally, everyone has an RStudio-enabled device. If you don't, you can still take notes by keeping track of the code and trying it on your own later.
+    
+# Review
+
+## Sampling Distributions
+
+- A *sampling distribution* is the distribution of all possible values of a sample statistic from samples of a given sample size from a given population. 
+- Think about the sampling distribution as describing as how sample statistics vary from one study to another. 
+- In Chapters 11 and 12, we simulated sampling distributions using card shuffling and bootstrapping.
+
+## Central Limit Theorem for proportions
+
+**Theorem.** Suppose that $\hat{p}$ is a sample proportion calculated from a sample with *at least 10 successes and 10 failures* (i.e., at least 10 observations of each level). Then the sampling distribution of $\hat{p}$ is approximately normal.
+
+## Quick Confidence Intervals
+
+Assuming that the Central Limit Theorem applies, we can make a quick confidence interval for $\hat{p}$:
+
+- Choose the multiplier $z^*$ (use $z^* = 1.96$ for a 95% CI).
+- Confidence interval: $(\hat{p} - z^* \times SE_{\hat{p}}, \hat{p} + z^* \times SE_{\hat{p}})$
+    - We can also write the interval as $\hat{p} \pm z^* \times SE_{\hat{p}}$.
+    - The quantity $z^*\times SE_{\hat{p}}$ is called the *margin of error*.
+
+# Data Carpentry
+
+## Group Exercises
+
+Do all the challenges.
+
+```{r, eval = FALSE}
+library(tidyverse)
+
+# Sample data: Poll of 50 people. 
+#    Do you attend church regularly? (Yes, No)
+#    20% respond yes
+polldata <- data.frame(
+  church = c(rep("Yes", 10), rep("No", 40))
+)
+
+glimpse(polldata)
+polldata %>%
+  count(church)
+
+ggplot(polldata, aes(x = church)) +
+  geom_bar()
+
+polldata %>%
+  summarize(phat = sum(church == "Yes")/n())
+
+## Create a random sample
+samp1 <- polldata %>%
+  slice_sample(n = 50, replace = TRUE)
+
+samp1 %>%
+  count(church)
+  
+# Challenge: 
+# 1. Repeat the above two commands (make a sample, then count) a 
+#   few times. Does the sample change?
+# 2. Summarize to compute p_hat for this sample
+
+## Create a sampling distribution
+phat_list <- list() # Start with an empty list
+for (i in 1:10) {
+  samp1 <- polldata %>%
+    slice_sample(n = 50, replace = TRUE)
+  phat_list[[i]] <- samp1 %>%
+    summarize(p_hat = sum(church == "Yes")/n())
+}
+phatDF <- bind_rows(phat_list)
+glimpse(phatDF)
+
+ggplot(phatDF, aes(x = p_hat)) +
+  geom_histogram(binwidth = 0.05)
+
+## Challenge: 
+## 1. Modify the above code to create a sampling distribution with 1000 p_hats.
+## 2. Try using geom_density instead of geom_histogram.
+
+## Summarize the distribution
+
+phatDF %>%
+  summarize(mean = mean(p_hat),
+            SE = sd(p_hat),
+            p025 = quantile(p_hat, 0.025),
+            p975 = quantile(p_hat, 0.975))
+
+# Quick approximation of 95% CI
+0.2 - 1.96*0.056194 # SE may vary
+0.2 + 1.96*0.056194
+
+### Challenge: Redo the simulation of a sampling distribution, but this time
+#              use a sample size of 100 instead of 50. How does the standard
+#              error change? How does the 95% CI change?
+```
+

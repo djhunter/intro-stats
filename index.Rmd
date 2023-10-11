@@ -58,7 +58,7 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 | 10/2 |  [Confidence Intervals with Bootstrapping](slides/12-bootstrap_ci.html) |
 | 10/4 | [Inference with Mathematical Models](slides/13-math_models.html) | 
 | 10/6 | [Decision Errors](slides/14-decision_errors.html) |
-| 10/11 | [Simulating Sampling Distributions in R](slides/15-samp_dist_R.html) |
+| 10/11 | [Bootstrapping in R](slides/15a-bootstrapping.html) |
 
 ---
 # | 10/11| [Inference for a Single Proportion](slides/16-infer_1prop.html) |
