@@ -85,11 +85,16 @@ phatDF %>%
 0.2 - 1.96*0.056194
 0.2 + 1.96*0.056194
 
-### Challenge: Redo the simulation of a sampling distribution, but this time
-#              use a sample size of 100 instead of 50. How does the standard
+### Challenge: Redo the bootstrapping simulation, but this time
+#              use a sample size of 100 instead of 50, with the same proportion
+#              of churchgoers (20%). How does the standard
 #              error change? How does the 95% CI change?
 
 ############## Solution:
+polldata <- data.frame(
+  church = c(rep("Yes", 20), rep("No", 80))
+)
+
 phat_list <- list() # Start with an empty list
 for (i in 1:1000) {
   samp1 <- polldata %>%
@@ -104,7 +109,6 @@ ggplot(phatDF, aes(x = p_hat)) +
 
 ggplot(phatDF, aes(x = p_hat)) +
   geom_density(adjust = 2)
-#######
 
 phatDF %>%
   summarize(mean = mean(p_hat),
@@ -113,24 +117,26 @@ phatDF %>%
             p975 = quantile(p_hat, 0.975))
 
 # Quick approximation of 95% CI
-0.2 - 1.96*0.04023
-0.2 + 1.96*0.04023
+0.2 - 1.96*0.0391
+0.2 + 1.96*0.0391
+###############################################
 
 
 ## Answers to HW:
-
-phat_list <- list()
+library(tidyverse)
+polldata <- data.frame(
+  church = c(rep("Yes", 2), rep("No", 38))
+)
+polldata %>%
+  summarize(phat = sum(church == "Yes")/n())
+phat_list <- list() # Start with an empty list
 for (i in 1:1000) {
-  samp1 <- population %>%
-    sample_n(40)
+  samp1 <- polldata %>%
+    slice_sample(n = 40, replace = TRUE)
   phat_list[[i]] <- samp1 %>%
     summarize(p_hat = sum(church == "Yes")/n())
 }
 phatDF <- bind_rows(phat_list)
-glimpse(phatDF)
-
-ggplot(phatDF, aes(x = p_hat)) +
-  geom_histogram(binwidth = 0.05)
 
 ggplot(phatDF, aes(x = p_hat)) +
   geom_density(adjust = 2)

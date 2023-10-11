@@ -120,8 +120,10 @@ phatDF %>%
 0.2 - 1.96*0.056194 # SE may vary
 0.2 + 1.96*0.056194
 
-### Challenge: Redo the simulation of a sampling distribution, but this time
-#              use a sample size of 100 instead of 50. How does the standard
+### Challenge: Redo the bootstrapping simulation, but this time
+#              use a sample size of 100 instead of 50, with the same proportion
+#              of churchgoers (20%). How does the standard
 #              error change? How does the 95% CI change?
+
 ```
 
