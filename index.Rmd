@@ -59,30 +59,30 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 | 10/4 | [Inference with Mathematical Models](slides/13-math_models.html) | 
 | 10/6 | [Decision Errors](slides/14-decision_errors.html) |
 | 10/11 | [Bootstrapping in R](slides/15a-bootstrapping.html) |
+| 10/13| [Inference for a Single Proportion](slides/16-infer_1prop.html) |
 
 ---
-# | 10/11| [Inference for a Single Proportion](slides/16-infer_1prop.html) |
-# | 10/13 | [Inference for Comparing Two Proportions](slides/17-infer_2prop.html) | 
-# | 10/16 | [Inference for Two-Way Tables](slides/18-infer_chisquare.html) |
-# | 10/18 | [Review for Test #2](slides/18c-test2review.html) |
-# | 10/20 | Test #2, Chapters 9-18 |
-# Note: modify spreadsheet if dates change for tests
-# | 10/23 |  [Inference for a Single Mean](slides/19-infer_onemean.html) |
-# | 10/25 | [Bootstrapping and t-tests in R](slides/19b-onemean_R.html) |
-# | 10/27 | [Inference for Comparing Two Independent Means](slides/20-infer_twomean.html) |
-# | 10/30 | [Inference for Comparing Paired Means](slides/21-infer_pairedmean.html) |
-# | 11/1 | [Inference for Comparing Many Means](slides/22-infer_manymeans.html) |
-# | 11/3 | [Inference for Numerical Data in R](slides/23b-num_infer_R.html) |
-# | 11/6 | [Inference for Linear Regression](slides/24-infer_regression.html) |
-# | 11/8 | [Inference for Linear Regression, continued](slides/24-infer_regression.html)  |
-# | 11/10 |  [Inference for Multiple Regression](slides/25-infer_multiple.html) |
-# | 11/13 | [Inference for Multiple Regression in R](slides/27-mariokart.html) 
+# | 10/16 | [Inference for Comparing Two Proportions](slides/17-infer_2prop.html) | 
+# | 10/18 | [Inference for Two-Way Tables](slides/18-infer_chisquare.html) |
+# | 10/20 | [Inference on Categorical Variables in R]() |
+# | 10/23 | [Review for Test #2](slides/18c-test2review.html) |
+# | 10/25 | Test #2, Chapters 9-18 |
+# | 10/27 |  [Inference for a Single Mean](slides/19-infer_onemean.html) |
+# | 10/30 | [Bootstrapping and t-tests in R](slides/19b-onemean_R.html) |
+# | 11/1 | [Inference for Comparing Two Independent Means](slides/20-infer_twomean.html) |
+# | 11/3 | [Inference for Comparing Paired Means](slides/21-infer_pairedmean.html) |
+# | 11/6 | [Inference for Comparing Many Means](slides/22-infer_manymeans.html) |
+# | 11/8 | [Inference for Numerical Data in R](slides/23b-num_infer_R.html) |
+# | 11/10 | [Inference for Linear Regression](slides/24-infer_regression.html) |
+# | 11/13 | [Inference for Linear Regression, continued](slides/24-infer_regression.html)  |
 # | 11/15 | [Review for Test #3](slides/24c-test3review.html) |
-# | 11/17 | Test #3, Chapters 19-25??
-# | 11/20 | [Something cool with R?] 
-# | 11/27 | [Inference for Logistic Regression](slides/26-infer_logistic.html) |
-# | 11/29 | [Inference for Logistic Regression in R](slides/27b-nbarookies.html) |
-# Three extra days 
+# | 11/17 | Test #3, Chapters 19-24??
+# Note: modify spreadsheet if dates change for tests
+# | 11/20 |  [Inference for Multiple Regression](slides/25-infer_multiple.html) |
+# | 11/27 | [Inference for Multiple Regression in R](slides/27-mariokart.html) 
+# | 11/29 | [Inference for Logistic Regression](slides/26-infer_logistic.html) |
+# | 12/1 | [Inference for Logistic Regression in R](slides/27b-nbarookies.html) |
+# Two extra days
 # | 12/8 | [Final Exam Review](slides/27c-test4review.html) |
 ---
 

@@ -60,7 +60,7 @@ Two types of bootstrap:
 
 ```{r}
 bootPhats <- rbinom(10000, 25, 0.56)/25
-quantile(bootPhats, c(0.025, c(0.975)))
+quantile(bootPhats, c(0.025, 0.975))
 ```
 
 We are 95% confident that the true proportion of frogs in this population who have this disease is between 0.36 and 0.76.
@@ -133,7 +133,7 @@ By the Central Limit Theorem for Proportions, the sampling distribution for $\ha
 If the independence and success-failure conditions are met,
 
 $$
-SE(\hat{p}) \approx \sqrt{\frac{(\mbox{best guess of }p)(1 - \mbox{best guess of }p)}{n}}
+SE_\hat{p} \approx \sqrt{\frac{(\mbox{best guess of }p)(1 - \mbox{best guess of }p)}{n}}
 $$
 
 - For confidence intervals, the "best guess" of $p$ is the observed $\hat{p}$.
@@ -145,7 +145,7 @@ $$
     - We have 14 successes and 11 failures $\checkmark$
 
 $$
-SE(\hat{p}) \approx \sqrt{\frac{\hat{p}(1-\hat{p})}{n}} \approx \sqrt{\frac{0.56(1-0.56)}{25}} \approx 0.0993
+SE_\hat{p} \approx \sqrt{\frac{\hat{p}(1-\hat{p})}{n}} \approx \sqrt{\frac{0.56(1-0.56)}{25}} \approx 0.0993
 $$
 
 So the quick 95% confidence interval is:
@@ -174,7 +174,7 @@ A simple random sample of 826 payday loan borrowers was surveyed to better under
 - Test the hypotheses $H_0: p = 0.5$ versus the alternative $H_A: p > 0.5$.
 
 $$
-SE(\hat{p}) \approx \sqrt{\frac{p_0(1-p_0)}{n}} \approx \sqrt{\frac{0.5(1-0.5)}{25}} = 0.1
+SE_\hat{p} \approx \sqrt{\frac{p_0(1-p_0)}{n}} \approx \sqrt{\frac{0.5(1-0.5)}{25}} = 0.1
 $$
 
 $$
