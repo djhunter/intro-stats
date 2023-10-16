@@ -147,7 +147,7 @@ For a 90% confidence interval, we need 5% in each tail.
 Once we have a bootstrap distribution, we can take its standard deviation using `sd()`.
 
 $$
-SE(\hat{p}_T - \hat{p}_C) \approx SE(\hat{p}_{T, boot} - \hat{p}_{C, boot}) = 0.098
+SE_{\hat{p}_T - \hat{p}_C} \approx SE_{\hat{p}_{T, boot} - \hat{p}_{C, boot}} = 0.098
 $$
 
 Then use the generic formula to get a 95% confidence interval:
@@ -164,7 +164,7 @@ $$
 
 ## {data-background-image="https://openintro-ims.netlify.app/17-inference-two-props_files/figure-html/ci25ints-1.png" data-background-size="contain"}
 
-# Group Activity: Is Yawning Contagious?
+# Case Study: Is Yawning Contagious?
 
 ## Is Yawning Contagious? {data-background="https://media.giphy.com/media/RKe73XLbBCKOI/giphy.gif" data-background-size="contain"}
 
@@ -229,7 +229,7 @@ Conditions:
 ## 17.3.1 Variability of the difference between two proportions
 
 $$
-SE(\hat{p}_1 - \hat{p}_2) = \sqrt{\frac{p_1(1-p_1)}{n_1} + \frac{p_2(1-p_2)}{n_2}}
+SE_{\hat{p}_1 - \hat{p}_2} = \sqrt{\frac{p_1(1-p_1)}{n_1} + \frac{p_2(1-p_2)}{n_2}}
 $$
 
 ## 17.3.2 Confidence interval for the difference between two proportions
@@ -243,9 +243,31 @@ $$
 \end{aligned}
 $$
 
+## Group Activity
+
+Recall the Yawning Study:
+
+\[
+\begin{align}
+\hat{p}_1 &= 11/34 \approx 0.32 \\
+\hat{p}_2 &= 3/16 \approx 0.19 \\
+\hat{p}_1-\hat{p}_2 &= 11/34-3/16 \approx 0.136 \\
+\end{align}
+\]
+
+1. Are the conditions for the mathematical model satisfied?
+
+2. Regardless of (1), compute $SE_{\hat{p}_1-\hat{p}_2}$ using the mathematical model.
+
+3. Use the generic formula to obtain a 95% confidence interval for $p_1 - p_2$.
+
+
+
+# Using software
+
 ## Use R to compute mathematical models
 
-- The `prop.test` command can be used for testing the null that the proportions (probabilities of success) in several groups are the same, or that they equal certain given values.
+- The `prop.test` command can be used for testing the null that the proportions (probabilities of success) in two groups are the same, or that they equal certain given values.
 - `prop.test` also gives confidence intervals.
     - For confidence intervals, use the two-sided test (default).
 
@@ -279,6 +301,8 @@ prop.test(x = c(14,11), n = c(40, 50))
 prop.test(x = c(14,11), n = c(40, 50), conf.level = 0.90)
 ```
 
+# The connection between confidence intervals and hypothesis tests
+
 ## Two-sided tests and confidence intervals
 
 Suppose we test $H_0: p_1 - p_2 = 0$ versus $H_A: p_1 - p_2 \neq 0$, and we also construct a confidence interval for $p_1 - p_2$.
@@ -287,4 +311,4 @@ Suppose we test $H_0: p_1 - p_2 = 0$ versus $H_A: p_1 - p_2 \neq 0$, and we also
 >- If zero is not in the confidence interval, then it is not plausible that the groups are the same.
 >    - i.e., the null is not plausible.
 >- Here, the significance level $\alpha$ is $1 - \text{confidence level}$
->    - e.g., *a 95% confidence interval will contain zero if and only if the p-value for the two-sided test is greater than 0.05.*
+>    - e.g., *a 95% confidence interval for $p_1 - p_2$ will contain zero if and only if the p-value for the two-sided test is greater than 0.05.*
