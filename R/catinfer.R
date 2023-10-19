@@ -105,3 +105,19 @@ gss %>%
   ggplot(aes(x = church, fill = happy)) +
     geom_bar(position = "fill")
 ###################################################
+
+#####################
+## HW solutions
+
+library(tidyverse)
+library(openintro)
+glimpse(cle_sac)
+?cle_sac
+
+cle_sac %>% ggplot(aes(x = city, fill = race)) + geom_bar()
+
+cle_sac %>%
+  select(city, race) %>%
+  table() %>% 
+  chisq.test()
+
