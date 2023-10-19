@@ -1,5 +1,5 @@
 ---
-title: "Bootstrapping in R"
+title: "Inference on Categorical Variables in R"
 output: 
   revealjs::revealjs_presentation:
     fig_width: 14 
@@ -28,10 +28,30 @@ theme_set(theme_bw())
 # Pairs Today
 
 - Please pair up (your choice).
-    - At least one person in each pair needs to have a device that can use RStudio (installed or using rstudio.cloud). This person is the *Operator*.
+    - At least one person in each pair needs to have a device that can use RStudio (installed or using posit.cloud). This person is the *Operator*.
     - Ideally, everyone has an RStudio-enabled device. If you don't, you can still take notes by keeping track of the code and trying it on your own later.
     
 # Review
+
+## Two-proportion test
+
+- Explanatory variable: Categorical, 2 levels
+- Response variable: Categorical, 2 levels
+- Observed statistic: $\hat{p}_1 - \hat{p}_2$
+- Null Hypothesis: $H_0: p_1 - p_2 = 0$
+- Alternative Hypothesis: $H_A: p_1 - p_2 \neq 0$
+    - Small P-values give you evidence in favor of $H_A$ (groups are different)
+- Can also compute confidence intervals for $p_1 - p_2$.
+
+## Chi-squared test
+
+- Explanatory variable: Categorical, $\geq$ 2 levels
+- Response variable: Categorical, $\geq$ 2 levels
+- Observed statistic: $\chi^2$
+- Null Hypothesis: No association (independent)
+- Alternative Hypothesis: Some association (not independent)
+    - Small P-values give you evidence of an association (groups are not all the same)
+- Confidence intervals don't apply.
 
 # Data Carpentry
 
@@ -56,5 +76,48 @@ theme_set(theme_bw())
 Do all the challenges.
 
 ```{r, eval = FALSE}
+library(tidyverse)
+
+gss <- read_csv("http://math.westmont.edu/data/gss.csv")
+
+gss %>%
+  ggplot(aes(x = metal)) +
+    geom_bar()
+
+## Challenge: incorporate opera into the above plot. Do you think
+## the plot suggests an association between opera and metal? Record
+## a sentence.
+
+# make a table
+gss %>%
+  select(metal, opera) %>%
+  table()
+
+## Challenge: Make two new variables:
+## p1hat = proportion of metal-likers who like opera
+## p2hat = proportion of metal-dislikers who like opera
+## Then compute p1hat - p2hat
+
+gss %>%
+  select(metal, opera) %>%
+  table() %>% 
+  prop.test()
+
+gss %>%
+  select(metal, opera) %>%
+  table() %>% 
+  chisq.test()
+
+## Challenge: Is political party associated with church attendance? 
+## Make a bar plot: Record what you observe.
+## Do a chisq.test. Record what you conclude.
+## Try a prop.test. What happens. Why?
+
+## Challenge: Find two categorical variables in the data
+## set that have a significant association. Make a bar plot
+## and do an appropriate test. Record the variables you used.
+
+# Challenge: Are churchgoers happier? Answer with a bar plot and an 
+# appropriate test/CI.
 ```
 
