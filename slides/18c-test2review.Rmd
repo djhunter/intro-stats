@@ -1,5 +1,5 @@
 ---
-title: "Review for Test #2, Chapters 8-18"
+title: "Review for Test #2, Chapters 9-18"
 output: 
   revealjs::revealjs_presentation:
     fig_width: 14 
@@ -40,17 +40,19 @@ See the study guide.
 
 # Review Problems
 
-## Review Problems: Regression
+## Review Problems: Logistic Regression
 
-- Chapter 8, Exercises 7, 9
 - Chapter 9, Exercise 5
 
-## Review Problems: Inference
+## Review Problems: Fundamentals of Inference
 
 - Chapter 11, Exercise 7
 - Chapter 12, Exercises 3, 7
 - Chapter 13, Exercise 5
 - Chapter 14, Exercises 3, 4
+
+## Review Problems: Inference on Categorical Variables
+
 - Chapter 16, Exercise 23
 - Chapter 17, Exercise 5
 - Chapter 18, Exercise 13 (see next slide)
