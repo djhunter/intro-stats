@@ -68,7 +68,7 @@ set.seed(1423)
 Once we have a bootstrapped sampling distribution, we can use it to make confidence intervals.
 
 - The 95% *percentile confidence interval* is the the interval from the 2.5%ile to the 97.5%ile.
-- The 95% *SE confidence interval* is the quick approximation $\mbox{point estimate} \pm 2 \cdot SE_{BS}$
+- The 95% *SE confidence interval* is the quick approximation $\mbox{point estimate} \pm 2 \cdot SE$
     - We are using 2 instead of 1.96.
 
 ## 19.1.5 Bootstrapping is not a solution to small sample sizes!
