@@ -41,13 +41,13 @@ set.seed(1423)
     - 22.3.3 Reading an ANOVA table from software
     - 22.3.4 Conditions for an ANOVA analysis
 
-# Multiple mean hypotheses
-
-- $H_0$: The mean outcome is the same across all groups.
-    - $H_0: \mu_1 = \mu_2 = \cdots = \mu_k$
-- $H_A$: At least one mean is different.
-
 # 22.1 Case study: Batting
+
+## Research Question
+
+Is a baseball player's on-base-percentage (OBP) associated with their defensive position?
+
+## 22.2.1 Observed data
 
 ```{r mlb_players_18-data-prep, include=FALSE}
 players <- mlb_players_18 %>%
@@ -68,14 +68,7 @@ players <- mlb_players_18 %>%
 ```{r}
 glimpse(players)
 ```
-## Hypotheses
-
-- $H_0: \mu_{OF} = \mu_{IF} = \mu_{C}$ (The average OBP is the same for outfielders, infielders, and catchers).
-- $H_A:$ The average OBP is not the same for all three groups.
-
-# 22.2 Randomization test for comparing many means
-
-## 22.2.1 Observed data
+## Data summary
 
 ```{r}
 players %>%
@@ -92,15 +85,61 @@ ggplot(players, aes(x = position, y = OBP)) +
   geom_boxplot()
 ```
 
+## t-test: OF vs IF
+
+```{r}
+players %>%
+  filter(position %in% c("OF", "IF")) %>%
+  t.test(OBP ~ position, data = .)
+```
+
+## t-test: OF vs C
+
+```{r}
+players %>%
+  filter(position %in% c("OF", "C")) %>%
+  t.test(OBP ~ position, data = .)
+```
+
+## t-test: C vs IF
+
+```{r}
+players %>%
+  filter(position %in% c("C", "IF")) %>%
+  t.test(OBP ~ position, data = .)
+```
+
+
+
 ## P-hacking
 
 It is *not* good practice to take several groups and compare selected pairs.
 
-- Given enough groups to compare, you will eventually find a significant difference just by chance.
-- This is the *Multiple Comparisons Problem*
-    - aka, "data snooping", "data fishing", or "p-hacking"
+>- Even if there is no association, 5% of t-tests will show a p-value less than 0.05. This is a consequence of random sampling.
+>- Given enough groups to compare, you will eventually find a significant difference just by chance, even if no association is present.
+>- This is the *Multiple Comparisons Problem*, aka, "data snooping", "data fishing", or "p-hacking"
 
-# The F-Statistic
+## Omnibus Tests
+
+**Best Practice:** 
+
+- First: Apply an *omnibus test* to check for an overall association.
+- If the omnibus test shows a significant association, it is OK to follow up with pairwise comparisons.
+
+# 22.2 Randomization test for comparing many means
+
+## Multiple mean hypotheses
+
+- $H_0$: The mean outcome is the same across all groups.
+    - $H_0: \mu_1 = \mu_2 = \cdots = \mu_k$
+- $H_A$: At least one mean is different.
+
+## Hypotheses (Batting)
+
+- $H_0: \mu_{OF} = \mu_{IF} = \mu_{C}$ (The average OBP is the same for outfielders, infielders, and catchers).
+- $H_A:$ The average OBP is not the same for all three groups.
+
+## The F-Statistic
 
 - We want a statistic that measures *all* the groups at once, and reflects the overall difference.
 - The *F-statistic* is the fraction $\displaystyle{\frac{MSG}{MSE}}$
@@ -118,6 +157,23 @@ F &= \frac{\frac{1}{I-1} \sum_{i=1}^I n_i(\bar{x}_i - \bar{x})^2}{\frac{1}{N-I}\
 \end{align}
 \]
 
+## Group Activity
+
+```{r, echo=FALSE, message=FALSE, fig.height=3.5}
+m1 <- c(3,5,4)
+m2 <- c(2, 6, 4)
+noise <- c(0,0,0,-0.25,-0.25,-0.25,0.25,0.25,0.25,0,0,0)
+group <- factor(c(1,1,1,2,2,2,3,3,3,4,4,4))
+Plot <- c(rep("A", 12), rep("B", 12), rep("D", 12), rep("C",12))
+bp <- data.frame(x = c(m1+noise, m2 + noise, m1 + 2*noise, m2+2*noise), group = rep(group, 4), Plot = Plot)
+p <- ggplot(bp, aes(x = x, y = group)) + geom_boxplot()
+p + facet_wrap(vars(Plot)) + theme_bw()
+```
+
+1. Which data sets (A,B,C,D) have the most *within-group* variability?
+2. Which data sets have the most *between-group* variablilty?
+3. Which data set has the largest F-statistic?
+
 ## 22.2.2 Variability of the statistic
 
 Simulation using cards:
@@ -126,7 +182,7 @@ Simulation using cards:
 - Deal into 3 piles, 160 OFs, 205IFs, 64Cs
 - Compute simulated F-statistic
     - These statistics make a *null-distribution*
-- Compute P-value by finding the proportion of the null distribution that is as or more extreme as the observed F-statistic.
+- Compute P-value by finding the proportion of the null distribution that are as or more extreme than the observed F-statistic.
 
 # Exercise and Brain Volume
 
