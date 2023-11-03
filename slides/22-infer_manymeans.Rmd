@@ -162,12 +162,12 @@ F &= \frac{\frac{1}{I-1} \sum_{i=1}^I n_i(\bar{x}_i - \bar{x})^2}{\frac{1}{N-I}\
 ```{r, echo=FALSE, message=FALSE, fig.height=3.5}
 m1 <- c(3,5,4)
 m2 <- c(2, 6, 4)
-noise <- c(0,0,0,-0.25,-0.25,-0.25,0.25,0.25,0.25,0,0,0)
+noise <- c(0,0,0,-0.25,-0.25,-0.25,0.25,0.25,0.25,0.1,0.1,0.1)
 group <- factor(c(1,1,1,2,2,2,3,3,3,4,4,4))
 Plot <- c(rep("A", 12), rep("B", 12), rep("D", 12), rep("C",12))
 bp <- data.frame(x = c(m1+noise, m2 + noise, m1 + 2*noise, m2+2*noise), group = rep(group, 4), Plot = Plot)
-p <- ggplot(bp, aes(x = x, y = group)) + geom_boxplot()
-p + facet_wrap(vars(Plot)) + theme_bw()
+p <- ggplot(bp, aes(x = x, y = group, fill=group)) + geom_boxplot()
+p + facet_wrap(vars(Plot)) + theme_bw() + guides(fill="none")
 ```
 
 1. Which data sets (A,B,C,D) have the most *within-group* variability?
