@@ -332,12 +332,15 @@ shirt.aov <- aov(IQ ~ shirt, data = shirtIQ)
 anova(shirt.aov)
 ```
 
+**Question:** Based on this ANOVA test, what should you do next?
 
 ## What if we follow-up anyway?
 
 ```{r}
 pairwise.t.test(shirtIQ$IQ, shirtIQ$shirt, p.adjust.method = "none")
 ```
+
+**Question:** Are any of the pairwise t-tests significant at $\alpha = 0.05$?
 
 ## P-hacking: Choose the pair you found
 
