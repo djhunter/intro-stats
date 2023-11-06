@@ -271,7 +271,7 @@ anova(aov(OBP ~ position, data = players))
 
 ## Group Activity
 
-1. Open [Multiple Means applet](http://www.rossmanchance.com/applets/AnovaShuffle.htm?hideExtras=2) and choose the *Diets* data. Select the Statistic pull-down menu (on the left) to select $F$-statistic. Record the observed value of the $F$-statistic, and compute a p-value using a simulated null distribution.
+1. Open [Multiple Means applet](http://www.rossmanchance.com/applets/AnovaShuffle.htm?hideExtras=2) and choose the *Diets* data. Select the Statistic pull-down menu (on the left) to select $F$-statistic. Record the observed value of the $F$-statistic, and compute a p-value using a **simulated null distribution.**
 
 2. **Record** a sentence interpreting this p-value in the context of the study.
 
@@ -300,4 +300,56 @@ anova(diet.aov)
 TukeyHSD(diet.aov)
 ```
 
+# P-Hacking Demo
+
+## Simulated Data
+
+- 10 groups: (shirt color) 
+- Response variable: IQ (randomly assigned)
+
+```{r}
+set.seed(2434)
+shirt <- factor(c("red", "green", "blue", "orange", "gold", 
+                  "yellow", "brown", "pink", "gray", "purple"))
+shirtIQ <- data.frame(
+  shirt = sample(shirt, 2000, replace=TRUE), 
+  IQ = rnorm(2000, mean = 100, sd = 15))
+```
+
+## Side-by-side box plots
+
+```{r, fig.height=3.8, fig.width=6, fig.align='center'}
+shirtIQ %>%
+  ggplot(aes(x = IQ, y = shirt)) +
+  geom_boxplot()
+```
+
+
+## Omnibus ANOVA test
+
+```{r}
+shirt.aov <- aov(IQ ~ shirt, data = shirtIQ)
+anova(shirt.aov)
+```
+
+
+## What if we follow-up anyway?
+
+```{r}
+pairwise.t.test(shirtIQ$IQ, shirtIQ$shirt, p.adjust.method = "none")
+```
+
+## P-hacking: Choose the pair you found
+
+```{r}
+shirtIQ %>%
+  filter(shirt %in% c("purple", "brown")) %>%
+  t.test(IQ ~ shirt, data = .)
+```
+
+## Note: Tukey HSD doesn't make this error
+
+```{r}
+TukeyHSD(shirt.aov)
+```
 

@@ -69,9 +69,9 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 | 10/30 | [Inference for Comparing Two Independent Means](slides/20-infer_twomean.html) |
 | 11/1 | [Inference for Comparing Paired Means](slides/21-infer_pairedmean.html) |
 | 11/3 | [Inference for Comparing Many Means](slides/22-infer_manymeans.html) |
+| 11/6 | [Inference for Comparing Many Means (continued)](slides/22-infer_manymeans.html) |
 
 ---
-# | 11/6 | [Inference for Comparing Many Means (continued)](slides/22-infer_manymeans.html) |
 # | 11/8 | [Inference for Numerical Data in R](slides/23b-num_infer_R.html) |
 # | 11/10 | [Applications of Inference](slides/23-applications_infer.html)
 # | 11/13 | [Review for Test #3](slides/24c-test3review.html) |
