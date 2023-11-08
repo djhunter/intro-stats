@@ -82,6 +82,9 @@ ggplot(smoking, aes(x = age, fill = smoke)) +  geom_density(alpha = 0.3)
 t.test(age ~ smoke, data = smoking)
 ```
 
+**Record** a sentence interpreting the endpoints of the 
+confidence interval in the context of the data.
+
 ---
 
 ```{r, eval = FALSE}
@@ -114,7 +117,10 @@ anova(mstat.aov)
 ## Challenge: Can you find a factor in the data set that is
 ## associated with how much someone smokes on weekends? 
 ## Try some. Make a boxplot, and then do an anova. 
-## Is there evidence of an association? If so, follow up with TukeyHSD.
+## Is there evidence of an association? 
+## If so, follow up with TukeyHSD. Which groups show
+## a significant difference?
+
 ```
 
 ---
@@ -145,3 +151,19 @@ smokers %>%
   ggplot(aes(x = amount, y = gender, color = day_type)) +
   geom_boxplot()
 ```
+
+---
+
+Optional:
+
+```{r, eval = FALSE}
+smokers %>%
+  select(gender, amt_weekdays, amt_weekends) %>%
+  pivot_longer(cols = c(amt_weekdays, amt_weekends),
+               names_to = "day_type",
+               values_to = "amount") %>%
+  ggplot(aes(x = amount, y = day_type)) +
+  geom_boxplot() +
+  facet_wrap(~gender)
+```
+
