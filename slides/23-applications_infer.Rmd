@@ -71,13 +71,15 @@ set.seed(1423)
 
 # 23.2 Recap: Mathematical models
 
-| Explanatory | Response | Model |
-| ----------- | -------- | ----- |
+| Response | Explanatory  | Model |
+| ----- | ----- | ----- |
+| Categorical | none        | One-proportion z-test |
+| Categorical (2 levels) | Categorical (2 levels) | Two-proportion z-test |
 | Categorical ($\geq$ 2 levels) | Categorical ($\geq$ 2 levels) | Chi-squared |
-| none | Numeric | One-sample t-test |
-| Categorical (2 levels) | Numeric | Two-sample t-test |
-| Categorical (2 levels, paired) | Numeric | Paired t-test |
-| Categorical (> 2 levels) | Numeric | ANOVA F-test |
+|  Numerical | none  | One-sample t-test |
+| Numerical | Categorical (2 levels) | Two-sample t-test |
+| Numerical | Categorical (2 levels, paired) | Paired t-test |
+| Numerical | Categorical ($\geq$ 2 levels) | ANOVA F-test |
 
 ## Group Activity
 
@@ -126,7 +128,7 @@ glimpse(redundant)
 ## Redundant adjectives: boxplots
 
 ```{r, fig.height=4, fig.width=6, fig.align='center'}
-ggplot(redundant, aes(x = items, y = redundant_perc, color = Language)) + geom_boxplot()
+ggplot(redundant, aes(x = items, y = redundant_perc, fill = Language)) + geom_boxplot()
 ``` 
 
 
