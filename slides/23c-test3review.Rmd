@@ -67,7 +67,7 @@ https://openintro-ims.netlify.app/
 
 ## Group Activity
 
-- Chapter 19, Exercises 13, 17
+- Chapter 19, Exercises 13, 17 (find BOB's mistake)
 - Chapter 20, Exercises 5, 6
 - Chapter 21, Exercises 4, 7 
 - Chapter 22, Exercises 5 (see next slides)
