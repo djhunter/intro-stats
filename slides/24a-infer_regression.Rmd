@@ -44,9 +44,9 @@ set.seed(1423)
 # 24.1 Case study: Sandwich store
 
 - Explanatory variable: Amount spent on advertising
-    - Numeric
+    - Numerical
 - Response variable: Revenue
-    - Numeric
+    - Numerical
 - Linear regression model: $y = \beta_0 + \beta_1x + \varepsilon$
     - $\beta_0$ and $\beta_1$ are *unknown parameters*
     - $\beta_0$ is the regression intercept.
@@ -71,7 +71,7 @@ We can estimate the unknown parameters by taking a random sample of 20 stores, a
 - We can estimate the variability of the statistics $b_0$ and $b_1$ using randomization.
     - Resampling from a hypothetical distribution, 
     - Bootstrapping, or
-    - Randomizing the data to create a null distribtion
+    - Randomizing the data to create a null distribution
 
 ##  {data-background="https://openintro-ims.netlify.app/24-inf-model-slr_files/figure-html/unnamed-chunk-4-1.png" data-background-size="contain"}
 
@@ -96,15 +96,29 @@ We can estimate the unknown parameters by taking a random sample of 20 stores, a
 
 ##  {data-background="https://openintro-ims.netlify.app/24-inf-model-slr_files/figure-html/babyweight-1.png" data-background-size="contain"}
 
+## Group Activity
+
+**Research Question:** Can we predict the weight of a newborn baby based on the number of weeks of gestation?
+
+1. What are the explanatory and response variables, and what are their types?
+
+2. The observed statistics are the regression slope (0.34) and the regression intercept (-5.72). What symbols do we use for these numbers?
+
+3. Write down the regression equation.
+
+4. Predict the weight of a baby born after 30 weeks of gestation.
+
+5. Interpret the regression slope in context.
+
 ## Hypotheses
 
-Is there an association between weeks of gestation and the weight of the baby?
-
-- Null Hypothesis: No linear association
-    - $H_0: \beta_1 = 0$
-        - Regression slope is zero
-    - $H_A: \beta_1 \neq 0$
-        - Some linear association
+>- The regression slope and intercept are based on a *random sample*.
+>- For our random sample, the regression slope was positive ($b_1 \approx 0.34$), but a different random sample would give us a different slope.
+>- Do we have enough evidence to conclude that the actual (population) slope $\beta_1$ is not zero?
+>- Is there an association between weeks of gestation and the weight of the baby?
+>- Null Hypothesis: No linear association
+>- $H_0: \beta_1 = 0$ (Population regression slope is zero)
+>- $H_A: \beta_1 \neq 0$ (Some linear association)
         
 ## 24.2.2 Variability of the statistic
 
