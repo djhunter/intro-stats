@@ -74,10 +74,10 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 | 11/10 | [Applications of Inference](slides/23-applications_infer.html)
 | 11/13 | [Review for Test #3](slides/23c-test3review.html) |
 | 11/15 | Test #3, Chapters 16-23 |
-| 11/17 | [Inference for Linear Regression](slides/24-infer_regression.html) |
+| 11/17 | [Inference for Linear Regression](slides/24a-infer_regression.html) |
+| 11/20 | [Inference for Linear Regression, continued](slides/24b-infer_regression.html)  |
 
 ---
-# | 11/20 | [Inference for Linear Regression, continued](slides/24-infer_regression.html)  |
 # Note: modify spreadsheet if dates change for tests
 # | 11/27 |  [Inference for Multiple Regression](slides/25-infer_multiple.html) |
 # | 11/29 | [Inference for Multiple Regression in R](slides/27-mariokart.html) 
