@@ -1955,11 +1955,11 @@ controller) in auctions?</li>
 <section class="slide level2">
 
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Linear regression model</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>mmod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(total_pr <span class="sc">~</span> cond, <span class="at">data =</span> mk)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mmod1)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mk, <span class="fu">aes</span>(<span class="at">x =</span> total_pr, <span class="at">y =</span> cond)) <span class="sc">+</span> <span class="fu">geom_violin</span>()</span></code></pre></div>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mk, <span class="fu">aes</span>(<span class="at">x =</span> total_pr, <span class="at">y =</span> cond)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mk, <span class="fu">aes</span>(<span class="at">x =</span> total_pr, <span class="at">y =</span> cond)) <span class="sc">+</span> <span class="fu">geom_violin</span>()</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>mmod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(total_pr <span class="sc">~</span> cond, <span class="at">data =</span> mk)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mmod1)</span></code></pre></div>
 </section>
 <section class="slide level2">
 
@@ -1970,7 +1970,8 @@ controller) in auctions?</li>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mk, <span class="fu">aes</span>(<span class="at">x =</span> wheels, <span class="at">y =</span> total_pr, <span class="at">color =</span> cond)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Challenge: Control for wheels by adding it as a predictor. Call your new</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="do">## model mmod2. Compare with mmod1.</span></span></code></pre></div>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="do">## model mmod2. Compare with mmod1. What is the price difference between</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="do">## new and used versions?</span></span></code></pre></div>
 </section>
 <section class="slide level2">
 

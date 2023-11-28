@@ -77,10 +77,10 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 | 11/17 | [Inference for Linear Regression](slides/24a-infer_regression.html) |
 | 11/20 | [Inference for Linear Regression, continued](slides/24b-infer_regression.html)  |
 | 11/27 |  [Inference for Multiple Regression](slides/25-infer_multiple.html) |
+| 11/29 | [Inference for Multiple Regression in R](slides/27-mariokart.html) |
 
 ---
 # Note: modify spreadsheet if dates change for tests
-# | 11/29 | [Inference for Multiple Regression in R](slides/27-mariokart.html) 
 # | 12/1 | [Inference for Logistic Regression](slides/26-infer_logistic.html) |
 # | 12/4 | [Inference for Logistic Regression in R](slides/27b-nbarookies.html) |
 # 12/6 ? 

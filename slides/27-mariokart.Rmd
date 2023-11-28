@@ -90,11 +90,11 @@ ggplot(mk, aes(x = total_pr)) + geom_histogram()
 
 ```{r, eval = FALSE}
 ## Linear regression model
+ggplot(mk, aes(x = total_pr, y = cond)) + geom_boxplot()
+ggplot(mk, aes(x = total_pr, y = cond)) + geom_violin()
 
 mmod1 <- lm(total_pr ~ cond, data = mk)
 summary(mmod1)
-
-ggplot(mk, aes(x = total_pr, y = cond)) + geom_violin()
 ```
 
 ---
@@ -107,7 +107,8 @@ ggplot(mk, aes(x = wheels, y = total_pr)) + geom_point()
 ggplot(mk, aes(x = wheels, y = total_pr, color = cond)) + geom_point()
 
 ## Challenge: Control for wheels by adding it as a predictor. Call your new
-## model mmod2. Compare with mmod1.
+## model mmod2. Compare with mmod1. What is the price difference between
+## new and used versions?
 ```
 
 ---

@@ -25,10 +25,16 @@ mk <- mariokart %>%
 
 ggplot(mk, aes(x = total_pr)) + geom_histogram()
 
+ggplot(mk, aes(x = total_pr, y = cond)) + geom_boxplot()
+ggplot(mk, aes(x = total_pr, y = cond)) + geom_violin()
+
 mmod1 <- lm(total_pr ~ cond, data = mk)
 summary(mmod1)
 
-ggplot(mk, aes(x = total_pr, y = cond)) + geom_violin()
+## Optional note: same as t.test with equal variance!
+t.test(total_pr ~ cond, data = mk, var.equal = TRUE)
+
+## Record a table to keep track of models
 
 ## Control for Wii wheels
 
@@ -38,7 +44,8 @@ ggplot(mk, aes(x = wheels, y = total_pr)) + geom_point()
 ggplot(mk, aes(x = wheels, y = total_pr, color = cond)) + geom_point()
 
 ## Challenge: Control for wheels by adding it as a predictor. Call your new
-## model mmod2. Compare with mmod1.
+## model mmod2. Compare with mmod1. What is the price difference between
+## new and used versions?
 
 ## Solution:
 mmod2 <- lm(total_pr ~ cond + wheels, data = mk)
@@ -47,7 +54,6 @@ summary(mmod2)
 # The average price difference is only $5, when wheels are taken into account.
 
 ## Cross Validation
-
 
 set.seed(3456)
 tc <- trainControl(method = "cv", number = 5)
