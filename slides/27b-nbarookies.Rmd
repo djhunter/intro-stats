@@ -54,11 +54,7 @@ Do all the challenges.
 ```{r, eval = FALSE}
 library(tidyverse)
 library(caret)
-```
 
----
-
-```{r, eval = FALSE}
 ## Load and inspect the data
 nba <- read_csv("https://math.westmont.edu/data/nba.csv")
 view(nba)
@@ -66,51 +62,42 @@ view(nba)
 ggplot(nba, aes(x = PTS)) + geom_histogram()
 ggplot(nba, aes(x = PTS, y = TARGET_5Yrs)) + geom_point()
 ggplot(nba, aes(x = PTS, y = TARGET_5Yrs)) + geom_boxplot()
-```
 
----
-
-```{r, eval = FALSE}
 ## Logistic regression models
 bbmod1 <- glm(TARGET_5Yrs ~ PTS, family = "binomial", data = nba)
 summary(bbmod1)
 
-bbmod2 <- glm(TARGET_5Yrs ~ 3P, family = "binomial", data = nba)
-## Need backticks:
-bbmod2 <- glm(TARGET_5Yrs ~ `3P`, family = "binomial", data = nba)
+bbmod2 <- glm(TARGET_5Yrs ~ 3P%, family = "binomial", data = nba) # error
 
+glimpse(nba)
+bbmod2 <- glm(TARGET_5Yrs ~ `3P%`, family = "binomial", data = nba)
 summary(bbmod2)
 
 # Challenge: Improve bbmod2 by controlling for 3 point attempts (3PA). Do
 # the p-values change? Can you explain why?
 
-```
-
----
-
-```{r, eval = FALSE}
 ## Correlated predictors?
 cor(nba[,7:31])
 round(cor(nba[,7:31]), 1)
 
-ggplot(nba, aes(x = `3PA`, y = `3P`)) + geom_point()
-ggplot(nba, aes(x = `3P%`)) + geom_histogram()
-```
+## Challenge: Why are some of the correlations NA? 
 
----
-
-```{r, eval = FALSE}
 ## Cross Validation
 
 tc <- trainControl(method = "cv", number = 10)
-bbcv1 <- train(TARGET_5Yrs ~ PTS, 
-               data = nba, method = "glm", family = "binomial", trControl = tc)
-# Error: Needs to be a factor
-nba$TARGET_5Yrs <- factor(nba$TARGET_5Yrs)
-bbcv1 <- train(TARGET_5Yrs ~ PTS, 
+train(TARGET_5Yrs ~ PTS,  data = nba, 
+      method = "glm", family = "binomial", trControl = tc)
+nba <- nba %>%
+  mutate(T5Y = factor(ifelse(TARGET_5Yrs, "Yes", "No")))
+train(T5Y ~ PTS,  data = nba, 
+      method = "glm", family = "binomial", trControl = tc)
+bbcv1 <- train(T5Y ~ PTS, 
                data = nba, method = "glm", family = "binomial", trControl = tc)
 confusionMatrix(bbcv1)
-bbcv2 <- train(TARGET_5Yrs ~ `3P` + `3PA`, 
+
+bbcv2 <- train(T5Y ~ `3P%` + `3PA`, 
+               data = nba, method = "glm", family = "binomial", trControl = tc)
+bbcv2 <- train(T5Y ~ `3P` + `3PA`, 
                data = nba, method = "glm", family = "binomial", trControl = tc)
 confusionMatrix(bbcv2)
 bbcv2
@@ -118,16 +105,16 @@ bbcv2
 ## Challenge: Find a model with a better prediction accuracy.
 ## For the best model you find, generate a logistic regression 
 ## table. Which predictors are most important? 
-```
 
----
-
-```{r, eval = FALSE}
 ## Search for best model?
 nba_complete <- nba %>%
-  drop_na() %>%
-  select(-Player, -PlayerID, -Pos, -Tm)
-fullmod <- glm(TARGET_5Yrs ~ ., family = "binomial", data = nba_complete)
+  select(-TARGET_5Yrs, -PlayerID, -Player, -Pos, -Age, -Tm, -Year, -`FG%`, -`3P%`, -`2P%`, -`eFG%`, -`FT%`, -GS)
+fullmod <- glm(T5Y ~ ., family = "binomial", data = nba_complete)
 summary(fullmod)
 step(fullmod)
+
+## Challenge: Use the results of step, make a regression model using glm
+## and test its accuracy using train. Does it beat the other models we found?
+
 ```
+
