@@ -1,0 +1,105 @@
+---
+title: "Summary of Inference Methods in R"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(tidyverse)
+theme_set(theme_bw())
+```
+
+# Pairs Today
+
+- Please pair up (your choice).
+    - At least one person in each pair needs to have a device that can use RStudio (installed or using posit.cloud). This person is the *Operator*.
+    - Ideally, everyone has an RStudio-enabled device. If you don't, you can still take notes by keeping track of the code and trying it on your own later.
+    
+# Review
+
+## Summary of Explanatory/Response Scenarios
+
+# Data Carpentry
+
+## General Social Survey Data
+
+| Variable name | Value | Description |
+| ------------ | ----------------------- | ---------------------------- |
+| `belief` | `athiest`, `theist`, or `unsure` | Subject's belief in God. |
+| `major` | `STEM`, `other`, or `none` | Subject's college major (STEM = Science, Technology, Engineering, or Mathematics) |
+| `boyGirl` | `corr` or `incDK` | Subject's answer to the question, "It is the father’s gene that decides whether the baby is a boy or a girl. (Is that true or false?)" (correct or incorrect/don't know) |
+| `atoms` | `corr` or `incDK`  | Subject's answer to the question, "Electrons are smaller than atoms. (Is that true or false?)" |
+| `earth` | `corr` or `incDK`  | Subject's answer to the question, "How long does it take for the Earth to go around the Sun: one day, one month, or one year?" |
+| `church ` | `often` or `rarely` | How frequently the subject attends church or other religious services. |
+| `age` | Subject's age in years | |
+| `words` | Number of words correct | Subject's score on a 10 point vocabulary quiz. |
+| `educ`  | Number of years of school | Subject's education level |
+| `status` | SES score on a 100 point scale | Subject's socioeconomic status |
+| `income` | Subject's income in dollars | |
+
+## Group Exercises
+
+Do all the challenges.
+
+```{r, eval = FALSE}
+library(tidyverse)
+
+gss <- read_csv("http://math.westmont.edu/data/gss2.csv")
+
+gss %>%
+  ggplot(aes(x = church, fill = atoms)) +
+    geom_bar(position = "fill")
+
+?prop.test
+
+gss %>%
+  select(church, atoms) %>%
+  table() %>%
+  prop.test()
+
+## Interpretation: Churchgoers are significantly less likely to know 
+## that electrons are smaller than atoms. 
+
+?chisq.test
+
+## Challenge: Conduct a chi-square test for an appropriate choice of 
+## variables in this data set. Record an interpretation.
+
+?t.test
+
+## Challenge: Conduct a two-sample t-test for an appropriate choice of 
+## variables and record an interpretation.
+
+?aov
+?TukeyHSD
+
+## Challenge: Conduct an ANOVA F-test for an appropriate choice of 
+## variables, and follow up appropriately. Record an interpretation.
+
+?lm
+
+## Challenge: Fit a linear regression model for an appropriate choice of 
+## variables. Record an interpretation of the p-values.
+
+?glm
+
+## Challenge: Fit a logistic regression model for an appropriate choice of 
+## variables. Record an interpretation of the p-values.
+```
+

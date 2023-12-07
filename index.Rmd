@@ -81,6 +81,7 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 | 12/1 | [Inference for Logistic Regression](slides/26-infer_logistic.html) |
 | 12/4 | [Inference for Logistic Regression in R](slides/27b-nbarookies.html) |
 | 12/6 | [Final Exam Review](slides/27c-test4review.html) |
+| 12/8 | [Review of Inference Methods in R](slides/27d-infer_review_R.html) |
 
 ---
 # Note: modify spreadsheet if dates change for tests
