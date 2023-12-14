@@ -1,0 +1,98 @@
+---
+title: "Introduction to Statistics"
+author: "David J. Hunter"
+output:
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+    df_print: paged
+    theme: spacelab
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=FALSE}
+library(metathis)
+meta() %>%
+  meta_description(
+    "Resources for my introductory statistics class."
+  ) %>%
+  meta_name("github-repo" = "djhunter/intro-stats") %>%
+  meta_viewport() %>%
+  meta_social(
+    title = "Introduction to Statistics",
+    url = "https://djhunter.github.io/intro-stats/index.html",
+    image = "https://ggplot2.tidyverse.org/reference/geom_smooth-1.png",
+    image_alt = "Scatterplot",
+    og_author = c("David J. Hunter")
+  )
+```
+
+This site contains slides and other resources that I use in my introductory statistics class.
+
+# Slides 
+
+These slides are meant to accompany the textbook [Introduction to Modern Statistics](https://openintro-ims.netlify.app/), First Edition by Mine Çetinkaya-Rundel and Johanna Hardin, and much of the material contained herein is derivative of this text. As such, these slides are offered with the same Creative Commons ShareAlike license.
+
+| Date | Topics |
+|:---- |:-------------------------- |
+| 8/28 | [Hello Data](slides/01-hellodata.html) |
+| 8/30 | [Association and Experiments](slides/01b-association.html) |
+|  9/1 | [Study Design](slides/02-studydesign.html) |
+| 9/4 | [Getting Started with Data in R](slides/03-intro_data_R.html) |
+| 9/6 | [Exploring Categorical Data](slides/04-catdata.html) 
+| 9/8 | [Exploring Numerical Data](slides/05-numdata.html) |
+| 9/11 | [Exploring Data in R](slides/06b-explore_data_R.html) |
+| 9/13 | [Linear Regression with a Single Predictor](slides/07a-lin_regression.html) |
+| 9/15 | [Linear Regression with Multiple Predictors](slides/08-multi_regression.html) |
+| 9/18 | [Regression Models in R](slides/8b-regression_R.html) |
+| 9/20 |  [Review for Test #1](slides/08c-test1review.html) |
+| 9/22 | Test #1, Chapters 1-8 |
+| 9/25 | [Logistic Regression](slides/09-logit_regression.html) |
+| 9/27 | [Logistic Regression in R](slides/09b-logit_reg_R.html) |
+| 9/29 | [Hypothesis Testing with Randomization](slides/11-hypoth_random.html) |
+| 10/2 |  [Confidence Intervals with Bootstrapping](slides/12-bootstrap_ci.html) |
+| 10/4 | [Inference with Mathematical Models](slides/13-math_models.html) | 
+| 10/6 | [Decision Errors](slides/14-decision_errors.html) |
+| 10/11 | [Bootstrapping in R](slides/15a-bootstrapping.html) |
+| 10/13| [Inference for a Single Proportion](slides/16-infer_1prop.html) |
+| 10/16 | [Inference for Comparing Two Proportions](slides/17-infer_2prop.html) | 
+| 10/18 | [Inference for Two-Way Tables](slides/18-infer_chisquare.html) |
+| 10/20 | [Inference on Categorical Variables in R](slides/18a-infer_cat_R.html) |
+| 10/23 | [Review for Test #2](slides/18c-test2review.html) |
+| 10/25 | Test #2, Chapters 9-18 |
+| 10/27 |  [Inference for a Single Mean](slides/19-infer_onemean.html) |
+| 10/30 | [Inference for Comparing Two Independent Means](slides/20-infer_twomean.html) |
+| 11/1 | [Inference for Comparing Paired Means](slides/21-infer_pairedmean.html) |
+| 11/3 | [Inference for Comparing Many Means](slides/22-infer_manymeans.html) |
+| 11/6 | [Inference for Comparing Many Means (continued)](slides/22-infer_manymeans.html) |
+| 11/8 | [Inference for Numerical Data in R](slides/23b-num_infer_R.html) |
+| 11/10 | [Applications of Inference](slides/23-applications_infer.html)
+| 11/13 | [Review for Test #3](slides/23c-test3review.html) |
+| 11/15 | Test #3, Chapters 16-23 |
+| 11/17 | [Inference for Linear Regression](slides/24a-infer_regression.html) |
+| 11/20 | [Inference for Linear Regression, continued](slides/24b-infer_regression.html)  |
+| 11/27 |  [Inference for Multiple Regression](slides/25-infer_multiple.html) |
+| 11/29 | [Inference for Multiple Regression in R](slides/27-mariokart.html) |
+| 12/1 | [Inference for Logistic Regression](slides/26-infer_logistic.html) |
+| 12/4 | [Inference for Logistic Regression in R](slides/27b-nbarookies.html) |
+| 12/6 | [Final Exam Review](slides/27c-test4review.html) |
+| 12/8 | [Review of Inference Methods in R](slides/27d-infer_review_R.html) |
+
+---
+# Note: modify spreadsheet if dates change for tests
+# 12/6 ? 
+---
+
+# Other Resources
+
+- [Syllabus](syllabus/ma005hunterF23.pdf) (PDF)
+- [Textbook Website](https://openintro-ims.netlify.app/)
+- [How to install R and RStudio](slides/installRStudio.html)
+
+All of the pages and slides on this site were authored in RMarkdown.  The source code is available on GitHub: https://github.com/djhunter/intro-stats
+
