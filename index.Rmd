@@ -75,7 +75,7 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 
 # Other Resources
 
-- [Syllabus](syllabus/ma005hunterS23.pdf) (PDF)
+- [Syllabus](syllabus/ma005hunterS24.pdf) (PDF)
 - [Textbook Website](https://openintro-ims.netlify.app/)
 - [How to install R and RStudio](slides/installRStudio.html)
 

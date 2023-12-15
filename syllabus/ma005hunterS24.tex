@@ -1,0 +1,324 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  twoside]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[left=0.5in, right=0.5in, top=0.8in, bottom=0.4in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage[charter]{mathdesign}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{MA-005, Hunter, Spring 2024}
+\rhead{Syllabus, Page \thepage}
+\cfoot{}
+\setlength{\headsep}{0.2in}
+
+\usepackage{enumitem}
+
+\setenumerate{leftmargin=*}
+
+\newcommand{\vect}[1]{\mathbf{#1}} % vectors in bold face
+
+%\newcommand{\vect}[1]{\mathbf{#1}\,} % vectors in bold face (need thin
+                                     % space after)
+%\newcommand{\vect}[1]{\vec{#1}} %vectors as arrows
+
+\providecommand{\norm}[1]{\left\lvert#1\right\rvert} % norms as single lines
+%\providecommand{\norm}[1]{\left\lVert#1\right\rVert} % norms as double lines
+
+% bold or blackboard bold!?
+\newcommand{\NN}{\mathbb{N}}
+%\newcommand{\RR}{\mathbf{R}}
+\newcommand{\RR}{\mathbb{R}}
+
+% some useful abbreviations
+\newcommand{\vx}{\vect{x}}
+\newcommand{\vy}{\vect{y}}
+\newcommand{\vz}{\vect{z}}
+\newcommand{\vu}{\vect{u}}
+\newcommand{\vv}{\vect{v}}
+\newcommand{\vw}{\vect{w}}
+\newcommand{\va}{\vect{a}}
+\newcommand{\vb}{\vect{b}}
+\newcommand{\vc}{\vect{c}}
+\newcommand{\ve}{\vect{e}}
+\newcommand{\vf}{\vect{f}}
+\newcommand{\vF}{\vect{F}}
+\newcommand{\vg}{\vect{g}}
+\newcommand{\vh}{\vect{h}}
+\newcommand{\vl}{\vect{l}}
+\newcommand{\vm}{\vect{m}}
+\newcommand{\vn}{\vect{n}}
+\newcommand{\vp}{\vect{p}}
+\newcommand{\vr}{\vect{r}}
+\newcommand{\vs}{\vect{s}}
+\newcommand{\vi}{\vect{i}}
+\newcommand{\vj}{\vect{j}}
+\newcommand{\vk}{\vect{k}}
+\newcommand{\vzero}{\vect{0}}
+% lower-case greek letters are handled differently: poor man's bold macro
+%\newcommand{\vphi}{\pmb{\phi}}
+
+\newcommand{\malename}{Westley} % recurring male name
+\newcommand{\femalename}{Buttercup} % recurring female name
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+
+\hypertarget{introduction-to-statistics-ma-005-westmont-college-spring-2024}{%
+\section{Introduction to Statistics (MA-005) Westmont College, Spring
+2024}\label{introduction-to-statistics-ma-005-westmont-college-spring-2024}}
+
+\hypertarget{why-learn-statistics}{%
+\subsection{Why learn statistics?}\label{why-learn-statistics}}
+
+In your future vocation, you will be better equipped to be a faithful
+presence in our modern culture if you know how to analyze data and use
+it to make decisions. This course will introduce you to the practice of
+statistics in a wide variety of contexts. You will learn the fundamental
+techniques for making inferences from data. By the end of the course,
+you should be able to describe data with graphs and numbers, produce
+data and simulate chance models using randomization, estimate parameters
+with confidence intervals, assess evidence for a claim with significance
+tests, and explore correlations using regression.
+
+\hypertarget{what-topics-will-we-cover}{%
+\subsection{What topics will we
+cover?}\label{what-topics-will-we-cover}}
+
+We will cover Chapters 1--27 of \emph{Introduction to Modern Statistics}
+by Mine Çetinkaya-Rundel and Johanna Hardin. This book is freely
+available at
+\href{https://openintro-ims.netlify.app/}{\texttt{https://openintro-ims.netlify.app}}.
+Here's an overview:
+
+\begin{description}[noitemsep]
+\item[Introduction to data.] Data structures, variables, summaries, graphics, and basic data collection and study design techniques.
+\item[Exploratory data analysis.] Data visualization and summarization, with particular emphasis on multivariable relationships.
+\item[Regression modeling.] Modeling numerical and categorical outcomes with linear and logistic regression and using model results to describe relationships and make predictions.
+\item[Foundations for inference.] Case studies are used to introduce the ideas of statistical inference with randomization tests, bootstrap intervals, and mathematical models.
+\item[Statistical inference.] Further details of statistical inference using randomization tests, bootstrap intervals, and mathematical models for numerical and categorical data, including $t$-tests, $\chi^2$-tests, and ANOVA.
+\item[Inferential modeling.] Extending inference techniques presented thus-far to linear and logistic regression settings and evaluating model performance.
+\end{description}
+
+Throughout the course we will use the R programming language to
+manipulate data, produce graphics, and perform computations.
+
+\hypertarget{wait-what-were-going-to-have-to-learn-how-to-code}{%
+\subsection{Wait, What?! We're going to have to learn how to
+code?}\label{wait-what-were-going-to-have-to-learn-how-to-code}}
+
+Relax. You won't be writing computer programs. You will learn how to
+write short commands, or ``scripts'', that will get R to do a lot of the
+tedious computational work for you. Please note that the description of
+this course in the Westmont catalog includes the following sentence:
+``This course involves extensive use of statistical software.'' These
+tools are widely used in academic research and in industry, so
+developing some competence in R is valuable.
+
+\hypertarget{what-is-the-coursework-and-how-is-it-graded}{%
+\subsection{What is the coursework and how is it
+graded?}\label{what-is-the-coursework-and-how-is-it-graded}}
+
+Our typical class meeting will consist of several short mini-lectures
+and student \textbf{participation} in group discussions. On the night
+before each class meeting there will be a \textbf{daily assignment} due
+on Canvas. Every four weeks there will be an in-class \textbf{exam}, and
+there will be a cumulative \textbf{final exam} on the scheduled date.
+The following table shows how these assessments are weighted to
+determine your final grade.
+
+\begin{tabular}[t]{ll}
+\toprule
+Exams (3) & 18\% each\\
+Final Exam & 18\%\\
+Daily Assignments & 18\%\\
+Participation & 10\%\\
+\bottomrule
+\end{tabular}
+
+Grades are based on a 90/80/70/60 scale, with \(+/-\)'s within 3 percent
+of each letter-grade cutoff. Due dates will appear on Canvas, where you
+can also keep track of your progress.
+
+\hypertarget{what-other-policies-should-students-be-aware-of}{%
+\subsection{What other policies should students be aware
+of?}\label{what-other-policies-should-students-be-aware-of}}
+
+If you miss a significant number of classes, you will almost definitely
+do poorly in this class. If you miss more than four classes without a
+valid excuse, I reserve the right to terminate you from the course with
+a failing grade. Work missed (including tests) without a valid excuse
+will receive a zero. In the event of an \textbf{excused absence}, you
+can make up the participation grade by writing up answers to all the
+group activity questions found in the slides for the day that you
+missed. Hand in this written work when you return to class, and make
+sure it includes the reason for your absence.
+
+I expect you to check your email on a regular basis. If you use a
+non-Westmont email account, please forward your Westmont email to your
+preferred account. I'll send out notices on Canvas, so make sure you
+receive Canvas notifications in your email.
+
+Learning communities function best when students have academic
+integrity. Cheating is primarily an offense against your classmates
+because it undermines our learning community. Therefore, dishonesty of
+any kind may result in loss of credit for the work involved and the
+filing of a report with the Provost's Office. Major or repeated
+infractions may result in dismissal from the course with a failing
+grade. Be familiar with the College's plagiarism policy, found at
+\url{https://www.westmont.edu/office-provost/academic-program/academic-integrity-policy}.
+
+In particular, providing someone with an electronic copy of your work is
+a breach of the academic integrity policy. Do not email, post online, or
+otherwise disseminate any of the work that you do in this class. You may
+work with others on the assignments, but make sure that you write or
+type up your own answers yourself. You are on your honor that the work
+you hand in represents your own understanding.
+
+\hypertarget{other-information}{%
+\subsection{Other Information}\label{other-information}}
+
+\begin{description} \small
+
+\item[Professor:] David J. Hunter, Ph.D.
+  (\verb!dhunter@westmont.edu!). Student hours are from 1--3:30pm on Tuesdays and Thursdays in Winter Hall 303.
+
+\item[Accommodations for Students with Disabilities:] Students who choose to disclose a disability, diagnosis, or injury are encouraged to contact the Office of Disability Services (ODS) as early as possible in the semester to discuss potential accommodations for this course. Formal accommodations will only be granted for students whose diagnoses have been verified by the ODS. Accommodations are designed to minimize the impact of a diagnosis and to ensure equal access to programs for all students who have a diagnosed condition that impacts their participation in college activities. Please contact \href{mailto:ods@westmont.edu}{\tt ods@westmont.edu} or visit the website for more information: \url{https://www.westmont.edu/disability-services-welcome}. Seth Miller, Director of ODS and the ODS team are located upstairs in Voskuyl Library 310, 311A. 
+
+\item[General Education: ]
+This course fulfills the Quantitative and Analytical Reasoning (QAR) requirement because it emphasizes understanding and communication of numeric data including the computation and interpretation of summative statistics and the presentation and interpretation of graphical representations of data. A core focus of the course is the explicit study of quantitative and analytic methods. This course also fulfills Reasoning Abstractly (RA) because it focuses on critical and analytical reasoning about non-empirical, abstract concepts, objects and structures. You will learn to understand and evaluate abstract arguments and explanations, analyze abstract concepts and solve abstract problems.  Students completing this course will be able to:
+\begin{itemize}[noitemsep]
+    \item interpret numeric data, summative statistics and graphical representations (QAR);
+    \item reflect on the strengths and weaknesses of particular quantitative models or methods as tools in the natural and social sciences (QAR);
+    \item be able to interpret, reflect on, and use quantitative models and data in public, vocational, and/or private decision making (QAR);
+    \item identify instances of abstract reasoning about abstract objects or concepts (in the form of arguments, explanations, proofs, analyses, modeling, or processes of problem solving) (RA);
+    \item construct an instance of valid reasoning about abstract objects or concepts (in the form of arguments, explanations, proofs, analyses, modeling, or processes of problem solving) (RA);
+    \item distinguish valid forms of reasoning about abstract objects or concepts (in the form of arguments, explanations, proofs, analyses, modeling, or processes of problem solving) from invalid and/or fallacious
+forms of reasoning (RA).
+\end{itemize}
+
+\item[Program and Institutional Learning Outcomes:] The
+         mathematics department at Westmont College has formulated the
+         following learning outcomes for all of its classes. (PLO's)
+\begin{enumerate}[noitemsep]
+\item Core Knowledge: Students will demonstrate knowledge of the
+                  main concepts, skills, and facts of the discipline of
+                  mathematics.
+\item Communication: Students will be able to communicate mathematical ideas
+     following the standard conventions of writing or speaking in the
+     discipline.
+\item Creativity: Students will demonstrate the ability to formulate and make
+     progress toward solving non-routine problems.
+\item Christian Connection: Students will incorporate their mathematical skills
+     and knowledge into their thinking about their vocations as followers of
+     Christ.
+         \end{enumerate}
+         In addition, the faculty of Westmont College have established common
+         learning outcomes for all courses at the institution
+         (ILO's). These outcomes are summarized as follows:
+(1) Christian Understanding, Practices, and Affections,
+(2) Global Awareness and Diversity,
+(3) Critical Thinking,
+(4) Quantitative Literacy,
+(5) Written Communication,
+(6) Oral Communication, and
+(7) Information Literacy.
+
+\item[Course Learning Outcomes:] The above outcomes are reflected in the
+     particular learning outcomes for this course.
+     After taking this course, you should be able
+     to:
+    \begin{itemize}[noitemsep]
+        \item Demonstrate mastery of fundamental concepts of statistics. (PLO 1, ILOs 3,4)
+        \item Describe mathematical models and structures according to the
+             standards of the discipline. (PLO 2,
+              ILOs 3,5)
+        \item Present mathematical constructions, computations, and arguments orally, with
+              clarity and accuracy. (PLO 2, ILO~6)
+        \item Construct solutions to novel mathematical problems,
+               demonstrating perseverance in the face of open-ended or
+               partially-defined contexts. (PLO 3, ILO 3)
+        \item Explain the connection between your personal mathematical
+             development and your professional calling. (PLO 4, ILO
+             1)
+    \end{itemize}
+These outcomes will be assessed by group activities, written assignments, and exams, as described above.
+
+\end{description}
+
+\end{document}
