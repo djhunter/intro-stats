@@ -66,4 +66,8 @@ ggplot(gpa_study_hours, aes(x = study_hours, y = gpa)) + geom_point()
 
 If all went well, a scatterplot should appear in the **Plots** pane on the right.
 
+## Alternative Online Version
 
+If you are working on an IPad or a Chromebook, or if you are using the computers in the library, then you can use the free, online version of RStudio at https://posit.cloud/. You will need to make an account (you can sign in with Google), and the free tier will suffice for our purposes. 
+
+After you create your first workspace, follow the instructions in Step 3 above to install the `tidyverse` and `openintro` packages, and make sure you are able to create the scatterplot.
