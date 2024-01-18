@@ -118,7 +118,7 @@ mean(loan50$interest_rate)
     
 ## Group Exercise
 
-1. In the dot plot below, pretend that the dots are all physical objects (e.g., weights), and that the horizontal axis is a plank of wood. Where on the plank of wood would you place a support (i.e., fulcrum) so that the whole structure will balance? Everyone should make a guess, then *record the mean* of the guesses in your group.
+1. In the dot plot below, pretend that the dots are all physical objects (e.g., weights), and that the horizontal axis is a plank of wood. Where on the plank of wood would you place a support (i.e., fulcrum) so that the whole structure will balance? 
 
 ```{r, fig.width=9, fig.height=3.4, fig.align='center', message = FALSE, warning=FALSE, echo=FALSE}
 loan50 %>%
