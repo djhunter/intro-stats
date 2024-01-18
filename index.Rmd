@@ -42,9 +42,9 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 |:---- |:-------------------------- |
 | 1/9 | [Hello Data](slides/01-hellodata.html) <br> [Association and Experiments](slides/01b-association.html) |
 | 1/11 | [Study Design](slides/02-studydesign.html) <br> [Getting Started with Data in R](slides/03-intro_data_R.html) |
+| 1/18 | [Exploring Categorical Data](slides/04-catdata.html) <br> [Exploring Numerical Data](slides/05-numdata.html) |
 
 ---
-# | 1/24 | [Exploring Categorical Data](slides/04-catdata.html) <br> [Exploring Numerical Data](slides/05-numdata.html) |
 # | 1/26 | [Linear Regression with a Single Predictor](slides/07a-lin_regression.html) |
 # | 1/31 | [Linear Regression in R](slides/07b-linear_regression_R.html) <br> [Review for Test #1](slides/07c-test1review.html) |
 # | 2/2 | Test #1, Chapters 1-7 |
