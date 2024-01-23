@@ -79,5 +79,21 @@ ggplot(smokers, aes(x = amt_weekends)) +
 ## Challenge: Q. Do men and women smokers differ in how much they smoke on 
 ## weekends? Make a plot and record (log sheet) a
 ## conclusion sentence.
-```
 
+## plot a single numerical variable
+smoking %>%
+  ggplot(aes(x = age)) +
+  geom_boxplot()
+smoking %>%
+  ggplot(aes(x = age)) +
+  geom_histogram()
+smoking %>%
+  ggplot(aes(x = age)) +
+  geom_density()
+
+## Challenge: Is there an association between age
+## and whether someone smokes? (record a sentence) 
+## Try adding smoke as an aesthetic for the box, hist, and
+## density plots. (e.g., fill = smoke)
+
+```
