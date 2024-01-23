@@ -43,8 +43,7 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 | 1/9 | [Hello Data](slides/01-hellodata.html) <br> [Association and Experiments](slides/01b-association.html) |
 | 1/11 | [Study Design](slides/02-studydesign.html) <br> [Getting Started with Data in R](slides/03-intro_data_R.html) |
 | 1/18 | [Exploring Categorical Data](slides/04-catdata.html) <br> [Exploring Numerical Data](slides/05-numdata.html) |
-| 1/23 | [Exploring Data in R](slides/06b-explore_data_R.html) <br> 
-[Linear Regression with a Single Predictor](slides/07a-lin_regression.html) |
+| 1/23 | [Exploring Data in R](slides/06b-explore_data_R.html) <br> [Linear Regression with a Single Predictor](slides/07a-lin_regression.html) |
 
 ---
 # | 1/25 | [Linear Regression with a Single Predictor (continued)](slides/07a-lin_regression.html) <br> [Linear Regression with Multiple Predictors](slides/08-multi_regression.html) |
