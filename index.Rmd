@@ -47,6 +47,7 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 | 1/25 | [Linear Regression with a Single Predictor (continued)](slides/07a-lin_regression.html#/least-squares-regression) <br> [Linear Regression with Multiple Predictors](slides/08-multi_regression.html) |
 | 1/30 | [Regression Models in R](slides/8b-regression_R.html) <br> [Review for Test #1](slides/08c-test1review.html) |
 | 2/1 | Test #1, Chapters 1-8 |
+| 2/6 | [Logistic Regression](slides/09-logit_regression.html) <br> [Hypothesis Testing with Randomization](slides/11-hypoth_random.html)  |
 
 ---
 # | 2/7 | [Linear Regression with Multiple Predictors](slides/08-multi_regression.html) <br> [Multiple Regression in R](slides/10-regression_R.html) |
