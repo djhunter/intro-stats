@@ -1,3 +1,43 @@
+---
+title: "Bootstrapping in R"
+output: 
+  revealjs::revealjs_presentation:
+    fig_width: 14 
+    fig_height: 7
+    self_contained: true
+    theme: night
+    highlight: zenburn
+    css: slidesdjh.css
+    center: false
+    transition: slide
+    reveal_options:
+      controls: true
+      progress: false
+      width: 1080
+      height: 540
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = NA)
+options(width = 100)
+library(tidyverse)
+theme_set(theme_bw())
+```
+
+# Pairs Today
+
+- Please pair up (your choice).
+    - At least one person in each pair needs to have a device that can use RStudio (installed or using rstudio.cloud). This person is the *Operator*.
+    - Ideally, everyone has an RStudio-enabled device. If you don't, you can still take notes by keeping track of the code and trying it on your own later.
+    
+# Data Carpentry
+
+## Group Exercises
+
+Do all the challenges.
+
+```{r, eval = FALSE}
 library(tidyverse)
 
 # Sample data: Poll of 50 people. 
@@ -17,7 +57,7 @@ ggplot(polldata, aes(x = church)) +
 polldata %>%
   summarize(phat = sum(church == "Yes")/n())
 
-## Create a random resample
+## Create a random sample
 samp1 <- polldata %>%
   slice_sample(n = 50, replace = TRUE)
 
@@ -29,17 +69,7 @@ samp1 %>%
 #   few times. Does the sample change?
 # 2. Summarize to compute p_hat for this sample
 
-######### Solution
-polldata %>%
-  slice_sample(n = 50, replace = TRUE) %>%
-  count(church)
-
-polldata %>%
-  slice_sample(n = 50, replace = TRUE) %>%
-  summarize(p_hat = sum(church == "Yes")/n())
-#######
-
-## Make lots of p_hats
+## Make lots of p_hats 
 
 makephat <- function(i) {
   polldata %>%
@@ -61,15 +91,7 @@ ggplot(phatDF, aes(x = p_hat)) +
 ## 1. Modify the above code to create a sampling distribution with 1000 p_hats.
 ## 2. Try using geom_density instead of geom_histogram.
 
-#### Solution
-phatDF <- map(1:1000, makephat) %>%
-  bind_rows()
-
-ggplot(phatDF, aes(x = p_hat)) +
-  geom_density()
-#######
-
-## Summarize the distribution
+## Make a 95% confidence interval
 
 phatDF %>%
   summarize(p025 = quantile(p_hat, 0.025),
@@ -79,25 +101,5 @@ phatDF %>%
 #              use a sample size of 500 instead of 50, with the same proportion
 #              of churchgoers (20%). How does the 95% CI change?
 
-############## Solution:
-polldata <- data.frame(
-  church = c(rep("Yes", 100), rep("No", 400))
-)
+```
 
-makephat <- function(i) {
-  polldata %>%
-  slice_sample(n = 500, replace = TRUE) %>%
-  summarize(p_hat = sum(church == "Yes")/n())
-}
-
-phatDF <- map(1:1000, makephat) %>%
-  bind_rows()
-
-ggplot(phatDF, aes(x = p_hat)) +
-  geom_density()
-
-phatDF %>%
-  summarize(p025 = quantile(p_hat, 0.025),
-            p975 = quantile(p_hat, 0.975))
-
-###############################################
