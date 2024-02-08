@@ -89,7 +89,7 @@ biggss <- data.frame(
 )
 
 ### Challenge: Redo the bootstrapping simulation, but this time
-#              use a biggss simulated data. How does the 95% CI change?
+#              use the biggss simulated data. How does the 95% CI change?
 
 ############## Solution:
 
