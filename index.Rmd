@@ -49,12 +49,12 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 | 2/1 | Test #1, Chapters 1-8 |
 | 2/6 | [Logistic Regression](slides/09-logit_regression.html) <br> [Hypothesis Testing with Randomization](slides/11-hypoth_random.html)  |
 | 2/8 | [Confidence Intervals with Bootstrapping](slides/12-bootstrap_ci.html) <br> [Bootstrapping in R](slides/12b-bootstrap_ci_R.html)
+| 2/13 | [Inference with Mathematical Models](slides/13-math_models.html) <br> [Decision Errors](slides/14-decision_errors.html) |
 
 ---
 # | 2/7 | [Linear Regression with Multiple Predictors](slides/08-multi_regression.html) <br> [Multiple Regression in R](slides/10-regression_R.html) |
 # | 2/9 | [Logistic Regression](slides/09-logit_regression.html) <br> [Logistic Regression in R](slides/09b-logit_reg_R.html) |
 # | 2/14 | [Hypothesis Testing with Randomization](slides/11-hypoth_random.html) <br> [Confidence Intervals with Bootstrapping](slides/12-bootstrap_ci.html) |
-# | 2/16 | [Inference with Mathematical Models](slides/13-math_models.html) <br> [Decision Errors](slides/14-decision_errors.html) |
 # | 2/23 | [Simulating Sampling Distributions in R](slides/15-samp_dist_R.html) <br> [Inference for a Single Proportion](slides/16-infer_1prop.html) |
 # | 2/28 | [Inference for Comparing Two Proportions](slides/17-infer_2prop.html) <br> [Inference for Two-Way Tables](slides/18-infer_chisquare.html) |
 # | 3/2 | [Review for Test #2](slides/18c-test2review.html) |
