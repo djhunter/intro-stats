@@ -99,6 +99,10 @@ data.frame(p_hat = bootPhats) %>%
   scale_x_continuous(breaks = c(0.25, 0.50, 0.56, 0.75))
 ```
 
+. . . 
+
+**Group Question:** Estimate the endpoints of an interval covering the middle 95% of this distribution. (One sig-fig is OK.) The margin of error of this interval should be two standard errors. Estimate the standard error.
+
 ## 16.1.2 Variability of the statistic
 
 The *standard error* of a statistic is the standard deviation of its sampling distribution.
@@ -167,6 +171,17 @@ A simple random sample of 826 payday loan borrowers was surveyed to better under
 4. If we increased the confidence level from 95% to 99%, how would the confidence interval change (wider, narrower, same)?
 
 5. If the sample size were 2000 instead of 826, how would the confidence interval change (wider, narrower, same)?
+
+## Setting the sample size
+
+How big a sample do you need?
+
+- Decide on a margin of error.
+- The standard error is about half the margin of error (for a 95% confidence interval).
+- Solve the equation for $n$: 
+$$
+SE_\hat{p} \approx \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}
+$$
  
 ## 16.2.5 Hypothesis test for a proportion
 
