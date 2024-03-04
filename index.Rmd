@@ -53,22 +53,22 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 | 2/15 | [Inference for a Single Proportion](slides/16-infer_1prop.html) |
 | 2/22 | [Inference for Comparing Two Proportions](slides/17-infer_2prop.html) <br> [Inference for Two-Way Tables](slides/18-infer_chisquare.html) |
 | 2/27 | [Inference on Categorical Variables in R](slides/18a-infer_cat_R.html) <br> [Review for Test #2](slides/18c-test2review.html) |
+| 2/29 | Test #2, Chapters 9-18 |
+| 3/5 |  [Inference for a Single Mean](slides/19-infer_onemean.html) <br> [Bootstrapping and t-tests in R](slides/19b-onemean_R.html) |
 
 ---
-# | 2/29 | Test #2, Chapters 9-18 |
-# | 3/7 |  [Inference for a Single Mean](slides/19-infer_onemean.html) <br> [Bootstrapping and t-tests in R](slides/19b-onemean_R.html) |
-# | 3/21 | [Inference for Comparing Two Independent Means](slides/20-infer_twomean.html) |
-# | 3/23 | [Inference for Comparing Paired Means](slides/21-infer_pairedmean.html) |
-# | 3/28 | [Inference for Comparing Many Means](slides/22-infer_manymeans.html) |
-# | 3/30 | [Inference for Numerical Data in R](slides/23b-num_infer_R.html) |
-# | 4/4 | [Inference for Linear Regression](slides/24-infer_regression.html) |
-# | 4/6 | [Inference for Linear Regression, continued](slides/24-infer_regression.html)  |
-# | 4/11 | [Review for Test #3](slides/24c-test3review.html) |
-# | 11/15 | Test #3, Chapters 16-23 |
-# | 4/18 |  [Inference for Multiple Regression](slides/25-infer_multiple.html) |
-# | 4/20 | [Inference for Logistic Regression](slides/26-infer_logistic.html) |
-# | 4/25 | [Inference for Multiple Regression in R](slides/27-mariokart.html) <br> [Inference for Logistic Regression in R](slides/27b-nbarookies.html) |
-# | 4/27 | [Final Exam Review](slides/27c-test4review.html) |
+# | 3/7 | [Inference for Comparing Two Independent Means](slides/20-infer_twomean.html) |
+# | 3/19 | [Inference for Comparing Paired Means](slides/21-infer_pairedmean.html) |
+# | 3/21 | [Inference for Comparing Many Means](slides/22-infer_manymeans.html) |
+# | 3/26 | [Inference for Numerical Data in R](slides/23b-num_infer_R.html) |
+# | 3/28 | [Review for Test #3](slides/24c-test3review.html) |
+# | 4/2 | Test #3, Chapters 16-23 |
+# | 4/9 | [Inference for Linear Regression](slides/24-infer_regression.html) |
+# | 4/11 | [Inference for Linear Regression, continued](slides/24-infer_regression.html)  |
+# | 4/16 |  [Inference for Multiple Regression](slides/25-infer_multiple.html) |
+# | 4/18 | [Inference for Logistic Regression](slides/26-infer_logistic.html) |
+# | 4/23 | [Inference for Multiple Regression in R](slides/27-mariokart.html) <br> [Inference for Logistic Regression in R](slides/27b-nbarookies.html) |
+# | 4/25 | [Final Exam Review](slides/27c-test4review.html) |
 ---
 
 # Other Resources

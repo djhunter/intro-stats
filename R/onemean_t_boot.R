@@ -1,42 +1,3 @@
----
-title: "Bootstrapping and t-tests in R"
-output: 
-  revealjs::revealjs_presentation:
-    fig_width: 14 
-    fig_height: 7
-    self_contained: true
-    theme: night
-    highlight: zenburn
-    css: slidesdjh.css
-    center: false
-    transition: slide
-    reveal_options:
-      controls: true
-      progress: false
-      width: 1080
-      height: 540
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_chunk$set(comment = NA)
-options(width = 100)
-library(tidyverse)
-library(openintro)
-theme_set(theme_bw())
-```
-
-# Pairs Today
-
-- Please pair up (your choice).
-    - At least one person in each pair needs to have a device that can use RStudio (installed or using rstudio.cloud). This person is the *Operator*.
-    - Ideally, everyone has an RStudio-enabled device. If you don't, you can still take notes by keeping track of the code and trying it on your own later.
-    
-## Group Exercises
-
-Do all the challenges.
-
-```{r, eval = FALSE}
 library(tidyverse)
 library(openintro)
 glimpse(cherry)
@@ -47,6 +8,20 @@ data(cherry)
 # this data set. For each density plot, RECORD:
 # 1. Is the variable skewed?
 # 2. Estimate a range in which most (i.e., 95% of the data lies).
+
+### Solution
+ggplot(cherry, aes(x = diam)) + 
+  geom_density()
+# skewed right, (10, 18)
+
+ggplot(cherry, aes(x = height)) + 
+  geom_density()
+# skewed left (slightly), (65, 85)
+
+ggplot(cherry, aes(x = volume)) + 
+  geom_density()
+# skewed right, (15, 75)
+############################################
 
 ## Compute the means:
 cherry %>%
@@ -85,6 +60,18 @@ glimpse(xbarDF)
 # 1. Is the distribution of xbar skewed?
 # 2. Estimate a range in which most (i.e., 95% of the data lies).
 
+### Solution
+ggplot(xbarDF, aes(x = xbar_diam)) + 
+  geom_density()
+# symmetric: (12.5, 14.5)
+ggplot(xbarDF, aes(x = xbar_height)) + 
+  geom_density()
+# symmetric: (73, 79)
+ggplot(xbarDF, aes(x = xbar_volume)) + 
+  geom_density()
+# symmetric: (25, 36)
+#############################################
+
 ## One sample t-tests
 cherry %>%
   select(diam) %>%
@@ -94,7 +81,15 @@ cherry %>%
 
 t.test(cherry$diam)
 
-## Challenge: Do one-sample t-tests for the other two variables. Compare the 
+## Do one-sample t-tests for the other two variables. Compare the 
 # confidence interval to the estimates from the bootstrap distributions
 
-```
+### Solution:
+cherry %>%
+  select(height) %>%
+  t.test()
+
+cherry %>%
+  select(volume) %>%
+  t.test()
+
