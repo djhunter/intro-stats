@@ -55,9 +55,9 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 | 2/27 | [Inference on Categorical Variables in R](slides/18a-infer_cat_R.html) <br> [Review for Test #2](slides/18c-test2review.html) |
 | 2/29 | Test #2, Chapters 9-18 |
 | 3/5 |  [Inference for a Single Mean](slides/19-infer_onemean.html) <br> [Bootstrapping and t-tests in R](slides/19b-onemean_R.html) |
+| 3/7 | [Inference for Comparing Two Independent Means](slides/20-infer_twomean.html) |
 
 ---
-# | 3/7 | [Inference for Comparing Two Independent Means](slides/20-infer_twomean.html) |
 # | 3/19 | [Inference for Comparing Paired Means](slides/21-infer_pairedmean.html) |
 # | 3/21 | [Inference for Comparing Many Means](slides/22-infer_manymeans.html) |
 # | 3/26 | [Inference for Numerical Data in R](slides/23b-num_infer_R.html) |
