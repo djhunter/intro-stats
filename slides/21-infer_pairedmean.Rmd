@@ -156,7 +156,7 @@ textbooks <- ucla_textbooks_f18 %>%
   filter(!is.na(bookstore_new) & !is.na(amazon_new)) 
 ```
 
-*Example.* Data on 68 textbooks, giving their bookstrore price and their price on Amazon.
+*Example.* Data on 68 textbooks, giving their bookstore price and their price on Amazon.
 
 ```{r}
 glimpse(textbooks)
