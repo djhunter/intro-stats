@@ -58,9 +58,9 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 | 3/7 | [Inference for Comparing Two Independent Means](slides/20-infer_twomean.html) |
 | 3/19 | [Inference for Comparing Paired Means](slides/21-infer_pairedmean.html) |
 | 3/21 | [Inference for Comparing Many Means](slides/22-infer_manymeans.html) |
+| 3/26 | [Inference for Numerical Data in R](slides/23b-num_infer_R.html) |
 
 ---
-# | 3/26 | [Inference for Numerical Data in R](slides/23b-num_infer_R.html) |
 # | 3/28 | [Review for Test #3](slides/24c-test3review.html) |
 # | 4/2 | Test #3, Chapters 16-23 |
 # | 4/9 | [Inference for Linear Regression](slides/24-infer_regression.html) |
