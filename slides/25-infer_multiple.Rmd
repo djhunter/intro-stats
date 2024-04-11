@@ -116,6 +116,28 @@ round(summary(loan.model)$coefficients, 2)
 - The number of credit checks has a significant effect, *even when term and debt-to-income ratio are taken into account.*
 - *Controlling term and debt-to-income ratio,* the number of credit checks has a significant effect. 
 
+# Penguins revisited
+
+## Data Carpentry Script
+
+```{r, eval = FALSE}
+library(tidyverse)
+library(palmerpenguins)
+
+glimpse(penguins)
+ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm)) +
+  geom_point()
+
+bfit1 <- lm(bill_depth_mm ~ bill_length_mm, data = penguins)
+summary(bfit1)
+
+## This model reports a negative association, which doesn't make sense.
+## Challenge: Make a new multiple regression model using species as an 
+## additional response variable.
+## 1. Write down the multiple regression equation.
+## 2. For each coefficient whose effect is significant (p-val < 0.01),
+## write a sentence interpreting the p-value.
+```
 
 # 25.2 Multicollinearity
 
