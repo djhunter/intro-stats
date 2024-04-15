@@ -166,32 +166,38 @@ $$
 - $H_0: \beta_3 = 0$,  given to_multiple, cc, and urgent_subj are included in the model
 - $H_0: \beta_4 = 0$,  given to_multiple, dollar, and dollar are included in the model
 
-## Inference
+## Group Activity
 
 ```{r echo=FALSE}
 round(summary(model.spam)$coefficients, 2)
 ```
 
->- We can examine the coefficients and P-values to draw conclusions about the nature of spam (*inference*)
->    - This is different from *prediction*.
->- We can make the following *inferences*:
->    - It appears that the presence of a CC field is not a significant property of spam email (P-value = 0.25).
->    - We have evidence that the presence of the word "urgent" in the subject makes an email more likely to be spam (P-value = 0.25, positive coefficient 2.66)
->- These inferences are conditioned on the other variables in the model.
+1. Is the presence of a CC field a significant indicator of spam email?  Why/Why not?
+2. If an email has the word "urgent" in the subject, is it more or less likely to be spam? Is this effect significant?
+3. Suppose we have an email addressed to multiple people, without the word dollar, without a CC field, and without urgent in the subject. What does the model predict about this email?
 
-## Prediction
-
->- We can use the logistic regression equation to *predict* whether a given email is spam.
->- Suppose we have an email addressed to multiple people, without the word dollar, without a CC field, and without urgent in the subject.
->- The model predicts a logit of $-2.05 + (-1.91)\times 1 + 0.02 \times 0 - 0.07 \times 0 + 2.66 \times 0 = -3.96$
->    - A logit of -3.96 corresponds to a low predicted probability.
->    - We can use the conversion equation to calculate the predicted probability exactly:
-
-. . . 
-
-$$
-\frac{e^{-3.96}}{1 + e^{-3.96}} \approx 0.02
-$$
+---
+# >- We can examine the coefficients and P-values to draw conclusions about the nature of spam (*inference*)
+# >    - This is different from *prediction*.
+# >- We can make the following *inferences*:
+# >    - It appears that the presence of a CC field is not a significant property of spam email (P-value = 0.25).
+# >    - We have evidence that the presence of the word "urgent" in the subject makes an email more likely to be spam (P-value = 0.25, positive coefficient 2.66)
+# >- These inferences are conditioned on the other variables in the model.
+# 
+# ## Prediction
+# 
+# >- We can use the logistic regression equation to *predict* whether a given email is spam.
+# >- Suppose we have an email addressed to multiple people, without the word dollar, without a CC field, and without urgent in the subject.
+# >- The model predicts a logit of $-2.05 + (-1.91)\times 1 + 0.02 \times 0 - 0.07 \times 0 + 2.66 \times 0 = -3.96$
+# >    - A logit of -3.96 corresponds to a low predicted probability.
+# >    - We can use the conversion equation to calculate the predicted probability exactly:
+# 
+# . . . 
+# 
+# $$
+# \frac{e^{-3.96}}{1 + e^{-3.96}} \approx 0.02
+# $$
+---
 
 # 26.3 Cross-validation for prediction error
 

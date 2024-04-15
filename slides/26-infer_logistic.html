@@ -2134,54 +2134,23 @@ to_multiple, cc, and urgent_subj are included in the model</li>
 to_multiple, dollar, and dollar are included in the model</li>
 </ul>
 </section>
-<section id="inference" class="slide level2">
-<h2>Inference</h2>
+<section id="group-activity" class="slide level2">
+<h2>Group Activity</h2>
 <pre><code>             Estimate Std. Error z value Pr(&gt;|z|)
 (Intercept)     -2.05       0.06  -34.67     0.00
 to_multiple1    -1.91       0.30   -6.37     0.00
 cc               0.02       0.02    1.16     0.25
 dollar          -0.07       0.02   -3.38     0.00
 urgent_subj1     2.66       0.80    3.32     0.00</code></pre>
-<ul>
-<li class="fragment">We can examine the coefficients and P-values to
-draw conclusions about the nature of spam (<em>inference</em>)
-<ul>
-<li class="fragment">This is different from <em>prediction</em>.</li>
-</ul></li>
-<li class="fragment">We can make the following <em>inferences</em>:
-<ul>
-<li class="fragment">It appears that the presence of a CC field is not a
-significant property of spam email (P-value = 0.25).</li>
-<li class="fragment">We have evidence that the presence of the word
-“urgent” in the subject makes an email more likely to be spam (P-value =
-0.25, positive coefficient 2.66)</li>
-</ul></li>
-<li class="fragment">These inferences are conditioned on the other
-variables in the model.</li>
-</ul>
-</section>
-<section id="prediction" class="slide level2">
-<h2>Prediction</h2>
-<ul>
-<li class="fragment">We can use the logistic regression equation to
-<em>predict</em> whether a given email is spam.</li>
-<li class="fragment">Suppose we have an email addressed to multiple
-people, without the word dollar, without a CC field, and without urgent
-in the subject.</li>
-<li class="fragment">The model predicts a logit of <span class="math inline">\(-2.05 + (-1.91)\times 1 + 0.02 \times 0 - 0.07
-\times 0 + 2.66 \times 0 = -3.96\)</span>
-<ul>
-<li class="fragment">A logit of -3.96 corresponds to a low predicted
-probability.</li>
-<li class="fragment">We can use the conversion equation to calculate the
-predicted probability exactly:</li>
-</ul></li>
-</ul>
-<div class="fragment">
-<p><span class="math display">\[
-\frac{e^{-3.96}}{1 + e^{-3.96}} \approx 0.02
-\]</span></p>
-</div>
+<ol type="1">
+<li>Is the presence of a CC field a significant indicator of spam email?
+Why/Why not?</li>
+<li>If an email has the word “urgent” in the subject, is it more or less
+likely to be spam? Is this effect significant?</li>
+<li>Suppose we have an email addressed to multiple people, without the
+word dollar, without a CC field, and without urgent in the subject. What
+does the model predict about this email?</li>
+</ol>
 </section></section>
 <section>
 <section id="cross-validation-for-prediction-error" class="title-slide slide level1">
