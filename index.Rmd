@@ -65,9 +65,9 @@ These slides are meant to accompany the textbook [Introduction to Modern Statist
 | 4/9 | [Inference for Linear Regression, continued](slides/24-infer_regression.html)  |
 | 4/11 |  [Inference for Multiple Regression](slides/25-infer_multiple.html) |
 | 4/16 | [Inference for Logistic Regression](slides/26-infer_logistic.html) |
+| 4/18 | [Inference for Multiple Regression in R](slides/27-mariokart.html) |
 
 ---
-# | 4/18 | [Inference for Multiple Regression in R](slides/27-mariokart.html) |
 # | 4/23 | [Inference for Logistic Regression in R](slides/27b-nbarookies.html) |
 # | 4/25 | [Final Exam Review](slides/27c-test4review.html) |
 ---

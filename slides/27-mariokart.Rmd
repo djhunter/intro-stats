@@ -39,7 +39,7 @@ theme_set(theme_bw())
 >- Observational Units: 143 Ebay auctions of Mario Kart Wii.
 >- Response (Outcome) Variable: total price of the auction.
 >- Several possible explanatory variables: duration of auction in days, condition (new/used), number of bids, starting price, seller rating, etc.
->- Can we determine how total price is related to these variables, controlling for other variables? For example:
+>- Can we determine how *total price* is related to these variables, controlling for other variables? For example:
 >    - All other characteristics held constant, are longer auctions associated with higher or lower prices?
 >    - On average, how much more do buyers tend to pay for additional Wii wheels (plastic steering wheels that attach to the Wii controller) in auctions?
 
